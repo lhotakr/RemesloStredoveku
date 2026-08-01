@@ -1,4 +1,4 @@
-{
+ï»¿{
   "cycle_length": 29.53059,
   "phases": [
     {
@@ -7,31 +7,31 @@
     },
     {
       "day": 3.7,
-      "phase": "dorùstající srpek"
+      "phase": "dorÅ¯stajÃ­cÃ­ srpek"
     },
     {
       "day": 7.4,
-      "phase": "první ètvr"
+      "phase": "prvnÃ­ ÄtvrÅ¥"
     },
     {
       "day": 11.1,
-      "phase": "dorùstající mìsíc"
+      "phase": "dorÅ¯stajÃ­cÃ­ mÄ›sÃ­c"
     },
     {
       "day": 14.8,
-      "phase": "úplnìk"
+      "phase": "ÃºplnÄ›k"
     },
     {
       "day": 18.5,
-      "phase": "couvající mìsíc"
+      "phase": "couvajÃ­cÃ­ mÄ›sÃ­c"
     },
     {
       "day": 22.1,
-      "phase": "poslední ètvr"
+      "phase": "poslednÃ­ ÄtvrÅ¥"
     },
     {
       "day": 25.8,
-      "phase": "couvající srpek"
+      "phase": "couvajÃ­cÃ­ srpek"
     }
   ]
 }
