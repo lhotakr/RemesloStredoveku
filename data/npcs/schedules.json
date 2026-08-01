@@ -1,0 +1,243 @@
+{
+  "schedules": [
+    {
+      "feast_schedule": {
+        "default": [
+          {
+            "phase": "morning",
+            "zone": "chapel"
+          }
+        ]
+      },
+      "npc_id": "farmer_01",
+      "seasonal_schedule": {
+        "autumn": [
+          {
+            "phase": "dawn",
+            "zone": "yard"
+          },
+          {
+            "phase": "morning",
+            "zone": "field"
+          },
+          {
+            "phase": "forenoon",
+            "zone": "field"
+          },
+          {
+            "phase": "noon",
+            "zone": "house"
+          },
+          {
+            "phase": "afternoon",
+            "zone": "barn"
+          },
+          {
+            "phase": "lateday",
+            "zone": "barn"
+          },
+          {
+            "phase": "evening",
+            "zone": "house"
+          },
+          {
+            "phase": "night",
+            "zone": "house"
+          }
+        ],
+        "spring": [
+          {
+            "phase": "dawn",
+            "zone": "Pole"
+          },
+          {
+            "phase": "morning",
+            "zone": "Pole"
+          },
+          {
+            "phase": "forenoon",
+            "zone": "Pole"
+          },
+          {
+            "phase": "noon",
+            "zone": "Kostel"
+          },
+          {
+            "phase": "afternoon",
+            "zone": "Kostel"
+          },
+          {
+            "phase": "lateday",
+            "zone": "Kostel"
+          },
+          {
+            "phase": "evening",
+            "zone": "Kostel"
+          },
+          {
+            "phase": "night",
+            "zone": "Kostel"
+          }
+        ],
+        "summer": [
+          {
+            "phase": "dawn",
+            "zone": "yard"
+          },
+          {
+            "phase": "morning",
+            "zone": "field"
+          },
+          {
+            "phase": "forenoon",
+            "zone": "field"
+          },
+          {
+            "phase": "noon",
+            "zone": "tree_shade"
+          },
+          {
+            "phase": "afternoon",
+            "zone": "field"
+          },
+          {
+            "phase": "lateday",
+            "zone": "field"
+          },
+          {
+            "phase": "evening",
+            "zone": "yard"
+          },
+          {
+            "phase": "night",
+            "zone": "house"
+          }
+        ],
+        "winter": [
+          {
+            "phase": "dawn",
+            "zone": "house"
+          },
+          {
+            "phase": "morning",
+            "zone": "barn"
+          },
+          {
+            "phase": "forenoon",
+            "zone": "barn"
+          },
+          {
+            "phase": "noon",
+            "zone": "house"
+          },
+          {
+            "phase": "afternoon",
+            "zone": "village"
+          },
+          {
+            "phase": "lateday",
+            "zone": "village"
+          },
+          {
+            "phase": "evening",
+            "zone": "house"
+          },
+          {
+            "phase": "night",
+            "zone": "house"
+          }
+        ]
+      },
+      "sunday_schedule": [
+        {
+          "phase": "dawn",
+          "zone": "house"
+        },
+        {
+          "phase": "morning",
+          "zone": "church"
+        },
+        {
+          "phase": "forenoon",
+          "zone": "church"
+        },
+        {
+          "phase": "noon",
+          "zone": "church_square"
+        },
+        {
+          "phase": "afternoon",
+          "zone": "village_green"
+        },
+        {
+          "phase": "lateday",
+          "zone": "house"
+        },
+        {
+          "phase": "evening",
+          "zone": "house"
+        },
+        {
+          "phase": "night",
+          "zone": "house"
+        }
+      ]
+    },
+    {
+      "feast_schedule": {
+        "default": []
+      },
+      "npc_id": "Sedlak01",
+      "seasonal_schedule": {
+        "autumn": [],
+        "spring": [
+          {
+            "phase": "morning",
+            "zone": "Pole"
+          },
+          {
+            "phase": "dawn",
+            "zone": "Pole"
+          },
+          {
+            "phase": "noon",
+            "zone": "Pole"
+          },
+          {
+            "phase": "afternoon",
+            "zone": "Pole"
+          }
+        ],
+        "summer": [],
+        "winter": []
+      },
+      "sunday_schedule": []
+    },
+    {
+      "feast_schedule": {
+        "default": []
+      },
+      "npc_id": "Selka1",
+      "seasonal_schedule": {
+        "autumn": [],
+        "spring": [
+          {
+            "phase": "morning",
+            "zone": "Kostel"
+          },
+          {
+            "phase": "dawn",
+            "zone": "Kostel"
+          },
+          {
+            "phase": "forenoon",
+            "zone": "Kostel"
+          }
+        ],
+        "summer": [],
+        "winter": []
+      },
+      "sunday_schedule": []
+    }
+  ]
+}

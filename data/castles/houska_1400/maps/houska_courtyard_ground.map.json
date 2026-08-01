@@ -1,0 +1,1338 @@
+{
+  "schema_version": 2,
+  "layout_revision": "courtyard_v14_straight_stair_wide_gates_seamless_textures_2026_07_26",
+  "id": "houska_courtyard_ground",
+  "display_name": "Houska – nádvoří V14 – rovné schodiště, široké brány a čisté textury",
+  "geometry_mode": "polygon",
+  "draft_geometry": false,
+  "size": [
+    76,
+    58
+  ],
+  "cell_size": 1.0,
+  "door_scale": 0.6666666666666666,
+  "coordinate_note": "Jih je dole, východ vpravo. V11 uzavírá celý průchod nad dveřmi podle skutečné tloušťky zdi a používá dvě souvislé lichoběžníkové bočnice každého schodiště.",
+  "default_materials": {
+    "floor": "courtyard_stone_paving",
+    "wall": "courtyard_lime_plaster",
+    "ceiling": "courtyard_shingle_ceiling",
+    "door": "heavy_oak_door",
+    "sky": "sky_north_bohemia_overcast"
+  },
+  "rooms": [
+    {
+      "id": "courtyard_A",
+      "label": "A",
+      "name": "Lichoběžníkové nádvoří – V11",
+      "function": "courtyard",
+      "polygon": [
+        [
+          20,
+          13
+        ],
+        [
+          51,
+          13
+        ],
+        [
+          57,
+          41
+        ],
+        [
+          20,
+          41
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_stone_paving"
+      },
+      "ceiling": {
+        "type": "sky",
+        "height": 13.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_gallery_facade",
+      "wall_height": 4.6,
+      "ambient": 1.06,
+      "notes": "Západní strana je kolmá. Východní strana se směrem k jihu rozevírá; toto je hlavní viditelná změna V3."
+    },
+    {
+      "id": "room_01_gate_passage",
+      "label": "1",
+      "name": "Krytý vstupní průjezd od mostu",
+      "function": "gate_passage",
+      "polygon": [
+        [
+          29,
+          41
+        ],
+        [
+          35,
+          41
+        ],
+        [
+          35,
+          55
+        ],
+        [
+          29,
+          55
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_stone_paving"
+      },
+      "ceiling": {
+        "type": "vault",
+        "height": 3.25,
+        "material": "courtyard_lime_plaster"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "gate_passage_masonry",
+      "wall_height": 3.25,
+      "ambient": 0.58,
+      "notes": "Jižní portál navazuje na most. Severní konec je široká lomená klenba do nádvoří."
+    },
+    {
+      "id": "room_02_guardroom",
+      "label": "2",
+      "name": "Strážnice",
+      "function": "guard",
+      "polygon": [
+        [
+          36,
+          42
+        ],
+        [
+          47,
+          42
+        ],
+        [
+          47,
+          55
+        ],
+        [
+          36,
+          55
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.85,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Vstup z nádvoří a dveře do skladu 3. Velké jižní okno."
+    },
+    {
+      "id": "room_03_guard_store",
+      "label": "3",
+      "name": "Sklad strážnice",
+      "function": "storage",
+      "polygon": [
+        [
+          48,
+          42
+        ],
+        [
+          55,
+          42
+        ],
+        [
+          55,
+          55
+        ],
+        [
+          48,
+          55
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.65,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Vstup z nádvoří i ze strážnice 2. Velké jižní okno."
+    },
+    {
+      "id": "room_04_rock_room",
+      "label": "4",
+      "name": "Místnost zasekaná do skály",
+      "function": "rock_service_room",
+      "polygon": [
+        [
+          58,
+          35
+        ],
+        [
+          69,
+          32
+        ],
+        [
+          72,
+          45
+        ],
+        [
+          63,
+          51
+        ],
+        [
+          57,
+          41
+        ]
+      ],
+      "floor": {
+        "height": 1.15,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "type": "rock",
+        "height": 3.95,
+        "material": "sandstone_cliff_local"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 2.8,
+      "ambient": 0.5,
+      "notes": "JV skalní místnost. Dole dveře, následně šikmá chodba se schody nahoru. Severní krb a úzké rozevřené špaletové okno."
+    },
+    {
+      "id": "room_05_east_main",
+      "label": "5",
+      "name": "Východní místnost se dvěma vstupy",
+      "function": "service",
+      "polygon": [
+        [
+          55,
+          23
+        ],
+        [
+          66,
+          20
+        ],
+        [
+          69,
+          31
+        ],
+        [
+          58,
+          34
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.75,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Dva vstupy z nádvoří a dvě vnější okna."
+    },
+    {
+      "id": "room_06_east_inner",
+      "label": "6",
+      "name": "Východní zadní místnost",
+      "function": "storage",
+      "polygon": [
+        [
+          56,
+          16
+        ],
+        [
+          65,
+          15
+        ],
+        [
+          67,
+          20
+        ],
+        [
+          55,
+          22
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.65,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Přístup jen z místnosti 5; jedno vnější okno."
+    },
+    {
+      "id": "room_07_tower_corridor",
+      "label": "7",
+      "name": "Úzká chodba k točitému schodišti",
+      "function": "corridor",
+      "polygon": [
+        [
+          53,
+          12
+        ],
+        [
+          58,
+          12
+        ],
+        [
+          66,
+          11
+        ],
+        [
+          67,
+          13
+        ],
+        [
+          62,
+          15
+        ],
+        [
+          54,
+          15
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_stone_paving"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.35,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Úzká chodba probíhá jižně od kaple a končí točitým schodištěm kruhové věže."
+    },
+    {
+      "id": "room_08_chapel",
+      "label": "8",
+      "name": "Hradní kaple",
+      "function": "chapel",
+      "polygon": [
+        [
+          34,
+          1
+        ],
+        [
+          52,
+          1
+        ],
+        [
+          58,
+          3
+        ],
+        [
+          60,
+          7
+        ],
+        [
+          56,
+          12
+        ],
+        [
+          34,
+          12
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_stone_paving"
+      },
+      "ceiling": {
+        "type": "rib_vault",
+        "height": 6.4,
+        "material": "courtyard_lime_plaster"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_chapel_facade",
+      "wall_height": 6.4,
+      "ambient": 0.82,
+      "notes": "Pětiboké východní zakončení. Oltář je na východě; velké východní a severní okno."
+    },
+    {
+      "id": "room_09_north_stair",
+      "label": "9",
+      "name": "Schodišťová místnost severního křídla",
+      "function": "stair_room",
+      "polygon": [
+        [
+          25,
+          1
+        ],
+        [
+          33,
+          1
+        ],
+        [
+          33,
+          12
+        ],
+        [
+          25,
+          12
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_stone_paving"
+      },
+      "ceiling": {
+        "type": "vault",
+        "height": 4.4,
+        "material": "courtyard_lime_plaster"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.62,
+      "notes": "Schodiště do vyšších pater; malé severní okno."
+    },
+    {
+      "id": "room_10_west_north",
+      "label": "10",
+      "name": "Severozápadní místnost",
+      "function": "storage",
+      "polygon": [
+        [
+          4,
+          3
+        ],
+        [
+          18,
+          3
+        ],
+        [
+          18,
+          13
+        ],
+        [
+          4,
+          13
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.7,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Přístup z místnosti 11. Okno na sever a západ."
+    },
+    {
+      "id": "room_11_west_mid_north",
+      "label": "11",
+      "name": "Západní severní místnost",
+      "function": "storage",
+      "polygon": [
+        [
+          4,
+          14
+        ],
+        [
+          18,
+          14
+        ],
+        [
+          18,
+          25
+        ],
+        [
+          4,
+          25
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.7,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Přístup z místnosti 12. Jedno západní okno."
+    },
+    {
+      "id": "room_12_west_entry",
+      "label": "12",
+      "name": "Vstupní místnost západního křídla",
+      "function": "service",
+      "polygon": [
+        [
+          10,
+          26
+        ],
+        [
+          19,
+          26
+        ],
+        [
+          19,
+          34
+        ],
+        [
+          10,
+          34
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.7,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Vstup z nádvoří. Na západě prevét/výsernice s vlastním oknem."
+    },
+    {
+      "id": "room_13_west_mid_south",
+      "label": "13",
+      "name": "Západní jižní místnost",
+      "function": "storage",
+      "polygon": [
+        [
+          4,
+          35
+        ],
+        [
+          18,
+          35
+        ],
+        [
+          18,
+          43
+        ],
+        [
+          4,
+          43
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.7,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Přístup z místnosti 12. Jedno západní okno."
+    },
+    {
+      "id": "room_14_west_south",
+      "label": "14",
+      "name": "Jihozápadní místnost",
+      "function": "storage",
+      "polygon": [
+        [
+          4,
+          44
+        ],
+        [
+          19,
+          44
+        ],
+        [
+          19,
+          54
+        ],
+        [
+          4,
+          54
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_oak_floor"
+      },
+      "ceiling": {
+        "type": "flat",
+        "height": 2.7,
+        "material": "courtyard_shingle_ceiling"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.66,
+      "notes": "Přístup z místnosti 13. Okno na západ a jih."
+    },
+    {
+      "id": "room_15_gate_stair",
+      "label": "15",
+      "name": "Schodiště nad průjezdem na horní ochoz",
+      "function": "stair_room",
+      "polygon": [
+        [
+          23,
+          42
+        ],
+        [
+          28,
+          42
+        ],
+        [
+          28,
+          55
+        ],
+        [
+          23,
+          55
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "courtyard_stone_paving"
+      },
+      "ceiling": {
+        "type": "vault",
+        "height": 4.7,
+        "material": "courtyard_lime_plaster"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "courtyard_lime_plaster",
+      "wall_height": -1.0,
+      "ambient": 0.6,
+      "notes": "Nástup schodiště je vedle průjezdu 1; horní podesta nad průjezdem je v mapě houska_upper_floor."
+    }
+  ],
+  "features": [
+    {
+      "id": "portal_bridge_to_01",
+      "type": "map_portal",
+      "x": 30,
+      "y": 55,
+      "span": 4,
+      "axis": "x",
+      "room": "room_01_gate_passage",
+      "material": "courtyard_gate_wide",
+      "motion": "transition",
+      "target_location": "castle:houska_1400/houska_forecourt",
+      "target_spawn": "core_gate",
+      "height": 2.55,
+      "shape": "pointed_arch",
+      "width": 4.0
+    },
+    {
+      "id": "arch_01_to_A",
+      "type": "open_portal",
+      "x": 30,
+      "y": 41,
+      "span": 4,
+      "axis": "x",
+      "room": "room_01_gate_passage",
+      "to": "courtyard_A",
+      "shape": "pointed_arch"
+    },
+    {
+      "id": "door_A_to_02",
+      "type": "door",
+      "x": 40,
+      "y": 41,
+      "span": 1,
+      "axis": "x",
+      "room": "courtyard_A",
+      "to": "room_02_guardroom",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.1
+    },
+    {
+      "id": "door_A_to_03",
+      "type": "door",
+      "x": 51,
+      "y": 41,
+      "span": 1,
+      "axis": "x",
+      "room": "courtyard_A",
+      "to": "room_03_guard_store",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.1
+    },
+    {
+      "id": "door_02_to_03",
+      "type": "door",
+      "x": 47,
+      "y": 48,
+      "span": 1,
+      "axis": "y",
+      "room": "room_02_guardroom",
+      "to": "room_03_guard_store",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "window_02_south",
+      "type": "window",
+      "x": 40,
+      "y": 55,
+      "span": 3,
+      "axis": "x",
+      "room": "room_02_guardroom",
+      "material": "courtyard_window_large",
+      "shape": "large_gothic"
+    },
+    {
+      "id": "window_03_south",
+      "type": "window",
+      "x": 50,
+      "y": 55,
+      "span": 3,
+      "axis": "x",
+      "room": "room_03_guard_store",
+      "material": "courtyard_window_large",
+      "shape": "large_gothic"
+    },
+    {
+      "id": "door_A_to_04",
+      "type": "door",
+      "x": 57,
+      "y": 38,
+      "span": 1,
+      "axis": "y",
+      "room": "courtyard_A",
+      "to": "room_04_rock_room",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.55,
+      "segment": [
+        [
+          56.254470911269124,
+          37.52219758592259
+        ],
+        [
+          56.673529088730874,
+          39.47780241407741
+        ]
+      ],
+      "width": 2.0,
+      "leaves": 2,
+      "opens_toward": "room",
+      "swing_degrees": 92.0,
+      "speed": 1.25,
+      "compile_connector": false,
+      "note": "V23: dvojkřídlé dveře s tenčí hranou; otvor a schodiště mají sladěnou šířku."
+    },
+    {
+      "id": "window_04_east",
+      "type": "window",
+      "x": 71,
+      "y": 40,
+      "span": 1,
+      "axis": "y",
+      "room": "room_04_rock_room",
+      "material": "rock_window_splayed",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "fireplace_04_north",
+      "type": "fireplace",
+      "x": 63,
+      "y": 32,
+      "span": 2,
+      "axis": "x",
+      "room": "room_04_rock_room",
+      "material": "fireplace_wall",
+      "shape": "hearth"
+    },
+    {
+      "id": "door_A_to_05a",
+      "type": "door",
+      "x": 54,
+      "y": 25,
+      "span": 1,
+      "axis": "y",
+      "room": "courtyard_A",
+      "to": "room_05_east_main",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "door_A_to_05b",
+      "type": "door",
+      "x": 56,
+      "y": 32,
+      "span": 1,
+      "axis": "y",
+      "room": "courtyard_A",
+      "to": "room_05_east_main",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "door_05_to_06",
+      "type": "door",
+      "x": 60,
+      "y": 22,
+      "span": 1,
+      "axis": "x",
+      "room": "room_05_east_main",
+      "to": "room_06_east_inner",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "window_05_east_1",
+      "type": "window",
+      "x": 67,
+      "y": 23,
+      "span": 1,
+      "axis": "y",
+      "room": "room_05_east_main",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_05_east_2",
+      "type": "window",
+      "x": 68,
+      "y": 28,
+      "span": 1,
+      "axis": "y",
+      "room": "room_05_east_main",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_06_east",
+      "type": "window",
+      "x": 66,
+      "y": 17,
+      "span": 1,
+      "axis": "y",
+      "room": "room_06_east_inner",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "arch_A_to_07",
+      "type": "open_portal",
+      "x": 52,
+      "y": 13,
+      "span": 2,
+      "axis": "x",
+      "room": "courtyard_A",
+      "to": "room_07_tower_corridor",
+      "shape": "pointed_arch"
+    },
+    {
+      "id": "door_A_to_08",
+      "type": "door",
+      "x": 43,
+      "y": 12,
+      "span": 2,
+      "axis": "x",
+      "room": "courtyard_A",
+      "to": "room_08_chapel",
+      "material": "chapel_portal_embedded",
+      "motion": "swing",
+      "height": 2.65,
+      "shape": "gothic_portal"
+    },
+    {
+      "id": "window_08_east_altar",
+      "type": "window",
+      "x": 59,
+      "y": 6,
+      "span": 1,
+      "axis": "y",
+      "room": "room_08_chapel",
+      "material": "chapel_window_tracery",
+      "shape": "large_tracery"
+    },
+    {
+      "id": "window_08_north",
+      "type": "window",
+      "x": 43,
+      "y": 0,
+      "span": 2,
+      "axis": "x",
+      "room": "room_08_chapel",
+      "material": "chapel_window_tall",
+      "shape": "tall_gothic"
+    },
+    {
+      "id": "door_A_to_09",
+      "type": "door",
+      "x": 29,
+      "y": 12,
+      "span": 1,
+      "axis": "x",
+      "room": "courtyard_A",
+      "to": "room_09_north_stair",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.1
+    },
+    {
+      "id": "window_09_north",
+      "type": "window",
+      "x": 29,
+      "y": 0,
+      "span": 1,
+      "axis": "x",
+      "room": "room_09_north_stair",
+      "material": "courtyard_window_narrow",
+      "shape": "small_narrow"
+    },
+    {
+      "id": "door_A_to_12",
+      "type": "door",
+      "x": 19,
+      "y": 30,
+      "span": 1,
+      "axis": "y",
+      "room": "courtyard_A",
+      "to": "room_12_west_entry",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "door_12_to_11",
+      "type": "door",
+      "x": 14,
+      "y": 25,
+      "span": 1,
+      "axis": "x",
+      "room": "room_12_west_entry",
+      "to": "room_11_west_mid_north",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "door_11_to_10",
+      "type": "door",
+      "x": 11,
+      "y": 13,
+      "span": 1,
+      "axis": "x",
+      "room": "room_11_west_mid_north",
+      "to": "room_10_west_north",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "door_12_to_13",
+      "type": "door",
+      "x": 14,
+      "y": 34,
+      "span": 1,
+      "axis": "x",
+      "room": "room_12_west_entry",
+      "to": "room_13_west_mid_south",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "door_13_to_14",
+      "type": "door",
+      "x": 11,
+      "y": 43,
+      "span": 1,
+      "axis": "x",
+      "room": "room_13_west_mid_south",
+      "to": "room_14_west_south",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    },
+    {
+      "id": "garderobe_12_west",
+      "type": "garderobe",
+      "x": 9,
+      "y": 30,
+      "span": 1,
+      "axis": "y",
+      "room": "room_12_west_entry",
+      "material": "garderobe_wall",
+      "shape": "garderobe"
+    },
+    {
+      "id": "window_10_north",
+      "type": "window",
+      "x": 11,
+      "y": 2,
+      "span": 1,
+      "axis": "x",
+      "room": "room_10_west_north",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_10_west",
+      "type": "window",
+      "x": 3,
+      "y": 8,
+      "span": 1,
+      "axis": "y",
+      "room": "room_10_west_north",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_11_west",
+      "type": "window",
+      "x": 3,
+      "y": 19,
+      "span": 1,
+      "axis": "y",
+      "room": "room_11_west_mid_north",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_12_west",
+      "type": "window",
+      "x": 9,
+      "y": 29,
+      "span": 1,
+      "axis": "y",
+      "room": "room_12_west_entry",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_13_west",
+      "type": "window",
+      "x": 3,
+      "y": 39,
+      "span": 1,
+      "axis": "y",
+      "room": "room_13_west_mid_south",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_14_west",
+      "type": "window",
+      "x": 3,
+      "y": 49,
+      "span": 1,
+      "axis": "y",
+      "room": "room_14_west_south",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "window_14_south",
+      "type": "window",
+      "x": 11,
+      "y": 54,
+      "span": 1,
+      "axis": "x",
+      "room": "room_14_west_south",
+      "material": "courtyard_window_narrow",
+      "shape": "narrow_splayed"
+    },
+    {
+      "id": "door_A_to_15",
+      "type": "door",
+      "x": 25,
+      "y": 41,
+      "span": 1,
+      "axis": "x",
+      "room": "courtyard_A",
+      "to": "room_15_gate_stair",
+      "material": "heavy_oak_door",
+      "motion": "swing",
+      "height": 2.0
+    }
+  ],
+  "stairs": [
+    {
+      "id": "stairs_04_entry",
+      "room": "room_04_rock_room",
+      "kind": "segmented",
+      "start": [
+        56.55,
+        38.5,
+        0.0
+      ],
+      "end": [
+        63.15,
+        38.5,
+        1.15
+      ],
+      "steps": 9,
+      "width": 1.78,
+      "compile_geometry": true,
+      "smooth_traversal": true,
+      "floor_material": "sandstone_plateau_surface",
+      "boundary_material": "gate_passage_masonry",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "note": "V23: schodiště odpovídá šířce dveřního otvoru; každý stupeň má vlastní uzavřené bočnice a první čelní podstupnici."
+    },
+    {
+      "id": "stairs_09_internal",
+      "room": "room_09_north_stair",
+      "kind": "map_transition",
+      "start": [
+        32.5,
+        10.0,
+        0.0
+      ],
+      "end": [
+        32.5,
+        3.0,
+        3.2
+      ],
+      "steps": 18,
+      "compile_geometry": false,
+      "smooth_traversal": true,
+      "floor_material": "courtyard_stone_paving",
+      "boundary_material": "sandstone_cliff_local",
+      "target_location": "castle:houska_1400/houska_upper_floor",
+      "target_spawn": "north_stair_top"
+    },
+    {
+      "id": "stairs_15_internal",
+      "room": "room_15_gate_stair",
+      "kind": "map_transition",
+      "start": [
+        27.5,
+        52.0,
+        0.0
+      ],
+      "end": [
+        27.5,
+        44.0,
+        3.0
+      ],
+      "steps": 17,
+      "compile_geometry": false,
+      "smooth_traversal": true,
+      "floor_material": "courtyard_stone_paving",
+      "boundary_material": "sandstone_cliff_local",
+      "target_location": "castle:houska_1400/houska_upper_floor",
+      "target_spawn": "gate_gallery_top"
+    }
+  ],
+  "spawns": [
+    {
+      "id": "south_gate",
+      "room": "room_01_gate_passage",
+      "position": [
+        32.0,
+        52.5,
+        0.0
+      ],
+      "angle_degrees": 270.0,
+      "pitch": 0.0
+    },
+    {
+      "id": "south_gate_spawn",
+      "room": "room_01_gate_passage",
+      "position": [
+        32.0,
+        52.5,
+        0.0
+      ],
+      "angle_degrees": 270.0,
+      "pitch": 0.0
+    },
+    {
+      "id": "courtyard_center",
+      "room": "courtyard_A",
+      "position": [
+        36.0,
+        27.0,
+        0.0
+      ],
+      "angle_degrees": 0.0,
+      "pitch": 0.0
+    },
+    {
+      "id": "layout_v3_check",
+      "room": "courtyard_A",
+      "position": [
+        23.0,
+        16.0,
+        0.0
+      ],
+      "angle_degrees": 45.0,
+      "pitch": 0.0
+    }
+  ],
+  "room_graph": {
+    "courtyard_A": [
+      "room_01_gate_passage",
+      "room_02_guardroom",
+      "room_03_guard_store",
+      "room_04_rock_room",
+      "room_05_east_main",
+      "room_07_tower_corridor",
+      "room_08_chapel",
+      "room_09_north_stair",
+      "room_12_west_entry",
+      "room_15_gate_stair"
+    ],
+    "room_02_guardroom": [
+      "room_03_guard_store"
+    ],
+    "room_05_east_main": [
+      "room_06_east_inner"
+    ],
+    "room_12_west_entry": [
+      "room_11_west_mid_north",
+      "room_13_west_mid_south"
+    ],
+    "room_11_west_mid_north": [
+      "room_10_west_north"
+    ],
+    "room_13_west_mid_south": [
+      "room_14_west_south"
+    ]
+  },
+  "implementation_constraints": {
+    "runtime": "schema v2 polygons compile directly to native runtime sectors; raster is compatibility-only; V11 uses full-depth doorway tunnels and continuous variable-height stair cheeks",
+    "upper_floors": "rooms 9 and 15 use straight solid polygon steps aligned with the eastern wall and a map transition at the top",
+    "historical_certainty": "documented/probable/interpretive kept per room and asset"
+  },
+  "map_kind": "exterior_25d",
+  "fov_degrees": 72.0,
+  "eye_height": 0.6,
+  "default_solid_material": "courtyard_lime_plaster",
+  "default_sector": "courtyard_A",
+  "sky_material": "sky_north_bohemia_overcast",
+  "historical": {
+    "certainty": "documented",
+    "phase": "late_gothic_1390_1410",
+    "active_from": 1390,
+    "active_to": 1410,
+    "sources": [
+      "project_historical_brief",
+      "user_floorplan_annotation_2026_07_23"
+    ],
+    "note": "V3 byla fyzicky překreslena podle místností A a 1–15. Přesná metrika zůstává rekonstrukční."
+  },
+  "name": "Houska – nádvoří V23 – uzavřené schodiště a tenčí dveře"
+}

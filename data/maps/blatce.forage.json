@@ -1,0 +1,245 @@
+{
+  "forage_spawns": [
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_01",
+      "id": "forage_1",
+      "map_scale_override": 0.07999999821186066,
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Hřib pravý"
+      ],
+      "tile_x": 16,
+      "tile_y": 22
+    },
+    {
+      "archetype_id": "generic_herb_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "herbs_001",
+      "id": "forage_2",
+      "map_scale_override": 0.15000000596046448,
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Pampeliška"
+      ],
+      "tile_x": 15,
+      "tile_y": 12
+    },
+    {
+      "archetype_id": "generic_herb_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "herbs_001",
+      "id": "forage_3",
+      "map_scale_override": 0.14000000059604645,
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Pampeliška"
+      ],
+      "tile_x": 21,
+      "tile_y": 15
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_01",
+      "id": "forage_4",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Hřib pravý"
+      ],
+      "tile_x": 12,
+      "tile_y": 21
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_01",
+      "id": "forage_5",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Hřib pravý"
+      ],
+      "tile_x": 21,
+      "tile_y": 21
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_01",
+      "id": "forage_6",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Hřib pravý"
+      ],
+      "tile_x": 15,
+      "tile_y": 29
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_01",
+      "id": "forage_7",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Hřib pravý"
+      ],
+      "tile_x": 22,
+      "tile_y": 7
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_01",
+      "id": "forage_8",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Hřib pravý"
+      ],
+      "tile_x": 17,
+      "tile_y": 6
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_05",
+      "id": "forage_9",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Muchomůrka červená"
+      ],
+      "tile_x": 8,
+      "tile_y": 15
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_05",
+      "id": "forage_10",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Muchomůrka červená"
+      ],
+      "tile_x": 11,
+      "tile_y": 18
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_05",
+      "id": "forage_11",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Muchomůrka červená"
+      ],
+      "tile_x": 8,
+      "tile_y": 22
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_04",
+      "id": "forage_12",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Muchomůrka zelená"
+      ],
+      "tile_x": 22,
+      "tile_y": 10
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_04",
+      "id": "forage_13",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Muchomůrka zelená"
+      ],
+      "tile_x": 24,
+      "tile_y": 9
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "gather_once": false,
+      "generic_map_sprite_override": "forage_map_mushroom_general_04",
+      "id": "forage_14",
+      "quantity_max": 1,
+      "quantity_min": 1,
+      "rarity": 50,
+      "requires_examination": true,
+      "respawn_days": 0,
+      "season_mask": [],
+      "species_pool": [
+        "Muchomůrka zelená"
+      ],
+      "tile_x": 28,
+      "tile_y": 5
+    }
+  ]
+}

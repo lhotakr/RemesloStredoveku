@@ -1,0 +1,591 @@
+{
+  "id": "test_chamber",
+  "name": "Panský dům a nádvoří – portálový prototyp",
+  "fov_degrees": 74,
+  "eye_height": 0.56,
+  "spawn": {
+    "x": 10.5,
+    "y": 5.5,
+    "angle_degrees": 180,
+    "pitch": 0.0
+  },
+  "textures": {
+    "1": "assets/Interior/wall_stone.png",
+    "2": "assets/Interior/wall_plaster.png",
+    "3": "assets/Interior/wall_brick.png",
+    "4": "assets/Interior/wall_metal.png",
+    "D": "assets/Interior/door_wood.png",
+    "F": "assets/Interior/floor_boards.png",
+    "S": "assets/Interior/floor_stone.png",
+    "C": "assets/Interior/ceiling_beams.png",
+    "P": "assets/Interior/ceiling_plaster.png",
+    "T": "assets/Interior/sprite_torch.png",
+    "B": "assets/Interior/sprite_barrel.png",
+    "X": "assets/Interior/sprite_crate.png",
+    "R": "assets/Interior/sprite_stairs.png",
+    "K": "assets/Interior/sky_overcast.png",
+    "5": "assets/Interior/wall_courtyard.png",
+    "Y": "assets/Interior/floor_courtyard.png",
+    "W": "assets/Interior/sprite_well.png",
+    "L": "assets/Interior/sprite_tree_courtyard.png"
+  },
+  "grid": [
+    "11111111111111111111155555555555555",
+    "1...................1.............5",
+    "1..333333...222222221.......5555555",
+    "1..3....3...2......21.......5.....5",
+    "1..3....3...2......21.......D.....5",
+    "1..3....D...D......21.......5.....5",
+    "1..3....3...2......21.......5555555",
+    "1..333333...2......21.............5",
+    "1...........222222221.............5",
+    "1...................D.............5",
+    "1...................1.............5",
+    "1.........1111D111..1.............5",
+    "1...................1.............5",
+    "1...................1.............5",
+    "1...................1.............5",
+    "1...................1.............5",
+    "1111111111D111111111155555555555555"
+  ],
+  "sector_grid": [
+    "AAAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOO",
+    "AAAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOO",
+    "AAADDDDDDAAABBBBBBBBAOOOOOOONNNNNNN",
+    "AAADDDDDDAAABBBBBBBBAOOOOOOONNNNNNN",
+    "AAADDDDDDAAABBBBBBBBAOOOOOOONNNNNNN",
+    "AAADDDDDDAAABBBBBBBBAOOOOOOONNNNNNN",
+    "AAADDDDDDAAABBBBBBBBAOOOOOOONNNNNNN",
+    "AAADDDDDDAAABBBBBBBBAOOOOOOOOOOOOOO",
+    "AAAAAAAAAAAABBBBBBBBAOOOOOOOOOOOOOO",
+    "AAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOOO",
+    "AAACCCCCCAAAAAAAAAAAAOOOOOOOOOOOOOO",
+    "AAACCCCCCAAAAAAAAAAAAOQQQOOOOOOOOOO",
+    "AAACCCCGFEAAAAAAAAAAAOQQQOOOOOOOOOO",
+    "AAACCCCCCAAAAAAAAAAAAOQQQOOOOOOOOOO",
+    "AAACCCCCCAAAAAAAAAAAAOQQQOOOOOOOOOO",
+    "AAAAAAAAAAGAAAAAAAAAAOVVVOOOOOOOOOO",
+    "AAAAAAAAAAAAAAAAAAAAAOOOOOOOOOOOOOO"
+  ],
+  "sectors": {
+    "A": {
+      "id": "main_hall",
+      "name": "Hlavní síň",
+      "floor_texture": "F",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        67,
+        45,
+        28
+      ],
+      "ceiling_color": [
+        43,
+        34,
+        25
+      ],
+      "floor_height": 0.0,
+      "ceiling_height": 2.4,
+      "ambient": 0.92,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "B": {
+      "id": "living_room",
+      "name": "Vyvýšená světnice",
+      "floor_texture": "F",
+      "ceiling_texture": "P",
+      "boundary_texture": "2",
+      "floor_color": [
+        89,
+        58,
+        34
+      ],
+      "ceiling_color": [
+        114,
+        104,
+        88
+      ],
+      "floor_height": 0.23,
+      "ceiling_height": 2.65,
+      "ambient": 1.1,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "C": {
+      "id": "sunken_storage",
+      "name": "Zapuštěná skladová část",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        46,
+        45,
+        42
+      ],
+      "ceiling_color": [
+        24,
+        23,
+        22
+      ],
+      "floor_height": -0.32,
+      "ceiling_height": 1.65,
+      "ambient": 0.5,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "D": {
+      "id": "gallery",
+      "name": "Vysoká komora",
+      "floor_texture": "F",
+      "ceiling_texture": "C",
+      "boundary_texture": "3",
+      "floor_color": [
+        79,
+        46,
+        28
+      ],
+      "ceiling_color": [
+        43,
+        31,
+        22
+      ],
+      "floor_height": 0.48,
+      "ceiling_height": 3.2,
+      "ambient": 0.78,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "O": {
+      "id": "outdoor_courtyard",
+      "name": "Otevřené nádvoří",
+      "floor_texture": "Y",
+      "ceiling_texture": "K",
+      "boundary_texture": "5",
+      "floor_color": [
+        104,
+        88,
+        63
+      ],
+      "ceiling_color": [
+        103,
+        122,
+        143
+      ],
+      "floor_height": 0.0,
+      "ceiling_height": 12.0,
+      "ambient": 1.15,
+      "sky_ceiling": true,
+      "wall_height": 2.8,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "E": {
+      "id": "cellar_stair_1",
+      "name": "Sklepní schod 1",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        55,
+        48,
+        40
+      ],
+      "ceiling_color": [
+        38,
+        32,
+        27
+      ],
+      "floor_height": -0.08,
+      "ceiling_height": 2.32,
+      "ambient": 0.72,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "F": {
+      "id": "cellar_stair_2",
+      "name": "Sklepní schod 2",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        55,
+        48,
+        40
+      ],
+      "ceiling_color": [
+        38,
+        32,
+        27
+      ],
+      "floor_height": -0.16,
+      "ceiling_height": 2.24,
+      "ambient": 0.72,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "G": {
+      "id": "cellar_stair_3",
+      "name": "Sklepní schod 3",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        55,
+        48,
+        40
+      ],
+      "ceiling_color": [
+        38,
+        32,
+        27
+      ],
+      "floor_height": -0.24,
+      "ceiling_height": 2.16,
+      "ambient": 0.72,
+      "wall_height": -1.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "N": {
+      "id": "courtyard_shed",
+      "name": "Krytá kůlna na nádvoří",
+      "floor_texture": "Y",
+      "ceiling_texture": "C",
+      "boundary_texture": "5",
+      "floor_color": [
+        88,
+        72,
+        53
+      ],
+      "ceiling_color": [
+        47,
+        37,
+        29
+      ],
+      "floor_height": 0.05,
+      "ceiling_height": 2.55,
+      "wall_height": -1.0,
+      "ambient": 0.82,
+      "sky_ceiling": false,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0
+    },
+    "Q": {
+      "id": "courtyard_ramp",
+      "name": "Šikmá rampa na ochoz",
+      "floor_texture": "Y",
+      "ceiling_texture": "K",
+      "boundary_texture": "5",
+      "floor_color": [
+        104,
+        88,
+        63
+      ],
+      "ceiling_color": [
+        103,
+        122,
+        143
+      ],
+      "floor_height": 0.0,
+      "ceiling_height": 12.0,
+      "ambient": 1.15,
+      "sky_ceiling": true,
+      "wall_height": 2.8,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.18,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 22.0,
+      "slope_origin_y": 11.0
+    },
+    "V": {
+      "id": "courtyard_platform",
+      "name": "Vyvýšený ochoz nádvoří",
+      "floor_texture": "Y",
+      "ceiling_texture": "K",
+      "boundary_texture": "5",
+      "floor_color": [
+        104,
+        88,
+        63
+      ],
+      "ceiling_color": [
+        103,
+        122,
+        143
+      ],
+      "floor_height": 0.72,
+      "ceiling_height": 12.0,
+      "ambient": 1.15,
+      "sky_ceiling": true,
+      "wall_height": 2.8,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "slope_origin_x": 22.0,
+      "slope_origin_y": 15.0
+    }
+  },
+  "doors": [
+    {
+      "id": "door_gallery",
+      "x": 8,
+      "y": 5,
+      "locked": false,
+      "open": false,
+      "speed": 2.1,
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "door_living",
+      "x": 12,
+      "y": 5,
+      "locked": false,
+      "open": false,
+      "speed": 1.7,
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "door_corridor",
+      "x": 14,
+      "y": 11,
+      "locked": false,
+      "open": false,
+      "speed": 2.2,
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "door_to_cellar",
+      "x": 10,
+      "y": 16,
+      "locked": false,
+      "open": false,
+      "speed": 1.5,
+      "target_interior": "cellar_chamber",
+      "target_spawn": "entry"
+    },
+    {
+      "id": "door_courtyard",
+      "x": 20,
+      "y": 9,
+      "locked": false,
+      "open": false,
+      "speed": 2.0,
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "door_courtyard_shed",
+      "x": 28,
+      "y": 4,
+      "locked": false,
+      "open": false,
+      "speed": 1.6,
+      "target_interior": "",
+      "target_spawn": ""
+    }
+  ],
+  "sprites": [
+    {
+      "id": "torch_hall_1",
+      "texture": "T",
+      "x": 9.2,
+      "y": 3.2,
+      "z_offset": 0.32,
+      "scale": 0.65,
+      "solid": false,
+      "interaction_label": "",
+      "target_interior": ""
+    },
+    {
+      "id": "torch_hall_2",
+      "texture": "T",
+      "x": 11.8,
+      "y": 7.7,
+      "z_offset": 0.32,
+      "scale": 0.65,
+      "solid": false,
+      "interaction_label": "",
+      "target_interior": ""
+    },
+    {
+      "id": "barrel_storage_1",
+      "texture": "B",
+      "x": 4.0,
+      "y": 12.0,
+      "z_offset": 0.0,
+      "scale": 0.72,
+      "solid": true,
+      "interaction_label": "Sud je pevně zavřený.",
+      "target_interior": ""
+    },
+    {
+      "id": "crate_storage_1",
+      "texture": "X",
+      "x": 7.1,
+      "y": 13.2,
+      "z_offset": 0.0,
+      "scale": 0.7,
+      "solid": true,
+      "interaction_label": "Dřevěná bedna.",
+      "target_interior": ""
+    },
+    {
+      "id": "stairs_to_cellar",
+      "texture": "R",
+      "x": 10.5,
+      "y": 15.55,
+      "z_offset": -0.3,
+      "scale": 0.28,
+      "solid": false,
+      "interaction_label": "E – sejít do sklepa",
+      "target_interior": "cellar_chamber",
+      "target_spawn": "entry"
+    },
+    {
+      "id": "courtyard_well",
+      "texture": "W",
+      "x": 25.8,
+      "y": 8.2,
+      "z_offset": 0.0,
+      "scale": 0.92,
+      "solid": true,
+      "interaction_label": "Kamenná studna na nádvoří.",
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "courtyard_tree",
+      "texture": "L",
+      "x": 31.2,
+      "y": 11.5,
+      "z_offset": 0.0,
+      "scale": 1.35,
+      "solid": true,
+      "interaction_label": "Starý strom u zdi.",
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "courtyard_barrel",
+      "texture": "B",
+      "x": 31.0,
+      "y": 4.2,
+      "z_offset": 0.05,
+      "scale": 0.72,
+      "solid": true,
+      "interaction_label": "Sud ve kůlně.",
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "courtyard_crate",
+      "texture": "X",
+      "x": 32.3,
+      "y": 4.5,
+      "z_offset": 0.05,
+      "scale": 0.72,
+      "solid": true,
+      "interaction_label": "Bedna uložená ve kůlně.",
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "ramp_crate",
+      "texture": "X",
+      "x": 23.5,
+      "y": 15.35,
+      "z_offset": 0.0,
+      "scale": 0.72,
+      "solid": true,
+      "interaction_label": "Bedna na vyvýšeném ochozu.",
+      "target_interior": "",
+      "target_spawn": ""
+    }
+  ],
+  "spawns": {
+    "main_entry": {
+      "x": 10.5,
+      "y": 5.5,
+      "angle_degrees": 180,
+      "pitch": 0.0
+    },
+    "cellar_return": {
+      "x": 10.5,
+      "y": 14.2,
+      "angle_degrees": 90,
+      "pitch": 0.0
+    },
+    "storage_stairs_test": {
+      "x": 10.5,
+      "y": 12.5,
+      "angle_degrees": 180,
+      "pitch": 0.0
+    },
+    "courtyard_preview": {
+      "x": 23.5,
+      "y": 8.5,
+      "angle_degrees": 0,
+      "pitch": -0.02
+    },
+    "courtyard_center": {
+      "x": 27.0,
+      "y": 9.0,
+      "angle_degrees": 20,
+      "pitch": -0.02
+    },
+    "courtyard_ramp": {
+      "x": 23.5,
+      "y": 10.7,
+      "angle_degrees": 90,
+      "pitch": -0.08
+    }
+  }
+}

@@ -1,0 +1,464 @@
+{
+  "schema_version": 2,
+  "map_id": "houska_courtyard_ground",
+  "geometry_mode": "polygon_sectors",
+  "generated_from": "maps/houska_courtyard_ground.map.json",
+  "source_revision": "courtyard_v4_native_polygon_runtime_2026_07_25",
+  "source_note": "Optional editor overlay derived from canonical rooms A and 1-15. Runtime polygons, connectors, edge openings and stairs are compiled directly from the map source.",
+  "wall_segments": [],
+  "polygon_sectors": [
+    {
+      "id": "courtyard_A",
+      "sector_id": "courtyard_A",
+      "boundary_solid": false,
+      "wall_material": "courtyard_gallery_facade",
+      "wall_ambient": 1.06,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          20,
+          13
+        ],
+        [
+          51,
+          13
+        ],
+        [
+          57,
+          41
+        ],
+        [
+          20,
+          41
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_01_gate_passage",
+      "sector_id": "room_01_gate_passage",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.58,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          29,
+          41
+        ],
+        [
+          35,
+          41
+        ],
+        [
+          35,
+          55
+        ],
+        [
+          29,
+          55
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_02_guardroom",
+      "sector_id": "room_02_guardroom",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          36,
+          42
+        ],
+        [
+          47,
+          42
+        ],
+        [
+          47,
+          55
+        ],
+        [
+          36,
+          55
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_03_guard_store",
+      "sector_id": "room_03_guard_store",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          48,
+          42
+        ],
+        [
+          55,
+          42
+        ],
+        [
+          55,
+          55
+        ],
+        [
+          48,
+          55
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_04_rock_room",
+      "sector_id": "room_04_rock_room",
+      "boundary_solid": false,
+      "wall_material": "sandstone_cliff_local",
+      "wall_ambient": 0.5,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          58,
+          35
+        ],
+        [
+          69,
+          32
+        ],
+        [
+          72,
+          45
+        ],
+        [
+          63,
+          51
+        ],
+        [
+          57,
+          41
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_05_east_main",
+      "sector_id": "room_05_east_main",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          55,
+          23
+        ],
+        [
+          66,
+          20
+        ],
+        [
+          69,
+          31
+        ],
+        [
+          58,
+          34
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_06_east_inner",
+      "sector_id": "room_06_east_inner",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          56,
+          16
+        ],
+        [
+          65,
+          15
+        ],
+        [
+          67,
+          20
+        ],
+        [
+          55,
+          22
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_07_tower_corridor",
+      "sector_id": "room_07_tower_corridor",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          53,
+          12
+        ],
+        [
+          58,
+          12
+        ],
+        [
+          66,
+          11
+        ],
+        [
+          67,
+          13
+        ],
+        [
+          62,
+          15
+        ],
+        [
+          54,
+          15
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_08_chapel",
+      "sector_id": "room_08_chapel",
+      "boundary_solid": false,
+      "wall_material": "courtyard_chapel_facade",
+      "wall_ambient": 0.82,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          34,
+          1
+        ],
+        [
+          52,
+          1
+        ],
+        [
+          58,
+          3
+        ],
+        [
+          60,
+          7
+        ],
+        [
+          56,
+          12
+        ],
+        [
+          34,
+          12
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_09_north_stair",
+      "sector_id": "room_09_north_stair",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.62,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          25,
+          1
+        ],
+        [
+          33,
+          1
+        ],
+        [
+          33,
+          12
+        ],
+        [
+          25,
+          12
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_10_west_north",
+      "sector_id": "room_10_west_north",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          4,
+          3
+        ],
+        [
+          18,
+          3
+        ],
+        [
+          18,
+          13
+        ],
+        [
+          4,
+          13
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_11_west_mid_north",
+      "sector_id": "room_11_west_mid_north",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          4,
+          14
+        ],
+        [
+          18,
+          14
+        ],
+        [
+          18,
+          25
+        ],
+        [
+          4,
+          25
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_12_west_entry",
+      "sector_id": "room_12_west_entry",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          10,
+          26
+        ],
+        [
+          19,
+          26
+        ],
+        [
+          19,
+          34
+        ],
+        [
+          10,
+          34
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_13_west_mid_south",
+      "sector_id": "room_13_west_mid_south",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          4,
+          35
+        ],
+        [
+          18,
+          35
+        ],
+        [
+          18,
+          43
+        ],
+        [
+          4,
+          43
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_14_west_south",
+      "sector_id": "room_14_west_south",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.66,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          4,
+          44
+        ],
+        [
+          19,
+          44
+        ],
+        [
+          19,
+          54
+        ],
+        [
+          4,
+          54
+        ]
+      ],
+      "edge_openings": []
+    },
+    {
+      "id": "room_15_gate_stair",
+      "sector_id": "room_15_gate_stair",
+      "boundary_solid": false,
+      "wall_material": "courtyard_lime_plaster",
+      "wall_ambient": 0.6,
+      "wall_texture_scale": 1.0,
+      "vertices": [
+        [
+          23,
+          42
+        ],
+        [
+          28,
+          42
+        ],
+        [
+          28,
+          55
+        ],
+        [
+          23,
+          55
+        ]
+      ],
+      "edge_openings": []
+    }
+  ],
+  "editor_only": true
+}

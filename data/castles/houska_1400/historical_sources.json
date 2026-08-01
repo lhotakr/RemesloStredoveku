@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "sources": [
+    {
+      "id": "project_historical_brief",
+      "type": "project_brief",
+      "title": "Historické zadání rekonstrukce Housky 1390–1410",
+      "status": "working_reference",
+      "note": "Tento záznam označuje historické požadavky projektu. Před publikací bude doplněna přesná literatura a stavebněhistorické prameny."
+    }
+  ]
+}

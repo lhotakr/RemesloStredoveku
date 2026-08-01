@@ -1,0 +1,36 @@
+{
+  "quests": [
+    {
+      "description": "Anna chce donest vodu od studny.",
+      "done_flag": "quest_anna_water_done",
+      "id": "anna_water",
+      "ready_flag": "quest_anna_water_ready",
+      "started_flag": "quest_anna_water_started",
+      "title": "Voda pro Annu"
+    },
+    {
+      "description": "Matej potrebuje pomoc na poli.",
+      "done_flag": "quest_matej_field_done",
+      "id": "matej_field_help",
+      "ready_flag": "quest_matej_field_ready",
+      "started_flag": "quest_matej_field_started",
+      "title": "Pomoc na poli"
+    },
+    {
+      "description": "Ondrej chce odnest mouku nebo obili.",
+      "done_flag": "quest_ondrej_flour_done",
+      "id": "ondrej_flour_delivery",
+      "ready_flag": "quest_ondrej_flour_ready",
+      "started_flag": "quest_ondrej_flour_started",
+      "title": "Mlynarska zakazka"
+    },
+    {
+      "id": "matej_water",
+      "title": "Voda pro Matěje",
+      "description": "Matěj chce, abych donesl vodu od studny na návsi. Pak se mám vrátit za ním.",
+      "started_flag": "quest_matej_water_started",
+      "ready_flag": "quest_matej_water_ready",
+      "done_flag": "quest_matej_water_done"
+    }
+  ]
+}

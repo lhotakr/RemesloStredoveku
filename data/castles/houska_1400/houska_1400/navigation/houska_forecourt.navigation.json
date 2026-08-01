@@ -1,0 +1,88 @@
+{
+  "schema_version": 1,
+  "lights": [
+    {
+      "id": "south_gate_daylight",
+      "type": "sky",
+      "x": 27.5,
+      "y": 37.0,
+      "z": 3.0,
+      "radius": 8.0,
+      "intensity": 1.0,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "guardhouse_fire",
+      "type": "hearth",
+      "x": 10.5,
+      "y": 28.0,
+      "z": 0.8,
+      "radius": 3.0,
+      "intensity": 0.7,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "stable_lantern",
+      "type": "torch",
+      "x": 40.0,
+      "y": 26.0,
+      "z": 1.5,
+      "radius": 2.5,
+      "intensity": 0.55,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    }
+  ],
+  "npc_regions": [
+    {
+      "id": "forecourt_service_yard",
+      "rect": [
+        6,
+        20,
+        44,
+        15
+      ],
+      "access": true
+    },
+    {
+      "id": "bridge_crossing",
+      "rect": [
+        25,
+        15,
+        6,
+        5
+      ],
+      "access": true
+    },
+    {
+      "id": "ditch_no_access",
+      "rect": [
+        8,
+        15,
+        40,
+        5
+      ],
+      "access": false
+    }
+  ]
+}

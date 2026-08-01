@@ -1,0 +1,453 @@
+{
+  "schema_version": 1,
+  "id": "houska_exterior",
+  "display_name": "Houska – skalní plošina V11 – přesně řešená šikmá rampa",
+  "map_kind": "exterior_25d",
+  "size": [
+    48,
+    36
+  ],
+  "cell_size": 1.0,
+  "fov_degrees": 74.0,
+  "eye_height": 0.62,
+  "default_solid_material": "sandstone_cliff_local",
+  "default_sector": "south_approach",
+  "sky_material": "sky_north_bohemia_overcast",
+  "historical": {
+    "certainty": "documented",
+    "phase": "late_gothic_1390_1410",
+    "active_from": 1390,
+    "active_to": 1410,
+    "sources": [
+      "project_historical_brief"
+    ],
+    "note": "Stabilizovaná etapa 1 V11: jižní cesta a skalní krček tvoří souvislou šikmou rampu; kamera při stoupání nikdy nezůstane pod skutečnou výškou podlahy."
+  },
+  "sectors": [
+    {
+      "id": "south_approach",
+      "display_name": "Jižní přístupová cesta",
+      "room_id": "exterior_south_approach",
+      "room_function": "access_road",
+      "floor": {
+        "height": -0.75,
+        "slope_y": -0.05470588235294118,
+        "origin_x": 24.0,
+        "origin_y": 35.0,
+        "material": "packed_earth_path"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.2,
+      "ambient": 1.02,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Přesné vedení středověké cesty je interpretačně zjednodušené pro hratelnost; sklon je plynule napojen na skalní krček."
+      }
+    },
+    {
+      "id": "rock_neck",
+      "display_name": "Úzký skalní krček",
+      "room_id": "exterior_rock_neck",
+      "room_function": "defensive_approach",
+      "floor": {
+        "height": -0.75,
+        "slope_y": -0.05470588235294118,
+        "origin_x": 24.0,
+        "origin_y": 35.0,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.8,
+      "ambient": 1.04,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "natural_terrain",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "outer_plateau",
+      "display_name": "Vnější část skalní plošiny",
+      "room_id": "exterior_plateau",
+      "room_function": "castle_surroundings",
+      "floor": {
+        "height": 0.18,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 5.2,
+      "ambient": 1.06,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "natural_terrain",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "cleared_defence_zone",
+      "display_name": "Vyčištěné obranné okolí",
+      "room_id": "exterior_plateau",
+      "room_function": "defensive_clearance",
+      "floor": {
+        "height": 0.18,
+        "material": "cleared_defence_ground"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 5.4,
+      "ambient": 1.08,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "forecourt_threshold",
+      "display_name": "Jižní předpolí předhradí",
+      "room_id": "exterior_plateau",
+      "room_function": "forecourt_threshold",
+      "floor": {
+        "height": 0.18,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_limewashed",
+      "wall_height": 3.1,
+      "ambient": 1.05,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Přesná podoba jižního vstupu bude řešena v etapě předhradí."
+      }
+    },
+    {
+      "id": "approach_step_1",
+      "display_name": "Kamenný přístupový stupeň 1",
+      "room_id": "exterior_rock_neck",
+      "room_function": "approach_stair",
+      "floor": {
+        "height": 0.0,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.8,
+      "ambient": 1.04,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Krátké herní schodiště stabilizuje přechod ze šikmé přístupové cesty na skalní plošinu."
+      }
+    },
+    {
+      "id": "approach_step_2",
+      "display_name": "Kamenný přístupový stupeň 2",
+      "room_id": "exterior_rock_neck",
+      "room_function": "approach_stair",
+      "floor": {
+        "height": 0.045,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.8,
+      "ambient": 1.04,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Krátké herní schodiště stabilizuje přechod ze šikmé přístupové cesty na skalní plošinu."
+      }
+    },
+    {
+      "id": "approach_step_3",
+      "display_name": "Kamenný přístupový stupeň 3",
+      "room_id": "exterior_rock_neck",
+      "room_function": "approach_stair",
+      "floor": {
+        "height": 0.09,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.8,
+      "ambient": 1.04,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Krátké herní schodiště stabilizuje přechod ze šikmé přístupové cesty na skalní plošinu."
+      }
+    },
+    {
+      "id": "approach_step_4",
+      "display_name": "Kamenný přístupový stupeň 4",
+      "room_id": "exterior_rock_neck",
+      "room_function": "approach_stair",
+      "floor": {
+        "height": 0.135,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.8,
+      "ambient": 1.04,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Krátké herní schodiště stabilizuje přechod ze šikmé přístupové cesty na skalní plošinu."
+      }
+    },
+    {
+      "id": "approach_step_5",
+      "display_name": "Kamenný přístupový stupeň 5",
+      "room_id": "exterior_rock_neck",
+      "room_function": "approach_stair",
+      "floor": {
+        "height": 0.18,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 4.8,
+      "ambient": 1.04,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Krátké herní schodiště stabilizuje přechod ze šikmé přístupové cesty na skalní plošinu."
+      }
+    }
+  ],
+  "raster": {
+    "walkable_regions": [
+      {
+        "sector": "south_approach",
+        "rect": [
+          21,
+          27,
+          7,
+          9
+        ]
+      },
+      {
+        "sector": "south_approach",
+        "rect": [
+          18,
+          25,
+          10,
+          5
+        ]
+      },
+      {
+        "sector": "outer_plateau",
+        "rect": [
+          11,
+          11,
+          26,
+          7
+        ]
+      },
+      {
+        "sector": "cleared_defence_zone",
+        "rect": [
+          14,
+          8,
+          20,
+          7
+        ]
+      },
+      {
+        "sector": "forecourt_threshold",
+        "rect": [
+          18,
+          5,
+          12,
+          5
+        ]
+      },
+      {
+        "sector": "rock_neck",
+        "rect": [
+          19,
+          18,
+          10,
+          9
+        ]
+      },
+      {
+        "sector": "outer_plateau",
+        "rect": [
+          13,
+          15,
+          22,
+          3
+        ]
+      }
+    ],
+    "solid_regions": [
+      {
+        "material": "sandstone_limewashed",
+        "sector": "forecourt_threshold",
+        "rect": [
+          17,
+          4,
+          14,
+          1
+        ]
+      },
+      {
+        "material": "sandstone_limewashed",
+        "sector": "forecourt_threshold",
+        "rect": [
+          17,
+          5,
+          1,
+          5
+        ]
+      },
+      {
+        "material": "sandstone_limewashed",
+        "sector": "forecourt_threshold",
+        "rect": [
+          30,
+          5,
+          1,
+          5
+        ]
+      }
+    ],
+    "cell_overrides": [
+      {
+        "x": 23,
+        "y": 4,
+        "solid": false,
+        "sector": "forecourt_threshold"
+      }
+    ]
+  },
+  "doors": [
+    {
+      "id": "forecourt_gate",
+      "x": 22,
+      "y": 4,
+      "locked": false,
+      "initially_open": false,
+      "speed": 1.5,
+      "target_location": "castle:houska_1400/houska_forecourt",
+      "target_spawn": "south_gate",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Průchod do jižního předhradí. Vizuál používá samostatnou neprůhlednou gotickou fasádu připravenou pro software renderer."
+      },
+      "material": "courtyard_gate_wide",
+      "motion": "transition",
+      "height": 2.65,
+      "span": 4,
+      "axis": "x"
+    }
+  ],
+  "spawns": [
+    {
+      "id": "south_road",
+      "x": 24.5,
+      "y": 34.0,
+      "angle_degrees": 270.0
+    },
+    {
+      "id": "plateau_overlook",
+      "x": 16.5,
+      "y": 16.5,
+      "angle_degrees": 315.0
+    },
+    {
+      "id": "forecourt_gate",
+      "x": 23.5,
+      "y": 7.5,
+      "angle_degrees": 270.0
+    }
+  ]
+}

@@ -1,0 +1,618 @@
+{
+  "schema_version": 1,
+  "materials": [
+    {
+      "id": "sky_north_bohemia_overcast",
+      "kind": "sky",
+      "texture": "assets/Castles/Houska1400/sky_north_bohemia.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Výtvarná obloha pro čitelnost exteriéru; nereprezentuje konkrétní doložený den."
+      }
+    },
+    {
+      "id": "sandstone_cliff_local",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/sandstone_cliff.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "natural_terrain",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "sandstone_limewashed",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/sandstone_limewashed.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Částečné vápenné omítky udržovaného obývaného hradu."
+      }
+    },
+    {
+      "id": "packed_earth_path",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/packed_earth_path.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "sandstone_plateau_surface",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/sandstone_plateau.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "natural_terrain",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "cleared_defence_ground",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/cleared_ground.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Bezprostřední obranné okolí je záměrně řidší než okolní les."
+      }
+    },
+    {
+      "id": "simple_timber_gate",
+      "kind": "door",
+      "texture": "assets/Castles/Houska1400/simple_timber_gate.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "mixed_forest_tree",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/mixed_forest_tree.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "sandstone_outcrop",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/sandstone_outcrop.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "oak_timber_wall",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/oak_timber_wall.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Obecný dubový konstrukční povrch pro hospodářské stavby předhradí."
+      }
+    },
+    {
+      "id": "oak_bridge_planks",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/oak_bridge_planks.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Přesná konstrukce mostu není bezpečně doložena; použita střídmá dřevěná varianta."
+      }
+    },
+    {
+      "id": "stable_floor",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/stable_floor.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "rock_cut_ditch_floor",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/rock_cut_ditch_floor.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "natural_terrain",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "dark_shingle_ceiling",
+      "kind": "ceiling",
+      "texture": "assets/Castles/Houska1400/dark_shingle_ceiling.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Vnitřní pohled na jednoduchou dřevěnou střechu hospodářských staveb."
+      }
+    },
+    {
+      "id": "haystack",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/haystack.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "wooden_trough",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/wooden_trough.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "barrel_stack",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/barrel_stack.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "wooden_cart",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/wooden_cart.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "black_arch_portal",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/black_arch_portal.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "development_marker",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Herní černý klenutý portál mezi 2D a 2.5D vrstvou; nejde o historicky doložený stavební prvek."
+      }
+    },
+    {
+      "id": "courtyard_lime_plaster",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/courtyard_lime_plaster.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Světlá udržovaná vápenná omítka s místy přiznaným pískovcem."
+      }
+    },
+    {
+      "id": "courtyard_stone_paving",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/courtyard_stone_paving.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Herní rekonstrukce nepravidelné kamenné dlažby nádvoří."
+      }
+    },
+    {
+      "id": "courtyard_oak_floor",
+      "kind": "floor",
+      "texture": "assets/Castles/Houska1400/courtyard_oak_floor.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Jednoduchá prkenná podlaha provozních místností."
+      }
+    },
+    {
+      "id": "courtyard_gallery_facade",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/courtyard_gallery_facade.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Výtvarná textura nádvořní fasády s dřevěnou pavlačí; přesný detail konstrukce není doložen."
+      }
+    },
+    {
+      "id": "courtyard_chapel_facade",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/courtyard_chapel_facade.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Nádvořní strana severního křídla s gotickými otvory, výtvarně přizpůsobená současnému 2.5D rendereru."
+      }
+    },
+    {
+      "id": "courtyard_shingle_ceiling",
+      "kind": "ceiling",
+      "texture": "assets/Castles/Houska1400/courtyard_shingle_ceiling.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Podhled jednoduchého dřevěného zastřešení."
+      }
+    },
+    {
+      "id": "courtyard_gate_wide",
+      "kind": "door",
+      "texture": "assets/Castles/Houska1400/courtyard_gate_wide.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Širší a nižší gotická brána upravená pro měřítko hry."
+      }
+    },
+    {
+      "id": "grain_pit_lid",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/grain_pit_lid.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Těžký dřevěný poklop zásobnice vytesané do skály."
+      }
+    },
+    {
+      "id": "gallery_stairs",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/gallery_stairs.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Dřevěné schodiště na pavlač; přesné provedení je rekonstrukční."
+      }
+    },
+    {
+      "id": "courtyard_well",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/courtyard_well.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Herní vodní bod pro provoz nádvoří; přesná poloha není doložena."
+      }
+    },
+    {
+      "id": "courtyard_barrel_crates",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/courtyard_barrel_crates.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Běžné provozní nádoby a bedny."
+      }
+    },
+    {
+      "id": "courtyard_firewood",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/courtyard_firewood.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Zásoba palivového dřeva."
+      }
+    },
+    {
+      "id": "courtyard_bench",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/courtyard_bench.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Jednoduchá dřevěná lavice."
+      }
+    },
+    {
+      "id": "chapel_portal",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/chapel_portal.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Výtvarný zástupný portál vstupu do kaple."
+      }
+    },
+    {
+      "id": "courtyard_torch",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/courtyard_torch.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Pochodeň pro budoucí večerní režim nádvoří."
+      }
+    },
+    {
+      "id": "courtyard_gate_embedded",
+      "kind": "door",
+      "texture": "assets/Castles/Houska1400/courtyard_gate_embedded.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Širší a nižší gotická brána složená přímo do neprůhledné stěnové textury."
+      }
+    },
+    {
+      "id": "heavy_oak_door",
+      "kind": "door",
+      "texture": "assets/Castles/Houska1400/heavy_oak_door.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Samostatná dubová dveřní křídla bez kamenného ostění; ostění zůstává součástí statické stěny."
+      }
+    },
+    {
+      "id": "chapel_portal_embedded",
+      "kind": "door",
+      "texture": "assets/Castles/Houska1400/chapel_portal_embedded.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Vstup do kaple vložený přímo do stěny; výtvarný detail je přizpůsoben rendereru."
+      }
+    },
+    {
+      "id": "courtyard_window_large",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/courtyard_window_large.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Velké gotické okno strážnice; přesné členění je rekonstrukční."
+      }
+    },
+    {
+      "id": "courtyard_window_narrow",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/courtyard_window_narrow.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Úzké vnější okno s gotickou proporcí."
+      }
+    },
+    {
+      "id": "rock_window_splayed",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/rock_window_splayed.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Špaletové okno místnosti zasekané do skály; otvor se směrem ven zužuje."
+      }
+    },
+    {
+      "id": "chapel_window_tracery",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/chapel_window_tracery.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Velké východní kružbové okno za oltářem."
+      }
+    },
+    {
+      "id": "chapel_window_tall",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/chapel_window_tall.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Vysoké gotické okno severní stěny kaple."
+      }
+    },
+    {
+      "id": "fireplace_wall",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/fireplace_wall.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Krb v severní části skalní místnosti."
+      }
+    },
+    {
+      "id": "garderobe_wall",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/garderobe_wall.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Prevét / historický záchod v západním křídle."
+      }
+    },
+    {
+      "id": "chapel_altar",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/chapel_altar.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Oltář ve východní části kaple."
+      }
+    },
+    {
+      "id": "spiral_stair_marker",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/spiral_stair_marker.png",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ],
+        "note": "Točité schodiště na kruhovou věž."
+      }
+    },
+    {
+      "id": "campfire",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/campfire.png",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Malé ohniště stráže; přesná poloha je herní rekonstrukce."
+      }
+    },
+    {
+      "id": "gate_passage_masonry",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/gate_passage_masonry.png",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Světlá udržovaná vápenná omítka s místy přiznaným pískovcem."
+      },
+      "name": "Gate passage masonry"
+    }
+  ]
+}

@@ -1,0 +1,122 @@
+{
+  "dialogs": [
+    {
+      "dialog_id": "matej_intro",
+      "start_node": "start",
+      "nodes": [
+        {
+          "id": "start",
+          "speaker": "Matěj",
+          "text": "Nuže, cizinče, jestli chceš mezi námi obstáti, pomoz nejprve s vodou.",
+          "choices": [
+            {
+              "text": "Pomohu ti. Kam mám jíti?",
+              "next": "give_task",
+              "style": "polite",
+              "forbid_flag": "quest_matej_water_started"
+            },
+            {
+              "text": "Nemám na to času.",
+              "next": "refuse",
+              "style": "neutral",
+              "forbid_flag": "quest_matej_water_started"
+            },
+            {
+              "text": "Nesu vodu, jak jsi chtěl.",
+              "next": "turnin",
+              "style": "polite",
+              "require_flag": "quest_matej_water_ready",
+              "forbid_flag": "quest_matej_water_done"
+            },
+            {
+              "text": "Děkuji ti za pomoc a přístřeší.",
+              "next": "after_reward",
+              "style": "polite",
+              "require_flag": "quest_matej_water_done"
+            }
+          ]
+        },
+        {
+          "id": "give_task",
+          "speaker": "Matěj",
+          "text": "Jdi ke studni na návsi a dones vodu. Pak se vrať za mnou.",
+          "choices": [
+            {
+              "text": "Rozumím.",
+              "next": "end_started",
+              "set_flag": "quest_matej_water_started",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "refuse",
+          "speaker": "Matěj",
+          "text": "Jak chceš. Bez práce však zde sotva kdo dojde chleba.",
+          "choices": [
+            {
+              "text": "Vrátím se později.",
+              "next": "end_refuse",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "turnin",
+          "speaker": "Matěj",
+          "text": "Dobře. Vidím, že nejsi darmošlap. Anna ti dá najíst a ve stodole můžeš přespat.",
+          "choices": [
+            {
+              "text": "Děkuji.",
+              "next": "end_reward",
+              "set_flag": "quest_matej_water_done",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "after_reward",
+          "speaker": "Matěj",
+          "text": "Nuže, nyní už víš, jak to u nás chodí. Kdo pracuje, ten nezůstane o hladu.",
+          "choices": [
+            {
+              "text": "Rozumím.",
+              "next": "end_after",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "end_started",
+          "speaker": "Matěj",
+          "text": "",
+          "choices": []
+        },
+        {
+          "id": "end_refuse",
+          "speaker": "Matěj",
+          "text": "",
+          "choices": []
+        },
+        {
+          "id": "end_reward",
+          "speaker": "Matěj",
+          "text": "",
+          "choices": []
+        },
+        {
+          "id": "end_after",
+          "speaker": "Matěj",
+          "text": "",
+          "choices": []
+        }
+      ]
+    }
+   ,
+    {
+      "dialog_id": "new_dialog",
+      "nodes": [],
+      "start_node": "start"
+    }
+  ]
+}

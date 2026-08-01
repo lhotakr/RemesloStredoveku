@@ -1,0 +1,12 @@
+{
+  "schema_version": 1,
+  "map": "houska_forecourt",
+  "historical_layer": [
+    {
+      "id": "forecourt_function",
+      "text_key": "houska.forecourt.description",
+      "certainty": "probable"
+    }
+  ],
+  "legendary_layer": []
+}

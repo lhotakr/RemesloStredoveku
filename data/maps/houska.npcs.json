@@ -1,0 +1,15 @@
+{
+  "npcs": [
+    {
+      "id": "farmer_01",
+      "npc_id": "matej_sedlak",
+      "type_id": "farmer",
+      "script_id": "farmer_intro",
+      "character_id": "Character_2_char_01",
+      "tile_x": 12,
+      "tile_y": 9,
+      "hp": 100,
+      "mood": 50
+    }
+  ]
+}

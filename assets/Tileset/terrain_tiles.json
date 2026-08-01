@@ -1,0 +1,1525 @@
+{
+  "tile_size": 32,
+  "atlas": "terrain_atlas.png",
+  "tiles": [
+    {
+      "uid": "adbfa76acf47_TileGrass_0_0",
+      "atlas_x": 0,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "f964842b30d9_TileGrass_1_0",
+      "atlas_x": 1,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 1,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "ac05b5f9fb70_TileGrass_2_0",
+      "atlas_x": 2,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 2,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "c1b083745249_TileGrass_3_0",
+      "atlas_x": 3,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 3,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "d7e5a85852de_TileGrass_5_0",
+      "atlas_x": 5,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 1,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "069fc07eb5d7_TileGrass_6_0",
+      "atlas_x": 6,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 2,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "9ab5c4f6eb9d_TileGrass_7_0",
+      "atlas_x": 7,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 3,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "14e0dccf6e14_TileGrass_8_0",
+      "atlas_x": 8,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_mud",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "f53c2a2b0c4f_TileGrass_9_0",
+      "atlas_x": 9,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_mud",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "9b9545d31799_TileGrass_0_1",
+      "atlas_x": 10,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 4,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "a6e74b29fbed_TileGrass_1_1",
+      "atlas_x": 11,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 5,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "7255a2906483_TileGrass_2_1",
+      "atlas_x": 12,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 6,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "c7fd9dfacb60_TileGrass_3_1",
+      "atlas_x": 13,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 7,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "3ea1136c9903_TileGrass_4_1",
+      "atlas_x": 14,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 4,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "79ddb9820221_TileGrass_5_1",
+      "atlas_x": 15,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 5,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "b6765f82b19a_TileGrass_6_1",
+      "atlas_x": 16,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 6,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "45f054f7c866_TileGrass_7_1",
+      "atlas_x": 17,
+      "atlas_y": 0,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 7,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "61c163ed3c30_TileGrass_8_1",
+      "atlas_x": 18,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_mud",
+        "x": 0,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "187a6ea19926_TileGrass_9_1",
+      "atlas_x": 19,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_mud",
+        "x": 1,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "0dd4f6e181cf_TileGrass_0_2",
+      "atlas_x": 20,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 128,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "9c0b75d6f65c_TileGrass_1_2",
+      "atlas_x": 21,
+      "atlas_y": 0,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 1,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "3c1be32d5dfb_TileGrass_2_2",
+      "atlas_x": 0,
+      "atlas_y": 1,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 16,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "b14fad271d1d_TileGrass_3_2",
+      "atlas_x": 1,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_grass_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "122c11dbfb6c_TileGrass_4_2",
+      "atlas_x": 2,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_grass_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "694263a3392a_TileGrass_5_2",
+      "atlas_x": 3,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "955ce60b94a3_TileGrass_6_2",
+      "atlas_x": 4,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "cab98e53a00d_TileGrass_7_2",
+      "atlas_x": 5,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 2,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "082c3ae7993e_TileGrass_8_2",
+      "atlas_x": 6,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_grass",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "6a27a1fc900a_TileGrass_9_2",
+      "atlas_x": 7,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_grass",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "896f2faa1f0f_TileGrass_0_3",
+      "atlas_x": 8,
+      "atlas_y": 1,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 8,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "76e0451e0360_TileGrass_2_3",
+      "atlas_x": 9,
+      "atlas_y": 1,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 2,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "9cbbd8dfc44c_TileGrass_3_3",
+      "atlas_x": 10,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_grass_spot",
+        "x": 0,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "07eec59fd77c_TileGrass_4_3",
+      "atlas_x": 11,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_grass_spot",
+        "x": 1,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "7de269f65c68_TileGrass_5_3",
+      "atlas_x": 12,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 0,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "a398205868cb_TileGrass_6_3",
+      "atlas_x": 13,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 1,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "4c456d70ba1a_TileGrass_7_3",
+      "atlas_x": 14,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 2,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "54df1eb314b3_TileGrass_8_3",
+      "atlas_x": 15,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_grass",
+        "x": 0,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "6b3ff25936d1_TileGrass_9_3",
+      "atlas_x": 16,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_puddle_grass",
+        "x": 1,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "b0f1527c1e9f_TileGrass_0_4",
+      "atlas_x": 17,
+      "atlas_y": 1,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 64,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "fa127214da07_TileGrass_1_4",
+      "atlas_x": 18,
+      "atlas_y": 1,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 4,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "96bc70d10035_TileGrass_2_4",
+      "atlas_x": 19,
+      "atlas_y": 1,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "grass",
+      "mask": 32,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "b5eb1b2c31d9_TileGrass_3_4",
+      "atlas_x": 20,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_grass_spot",
+        "x": 0,
+        "y": 2
+      },
+      "collision": null
+    },
+    {
+      "uid": "126c0da62450_TileGrass_4_4",
+      "atlas_x": 21,
+      "atlas_y": 1,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_grass_spot",
+        "x": 1,
+        "y": 2
+      },
+      "collision": null
+    },
+    {
+      "uid": "19d2e4116e64_TileGrass_5_4",
+      "atlas_x": 0,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 0,
+        "y": 2
+      },
+      "collision": null
+    },
+    {
+      "uid": "1659ed22cc7b_TileGrass_6_4",
+      "atlas_x": 1,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 1,
+        "y": 2
+      },
+      "collision": null
+    },
+    {
+      "uid": "f3dac2f610e6_TileGrass_7_4",
+      "atlas_x": 2,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_grass_spot",
+        "x": 2,
+        "y": 2
+      },
+      "collision": null
+    },
+    {
+      "uid": "a4b6abebabb9_TileGrass_8_4",
+      "atlas_x": 3,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "small_grass_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "c28da5ade753_TileGrass_9_4",
+      "atlas_x": 4,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "small_grass_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "c9e8fbd772c4_TileGrass_0_5",
+      "atlas_x": 5,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 32,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "2db08aed360c_TileGrass_1_5",
+      "atlas_x": 6,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 64,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "7507ff42ba99_TileGrass_3_5",
+      "atlas_x": 7,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_mug_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "fbfe90aa3dce_TileGrass_4_5",
+      "atlas_x": 8,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_mug_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "21a041b6f204_TileGrass_5_5",
+      "atlas_x": 9,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_mug_spot",
+        "x": 2,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "7905038bbd69_TileGrass_6_5",
+      "atlas_x": 10,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_mug_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "fbee67a95aa4_TileGrass_7_5",
+      "atlas_x": 11,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_mug_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "fa8d7c032fb7_TileGrass_8_5",
+      "atlas_x": 12,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "tiny_mug_spot_1",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "fcfec6d9bb68_TileGrass_9_5",
+      "atlas_x": 13,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "tiny_mug_spot_2",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "9eddc00e2c7a_TileGrass_0_6",
+      "atlas_x": 14,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 16,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "fd7d3f86226b_TileGrass_1_6",
+      "atlas_x": 15,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 128,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "51cec3c3f258_TileGrass_3_6",
+      "atlas_x": 16,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_mug_spot",
+        "x": 0,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "c2a3a63501e2_TileGrass_4_6",
+      "atlas_x": 17,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_mug_spot",
+        "x": 1,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "4a2ef572dd7c_TileGrass_5_6",
+      "atlas_x": 18,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "big_mug_spot",
+        "x": 2,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "d2fa8d70199d_TileGrass_6_6",
+      "atlas_x": 19,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_mug_spot",
+        "x": 0,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "7f9ac253eba5_TileGrass_7_6",
+      "atlas_x": 20,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "medium_mug_spot",
+        "x": 1,
+        "y": 1
+      },
+      "collision": null
+    },
+    {
+      "uid": "035afbfe6349_TileGrass_8_6",
+      "atlas_x": 21,
+      "atlas_y": 2,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 4,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "2854fdde7977_TileGrass_9_6",
+      "atlas_x": 0,
+      "atlas_y": 3,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 8,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "55be6389b311_TileGrass_0_7",
+      "atlas_x": 1,
+      "atlas_y": 3,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "grass_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "a08cfe558841_TileGrass_1_7",
+      "atlas_x": 2,
+      "atlas_y": 3,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "grass_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "359bc7a9332b_TileGrass_2_7",
+      "atlas_x": 3,
+      "atlas_y": 3,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "grass_spot",
+        "x": 2,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "848ea597d782_TileGrass_6_7",
+      "atlas_x": 4,
+      "atlas_y": 3,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "small_mug_spot",
+        "x": 0,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "384e2d2b9e04_TileGrass_7_7",
+      "atlas_x": 5,
+      "atlas_y": 3,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": {
+        "id": "small_mug_spot",
+        "x": 1,
+        "y": 0
+      },
+      "collision": null
+    },
+    {
+      "uid": "41a41869aee1_TileGrass_8_7",
+      "atlas_x": 6,
+      "atlas_y": 3,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 1,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "570c770ac17b_TileGrass_9_7",
+      "atlas_x": 7,
+      "atlas_y": 3,
+      "surface": "grass",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 2,
+      "composite": null,
+      "collision": null
+    },
+    {
+      "uid": "61cb97aa6170_TileWater_0_0",
+      "atlas_x": 20,
+      "atlas_y": 19,
+      "surface": "water",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": {
+        "type": "poly",
+        "points": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "8188829191b2_TileWater_1_0",
+      "atlas_x": 21,
+      "atlas_y": 19,
+      "surface": "water",
+      "feature": "normal",
+      "variant": 1,
+      "layer": "base",
+      "transition_to": null,
+      "mask": 0,
+      "composite": null,
+      "collision": {
+        "type": "poly",
+        "points": [
+          [
+            0.0,
+            1.0
+          ],
+          [
+            1.0,
+            1.0
+          ],
+          [
+            1.0,
+            0.0
+          ],
+          [
+            0.0,
+            0.0
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "e51d97018b37_TileWater_2_0",
+      "atlas_x": 0,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 128,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0,
+            0.6445,
+            0.9961,
+            0.3555
+          ],
+          [
+            0.0,
+            0.0078,
+            0.4414,
+            0.9922
+          ],
+          [
+            0.4219,
+            0.5586,
+            0.1133,
+            0.1094
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "bd4d317c0c21_TileWater_3_0",
+      "atlas_x": 1,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 1,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0,
+            0.6016,
+            0.9961,
+            0.3984
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "f3349d3518f5_TileWater_4_0",
+      "atlas_x": 2,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 16,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0039,
+            0.6016,
+            0.9961,
+            0.3984
+          ],
+          [
+            0.5938,
+            0.0117,
+            0.4062,
+            0.9883
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "ed684e2d71f1_TileWater_0_1",
+      "atlas_x": 3,
+      "atlas_y": 20,
+      "surface": "water",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 32,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.7383,
+            0.0,
+            0.2617,
+            0.1523
+          ],
+          [
+            0.8086,
+            0.1328,
+            0.1914,
+            0.1445
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "1ac79af8392b_TileWater_1_1",
+      "atlas_x": 4,
+      "atlas_y": 20,
+      "surface": "water",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 64,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0,
+            0.0,
+            0.3164,
+            0.2578
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "09fdf9105553_TileWater_2_1",
+      "atlas_x": 5,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 8,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0,
+            0.0,
+            0.4023,
+            0.9961
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "a862506acb03_TileWater_4_1",
+      "atlas_x": 6,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 2,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.5703,
+            0.0,
+            0.4297,
+            0.9961
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "b24abd177477_TileWater_0_2",
+      "atlas_x": 7,
+      "atlas_y": 20,
+      "surface": "water",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 16,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.7031,
+            0.8086,
+            0.2969,
+            0.1914
+          ],
+          [
+            0.8203,
+            0.6719,
+            0.1797,
+            0.1289
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "7dadd56c882e_TileWater_1_2",
+      "atlas_x": 8,
+      "atlas_y": 20,
+      "surface": "water",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "mud",
+      "mask": 128,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0,
+            0.8242,
+            0.3672,
+            0.1719
+          ],
+          [
+            0.0,
+            0.6523,
+            0.2539,
+            0.1641
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "37c98e976f04_TileWater_2_2",
+      "atlas_x": 9,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 64,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0,
+            0.0,
+            0.4023,
+            0.9922
+          ],
+          [
+            0.0078,
+            0.0,
+            0.9922,
+            0.3203
+          ],
+          [
+            0.3945,
+            0.3203,
+            0.1055,
+            0.0977
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "096e7ed7017e_TileWater_3_2",
+      "atlas_x": 10,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 4,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.0039,
+            0.0,
+            0.9961,
+            0.3281
+          ]
+        ]
+      }
+    },
+    {
+      "uid": "fc41feeeaaa1_TileWater_4_2",
+      "atlas_x": 11,
+      "atlas_y": 20,
+      "surface": "mud",
+      "feature": "normal",
+      "variant": 0,
+      "layer": "transition",
+      "transition_to": "water",
+      "mask": 32,
+      "composite": null,
+      "collision": {
+        "type": "rects",
+        "rects": [
+          [
+            0.6211,
+            0.0,
+            0.3789,
+            0.9961
+          ],
+          [
+            0.0078,
+            0.0,
+            0.9922,
+            0.3672
+          ],
+          [
+            0.5039,
+            0.3242,
+            0.1523,
+            0.1484
+          ]
+        ]
+      }
+    }
+  ]
+}

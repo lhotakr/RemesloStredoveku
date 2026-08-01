@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "npc_access": {
+    "enabled": true,
+    "allowed_sectors": [
+      "south_approach",
+      "rock_neck",
+      "outer_plateau",
+      "cleared_defence_zone",
+      "forecourt_threshold"
+    ]
+  },
+  "lights": [
+    {
+      "id": "daylight_exterior",
+      "type": "sky",
+      "x": 24.0,
+      "y": 18.0,
+      "z": 10.0,
+      "radius": 60.0,
+      "intensity": 1.0,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "runtime_lighting",
+        "sources": ["project_historical_brief"]
+      }
+    }
+  ]
+}

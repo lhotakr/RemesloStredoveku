@@ -1,0 +1,12 @@
+{
+  "types": [
+    {
+      "type_id": "farmer",
+      "name": "farmer",
+      "character_id": "Character_2_char_01",
+      "default_hp": 100,
+      "default_mood": 50,
+      "default_script_id": "farmer_intro"
+    }
+  ]
+}

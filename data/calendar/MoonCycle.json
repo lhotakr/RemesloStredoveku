@@ -1,0 +1,37 @@
+{
+  "cycle_length": 29.53059,
+  "phases": [
+    {
+      "day": 0.0,
+      "phase": "nov"
+    },
+    {
+      "day": 3.7,
+      "phase": "dorùstající srpek"
+    },
+    {
+      "day": 7.4,
+      "phase": "první ètvr"
+    },
+    {
+      "day": 11.1,
+      "phase": "dorùstající mìsíc"
+    },
+    {
+      "day": 14.8,
+      "phase": "úplnìk"
+    },
+    {
+      "day": 18.5,
+      "phase": "couvající mìsíc"
+    },
+    {
+      "day": 22.1,
+      "phase": "poslední ètvr"
+    },
+    {
+      "day": 25.8,
+      "phase": "couvající srpek"
+    }
+  ]
+}

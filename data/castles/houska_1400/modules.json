@@ -1,0 +1,160 @@
+{
+  "schema_version": 1,
+  "modules": [
+    {
+      "id": "sandstone_plateau",
+      "group": "terrain",
+      "certainty": "documented"
+    },
+    {
+      "id": "southern_access_road",
+      "group": "terrain",
+      "certainty": "probable"
+    },
+    {
+      "id": "rock_cut_ditch",
+      "group": "fortification",
+      "certainty": "documented"
+    },
+    {
+      "id": "forecourt_wall",
+      "group": "fortification",
+      "certainty": "probable"
+    },
+    {
+      "id": "covered_gate_passage",
+      "group": "fortification",
+      "certainty": "probable"
+    },
+    {
+      "id": "west_palace_shell",
+      "group": "palace",
+      "certainty": "documented"
+    },
+    {
+      "id": "north_palace_shell",
+      "group": "palace",
+      "certainty": "documented"
+    },
+    {
+      "id": "east_palace_shell",
+      "group": "palace",
+      "certainty": "documented"
+    },
+    {
+      "id": "lower_timber_gallery",
+      "group": "timber",
+      "certainty": "probable"
+    },
+    {
+      "id": "upper_timber_gallery",
+      "group": "timber",
+      "certainty": "probable"
+    },
+    {
+      "id": "shingle_roof_simple",
+      "group": "roof",
+      "certainty": "interpretive"
+    },
+    {
+      "id": "chapel_rib_vault",
+      "group": "chapel",
+      "certainty": "documented"
+    },
+    {
+      "id": "chapel_mural_layer_1400",
+      "group": "chapel",
+      "certainty": "documented"
+    },
+    {
+      "id": "timber_bridge_forecourt",
+      "group": "fortification",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_guardhouse_simple",
+      "group": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_stables_simple",
+      "group": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_feed_shed",
+      "group": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "courtyard_ground_core",
+      "group": "castle_core",
+      "certainty": "documented"
+    },
+    {
+      "id": "courtyard_grain_storage",
+      "group": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "courtyard_gallery_facade_visual",
+      "group": "timber",
+      "certainty": "probable"
+    },
+    {
+      "id": "courtyard_gallery_stairs_east",
+      "group": "timber",
+      "certainty": "probable"
+    },
+    {
+      "id": "courtyard_service_props",
+      "group": "service",
+      "certainty": "interpretive"
+    },
+    {
+      "id": "courtyard_polygon_ground_v2",
+      "group": "castle_core",
+      "certainty": "documented"
+    },
+    {
+      "id": "gate_passage_pointed_arch",
+      "group": "fortification",
+      "certainty": "probable"
+    },
+    {
+      "id": "guardroom_and_store_ground",
+      "group": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "rock_cut_room_04",
+      "group": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "tower_spiral_stair_07",
+      "group": "vertical_access",
+      "certainty": "documented"
+    },
+    {
+      "id": "chapel_ground_08",
+      "group": "chapel",
+      "certainty": "documented"
+    },
+    {
+      "id": "north_stair_09",
+      "group": "vertical_access",
+      "certainty": "documented"
+    },
+    {
+      "id": "gate_gallery_stair_15",
+      "group": "vertical_access",
+      "certainty": "documented"
+    },
+    {
+      "id": "garderobe_room_12",
+      "group": "sanitation",
+      "certainty": "documented"
+    }
+  ]
+}

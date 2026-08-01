@@ -1,0 +1,158 @@
+{
+  "schema_version": 2,
+  "entities": [
+    {
+      "id": "grain_storage_lid",
+      "prototype": "grain_pit_lid",
+      "material": "grain_pit_lid",
+      "render_mode": "billboard",
+      "x": 33.5,
+      "y": 24.0,
+      "z_offset": 0.0,
+      "scale": 0.82,
+      "solid": true,
+      "interaction_label": "Těžký dřevěný poklop lahvovité zásobnice obilí.",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "altar_08",
+      "prototype": "chapel_altar",
+      "material": "chapel_altar",
+      "render_mode": "billboard",
+      "x": 54.8,
+      "y": 5.4,
+      "z_offset": 0.0,
+      "scale": 0.82,
+      "solid": true,
+      "interaction_label": "Kamenný oltář ve východní části kaple.",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ]
+      }
+    },
+    {
+      "id": "spiral_stair_07",
+      "prototype": "spiral_stair_marker",
+      "material": "spiral_stair_marker",
+      "render_mode": "billboard",
+      "x": 56.0,
+      "y": 7.2,
+      "z_offset": 0.0,
+      "scale": 0.9,
+      "solid": false,
+      "interaction_label": "Točité schodiště do kruhové věže.",
+      "target_location": "castle:houska_1400/houska_upper_floor",
+      "target_spawn": "tower_stair_top",
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "user_floorplan_annotation_2026_07_23"
+        ]
+      }
+    },
+    {
+      "id": "guardroom_crates",
+      "prototype": "courtyard_barrel_crates",
+      "material": "courtyard_barrel_crates",
+      "render_mode": "billboard",
+      "x": 41.3,
+      "y": 44.8,
+      "z_offset": 0.0,
+      "scale": 0.72,
+      "solid": true,
+      "interaction_label": "Zásoby a výstroj stráže.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "chapel_bench",
+      "prototype": "courtyard_bench",
+      "material": "courtyard_bench",
+      "render_mode": "billboard",
+      "x": 35.0,
+      "y": 6.0,
+      "z_offset": 0.0,
+      "scale": 0.72,
+      "solid": true,
+      "interaction_label": "Jednoduchá lavice v kapli.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "courtyard_gate_torch_w",
+      "prototype": "courtyard_torch",
+      "material": "courtyard_torch",
+      "render_mode": "voxel",
+      "x": 28.1,
+      "y": 42.7,
+      "z_offset": 1.35,
+      "scale": 0.48,
+      "solid": false,
+      "yaw_degrees": 90,
+      "voxel_depth": 0.14,
+      "animated": true,
+      "random_animation": true,
+      "animation_min_fps": 8.0,
+      "animation_max_fps": 9.0,
+      "emits_light": true,
+      "light_color": [
+        255,
+        145,
+        70
+      ],
+      "light_radius": 3.2,
+      "light_intensity": 0.68,
+      "light_height": 0.55,
+      "light_flicker": 0.08,
+      "interaction_label": "Kovaná nástěnná pochodeň osvětluje průjezd."
+    },
+    {
+      "id": "courtyard_gate_torch_e",
+      "prototype": "courtyard_torch",
+      "material": "courtyard_torch",
+      "render_mode": "voxel",
+      "x": 35.9,
+      "y": 42.7,
+      "z_offset": 1.35,
+      "scale": 0.48,
+      "solid": false,
+      "yaw_degrees": 270,
+      "voxel_depth": 0.14,
+      "animated": true,
+      "random_animation": true,
+      "animation_min_fps": 8.0,
+      "animation_max_fps": 9.0,
+      "emits_light": true,
+      "light_color": [
+        255,
+        145,
+        70
+      ],
+      "light_radius": 3.2,
+      "light_intensity": 0.68,
+      "light_height": 0.55,
+      "light_flicker": 0.08,
+      "interaction_label": "Kovaná nástěnná pochodeň osvětluje průjezd."
+    }
+  ]
+}

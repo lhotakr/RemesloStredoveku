@@ -1,0 +1,44 @@
+{
+  "archetypes": [
+    {
+      "category": "mushroom",
+      "detail_placeholder_sprite": "forage_map_mushroom_general_03",
+      "display_partial": "houby",
+      "display_unknown": "neznámé houby",
+      "examination_slots": [
+        "cap",
+        "stem",
+        "gills",
+        "smell",
+        "habitat"
+      ],
+      "generic_map_sprite": "forage_map_mushroom_general_01",
+      "herbarium_placeholder_sprite": "fungi_001",
+      "id": "generic_mushroom_patch",
+      "map_scale": 0.10000000149011612,
+      "max_stack": 64,
+      "volume": 0.10000000149011612,
+      "weight": 0.05000000074505806
+    },
+    {
+      "category": "herb",
+      "detail_placeholder_sprite": "forage_map_herb_general_06",
+      "display_partial": "byliny",
+      "display_unknown": "neznámé byliny",
+      "examination_slots": [
+        "flower",
+        "leaf",
+        "smell",
+        "root",
+        "habitat"
+      ],
+      "generic_map_sprite": "forage_map_herb_general_01",
+      "herbarium_placeholder_sprite": "herbs_001",
+      "id": "generic_herb_patch",
+      "map_scale": 0.2800000011920929,
+      "max_stack": 64,
+      "volume": 0.10000000149011612,
+      "weight": 0.05000000074505806
+    }
+  ]
+}

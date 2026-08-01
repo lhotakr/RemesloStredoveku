@@ -1,0 +1,544 @@
+fileFormatVersion: 2
+guid: a146b60b93c9a2b4a9c940617bb23030
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: GateAndTowerSprites_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 456
+        width: 364
+        height: 210
+      alignment: 9
+      pivot: {x: 0.49175823, y: 0.042857144}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e639d73a05ec2645bb074d8a913fae9
+      internalID: -2074978186
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_1
+      rect:
+        serializedVersion: 2
+        x: 398
+        y: 450
+        width: 370
+        height: 233
+      alignment: 9
+      pivot: {x: 0.49594596, y: 0.042918455}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3537016b9040bb49a5154b2477bec53
+      internalID: 307006958
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_2
+      rect:
+        serializedVersion: 2
+        x: 35
+        y: 384
+        width: 59
+        height: 37
+      alignment: 9
+      pivot: {x: 0.50000024, y: 0.01690179}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc355c30f89c8e348ad4154e9bf54ee9
+      internalID: -1277917910
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_3
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 371
+        width: 32
+        height: 59
+      alignment: 9
+      pivot: {x: 0.51778364, y: 0.66311336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0c75cab4e72fa6f47a765a041422465f
+      internalID: -2113946932
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_4
+      rect:
+        serializedVersion: 2
+        x: 172
+        y: 383
+        width: 44
+        height: 36
+      alignment: 9
+      pivot: {x: 0.50355357, y: 0.052113004}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3aa38c163cb9790459f52d7191c0ca6c
+      internalID: 1584336308
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_5
+      rect:
+        serializedVersion: 2
+        x: 277
+        y: 377
+        width: 40
+        height: 56
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc8cb72e91b628f43aa2c1621ee2e8d4
+      internalID: -43019428
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_6
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 377
+        width: 60
+        height: 56
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89158bf7ba5d21346be481452ab73afc
+      internalID: 1186011375
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_7
+      rect:
+        serializedVersion: 2
+        x: 483
+        y: 186
+        width: 123
+        height: 233
+      alignment: 9
+      pivot: {x: 0.49593496, y: 0.021459227}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ce512bf7c6e995f448b60db5a8f6e0ee
+      internalID: 386097998
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_8
+      rect:
+        serializedVersion: 2
+        x: 643
+        y: 188
+        width: 123
+        height: 233
+      alignment: 9
+      pivot: {x: 0.49140298, y: 0.030256018}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46b46a49b0797514281292537e2689fa
+      internalID: -867661254
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_9
+      rect:
+        serializedVersion: 2
+        x: 78
+        y: 195
+        width: 60
+        height: 147
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2af8f67011b06864f971fd73484620e3
+      internalID: -1054885132
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_10
+      rect:
+        serializedVersion: 2
+        x: 142
+        y: 195
+        width: 60
+        height: 147
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e96419e874760bb48bf39725e39e4b88
+      internalID: -1541162673
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_11
+      rect:
+        serializedVersion: 2
+        x: 206
+        y: 195
+        width: 60
+        height: 147
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 597ab5f3e42d6984b8594c9c611a9dff
+      internalID: 1958825454
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_12
+      rect:
+        serializedVersion: 2
+        x: 303
+        y: 188
+        width: 171
+        height: 162
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ed45354b8723a542a31b9135002c0a2
+      internalID: -378245585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_13
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 0
+        width: 262
+        height: 172
+      alignment: 9
+      pivot: {x: 0.47498858, y: 0.755253}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: da04dc814f2a89d4b949051800d1ce1c
+      internalID: -169135718
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_16
+      rect:
+        serializedVersion: 2
+        x: 312
+        y: 36
+        width: 171
+        height: 128
+      alignment: 9
+      pivot: {x: 0.4706983, y: 0.7195208}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b0fe8a1a400438741abac16ef1f84643
+      internalID: -1704665911
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_18
+      rect:
+        serializedVersion: 2
+        x: 505
+        y: 62
+        width: 103
+        height: 110
+      alignment: 9
+      pivot: {x: 0.5, y: 0.63262385}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d32489621fbe33e46ab22118cfef0e6e
+      internalID: 1053505258
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_19
+      rect:
+        serializedVersion: 2
+        x: 653
+        y: 62
+        width: 103
+        height: 102
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d4faff44f9980b849b88221528c183dc
+      internalID: -1908220903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: GateAndTowerSprites_14
+      rect:
+        serializedVersion: 2
+        x: 399
+        y: 60
+        width: 86
+        height: 107
+      alignment: 9
+      pivot: {x: 0.5697674, y: 0.7009345}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0ae0877c9cc3c21458253bb9fe41dc35
+      internalID: 155499885
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      GateAndTowerSprites_0: -2074978186
+      GateAndTowerSprites_1: 307006958
+      GateAndTowerSprites_10: -1541162673
+      GateAndTowerSprites_11: 1958825454
+      GateAndTowerSprites_12: -378245585
+      GateAndTowerSprites_13: -169135718
+      GateAndTowerSprites_14: 155499885
+      GateAndTowerSprites_15: -1018216236
+      GateAndTowerSprites_16: -1704665911
+      GateAndTowerSprites_17: 288776195
+      GateAndTowerSprites_18: 1053505258
+      GateAndTowerSprites_19: -1908220903
+      GateAndTowerSprites_2: -1277917910
+      GateAndTowerSprites_20: 832324708
+      GateAndTowerSprites_21: -313541182
+      GateAndTowerSprites_22: -1445275204
+      GateAndTowerSprites_23: -2127832666
+      GateAndTowerSprites_24: 812695816
+      GateAndTowerSprites_25: 1152297131
+      GateAndTowerSprites_3: -2113946932
+      GateAndTowerSprites_4: 1584336308
+      GateAndTowerSprites_5: -43019428
+      GateAndTowerSprites_6: 1186011375
+      GateAndTowerSprites_7: 386097998
+      GateAndTowerSprites_8: -867661254
+      GateAndTowerSprites_9: -1054885132
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

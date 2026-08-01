@@ -1,0 +1,454 @@
+{
+  "days": [
+    {
+      "day": 6,
+      "month": 1,
+      "title": "Tři králové",
+      "after_form": "Třech králích",
+      "on_form": "Tři krále"
+    },
+    {
+      "day": 2,
+      "month": 2,
+      "title": "Hromnice",
+      "after_form": "Hromnicích",
+      "on_form": "Hromnice"
+    },
+    {
+      "day": 3,
+      "month": 2,
+      "title": "svatý Blažej",
+      "after_form": "svatém Blažeji",
+      "on_form": "svatého Blažeje"
+    },
+    {
+      "day": 12,
+      "month": 3,
+      "title": "svatý Řehoř",
+      "after_form": "svatém Řehoři",
+      "on_form": "svatého Řehoře"
+    },
+    {
+      "day": 19,
+      "month": 3,
+      "title": "svatý Josef",
+      "after_form": "svatém Josefovi",
+      "on_form": "svatého Josefa"
+    },
+    {
+      "day": 25,
+      "month": 3,
+      "title": "Zvěstování Páně",
+      "after_form": "Zvěstování Páně",
+      "on_form": "Zvěstování Páně"
+    },
+
+    {
+      "day": 23,
+      "month": 4,
+      "title": "svatý Vojtěch",
+      "after_form": "svatém Vojtěchu",
+      "on_form": "svatého Vojtěcha"
+    },
+    {
+      "id": "sv_jiri",
+      "day": 24,
+      "month": 4,
+      "title": "svatý Jiří",
+      "after_form": "svatém Jiří",
+      "on_form": "svatého Jiří",
+      "importance": "major",
+      "tags": [ "pasture", "spring", "work_start" ]
+    },
+    {
+      "day": 25,
+      "month": 4,
+      "title": "svatý Marek",
+      "after_form": "svatém Marku",
+      "on_form": "svatého Marka"
+    },
+    {
+      "day": 30,
+      "month": 4,
+      "title": "svatí Filip a Jakub",
+      "after_form": "svatých Filipu a Jakubu",
+      "on_form": "svaté Filipa a Jakuba"
+    },
+
+    {
+      "day": 3,
+      "month": 5,
+      "title": "Nalezení svatého Kříže",
+      "after_form": "Nalezení svatého Kříže",
+      "on_form": "Nalezení svatého Kříže"
+    },
+    {
+      "day": 8,
+      "month": 5,
+      "title": "svatý Stanislav",
+      "after_form": "svatém Stanislavu",
+      "on_form": "svatého Stanislava"
+    },
+    {
+      "day": 15,
+      "month": 5,
+      "title": "svatá Žofie",
+      "after_form": "svaté Žofii",
+      "on_form": "svatou Žofii"
+    },
+
+    {
+      "day": 8,
+      "month": 6,
+      "title": "svatý Medard",
+      "after_form": "svatém Medardu",
+      "on_form": "svatého Medarda"
+    },
+    {
+      "day": 15,
+      "month": 6,
+      "title": "svatý Vít",
+      "after_form": "svatém Vítu",
+      "on_form": "svatého Víta"
+    },
+    {
+      "id": "sv_jan",
+      "day": 24,
+      "month": 6,
+      "title": "svatý Jan Křtitel",
+      "after_form": "svatém Janu Křtiteli",
+      "on_form": "svatého Jana Křtitele",
+      "importance": "minor",
+      "tags": [ "summerTop", "rituals" ]
+    },
+    {
+      "day": 29,
+      "month": 6,
+      "title": "svatý Petr a Pavel",
+      "after_form": "svatém Petru a Pavlu",
+      "on_form": "svaté Petra a Pavla"
+    },
+
+    {
+      "day": 5,
+      "month": 7,
+      "title": "svatý Cyril a Metoděj",
+      "after_form": "svatém Cyrilu a Metoději",
+      "on_form": "svaté Cyrila a Metoděje"
+    },
+    {
+      "day": 14,
+      "month": 7,
+      "title": "svatý Prokop",
+      "after_form": "svatém Prokopu",
+      "on_form": "svatého Prokopa"
+    },
+    {
+      "day": 22,
+      "month": 7,
+      "title": "svatá Máří Magdaléna",
+      "after_form": "svaté Máří Magdaléně",
+      "on_form": "svatou Máří Magdalénu"
+    },
+    {
+      "id": "sv_jakub",
+      "day": 25,
+      "month": 7,
+      "title": "svatý Jakub",
+      "after_form": "svatém Jakubu",
+      "on_form": "svatého Jakuba",
+      "importance": "major",
+      "tags": [ "harvestStart"]
+    },
+    {
+      "day": 26,
+      "month": 7,
+      "title": "svatá Anna",
+      "after_form": "svaté Anně",
+      "on_form": "svatou Annu"
+    },
+
+    {
+      "day": 6,
+      "month": 8,
+      "title": "Proměnění Páně",
+      "after_form": "Proměnění Páně",
+      "on_form": "Proměnění Páně"
+    },
+    {
+      "day": 10,
+      "month": 8,
+      "title": "svatý Vavřinec",
+      "after_form": "svatém Vavřinci",
+      "on_form": "svatého Vavřince"
+    },
+    {
+      "day": 15,
+      "month": 8,
+      "title": "Nanebevzetí Panny Marie",
+      "after_form": "Nanebevzetí Panny Marie",
+      "on_form": "Nanebevzetí Panny Marie"
+    },
+    {
+      "day": 24,
+      "month": 8,
+      "title": "svatý Bartoloměj",
+      "after_form": "svatém Bartoloměji",
+      "on_form": "svatého Bartoloměje"
+    },
+
+    {
+      "day": 8,
+      "month": 9,
+      "title": "Narození Panny Marie",
+      "after_form": "Narození Panny Marie",
+      "on_form": "Narození Panny Marie"
+    },
+    {
+      "day": 14,
+      "month": 9,
+      "title": "Povýšení svatého Kříže",
+      "after_form": "Povýšení svatého Kříže",
+      "on_form": "Povýšení svatého Kříže"
+    },
+    {
+      "day": 16,
+      "month": 9,
+      "title": "svatá Ludmila",
+      "after_form": "svaté Ludmile",
+      "on_form": "svatou Ludmilu"
+    },
+    {
+      "day": 21,
+      "month": 9,
+      "title": "svatý Matouš",
+      "after_form": "svatém Matouši",
+      "on_form": "svatého Matouše"
+    },
+    {
+      "id": "sv_vaclav",
+      "day": 28,
+      "month": 9,
+      "title": "svatý Václav",
+      "after_form": "svatém Václavu",
+      "on_form": "svatého Václava",
+      "importance": "minor",
+      "tags": [ "contracts", "nation" ]
+    },
+    {
+      "day": 29,
+      "month": 9,
+      "title": "svatý Michael",
+      "after_form": "svatém Michaelovi",
+      "on_form": "svatého Michaela"
+    },
+
+    {
+      "day": 4,
+      "month": 10,
+      "title": "svatý František",
+      "after_form": "svatém Františku",
+      "on_form": "svatého Františka"
+    },
+    {
+      "day": 18,
+      "month": 10,
+      "title": "svatý Lukáš",
+      "after_form": "svatém Lukáši",
+      "on_form": "svatého Lukáše"
+    },
+
+    {
+      "day": 1,
+      "month": 11,
+      "title": "Všech svatých",
+      "after_form": "Všech svatých",
+      "on_form": "Všech svatých"
+    },
+    {
+      "day": 2,
+      "month": 11,
+      "title": "Dušičky",
+      "after_form": "Dušičkách",
+      "on_form": "Dušičky"
+    },
+    {
+      "id": "sv_martin",
+      "day": 11,
+      "month": 11,
+      "title": "svatý Martin",
+      "after_form": "svatém Martinovi",
+      "on_form": "svatého Martina",
+      "importance": "major",
+      "tags": [ "harvestEnd", "winterStart", "slaughter", "contractsEnd" ]
+    },
+    {
+      "day": 25,
+      "month": 11,
+      "title": "svatá Kateřina",
+      "after_form": "svaté Kateřině",
+      "on_form": "svatou Kateřinu"
+    },
+    {
+      "day": 30,
+      "month": 11,
+      "title": "svatý Ondřej",
+      "after_form": "svatém Ondřeji",
+      "on_form": "svatého Ondřeje"
+    },
+
+    {
+      "day": 6,
+      "month": 12,
+      "title": "svatý Mikuláš",
+      "after_form": "svatém Mikuláši",
+      "on_form": "svatého Mikuláše"
+    },
+    {
+      "day": 13,
+      "month": 12,
+      "title": "svatá Lucie",
+      "after_form": "svaté Lucii",
+      "on_form": "svatou Lucii"
+    },
+    {
+      "id": "stedry_den",
+      "day": 24,
+      "month": 12,
+      "title": "Štědrý den",
+      "after_form": "Štědrém dni",
+      "on_form": "Štědrý den",
+      "importance": "minor",
+      "tags": [ "family", "church", "winter", "feast" ]
+    },
+    {
+      "day": 25,
+      "month": 12,
+      "title": "Narození Páně",
+      "after_form": "Narození Páně",
+      "on_form": "Narození Páně"
+    },
+    {
+      "day": 26,
+      "month": 12,
+      "title": "svatý Štěpán",
+      "after_form": "svatém Štěpánu",
+      "on_form": "svatého Štěpána"
+    },
+    {
+      "day": 27,
+      "month": 12,
+      "title": "svatý Jan Evangelista",
+      "after_form": "svatém Janu Evangelistovi",
+      "on_form": "svatého Jana Evangelisty"
+    },
+    {
+      "day": 28,
+      "month": 12,
+      "title": "Svatá Mláďátka",
+      "after_form": "Svatých Mláďátkách",
+      "on_form": "Svatá Mláďátka"
+    },
+    {
+      "title": "Boží hod velikonoční",
+      "on_form": "Boží hod velikonoční",
+      "after_form": "Božím hodu velikonočním",
+      "movable": true,
+      "offset_from_easter": 0
+    },
+    {
+      "title": "Velký pátek",
+      "on_form": "Velký pátek",
+      "after_form": "Velkém pátku",
+      "movable": true,
+      "offset_from_easter": -2
+    },
+    {
+      "title": "Zelený čtvrtek",
+      "on_form": "Zelený čtvrtek",
+      "after_form": "Zeleném čtvrtku",
+      "movable": true,
+      "offset_from_easter": -3
+    },
+    {
+      "title": "Nanebevstoupení Páně",
+      "on_form": "Nanebevstoupení Páně",
+      "after_form": "Nanebevstoupení Páně",
+      "movable": true,
+      "offset_from_easter": 39
+    },
+    {
+      "title": "Seslání Ducha svatého",
+      "on_form": "Seslání Ducha svatého",
+      "after_form": "Seslání Ducha svatého",
+      "movable": true,
+      "offset_from_easter": 49
+    },
+    {
+      "id": "popelecni_streda",
+      "title": "Popeleční středa",
+      "on_form": "Popeleční středu",
+      "after_form": "Popeleční středě",
+      "movable": true,
+      "offset_from_easter": -46,
+      "importance": "major",
+      "tags": [ "fasting", "lent", "church" ]
+    },
+    {
+      "title": "Květná neděle",
+      "on_form": "Květnou neděli",
+      "after_form": "Květné neděli",
+      "movable": true,
+      "offset_from_easter": -7
+    },
+    {
+      "title": "Bílá sobota",
+      "on_form": "Bílou sobotu",
+      "after_form": "Bílé sobotě",
+      "movable": true,
+      "offset_from_easter": -1
+    },
+    {
+      "title": "Velikonoční pondělí",
+      "on_form": "Velikonoční pondělí",
+      "after_form": "Velikonočním pondělí",
+      "movable": true,
+      "offset_from_easter": 1
+    },
+    {
+      "title": "Letniční pondělí",
+      "on_form": "Letniční pondělí",
+      "after_form": "Letničním pondělí",
+      "movable": true,
+      "offset_from_easter": 50
+    },
+    {
+      "title": "Boží tělo",
+      "on_form": "Boží tělo",
+      "after_form": "Božím těle",
+      "movable": true,
+      "offset_from_easter": 60
+    },
+    {
+      "title": "Masopustní neděle",
+      "on_form": "Masopustní neděli",
+      "after_form": "Masopustní neděli",
+      "movable": true,
+      "offset_from_easter": -49
+    },
+    {
+      "title": "Masopustní pondělí",
+      "on_form": "Masopustní pondělí",
+      "after_form": "Masopustním pondělí",
+      "movable": true,
+      "offset_from_easter": -48
+    },
+    {
+      "title": "Masopustní úterý",
+      "on_form": "Masopustní úterý",
+      "after_form": "Masopustním úterý",
+      "movable": true,
+      "offset_from_easter": -47
+    }
+  ]
+}

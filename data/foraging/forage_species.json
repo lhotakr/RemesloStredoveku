@@ -1,0 +1,209 @@
+{
+  "species": [
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "description": "Klobouk je hnědý a masitý, třeň světlý a silný. Roste hlavně v lese a má typicky houbovou vůni.",
+      "detail_sprite": "fungi_001",
+      "difficulty": 35,
+      "edibility": "edible",
+      "effects_on_eat": [
+        "nutrition_small"
+      ],
+      "effects_on_use": [],
+      "folk_names": [
+        "hřib",
+        "pravák"
+      ],
+      "herbarium_sprite": "fungi_001",
+      "id": "Hřib pravý",
+      "inventory_sprite": "fungi_001",
+      "max_stack": 64,
+      "medicinal_value": "none",
+      "season": [
+        "summer",
+        "autumn"
+      ],
+      "toxicity_level": 0,
+      "traits": {
+        "cap": [
+          "hnědý",
+          "masitý"
+        ],
+        "flower": [],
+        "gills": [],
+        "habitat": [
+          "les"
+        ],
+        "leaf": [],
+        "root": [],
+        "smell": [
+          "houbový"
+        ],
+        "stem": [
+          "světlý",
+          "silný"
+        ]
+      },
+      "true_name": "hřib obecný",
+      "volume": 0.18000000715255737,
+      "weight": 0.11999999731779099
+    },
+    {
+      "archetype_id": "generic_herb_patch",
+      "description": "Běžná luční bylina se žlutým květem, zelenými listy v růžici a hořkou mléčnou šťávou.",
+      "detail_sprite": "herbs_001",
+      "difficulty": 65,
+      "edibility": "unknown_safe",
+      "effects_on_eat": [],
+      "effects_on_use": [
+        "wound_basic"
+      ],
+      "folk_names": [
+        "ranhojičská bylina"
+      ],
+      "herbarium_sprite": "herbs_001",
+      "id": "Pamplelicha",
+      "inventory_sprite": "herbs_001",
+      "max_stack": 64,
+      "medicinal_value": "wound_basic",
+      "season": [
+        "spring",
+        "summer"
+      ],
+      "toxicity_level": 0,
+      "traits": {
+        "Mléko": [
+          "Bílé",
+          "hořké"
+        ],
+        "cap": [],
+        "flower": [
+          "bílý květ"
+        ],
+        "gills": [],
+        "habitat": [
+          "louka",
+          "okraj lesa"
+        ],
+        "leaf": [
+          "zelený list"
+        ],
+        "root": [],
+        "smell": [
+          "hořká"
+        ],
+        "stem": []
+      },
+      "true_name": "Pampeliška lékařská",
+      "volume": 0.03999999910593033,
+      "weight": 0.019999999552965164
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "description": "Nápadná houba s červeným kloboukem a světlými bradavkami. Bývá spojovaná s břízami a jehličnatými lesy. Není smrtelně jistá, ale po požití způsobuje nepříjemnou otravu.",
+      "detail_sprite": "forage_map_mushroom_general_05",
+      "difficulty": 45,
+      "edibility": "poisonous",
+      "effects_on_eat": [
+        "poison_mild"
+      ],
+      "effects_on_use": [],
+      "folk_names": [
+        "muchomůrka",
+        "muchomůrka červená"
+      ],
+      "herbarium_sprite": "forage_map_mushroom_general_05",
+      "id": "Muchomůrka červená",
+      "inventory_sprite": "forage_map_mushroom_general_05",
+      "max_stack": 64,
+      "medicinal_value": "none",
+      "season": [
+        "summer",
+        "autumn"
+      ],
+      "toxicity_level": 45,
+      "traits": {
+        "cap": [
+          "červený klobouk",
+          "bílé bradavky"
+        ],
+        "flower": [],
+        "gills": [
+          "bílé lupeny"
+        ],
+        "habitat": [
+          "bříza",
+          "jehličnatý les",
+          "les"
+        ],
+        "leaf": [],
+        "root": [],
+        "smell": [
+          "nevýrazná"
+        ],
+        "stem": [
+          "bílý třeň"
+        ]
+      },
+      "true_name": "Muchomůrka červená",
+      "volume": 0.1599999964237213,
+      "weight": 0.10000000149011612
+    },
+    {
+      "archetype_id": "generic_mushroom_patch",
+      "description": "Velmi nebezpečná houba se zelenavým až olivovým kloboukem, bílými lupeny, prstenem a nápadnou pochvou u báze třeně. Počáteční klid je zrádný; příznaky mohou přijít až po mnoha hodinách.",
+      "detail_sprite": "fungi_052",
+      "difficulty": -55,
+      "edibility": "deadly_poisonous",
+      "effects_on_eat": [
+        "poison_deadly_48h"
+      ],
+      "effects_on_use": [],
+      "folk_names": [
+        "zelená muchomůrka",
+        "kalich smrti"
+      ],
+      "herbarium_sprite": "fungi_052",
+      "id": "Muchomůrka zelená",
+      "inventory_sprite": "fungi_052",
+      "max_stack": 64,
+      "medicinal_value": "none",
+      "season": [
+        "summer",
+        "autumn"
+      ],
+      "toxicity_level": 100,
+      "traits": {
+        "cap": [
+          "zelenavý klobouk",
+          "olivový klobouk"
+        ],
+        "flower": [],
+        "gills": [
+          "bílé lupeny"
+        ],
+        "habitat": [
+          "listnatý les",
+          "dub",
+          "buk"
+        ],
+        "leaf": [],
+        "root": [
+          "pochva u báze",
+          "hlíza"
+        ],
+        "smell": [
+          "nasládlá",
+          "nevýrazná"
+        ],
+        "stem": [
+          "bílý třeň",
+          "prsten"
+        ]
+      },
+      "true_name": "Muchomůrka zelená",
+      "volume": 0.14000000059604645,
+      "weight": 0.09000000357627869
+    }
+  ]
+}

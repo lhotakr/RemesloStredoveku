@@ -1,0 +1,124 @@
+{
+  "schema_version": 1,
+  "entities": [
+    {
+      "id": "tree_southwest_01",
+      "prototype": "mixed_forest_tree",
+      "material": "mixed_forest_tree",
+      "render_mode": "voxel",
+      "x": 15.6,
+      "y": 25.2,
+      "z_offset": 0.0,
+      "scale": 1.35,
+      "solid": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": -18,
+      "voxel_depth": 0.78
+    },
+    {
+      "id": "tree_southeast_01",
+      "prototype": "mixed_forest_tree",
+      "material": "mixed_forest_tree",
+      "render_mode": "voxel",
+      "x": 31.8,
+      "y": 25.5,
+      "z_offset": 0.0,
+      "scale": 1.3,
+      "solid": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": 31,
+      "voxel_depth": 0.76
+    },
+    {
+      "id": "tree_west_edge_01",
+      "prototype": "mixed_forest_tree",
+      "material": "mixed_forest_tree",
+      "render_mode": "voxel",
+      "x": 11.8,
+      "y": 13.2,
+      "z_offset": 0.0,
+      "scale": 1.15,
+      "solid": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": 8,
+      "voxel_depth": 0.66
+    },
+    {
+      "id": "outcrop_east_01",
+      "prototype": "sandstone_outcrop",
+      "material": "sandstone_outcrop",
+      "render_mode": "voxel",
+      "x": 34.0,
+      "y": 17.0,
+      "z_offset": 0.0,
+      "scale": 1.1,
+      "solid": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "natural_terrain",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": 22,
+      "voxel_depth": 0.72
+    },
+    {
+      "id": "stage_two_marker",
+      "prototype": "sandstone_outcrop",
+      "material": "sandstone_outcrop",
+      "render_mode": "billboard",
+      "x": 25.6,
+      "y": 6.0,
+      "z_offset": 0.0,
+      "scale": 0.55,
+      "solid": false,
+      "interaction_label": "Za touto branou vznikne v další etapě jižní předhradí, příkop a most.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "development_marker",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "south_black_portal",
+      "prototype": "black_arch_portal",
+      "material": "black_arch_portal",
+      "render_mode": "billboard",
+      "x": 24.5,
+      "y": 33.2,
+      "z_offset": 0.0,
+      "scale": 2.25,
+      "solid": false,
+      "interaction_label": "Velká klenutá brána – vizuální portál zpět do 2D části (logický návrat napojíme v další integrační etapě).",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "development_marker",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Vizuální gameplay portál pro oddělení 2D a 2.5D vrstvy."
+      }
+    }
+  ]
+}

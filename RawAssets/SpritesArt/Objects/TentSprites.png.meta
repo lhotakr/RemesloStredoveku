@@ -1,0 +1,382 @@
+fileFormatVersion: 2
+guid: ea1fb160a8102b84ca15fb4c425d6be6
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TentSprites_0
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 303
+        width: 71
+        height: 98
+      alignment: 9
+      pivot: {x: 0.49999994, y: 0.22167128}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: aaec37a621971cf409a7c541e15a724e
+      internalID: 467804158
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_1
+      rect:
+        serializedVersion: 2
+        x: 111
+        y: 303
+        width: 63
+        height: 98
+      alignment: 9
+      pivot: {x: 0.52061707, y: 0.22829826}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c2a1e313a8524e74494bcbe890ff54c7
+      internalID: -1233569877
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_2
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 184
+        width: 243
+        height: 217
+      alignment: 9
+      pivot: {x: 0.48129222, y: 0.13488095}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d4d996179fb8f14797f7e2c12c13932
+      internalID: -460121961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_3
+      rect:
+        serializedVersion: 2
+        x: 468
+        y: 183
+        width: 243
+        height: 217
+      alignment: 9
+      pivot: {x: 0.51069045, y: 0.17977251}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 184b9c4c39ef9e34e8c0b10f9d533ae6
+      internalID: 903167025
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_4
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 153
+        width: 89
+        height: 133
+      alignment: 9
+      pivot: {x: 0.507297, y: 0.22655424}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c00eaa39aa4c61e4dafb1c9280319249
+      internalID: 1120297087
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_5
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 151
+        width: 89
+        height: 133
+      alignment: 9
+      pivot: {x: 0.55107903, y: 0.24120325}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7b2abfd6c9fb4ae47a7c8c564eb886ec
+      internalID: 1336234808
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_6
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 13
+        width: 140
+        height: 171
+      alignment: 9
+      pivot: {x: 0.50927824, y: 0.04425777}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77d3d110ebaf2a34daf85423bc8314f7
+      internalID: -1749180633
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_7
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 14
+        width: 150
+        height: 161
+      alignment: 9
+      pivot: {x: 0.4870113, y: 0.052254174}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3ed797a6b01cf1d45abcadca6d752f70
+      internalID: -96365901
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_8
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 11
+        width: 89
+        height: 133
+      alignment: 9
+      pivot: {x: 0.55107903, y: 0.11424628}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d96e0f8fa28c09e438505b682d6310db
+      internalID: -1533520266
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_9
+      rect:
+        serializedVersion: 2
+        x: 116
+        y: 5
+        width: 89
+        height: 133
+      alignment: 9
+      pivot: {x: 0.55107903, y: 0.19237365}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b63ae255bbeedc40961837e1d7bcdbd
+      internalID: 507145236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TentSprites_10
+      rect:
+        serializedVersion: 2
+        x: 224
+        y: 5
+        width: 89
+        height: 133
+      alignment: 9
+      pivot: {x: 0.5437821, y: 0.20213947}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3fa1463aad80a749a582798ac411f9d
+      internalID: -1925135535
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      TentSprites_0: 467804158
+      TentSprites_1: -1233569877
+      TentSprites_10: -1925135535
+      TentSprites_2: -460121961
+      TentSprites_3: 903167025
+      TentSprites_4: 1120297087
+      TentSprites_5: 1336234808
+      TentSprites_6: -1749180633
+      TentSprites_7: -96365901
+      TentSprites_8: -1533520266
+      TentSprites_9: 507145236
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,209 @@
+{
+  "schema_version": 1,
+  "rooms": [
+    {
+      "id": "exterior_south_approach",
+      "map": "houska_exterior",
+      "function": "access_road",
+      "certainty": "probable"
+    },
+    {
+      "id": "exterior_rock_neck",
+      "map": "houska_exterior",
+      "function": "defensive_approach",
+      "certainty": "documented"
+    },
+    {
+      "id": "exterior_plateau",
+      "map": "houska_exterior",
+      "function": "castle_surroundings",
+      "certainty": "documented"
+    },
+    {
+      "id": "forecourt_stables",
+      "map": "houska_forecourt",
+      "function": "stable",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_guardhouse",
+      "map": "houska_forecourt",
+      "function": "guard",
+      "certainty": "probable"
+    },
+    {
+      "id": "west_residential_hall",
+      "map": "houska_west_first_floor",
+      "function": "residential_hall",
+      "certainty": "documented"
+    },
+    {
+      "id": "west_heated_chamber",
+      "map": "houska_west_first_floor",
+      "function": "heated_chamber",
+      "certainty": "documented"
+    },
+    {
+      "id": "west_timber_chamber",
+      "map": "houska_west_first_floor",
+      "function": "timber_chamber",
+      "certainty": "documented"
+    },
+    {
+      "id": "chapel_nave",
+      "map": "houska_north_chapel",
+      "function": "chapel_nave",
+      "certainty": "documented"
+    },
+    {
+      "id": "chapel_presbytery",
+      "map": "houska_north_chapel",
+      "function": "chapel_presbytery",
+      "certainty": "documented"
+    },
+    {
+      "id": "chapel_lords_gallery",
+      "map": "houska_north_chapel",
+      "function": "chapel_gallery",
+      "certainty": "documented"
+    },
+    {
+      "id": "forecourt_south_gate",
+      "map": "houska_forecourt",
+      "function": "gate_yard",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_ground",
+      "map": "houska_forecourt",
+      "function": "service_yard",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_feed_storage",
+      "map": "houska_forecourt",
+      "function": "feed_storage",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_rock_ditch",
+      "map": "houska_forecourt",
+      "function": "rock_cut_ditch",
+      "certainty": "documented"
+    },
+    {
+      "id": "forecourt_bridge",
+      "map": "houska_forecourt",
+      "function": "bridge",
+      "certainty": "probable"
+    },
+    {
+      "id": "forecourt_core_gate",
+      "map": "houska_forecourt",
+      "function": "core_gate_threshold",
+      "certainty": "probable"
+    },
+    {
+      "id": "courtyard_A",
+      "map": "houska_courtyard_ground",
+      "function": "courtyard",
+      "certainty": "documented"
+    },
+    {
+      "id": "room_01_gate_passage",
+      "map": "houska_courtyard_ground",
+      "function": "gate_passage",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_02_guardroom",
+      "map": "houska_courtyard_ground",
+      "function": "guard",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_03_guard_store",
+      "map": "houska_courtyard_ground",
+      "function": "storage",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_04_rock_room",
+      "map": "houska_courtyard_ground",
+      "function": "rock_service_room",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_05_east_main",
+      "map": "houska_courtyard_ground",
+      "function": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_06_east_inner",
+      "map": "houska_courtyard_ground",
+      "function": "storage",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_07_tower_corridor",
+      "map": "houska_courtyard_ground",
+      "function": "corridor",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_08_chapel",
+      "map": "houska_courtyard_ground",
+      "function": "chapel_nave",
+      "certainty": "documented"
+    },
+    {
+      "id": "room_09_north_stair",
+      "map": "houska_courtyard_ground",
+      "function": "stair",
+      "certainty": "documented"
+    },
+    {
+      "id": "room_10_west_north",
+      "map": "houska_courtyard_ground",
+      "function": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_11_west_mid_north",
+      "map": "houska_courtyard_ground",
+      "function": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_12_west_entry",
+      "map": "houska_courtyard_ground",
+      "function": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_13_west_mid_south",
+      "map": "houska_courtyard_ground",
+      "function": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_14_west_south",
+      "map": "houska_courtyard_ground",
+      "function": "service",
+      "certainty": "probable"
+    },
+    {
+      "id": "room_15_gate_stair",
+      "map": "houska_courtyard_ground",
+      "function": "stair",
+      "certainty": "documented"
+    },
+    {
+      "id": "grain_storage_mouth",
+      "map": "houska_courtyard_ground",
+      "function": "storage",
+      "certainty": "probable"
+    }
+  ]
+}

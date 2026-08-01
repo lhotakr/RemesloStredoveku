@@ -1,0 +1,6 @@
+out/
+vcpkg/
+vcpkg_installed/
+cmake-build-debug/
+repair_payload/
+.vs/

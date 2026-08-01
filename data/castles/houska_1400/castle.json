@@ -1,0 +1,30 @@
+{
+  "schema_version": 1,
+  "id": "houska_1400",
+  "display_name": "Hrad Houska kolem roku 1400",
+  "default_map": "houska_exterior",
+  "maps": [
+    "houska_exterior",
+    "houska_forecourt",
+    "houska_courtyard_ground",
+    "houska_west_first_floor",
+    "houska_east_first_floor",
+    "houska_north_chapel",
+    "houska_upper_floor",
+    "houska_cellars"
+  ],
+  "layers": {
+    "historical": true,
+    "legendary_optional": true
+  },
+  "historical": {
+    "certainty": "documented",
+    "phase": "late_gothic_1390_1410",
+    "active_from": 1390,
+    "active_to": 1410,
+    "sources": [
+      "project_historical_brief"
+    ],
+    "note": "Projektový manifest odděluje historickou, pravděpodobnou, interpretační a legendární vrstvu."
+  }
+}

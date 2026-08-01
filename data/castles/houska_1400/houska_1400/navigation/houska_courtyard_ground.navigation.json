@@ -1,0 +1,79 @@
+{
+  "schema_version": 2,
+  "npc_walkable_rooms": [
+    "courtyard_A",
+    "room_01_gate_passage",
+    "room_02_guardroom",
+    "room_03_guard_store",
+    "room_04_rock_room",
+    "room_05_east_main",
+    "room_06_east_inner",
+    "room_07_tower_corridor",
+    "room_08_chapel",
+    "room_09_north_stair",
+    "room_10_west_north",
+    "room_11_west_mid_north",
+    "room_12_west_entry",
+    "room_13_west_mid_south",
+    "room_14_west_south",
+    "room_15_gate_stair"
+  ],
+  "lights": [
+    {
+      "id": "courtyard_sky",
+      "type": "sky",
+      "x": 33.0,
+      "y": 24.0,
+      "z": 8.0,
+      "radius": 40.0,
+      "intensity": 1.0,
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "environment"
+      }
+    },
+    {
+      "id": "guardroom_hearth_light",
+      "type": "hearth",
+      "x": 39.5,
+      "y": 42.0,
+      "z": 1.1,
+      "radius": 4.0,
+      "intensity": 0.65,
+      "npc_access": true,
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation"
+      }
+    },
+    {
+      "id": "rock_room_fireplace_light",
+      "type": "hearth",
+      "x": 57.0,
+      "y": 31.0,
+      "z": 1.1,
+      "radius": 5.0,
+      "intensity": 0.75,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      }
+    },
+    {
+      "id": "chapel_window_light",
+      "type": "window",
+      "x": 54.5,
+      "y": 5.0,
+      "z": 3.2,
+      "radius": 7.0,
+      "intensity": 0.9,
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410"
+      }
+    }
+  ]
+}

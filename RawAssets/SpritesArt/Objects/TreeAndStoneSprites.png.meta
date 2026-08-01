@@ -1,0 +1,1956 @@
+fileFormatVersion: 2
+guid: 595e1064658f45946bf1cf59f669591f
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_0
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 530
+        width: 75
+        height: 120
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0.05}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 210218436bbdfb74c94854f183cfd17a
+      internalID: 146526280
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_1
+      rect:
+        serializedVersion: 2
+        x: 96
+        y: 530
+        width: 75
+        height: 120
+      alignment: 9
+      pivot: {x: 0.5133333, y: 0.079166666}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0fc90366a98436a4e89d2a3fcbc8c4b3
+      internalID: -1282822528
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_2
+      rect:
+        serializedVersion: 2
+        x: 185
+        y: 533
+        width: 75
+        height: 114
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0.083333336}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fc477dc26f9289848acaac3be04208a0
+      internalID: 2081467659
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_3
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 530
+        width: 97
+        height: 127
+      alignment: 9
+      pivot: {x: 0.5164741, y: 0.109940656}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 736bbc8539cebd14dadefb45690a8301
+      internalID: -543776953
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_4
+      rect:
+        serializedVersion: 2
+        x: 401
+        y: 533
+        width: 84
+        height: 146
+      alignment: 9
+      pivot: {x: 0.5063411, y: 0.08408596}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a621f1995ad097b4ea86c2bf5e734a1c
+      internalID: 892952276
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_5
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 538
+        width: 96
+        height: 144
+      alignment: 9
+      pivot: {x: 0.52219456, y: 0.067212425}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 244479a204c26594fa7c4273b77d7328
+      internalID: 1759060514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_6
+      rect:
+        serializedVersion: 2
+        x: 605
+        y: 534
+        width: 99
+        height: 152
+      alignment: 9
+      pivot: {x: 0.6506514, y: 0.082982115}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7ad14588c4779c44abb15504dd91dbfe
+      internalID: -1404898592
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_7
+      rect:
+        serializedVersion: 2
+        x: 727
+        y: 537
+        width: 110
+        height: 142
+      alignment: 9
+      pivot: {x: 0.4951577, y: 0.11363285}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7d3ad6b64b5e6c2459a0b241836fcbd5
+      internalID: 410136246
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_8
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 494
+        width: 30
+        height: 19
+      alignment: 9
+      pivot: {x: 0.4905984, y: 0.22267713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ee1098ac59328a44adb69064577ecd1
+      internalID: -128148527
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_9
+      rect:
+        serializedVersion: 2
+        x: 119
+        y: 490
+        width: 30
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8c2281d892d805e4ab58f204d02a4dc5
+      internalID: 365955654
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_10
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 494
+        width: 30
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82cc9c9847845564caeaf0c1224f677c
+      internalID: 1966390082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_11
+      rect:
+        serializedVersion: 2
+        x: 330
+        y: 497
+        width: 28
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3efb21607c81e3d4c9a312e2f843f9ec
+      internalID: -673899485
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_12
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 497
+        width: 30
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 94a859fc10d045549bc6badc24c1b516
+      internalID: -95149381
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_13
+      rect:
+        serializedVersion: 2
+        x: 535
+        y: 504
+        width: 21
+        height: 23
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9482b2df36a75084e8db685a7a879d4c
+      internalID: 820537143
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_14
+      rect:
+        serializedVersion: 2
+        x: 655
+        y: 500
+        width: 27
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5abca162c9022814bb4b3a3f1eddaab4
+      internalID: 787464987
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_15
+      rect:
+        serializedVersion: 2
+        x: 777
+        y: 507
+        width: 23
+        height: 17
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2af8737a70f36514c9a39f96b21a3f06
+      internalID: 1378092522
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_16
+      rect:
+        serializedVersion: 2
+        x: 19
+        y: 374
+        width: 63
+        height: 106
+      alignment: 9
+      pivot: {x: 0.5714286, y: 0.0990566}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b001a01e4dbb41b4d90e3a198d98d006
+      internalID: 880364994
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_17
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 373
+        width: 63
+        height: 106
+      alignment: 9
+      pivot: {x: 0.54761904, y: 0.10377359}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e47a491f883a5bb45b7b92253f2a9c7e
+      internalID: 826243524
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_18
+      rect:
+        serializedVersion: 2
+        x: 177
+        y: 345
+        width: 111
+        height: 134
+      alignment: 9
+      pivot: {x: 0.5810811, y: 0.09701493}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 90daa07a0e6b5d54c835b3376a0cb2fb
+      internalID: -834690209
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_19
+      rect:
+        serializedVersion: 2
+        x: 302
+        y: 346
+        width: 111
+        height: 134
+      alignment: 9
+      pivot: {x: 0.6009009, y: 0.08955224}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7014da4f468751843a433943e8f723e7
+      internalID: 509242846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_20
+      rect:
+        serializedVersion: 2
+        x: 430
+        y: 287
+        width: 115
+        height: 195
+      alignment: 9
+      pivot: {x: 0.5043478, y: 0.092307694}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 893fda7af89fa424ba560e6815955912
+      internalID: 1431273777
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_21
+      rect:
+        serializedVersion: 2
+        x: 564
+        y: 287
+        width: 122
+        height: 197
+      alignment: 9
+      pivot: {x: 0.52868855, y: 0.09137056}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 57fe894b0bae4134e840c21e89963757
+      internalID: 529679103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_22
+      rect:
+        serializedVersion: 2
+        x: 707
+        y: 284
+        width: 141
+        height: 210
+      alignment: 9
+      pivot: {x: 0.5177305, y: 0.08571429}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 79eae6fca9511494aa2d3ef211377872
+      internalID: -380520070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_23
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 346
+        width: 22
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b9b584ab00d9664a961492e29362070
+      internalID: 1898858039
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_24
+      rect:
+        serializedVersion: 2
+        x: 121
+        y: 348
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fcbe57a6f663c2f44ae9fefbc8d7206f
+      internalID: 1599914100
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_25
+      rect:
+        serializedVersion: 2
+        x: 39
+        y: 290
+        width: 35
+        height: 37
+      alignment: 9
+      pivot: {x: 0.47735596, y: 0.13586096}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eae04f9ff94c9e941ac84c69619b62d6
+      internalID: 354294930
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_26
+      rect:
+        serializedVersion: 2
+        x: 117
+        y: 293
+        width: 35
+        height: 38
+      alignment: 9
+      pivot: {x: 0.45471236, y: 0.103731655}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a7b04b72277d7324cb8247d65aab8708
+      internalID: -1318235543
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_27
+      rect:
+        serializedVersion: 2
+        x: 209
+        y: 304
+        width: 43
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e110259673d8c59418cd3570c33cb508
+      internalID: -1754537488
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_28
+      rect:
+        serializedVersion: 2
+        x: 281
+        y: 306
+        width: 32
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e693e724020f5034b91c6791a3c18dee
+      internalID: 1468450779
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_29
+      rect:
+        serializedVersion: 2
+        x: 322
+        y: 306
+        width: 32
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d63b40de22a8c414391f0c3406eb290d
+      internalID: 1380085868
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_30
+      rect:
+        serializedVersion: 2
+        x: 359
+        y: 308
+        width: 43
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1dc241a95617f2240b4cb8f6d1a96609
+      internalID: -560004715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_31
+      rect:
+        serializedVersion: 2
+        x: 285
+        y: 278
+        width: 24
+        height: 19
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3053570abb9fbcd4fbda52b62cde0ab3
+      internalID: -1511029515
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_34
+      rect:
+        serializedVersion: 2
+        x: 352
+        y: 269
+        width: 52
+        height: 32
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3618ea9645b58fb46b7c406d4bc514de
+      internalID: 1047977913
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_36
+      rect:
+        serializedVersion: 2
+        x: 318
+        y: 273
+        width: 28
+        height: 22
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 15a70ddfeb945ad44bd7e002295d6384
+      internalID: -341940155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_38
+      rect:
+        serializedVersion: 2
+        x: 473
+        y: 258
+        width: 36
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 76822459357678b42b2e4f3e60a385d3
+      internalID: -1121188812
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_40
+      rect:
+        serializedVersion: 2
+        x: 609
+        y: 253
+        width: 42
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cc53bb603abcce54a8e33691c314464a
+      internalID: -1386128359
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_41
+      rect:
+        serializedVersion: 2
+        x: 760
+        y: 253
+        width: 38
+        height: 27
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 370d4062bd8639649ba3bbc76c96435b
+      internalID: -352967385
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_42
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 150
+        width: 63
+        height: 103
+      alignment: 9
+      pivot: {x: 0.48412699, y: 0.116504855}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6b27286f8fd4f6b43a1023cddf14b7d0
+      internalID: 498860212
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_43
+      rect:
+        serializedVersion: 2
+        x: 109
+        y: 150
+        width: 62
+        height: 121
+      alignment: 9
+      pivot: {x: 0.46774194, y: 0.09504132}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 527020d076ec3bd4fa4b62207c7def2a
+      internalID: 839936042
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_44
+      rect:
+        serializedVersion: 2
+        x: 192
+        y: 150
+        width: 68
+        height: 103
+      alignment: 9
+      pivot: {x: 0.5588235, y: 0.097087376}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a2cfbc3fe4dadd4c9c9355eb9393d21
+      internalID: -1231104563
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_45
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 148
+        width: 83
+        height: 124
+      alignment: 9
+      pivot: {x: 0.5060241, y: 0.12096774}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 82b46e2b96f61dc4690ebea1bcf00ffd
+      internalID: 685685492
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_46
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 153
+        width: 21
+        height: 102
+      alignment: 9
+      pivot: {x: 0.42857143, y: 0.0882353}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0840f1e29d32a1b449b578003e9b350b
+      internalID: 1797627198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_47
+      rect:
+        serializedVersion: 2
+        x: 428
+        y: 153
+        width: 18
+        height: 102
+      alignment: 9
+      pivot: {x: 0.4722222, y: 0.063725494}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb8030871b26efe46bb2bde1e9f1ebe9
+      internalID: 1140458402
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_48
+      rect:
+        serializedVersion: 2
+        x: 480
+        y: 163
+        width: 45
+        height: 90
+      alignment: 9
+      pivot: {x: 0.48945245, y: 0.14141694}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a1ee0eb9bfa8890439c3a9f119f05aae
+      internalID: -920067489
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_49
+      rect:
+        serializedVersion: 2
+        x: 602
+        y: 68
+        width: 109
+        height: 161
+      alignment: 9
+      pivot: {x: 0.5091743, y: 0.09504216}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 26a13e429e001524496908f450c1dac2
+      internalID: 138995714
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_50
+      rect:
+        serializedVersion: 2
+        x: 724
+        y: 32
+        width: 124
+        height: 207
+      alignment: 9
+      pivot: {x: 0.5, y: 0.08695652}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2c0f2d0579db6e04590101c942173ca8
+      internalID: 1742478312
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_51
+      rect:
+        serializedVersion: 2
+        x: 42
+        y: 120
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b311a2770c996d408b019ef4e9962c8
+      internalID: -1216192190
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_52
+      rect:
+        serializedVersion: 2
+        x: 130
+        y: 122
+        width: 15
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f61972a80edbac640b81cf3fd0003cab
+      internalID: 1047695206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_53
+      rect:
+        serializedVersion: 2
+        x: 217
+        y: 118
+        width: 22
+        height: 20
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 51a7644eb1d78814fb1386620ee27dcc
+      internalID: 991634425
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_54
+      rect:
+        serializedVersion: 2
+        x: 283
+        y: 114
+        width: 39
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8b342cee524ab3d4abfdd6c9e26e9621
+      internalID: 1498438057
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_55
+      rect:
+        serializedVersion: 2
+        x: 378
+        y: 117
+        width: 18
+        height: 25
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 89f302824378ce34e856272623d7704b
+      internalID: -737256360
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_56
+      rect:
+        serializedVersion: 2
+        x: 422
+        y: 113
+        width: 30
+        height: 33
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c59e8cb7ed2e7bc4d9c234929a302330
+      internalID: 1434705986
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_57
+      rect:
+        serializedVersion: 2
+        x: 482
+        y: 110
+        width: 28
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74349521aa009af4a82d79c1c402d6a9
+      internalID: -1818403769
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_58
+      rect:
+        serializedVersion: 2
+        x: 515
+        y: 112
+        width: 30
+        height: 21
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bedf9300086b89146a9a0a9ff1d04077
+      internalID: 1341516510
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_60
+      rect:
+        serializedVersion: 2
+        x: 554
+        y: 112
+        width: 17
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d6c9f66774114d94595c49b41b8a8729
+      internalID: -186169802
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_61
+      rect:
+        serializedVersion: 2
+        x: 642
+        y: 14
+        width: 38
+        height: 33
+      alignment: 9
+      pivot: {x: 0.46022215, y: 0.07729366}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fe19ec351a6e8e249908d887bf9743e8
+      internalID: -1080034596
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_63
+      rect:
+        serializedVersion: 2
+        x: 140
+        y: 61
+        width: 52
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5, y: 0.20512821}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3015cdf9ff8ed1545ab6991f552a4030
+      internalID: -202533140
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_64
+      rect:
+        serializedVersion: 2
+        x: 214
+        y: 70
+        width: 28
+        height: 26
+      alignment: 9
+      pivot: {x: 0.53571427, y: 0.30769232}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3768b661af0aec54a972cec7d3d4dcaa
+      internalID: 556964618
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_65
+      rect:
+        serializedVersion: 2
+        x: 275
+        y: 66
+        width: 39
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5, y: 0.21320367}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d34548457d5570f4aa9d854aa9ba4a9d
+      internalID: -624653514
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_69
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 80
+        width: 33
+        height: 18
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c746f2d431ea23345b07e7b4e4d37ab7
+      internalID: 82979040
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_70
+      rect:
+        serializedVersion: 2
+        x: 467
+        y: 80
+        width: 33
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec0dc2abc6f64104caffb533434c8001
+      internalID: -1365143342
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_71
+      rect:
+        serializedVersion: 2
+        x: 492
+        y: 89
+        width: 7
+        height: 13
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e955674478894ec499e9d69c29e20870
+      internalID: 1541577494
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_73
+      rect:
+        serializedVersion: 2
+        x: 545
+        y: 43
+        width: 37
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bcda36136cc11c3489dda766cbfacd91
+      internalID: 1644637621
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_74
+      rect:
+        serializedVersion: 2
+        x: 34
+        y: 63
+        width: 32
+        height: 28
+      alignment: 9
+      pivot: {x: 0.484375, y: 0.25}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1004d3f36abef924fa6aac59efa11d55
+      internalID: 134955262
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_75
+      rect:
+        serializedVersion: 2
+        x: 84
+        y: 59
+        width: 43
+        height: 33
+      alignment: 9
+      pivot: {x: 0.5000002, y: 0.1969697}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5f7d51d8701539f4e91bd7c0d380f6e7
+      internalID: -1286043555
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_79
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 76
+        width: 54
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2baf98a4682f549429fe689495b62ac7
+      internalID: 1386229103
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_80
+      rect:
+        serializedVersion: 2
+        x: 345
+        y: 70
+        width: 42
+        height: 29
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 69290503d8ed88743b9a147ff3a94546
+      internalID: 1915872715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_81
+      rect:
+        serializedVersion: 2
+        x: 135
+        y: 16
+        width: 52
+        height: 39
+      alignment: 9
+      pivot: {x: 0.47115386, y: 0.26923078}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0e924ed33cc371846a86ac89fb66b732
+      internalID: 1956274386
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_82
+      rect:
+        serializedVersion: 2
+        x: 210
+        y: 22
+        width: 36
+        height: 27
+      alignment: 9
+      pivot: {x: 0.4722222, y: 0.25925925}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6404a68c2cfa92e4684ad00fcbb83fca
+      internalID: 122316846
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_83
+      rect:
+        serializedVersion: 2
+        x: 273
+        y: 23
+        width: 47
+        height: 32
+      alignment: 9
+      pivot: {x: 0.4893617, y: 0.09375}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9f55f860678e0945aa59e317c78d187
+      internalID: -568831219
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_84
+      rect:
+        serializedVersion: 2
+        x: 342
+        y: 17
+        width: 54
+        height: 38
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 675d030751bf37348912b25bc7c0ce81
+      internalID: -93632393
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_85
+      rect:
+        serializedVersion: 2
+        x: 426
+        y: 20
+        width: 65
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 688cb21de170edf40941e4eddbe9cb84
+      internalID: 1185722557
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_86
+      rect:
+        serializedVersion: 2
+        x: 513
+        y: 46
+        width: 25
+        height: 24
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 453d304af8e6ef04e9bde8f3760c73f2
+      internalID: 1864639482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_87
+      rect:
+        serializedVersion: 2
+        x: 573
+        y: 58
+        width: 4
+        height: 4
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: dccb0588a61f1494eb323bf00c4b7c72
+      internalID: -2109613691
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_88
+      rect:
+        serializedVersion: 2
+        x: 587
+        y: 14
+        width: 49
+        height: 39
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6a264e3a07a0fe847bde4a255be45507
+      internalID: 1081399112
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_89
+      rect:
+        serializedVersion: 2
+        x: 32
+        y: 17
+        width: 32
+        height: 28
+      alignment: 9
+      pivot: {x: 0.46875, y: 0.23214285}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6ea284cb0dfe25545a91dac1bb9c9718
+      internalID: -664866084
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_90
+      rect:
+        serializedVersion: 2
+        x: 81
+        y: 17
+        width: 41
+        height: 28
+      alignment: 9
+      pivot: {x: 0.4878049, y: 0.39285713}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b85bee082038df04d913eda93e5abd2e
+      internalID: 204205383
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_91
+      rect:
+        serializedVersion: 2
+        x: 521
+        y: 16
+        width: 20
+        height: 15
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3dde60ec5a831d947bb8fc5698a59630
+      internalID: 1203886384
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_92
+      rect:
+        serializedVersion: 2
+        x: 552
+        y: 18
+        width: 15
+        height: 14
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 837d30f47ed54b14f967a5779ee3be9b
+      internalID: -1907819051
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_93
+      rect:
+        serializedVersion: 2
+        x: 681
+        y: 13
+        width: 38
+        height: 30
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6eb20c05ed8310049a9e2fdc20fac6c3
+      internalID: -1241876281
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_32
+      rect:
+        serializedVersion: 2
+        x: 286
+        y: 286
+        width: 10
+        height: 5
+      alignment: 9
+      pivot: {x: 0.5, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a2aafe5b937a12e469f1cf42182857e6
+      internalID: -563668540
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: TreeAndStoneSprites_33
+      rect:
+        serializedVersion: 2
+        x: 298
+        y: 280
+        width: 9
+        height: 5
+      alignment: 9
+      pivot: {x: 0.5555556, y: 0.2}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 339e4e087f1c6dc4487239ce919acc3a
+      internalID: -1999168032
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      TreeAndStoneSprites_0: 146526280
+      TreeAndStoneSprites_1: -1282822528
+      TreeAndStoneSprites_10: 1966390082
+      TreeAndStoneSprites_11: -673899485
+      TreeAndStoneSprites_12: -95149381
+      TreeAndStoneSprites_13: 820537143
+      TreeAndStoneSprites_14: 787464987
+      TreeAndStoneSprites_15: 1378092522
+      TreeAndStoneSprites_16: 880364994
+      TreeAndStoneSprites_17: 826243524
+      TreeAndStoneSprites_18: -834690209
+      TreeAndStoneSprites_19: 509242846
+      TreeAndStoneSprites_2: 2081467659
+      TreeAndStoneSprites_20: 1431273777
+      TreeAndStoneSprites_21: 529679103
+      TreeAndStoneSprites_22: -380520070
+      TreeAndStoneSprites_23: 1898858039
+      TreeAndStoneSprites_24: 1599914100
+      TreeAndStoneSprites_25: 354294930
+      TreeAndStoneSprites_26: -1318235543
+      TreeAndStoneSprites_27: -1754537488
+      TreeAndStoneSprites_28: 1468450779
+      TreeAndStoneSprites_29: 1380085868
+      TreeAndStoneSprites_3: -543776953
+      TreeAndStoneSprites_30: -560004715
+      TreeAndStoneSprites_31: -1511029515
+      TreeAndStoneSprites_32: -563668540
+      TreeAndStoneSprites_33: -1999168032
+      TreeAndStoneSprites_34: 1047977913
+      TreeAndStoneSprites_35: -227184366
+      TreeAndStoneSprites_36: -341940155
+      TreeAndStoneSprites_37: 1294869574
+      TreeAndStoneSprites_38: -1121188812
+      TreeAndStoneSprites_39: 1864464366
+      TreeAndStoneSprites_4: 892952276
+      TreeAndStoneSprites_40: -1386128359
+      TreeAndStoneSprites_41: -352967385
+      TreeAndStoneSprites_42: 498860212
+      TreeAndStoneSprites_43: 839936042
+      TreeAndStoneSprites_44: -1231104563
+      TreeAndStoneSprites_45: 685685492
+      TreeAndStoneSprites_46: 1797627198
+      TreeAndStoneSprites_47: 1140458402
+      TreeAndStoneSprites_48: -920067489
+      TreeAndStoneSprites_49: 138995714
+      TreeAndStoneSprites_5: 1759060514
+      TreeAndStoneSprites_50: 1742478312
+      TreeAndStoneSprites_51: -1216192190
+      TreeAndStoneSprites_52: 1047695206
+      TreeAndStoneSprites_53: 991634425
+      TreeAndStoneSprites_54: 1498438057
+      TreeAndStoneSprites_55: -737256360
+      TreeAndStoneSprites_56: 1434705986
+      TreeAndStoneSprites_57: -1818403769
+      TreeAndStoneSprites_58: 1341516510
+      TreeAndStoneSprites_59: -678747783
+      TreeAndStoneSprites_6: -1404898592
+      TreeAndStoneSprites_60: -186169802
+      TreeAndStoneSprites_61: -1080034596
+      TreeAndStoneSprites_62: 2135536568
+      TreeAndStoneSprites_63: -202533140
+      TreeAndStoneSprites_64: 556964618
+      TreeAndStoneSprites_65: -624653514
+      TreeAndStoneSprites_66: -2081577426
+      TreeAndStoneSprites_67: 258301700
+      TreeAndStoneSprites_68: -233873505
+      TreeAndStoneSprites_69: 82979040
+      TreeAndStoneSprites_7: 410136246
+      TreeAndStoneSprites_70: -1365143342
+      TreeAndStoneSprites_71: 1541577494
+      TreeAndStoneSprites_72: -1626303036
+      TreeAndStoneSprites_73: 1644637621
+      TreeAndStoneSprites_74: 134955262
+      TreeAndStoneSprites_75: -1286043555
+      TreeAndStoneSprites_76: 1752780327
+      TreeAndStoneSprites_77: 231076771
+      TreeAndStoneSprites_78: -709326441
+      TreeAndStoneSprites_79: 1386229103
+      TreeAndStoneSprites_8: -128148527
+      TreeAndStoneSprites_80: 1915872715
+      TreeAndStoneSprites_81: 1956274386
+      TreeAndStoneSprites_82: 122316846
+      TreeAndStoneSprites_83: -568831219
+      TreeAndStoneSprites_84: -93632393
+      TreeAndStoneSprites_85: 1185722557
+      TreeAndStoneSprites_86: 1864639482
+      TreeAndStoneSprites_87: -2109613691
+      TreeAndStoneSprites_88: 1081399112
+      TreeAndStoneSprites_89: -664866084
+      TreeAndStoneSprites_9: 365955654
+      TreeAndStoneSprites_90: 204205383
+      TreeAndStoneSprites_91: 1203886384
+      TreeAndStoneSprites_92: -1907819051
+      TreeAndStoneSprites_93: -1241876281
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

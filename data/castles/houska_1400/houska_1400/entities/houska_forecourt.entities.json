@@ -1,0 +1,219 @@
+{
+  "schema_version": 1,
+  "entities": [
+    {
+      "id": "guardhouse_barrels",
+      "prototype": "barrel_stack",
+      "material": "barrel_stack",
+      "render_mode": "voxel",
+      "x": 14.5,
+      "y": 28.5,
+      "z_offset": 0.0,
+      "scale": 0.85,
+      "solid": true,
+      "interaction_label": "Sudy se zásobami pro strážnici.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": -8,
+      "voxel_depth": 0.62
+    },
+    {
+      "id": "stable_hay_01",
+      "prototype": "haystack",
+      "material": "haystack",
+      "render_mode": "voxel",
+      "x": 44.5,
+      "y": 27.0,
+      "z_offset": 0.0,
+      "scale": 1.15,
+      "solid": true,
+      "interaction_label": "Uschované seno pro koně.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": 17,
+      "voxel_depth": 0.82
+    },
+    {
+      "id": "stable_trough_01",
+      "prototype": "wooden_trough",
+      "material": "wooden_trough",
+      "render_mode": "voxel",
+      "x": 40.5,
+      "y": 30.0,
+      "z_offset": 0.0,
+      "scale": 0.9,
+      "solid": true,
+      "interaction_label": "Dřevěný žlab ve stáji.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": 90,
+      "voxel_depth": 0.48
+    },
+    {
+      "id": "forecourt_cart_01",
+      "prototype": "wooden_cart",
+      "material": "wooden_cart",
+      "render_mode": "billboard",
+      "x": 31.0,
+      "y": 29.0,
+      "z_offset": 0.0,
+      "scale": 1.45,
+      "solid": true,
+      "interaction_label": "Detailní dvoukolový hospodářský vůz.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": 25
+    },
+    {
+      "id": "feed_hay_01",
+      "prototype": "haystack",
+      "material": "haystack",
+      "render_mode": "voxel",
+      "x": 42.0,
+      "y": 21.5,
+      "z_offset": 0.0,
+      "scale": 0.95,
+      "solid": true,
+      "interaction_label": "Zásoba krmiva pod přístřeškem.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "yaw_degrees": -21,
+      "voxel_depth": 0.74
+    },
+    {
+      "id": "ditch_warning",
+      "prototype": "sandstone_outcrop",
+      "material": "sandstone_outcrop",
+      "render_mode": "billboard",
+      "x": 20.0,
+      "y": 17.2,
+      "z_offset": 0.0,
+      "scale": 0.6,
+      "solid": false,
+      "interaction_label": "Ve skále je vysekán hluboký příkop. Přechod vede pouze přes most.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "gameplay_marker",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "forecourt_campfire_01",
+      "prototype": "campfire",
+      "material": "campfire",
+      "render_mode": "billboard",
+      "x": 24.5,
+      "y": 29.5,
+      "z_offset": 0.0,
+      "scale": 1.15,
+      "solid": false,
+      "yaw_degrees": 0,
+      "animated": true,
+      "random_animation": false,
+      "animation_min_fps": 8.0,
+      "animation_max_fps": 8.0,
+      "emits_light": true,
+      "light_color": [
+        255,
+        126,
+        52
+      ],
+      "light_radius": 4.0,
+      "light_intensity": 0.88,
+      "light_height": 0.46,
+      "light_flicker": 0.1,
+      "interaction_label": "Malé ohniště stráže. Žhavé uhlíky ještě sálají teplo.",
+      "historical": {
+        "certainty": "interpretive",
+        "phase": "daily_operation",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Umístění ohniště je herní rekonstrukce každodenního provozu předhradí."
+      }
+    },
+    {
+      "id": "forecourt_gate_torch_w",
+      "prototype": "courtyard_torch",
+      "material": "courtyard_torch",
+      "render_mode": "voxel",
+      "x": 24.9,
+      "y": 10.1,
+      "z_offset": 1.25,
+      "scale": 0.48,
+      "solid": false,
+      "yaw_degrees": 0,
+      "voxel_depth": 0.14,
+      "animated": true,
+      "random_animation": true,
+      "animation_min_fps": 8.0,
+      "animation_max_fps": 9.0,
+      "emits_light": true,
+      "light_color": [
+        255,
+        145,
+        70
+      ],
+      "light_radius": 3.4,
+      "light_intensity": 0.72,
+      "light_height": 0.55,
+      "light_flicker": 0.08,
+      "interaction_label": "Kovaná nástěnná pochodeň osvětluje bránu."
+    },
+    {
+      "id": "forecourt_gate_torch_e",
+      "prototype": "courtyard_torch",
+      "material": "courtyard_torch",
+      "render_mode": "voxel",
+      "x": 30.1,
+      "y": 10.1,
+      "z_offset": 1.25,
+      "scale": 0.48,
+      "solid": false,
+      "yaw_degrees": 180,
+      "voxel_depth": 0.14,
+      "animated": true,
+      "random_animation": true,
+      "animation_min_fps": 8.0,
+      "animation_max_fps": 9.0,
+      "emits_light": true,
+      "light_color": [
+        255,
+        145,
+        70
+      ],
+      "light_radius": 3.4,
+      "light_intensity": 0.72,
+      "light_height": 0.55,
+      "light_flicker": 0.08,
+      "interaction_label": "Kovaná nástěnná pochodeň osvětluje bránu."
+    }
+  ]
+}

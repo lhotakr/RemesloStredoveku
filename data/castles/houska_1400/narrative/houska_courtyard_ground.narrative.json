@@ -1,0 +1,17 @@
+{
+  "schema_version": 1,
+  "historical_layer": {
+    "enabled": true,
+    "notes": [
+      "Ústí zásobnice je popisováno jako hospodářský prvek.",
+      "Nádvořní pavlače jsou dřevěné, nikoli dnešní kamenné arkády."
+    ]
+  },
+  "legendary_layer": {
+    "enabled_by_default": false,
+    "events": [],
+    "notes": [
+      "Pověsti o bráně do pekla se v této mapě neprojevují změnou architektury."
+    ]
+  }
+}

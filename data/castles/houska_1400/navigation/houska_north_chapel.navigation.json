@@ -1,0 +1,13 @@
+{
+  "schema_version": 1,
+  "lights": [
+    { "id": "chapel_torch_west_light", "type": "torch", "x": 6.2, "y": 8.3, "z": 1.6, "radius": 3.4, "intensity": 0.54, "npc_access": true,
+      "historical": { "certainty": "interpretive", "phase": "daily_operation", "sources": ["project_historical_brief"] } },
+    { "id": "chapel_torch_east_light", "type": "torch", "x": 17.8, "y": 8.3, "z": 1.6, "radius": 3.4, "intensity": 0.54, "npc_access": true,
+      "historical": { "certainty": "interpretive", "phase": "daily_operation", "sources": ["project_historical_brief"] } }
+  ],
+  "npc_regions": [
+    { "id": "chapel_nave", "rect": [5, 6, 14, 10], "access": true },
+    { "id": "chapel_presbytery", "rect": [7, 2, 10, 4], "access": false }
+  ]
+}

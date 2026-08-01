@@ -1,0 +1,35 @@
+{
+  "trait_groups": [
+    {
+      "id": "growth_form",
+      "label": "Způsob růstu",
+      "options": [
+        { "id": "single", "label": "roste samostatně" },
+        { "id": "small_group", "label": "roste v malé skupině" },
+        { "id": "cluster", "label": "roste v trsu" },
+        { "id": "wood", "label": "roste na dřevě" },
+        { "id": "shelf", "label": "roste jako patro na kmeni" },
+        { "id": "ground_rosette", "label": "roste přízemně v růžici" }
+      ]
+    },
+    {
+      "id": "underside_type",
+      "label": "Spodní strana",
+      "options": [
+        { "id": "pores", "label": "má rourky" },
+        { "id": "gills", "label": "má lupeny" },
+        { "id": "hidden", "label": "nelze dobře rozeznat" }
+      ]
+    },
+    {
+      "id": "smell",
+      "label": "Vůně po promnutí",
+      "options": [
+        { "id": "weak", "label": "nevýrazná" },
+        { "id": "aromatic", "label": "silně aromatická" },
+        { "id": "bitter", "label": "hořká" },
+        { "id": "sharp", "label": "štiplavá" }
+      ]
+    }
+  ]
+}

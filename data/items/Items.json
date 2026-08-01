@@ -1,0 +1,35 @@
+{
+  "items": [
+    {
+      "id": "bread",
+      "name": "Chl�b",
+      "weight": 0.5,
+      "stackable": true,
+      "max_stack": 10,
+      "food": true
+    },
+    {
+      "id": "water",
+      "name": "Voda",
+      "weight": 1.0,
+      "stackable": true,
+      "max_stack": 5,
+      "drink": true
+    },
+    {
+      "id": "bandage",
+      "name": "Obvaz",
+      "weight": 0.1,
+      "stackable": true,
+      "max_stack": 10,
+      "medicine": true
+    },
+    {
+      "id": "wood_log",
+      "name": "Poleno",
+      "weight": 3.0,
+      "stackable": false,
+      "max_stack": 1
+    }
+  ]
+}

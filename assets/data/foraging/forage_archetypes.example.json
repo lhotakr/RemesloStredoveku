@@ -1,0 +1,36 @@
+{
+  "archetypes": [
+    {
+      "id": "generic_mushroom_patch",
+      "category": "mushroom",
+      "display_unknown": "neznámé houby",
+      "display_partial": "houby",
+      "generic_map_sprite": "fungi_001",
+      "detail_placeholder_sprite": "fungi_002",
+      "herbarium_placeholder_sprite": "fungi_003",
+      "examination_slots": [
+        "cap",
+        "stem",
+        "gills",
+        "smell",
+        "habitat"
+      ]
+    },
+    {
+      "id": "generic_herb_patch",
+      "category": "herb",
+      "display_unknown": "neznámé byliny",
+      "display_partial": "byliny",
+      "generic_map_sprite": "herbs_001",
+      "detail_placeholder_sprite": "herbs_002",
+      "herbarium_placeholder_sprite": "herbs_003",
+      "examination_slots": [
+        "flower",
+        "leaf",
+        "smell",
+        "root",
+        "habitat"
+      ]
+    }
+  ]
+}

@@ -1,0 +1,76 @@
+{
+  "species": [
+    {
+      "id": "boletus_generic",
+      "archetype_id": "generic_mushroom_patch",
+      "true_name": "hřib obecný",
+      "folk_names": [
+        "hřib",
+        "pravák"
+      ],
+      "detail_sprite": "fungi_001",
+      "inventory_sprite": "fungi_001",
+      "herbarium_sprite": "fungi_001",
+      "difficulty": 25,
+      "edibility": "edible",
+      "medicinal_value": "none",
+      "toxicity_level": 0,
+      "traits": {
+        "cap": [
+          "hnědý",
+          "masitý"
+        ],
+        "stem": [
+          "světlý",
+          "silný"
+        ],
+        "habitat": [
+          "les"
+        ]
+      },
+      "effects_on_eat": [
+        "nutrition_small"
+      ],
+      "effects_on_use": [],
+      "season": [
+        "summer",
+        "autumn"
+      ]
+    },
+    {
+      "id": "unknown_healing_herb",
+      "archetype_id": "generic_herb_patch",
+      "true_name": "léčivá bylina",
+      "folk_names": [
+        "ranhojičská bylina"
+      ],
+      "detail_sprite": "herbs_001",
+      "inventory_sprite": "herbs_001",
+      "herbarium_sprite": "herbs_001",
+      "difficulty": 35,
+      "edibility": "unknown_safe",
+      "medicinal_value": "wound_basic",
+      "toxicity_level": 0,
+      "traits": {
+        "flower": [
+          "bílý květ"
+        ],
+        "leaf": [
+          "zelený list"
+        ],
+        "habitat": [
+          "louka",
+          "okraj lesa"
+        ]
+      },
+      "effects_on_eat": [],
+      "effects_on_use": [
+        "wound_basic"
+      ],
+      "season": [
+        "spring",
+        "summer"
+      ]
+    }
+  ]
+}

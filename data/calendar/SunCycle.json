@@ -1,0 +1,1832 @@
+[
+  {
+    "datum": "01.01",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:10"
+  },
+  {
+    "datum": "02.01",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:11"
+  },
+  {
+    "datum": "03.01",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:12"
+  },
+  {
+    "datum": "04.01",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:13"
+  },
+  {
+    "datum": "05.01",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:14"
+  },
+  {
+    "datum": "06.01",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:16"
+  },
+  {
+    "datum": "07.01",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:17"
+  },
+  {
+    "datum": "08.01",
+    "vychod_slunce": "07:59",
+    "zapad_slunce": "16:18"
+  },
+  {
+    "datum": "09.01",
+    "vychod_slunce": "07:59",
+    "zapad_slunce": "16:19"
+  },
+  {
+    "datum": "10.01",
+    "vychod_slunce": "07:58",
+    "zapad_slunce": "16:21"
+  },
+  {
+    "datum": "11.01",
+    "vychod_slunce": "07:58",
+    "zapad_slunce": "16:22"
+  },
+  {
+    "datum": "12.01",
+    "vychod_slunce": "07:57",
+    "zapad_slunce": "16:23"
+  },
+  {
+    "datum": "13.01",
+    "vychod_slunce": "07:57",
+    "zapad_slunce": "16:25"
+  },
+  {
+    "datum": "14.01",
+    "vychod_slunce": "07:56",
+    "zapad_slunce": "16:26"
+  },
+  {
+    "datum": "15.01",
+    "vychod_slunce": "07:55",
+    "zapad_slunce": "16:28"
+  },
+  {
+    "datum": "16.01",
+    "vychod_slunce": "07:54",
+    "zapad_slunce": "16:29"
+  },
+  {
+    "datum": "17.01",
+    "vychod_slunce": "07:54",
+    "zapad_slunce": "16:31"
+  },
+  {
+    "datum": "18.01",
+    "vychod_slunce": "07:53",
+    "zapad_slunce": "16:32"
+  },
+  {
+    "datum": "19.01",
+    "vychod_slunce": "07:52",
+    "zapad_slunce": "16:34"
+  },
+  {
+    "datum": "20.01",
+    "vychod_slunce": "07:51",
+    "zapad_slunce": "16:35"
+  },
+  {
+    "datum": "21.01",
+    "vychod_slunce": "07:50",
+    "zapad_slunce": "16:37"
+  },
+  {
+    "datum": "22.01",
+    "vychod_slunce": "07:49",
+    "zapad_slunce": "16:39"
+  },
+  {
+    "datum": "23.01",
+    "vychod_slunce": "07:48",
+    "zapad_slunce": "16:40"
+  },
+  {
+    "datum": "24.01",
+    "vychod_slunce": "07:47",
+    "zapad_slunce": "16:42"
+  },
+  {
+    "datum": "25.01",
+    "vychod_slunce": "07:45",
+    "zapad_slunce": "16:43"
+  },
+  {
+    "datum": "26.01",
+    "vychod_slunce": "07:44",
+    "zapad_slunce": "16:45"
+  },
+  {
+    "datum": "27.01",
+    "vychod_slunce": "07:43",
+    "zapad_slunce": "16:47"
+  },
+  {
+    "datum": "28.01",
+    "vychod_slunce": "07:42",
+    "zapad_slunce": "16:48"
+  },
+  {
+    "datum": "29.01",
+    "vychod_slunce": "07:40",
+    "zapad_slunce": "16:50"
+  },
+  {
+    "datum": "30.01",
+    "vychod_slunce": "07:39",
+    "zapad_slunce": "16:52"
+  },
+  {
+    "datum": "31.01",
+    "vychod_slunce": "07:38",
+    "zapad_slunce": "16:54"
+  },
+  {
+    "datum": "01.02",
+    "vychod_slunce": "07:36",
+    "zapad_slunce": "16:55"
+  },
+  {
+    "datum": "02.02",
+    "vychod_slunce": "07:35",
+    "zapad_slunce": "16:57"
+  },
+  {
+    "datum": "03.02",
+    "vychod_slunce": "07:33",
+    "zapad_slunce": "16:59"
+  },
+  {
+    "datum": "04.02",
+    "vychod_slunce": "07:32",
+    "zapad_slunce": "17:00"
+  },
+  {
+    "datum": "05.02",
+    "vychod_slunce": "07:30",
+    "zapad_slunce": "17:02"
+  },
+  {
+    "datum": "06.02",
+    "vychod_slunce": "07:29",
+    "zapad_slunce": "17:04"
+  },
+  {
+    "datum": "07.02",
+    "vychod_slunce": "07:27",
+    "zapad_slunce": "17:06"
+  },
+  {
+    "datum": "08.02",
+    "vychod_slunce": "07:26",
+    "zapad_slunce": "17:07"
+  },
+  {
+    "datum": "09.02",
+    "vychod_slunce": "07:24",
+    "zapad_slunce": "17:09"
+  },
+  {
+    "datum": "10.02",
+    "vychod_slunce": "07:22",
+    "zapad_slunce": "17:11"
+  },
+  {
+    "datum": "11.02",
+    "vychod_slunce": "07:20",
+    "zapad_slunce": "17:13"
+  },
+  {
+    "datum": "12.02",
+    "vychod_slunce": "07:19",
+    "zapad_slunce": "17:14"
+  },
+  {
+    "datum": "13.02",
+    "vychod_slunce": "07:17",
+    "zapad_slunce": "17:16"
+  },
+  {
+    "datum": "14.02",
+    "vychod_slunce": "07:15",
+    "zapad_slunce": "17:18"
+  },
+  {
+    "datum": "15.02",
+    "vychod_slunce": "07:13",
+    "zapad_slunce": "17:19"
+  },
+  {
+    "datum": "16.02",
+    "vychod_slunce": "07:12",
+    "zapad_slunce": "17:21"
+  },
+  {
+    "datum": "17.02",
+    "vychod_slunce": "07:10",
+    "zapad_slunce": "17:23"
+  },
+  {
+    "datum": "18.02",
+    "vychod_slunce": "07:08",
+    "zapad_slunce": "17:25"
+  },
+  {
+    "datum": "19.02",
+    "vychod_slunce": "07:06",
+    "zapad_slunce": "17:26"
+  },
+  {
+    "datum": "20.02",
+    "vychod_slunce": "07:04",
+    "zapad_slunce": "17:28"
+  },
+  {
+    "datum": "21.02",
+    "vychod_slunce": "07:02",
+    "zapad_slunce": "17:30"
+  },
+  {
+    "datum": "22.02",
+    "vychod_slunce": "07:00",
+    "zapad_slunce": "17:31"
+  },
+  {
+    "datum": "23.02",
+    "vychod_slunce": "06:58",
+    "zapad_slunce": "17:33"
+  },
+  {
+    "datum": "24.02",
+    "vychod_slunce": "06:56",
+    "zapad_slunce": "17:35"
+  },
+  {
+    "datum": "25.02",
+    "vychod_slunce": "06:54",
+    "zapad_slunce": "17:36"
+  },
+  {
+    "datum": "26.02",
+    "vychod_slunce": "06:52",
+    "zapad_slunce": "17:38"
+  },
+  {
+    "datum": "27.02",
+    "vychod_slunce": "06:50",
+    "zapad_slunce": "17:40"
+  },
+  {
+    "datum": "28.02",
+    "vychod_slunce": "06:48",
+    "zapad_slunce": "17:42"
+  },
+  {
+    "datum": "29.02",
+    "vychod_slunce": "06:46",
+    "zapad_slunce": "17:43"
+  },
+  {
+    "datum": "01.03",
+    "vychod_slunce": "06:44",
+    "zapad_slunce": "17:45"
+  },
+  {
+    "datum": "02.03",
+    "vychod_slunce": "06:42",
+    "zapad_slunce": "17:47"
+  },
+  {
+    "datum": "03.03",
+    "vychod_slunce": "06:40",
+    "zapad_slunce": "17:48"
+  },
+  {
+    "datum": "04.03",
+    "vychod_slunce": "06:38",
+    "zapad_slunce": "17:50"
+  },
+  {
+    "datum": "05.03",
+    "vychod_slunce": "06:36",
+    "zapad_slunce": "17:51"
+  },
+  {
+    "datum": "06.03",
+    "vychod_slunce": "06:34",
+    "zapad_slunce": "17:53"
+  },
+  {
+    "datum": "07.03",
+    "vychod_slunce": "06:32",
+    "zapad_slunce": "17:55"
+  },
+  {
+    "datum": "08.03",
+    "vychod_slunce": "06:29",
+    "zapad_slunce": "17:56"
+  },
+  {
+    "datum": "09.03",
+    "vychod_slunce": "06:27",
+    "zapad_slunce": "17:58"
+  },
+  {
+    "datum": "10.03",
+    "vychod_slunce": "06:25",
+    "zapad_slunce": "18:00"
+  },
+  {
+    "datum": "11.03",
+    "vychod_slunce": "06:23",
+    "zapad_slunce": "18:01"
+  },
+  {
+    "datum": "12.03",
+    "vychod_slunce": "06:21",
+    "zapad_slunce": "18:03"
+  },
+  {
+    "datum": "13.03",
+    "vychod_slunce": "06:19",
+    "zapad_slunce": "18:04"
+  },
+  {
+    "datum": "14.03",
+    "vychod_slunce": "06:17",
+    "zapad_slunce": "18:06"
+  },
+  {
+    "datum": "15.03",
+    "vychod_slunce": "06:14",
+    "zapad_slunce": "18:08"
+  },
+  {
+    "datum": "16.03",
+    "vychod_slunce": "06:12",
+    "zapad_slunce": "18:09"
+  },
+  {
+    "datum": "17.03",
+    "vychod_slunce": "06:10",
+    "zapad_slunce": "18:11"
+  },
+  {
+    "datum": "18.03",
+    "vychod_slunce": "06:08",
+    "zapad_slunce": "18:12"
+  },
+  {
+    "datum": "19.03",
+    "vychod_slunce": "06:06",
+    "zapad_slunce": "18:14"
+  },
+  {
+    "datum": "20.03",
+    "vychod_slunce": "06:03",
+    "zapad_slunce": "18:16"
+  },
+  {
+    "datum": "21.03",
+    "vychod_slunce": "06:01",
+    "zapad_slunce": "18:17"
+  },
+  {
+    "datum": "22.03",
+    "vychod_slunce": "05:59",
+    "zapad_slunce": "18:19"
+  },
+  {
+    "datum": "23.03",
+    "vychod_slunce": "05:57",
+    "zapad_slunce": "18:20"
+  },
+  {
+    "datum": "24.03",
+    "vychod_slunce": "05:55",
+    "zapad_slunce": "18:22"
+  },
+  {
+    "datum": "25.03",
+    "vychod_slunce": "05:53",
+    "zapad_slunce": "18:24"
+  },
+  {
+    "datum": "26.03",
+    "vychod_slunce": "05:50",
+    "zapad_slunce": "18:25"
+  },
+  {
+    "datum": "27.03",
+    "vychod_slunce": "05:48",
+    "zapad_slunce": "18:27"
+  },
+  {
+    "datum": "28.03",
+    "vychod_slunce": "05:46",
+    "zapad_slunce": "18:28"
+  },
+  {
+    "datum": "29.03",
+    "vychod_slunce": "05:44",
+    "zapad_slunce": "18:30"
+  },
+  {
+    "datum": "30.03",
+    "vychod_slunce": "05:42",
+    "zapad_slunce": "18:31"
+  },
+  {
+    "datum": "31.03",
+    "vychod_slunce": "06:39",
+    "zapad_slunce": "19:33"
+  },
+  {
+    "datum": "01.04",
+    "vychod_slunce": "06:37",
+    "zapad_slunce": "19:35"
+  },
+  {
+    "datum": "02.04",
+    "vychod_slunce": "06:35",
+    "zapad_slunce": "19:36"
+  },
+  {
+    "datum": "03.04",
+    "vychod_slunce": "06:33",
+    "zapad_slunce": "19:38"
+  },
+  {
+    "datum": "04.04",
+    "vychod_slunce": "06:31",
+    "zapad_slunce": "19:39"
+  },
+  {
+    "datum": "05.04",
+    "vychod_slunce": "06:29",
+    "zapad_slunce": "19:41"
+  },
+  {
+    "datum": "06.04",
+    "vychod_slunce": "06:27",
+    "zapad_slunce": "19:42"
+  },
+  {
+    "datum": "07.04",
+    "vychod_slunce": "06:24",
+    "zapad_slunce": "19:44"
+  },
+  {
+    "datum": "08.04",
+    "vychod_slunce": "06:22",
+    "zapad_slunce": "19:46"
+  },
+  {
+    "datum": "09.04",
+    "vychod_slunce": "06:20",
+    "zapad_slunce": "19:47"
+  },
+  {
+    "datum": "10.04",
+    "vychod_slunce": "06:18",
+    "zapad_slunce": "19:49"
+  },
+  {
+    "datum": "11.04",
+    "vychod_slunce": "06:16",
+    "zapad_slunce": "19:50"
+  },
+  {
+    "datum": "12.04",
+    "vychod_slunce": "06:14",
+    "zapad_slunce": "19:52"
+  },
+  {
+    "datum": "13.04",
+    "vychod_slunce": "06:12",
+    "zapad_slunce": "19:53"
+  },
+  {
+    "datum": "14.04",
+    "vychod_slunce": "06:10",
+    "zapad_slunce": "19:55"
+  },
+  {
+    "datum": "15.04",
+    "vychod_slunce": "06:08",
+    "zapad_slunce": "19:57"
+  },
+  {
+    "datum": "16.04",
+    "vychod_slunce": "06:06",
+    "zapad_slunce": "19:58"
+  },
+  {
+    "datum": "17.04",
+    "vychod_slunce": "06:04",
+    "zapad_slunce": "20:00"
+  },
+  {
+    "datum": "18.04",
+    "vychod_slunce": "06:02",
+    "zapad_slunce": "20:01"
+  },
+  {
+    "datum": "19.04",
+    "vychod_slunce": "06:00",
+    "zapad_slunce": "20:03"
+  },
+  {
+    "datum": "20.04",
+    "vychod_slunce": "05:58",
+    "zapad_slunce": "20:04"
+  },
+  {
+    "datum": "21.04",
+    "vychod_slunce": "05:56",
+    "zapad_slunce": "20:06"
+  },
+  {
+    "datum": "22.04",
+    "vychod_slunce": "05:54",
+    "zapad_slunce": "20:08"
+  },
+  {
+    "datum": "23.04",
+    "vychod_slunce": "05:52",
+    "zapad_slunce": "20:09"
+  },
+  {
+    "datum": "24.04",
+    "vychod_slunce": "05:50",
+    "zapad_slunce": "20:11"
+  },
+  {
+    "datum": "25.04",
+    "vychod_slunce": "05:48",
+    "zapad_slunce": "20:12"
+  },
+  {
+    "datum": "26.04",
+    "vychod_slunce": "05:46",
+    "zapad_slunce": "20:14"
+  },
+  {
+    "datum": "27.04",
+    "vychod_slunce": "05:44",
+    "zapad_slunce": "20:15"
+  },
+  {
+    "datum": "28.04",
+    "vychod_slunce": "05:42",
+    "zapad_slunce": "20:17"
+  },
+  {
+    "datum": "29.04",
+    "vychod_slunce": "05:40",
+    "zapad_slunce": "20:18"
+  },
+  {
+    "datum": "30.04",
+    "vychod_slunce": "05:39",
+    "zapad_slunce": "20:20"
+  },
+  {
+    "datum": "01.05",
+    "vychod_slunce": "05:37",
+    "zapad_slunce": "20:22"
+  },
+  {
+    "datum": "02.05",
+    "vychod_slunce": "05:35",
+    "zapad_slunce": "20:23"
+  },
+  {
+    "datum": "03.05",
+    "vychod_slunce": "05:33",
+    "zapad_slunce": "20:25"
+  },
+  {
+    "datum": "04.05",
+    "vychod_slunce": "05:32",
+    "zapad_slunce": "20:26"
+  },
+  {
+    "datum": "05.05",
+    "vychod_slunce": "05:30",
+    "zapad_slunce": "20:28"
+  },
+  {
+    "datum": "06.05",
+    "vychod_slunce": "05:28",
+    "zapad_slunce": "20:29"
+  },
+  {
+    "datum": "07.05",
+    "vychod_slunce": "05:27",
+    "zapad_slunce": "20:31"
+  },
+  {
+    "datum": "08.05",
+    "vychod_slunce": "05:25",
+    "zapad_slunce": "20:32"
+  },
+  {
+    "datum": "09.05",
+    "vychod_slunce": "05:24",
+    "zapad_slunce": "20:34"
+  },
+  {
+    "datum": "10.05",
+    "vychod_slunce": "05:22",
+    "zapad_slunce": "20:35"
+  },
+  {
+    "datum": "11.05",
+    "vychod_slunce": "05:20",
+    "zapad_slunce": "20:37"
+  },
+  {
+    "datum": "12.05",
+    "vychod_slunce": "05:19",
+    "zapad_slunce": "20:38"
+  },
+  {
+    "datum": "13.05",
+    "vychod_slunce": "05:18",
+    "zapad_slunce": "20:39"
+  },
+  {
+    "datum": "14.05",
+    "vychod_slunce": "05:16",
+    "zapad_slunce": "20:41"
+  },
+  {
+    "datum": "15.05",
+    "vychod_slunce": "05:15",
+    "zapad_slunce": "20:42"
+  },
+  {
+    "datum": "16.05",
+    "vychod_slunce": "05:13",
+    "zapad_slunce": "20:44"
+  },
+  {
+    "datum": "17.05",
+    "vychod_slunce": "05:12",
+    "zapad_slunce": "20:45"
+  },
+  {
+    "datum": "18.05",
+    "vychod_slunce": "05:11",
+    "zapad_slunce": "20:46"
+  },
+  {
+    "datum": "19.05",
+    "vychod_slunce": "05:10",
+    "zapad_slunce": "20:48"
+  },
+  {
+    "datum": "20.05",
+    "vychod_slunce": "05:08",
+    "zapad_slunce": "20:49"
+  },
+  {
+    "datum": "21.05",
+    "vychod_slunce": "05:07",
+    "zapad_slunce": "20:50"
+  },
+  {
+    "datum": "22.05",
+    "vychod_slunce": "05:06",
+    "zapad_slunce": "20:52"
+  },
+  {
+    "datum": "23.05",
+    "vychod_slunce": "05:05",
+    "zapad_slunce": "20:53"
+  },
+  {
+    "datum": "24.05",
+    "vychod_slunce": "05:04",
+    "zapad_slunce": "20:54"
+  },
+  {
+    "datum": "25.05",
+    "vychod_slunce": "05:03",
+    "zapad_slunce": "20:55"
+  },
+  {
+    "datum": "26.05",
+    "vychod_slunce": "05:02",
+    "zapad_slunce": "20:56"
+  },
+  {
+    "datum": "27.05",
+    "vychod_slunce": "05:01",
+    "zapad_slunce": "20:58"
+  },
+  {
+    "datum": "28.05",
+    "vychod_slunce": "05:00",
+    "zapad_slunce": "20:59"
+  },
+  {
+    "datum": "29.05",
+    "vychod_slunce": "04:59",
+    "zapad_slunce": "21:00"
+  },
+  {
+    "datum": "30.05",
+    "vychod_slunce": "04:58",
+    "zapad_slunce": "21:01"
+  },
+  {
+    "datum": "31.05",
+    "vychod_slunce": "04:58",
+    "zapad_slunce": "21:02"
+  },
+  {
+    "datum": "01.06",
+    "vychod_slunce": "04:57",
+    "zapad_slunce": "21:03"
+  },
+  {
+    "datum": "02.06",
+    "vychod_slunce": "04:56",
+    "zapad_slunce": "21:04"
+  },
+  {
+    "datum": "03.06",
+    "vychod_slunce": "04:55",
+    "zapad_slunce": "21:05"
+  },
+  {
+    "datum": "04.06",
+    "vychod_slunce": "04:55",
+    "zapad_slunce": "21:06"
+  },
+  {
+    "datum": "05.06",
+    "vychod_slunce": "04:54",
+    "zapad_slunce": "21:07"
+  },
+  {
+    "datum": "06.06",
+    "vychod_slunce": "04:54",
+    "zapad_slunce": "21:08"
+  },
+  {
+    "datum": "07.06",
+    "vychod_slunce": "04:53",
+    "zapad_slunce": "21:08"
+  },
+  {
+    "datum": "08.06",
+    "vychod_slunce": "04:53",
+    "zapad_slunce": "21:09"
+  },
+  {
+    "datum": "09.06",
+    "vychod_slunce": "04:53",
+    "zapad_slunce": "21:10"
+  },
+  {
+    "datum": "10.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:11"
+  },
+  {
+    "datum": "11.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:11"
+  },
+  {
+    "datum": "12.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:12"
+  },
+  {
+    "datum": "13.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:12"
+  },
+  {
+    "datum": "14.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:13"
+  },
+  {
+    "datum": "15.06",
+    "vychod_slunce": "04:51",
+    "zapad_slunce": "21:13"
+  },
+  {
+    "datum": "16.06",
+    "vychod_slunce": "04:51",
+    "zapad_slunce": "21:14"
+  },
+  {
+    "datum": "17.06",
+    "vychod_slunce": "04:51",
+    "zapad_slunce": "21:14"
+  },
+  {
+    "datum": "18.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:14"
+  },
+  {
+    "datum": "19.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "20.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "21.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "22.06",
+    "vychod_slunce": "04:52",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "23.06",
+    "vychod_slunce": "04:53",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "24.06",
+    "vychod_slunce": "04:53",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "25.06",
+    "vychod_slunce": "04:53",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "26.06",
+    "vychod_slunce": "04:54",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "27.06",
+    "vychod_slunce": "04:54",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "28.06",
+    "vychod_slunce": "04:55",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "29.06",
+    "vychod_slunce": "04:55",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "30.06",
+    "vychod_slunce": "04:56",
+    "zapad_slunce": "21:15"
+  },
+  {
+    "datum": "01.07",
+    "vychod_slunce": "04:57",
+    "zapad_slunce": "21:14"
+  },
+  {
+    "datum": "02.07",
+    "vychod_slunce": "04:57",
+    "zapad_slunce": "21:14"
+  },
+  {
+    "datum": "03.07",
+    "vychod_slunce": "04:58",
+    "zapad_slunce": "21:14"
+  },
+  {
+    "datum": "04.07",
+    "vychod_slunce": "04:59",
+    "zapad_slunce": "21:13"
+  },
+  {
+    "datum": "05.07",
+    "vychod_slunce": "05:00",
+    "zapad_slunce": "21:13"
+  },
+  {
+    "datum": "06.07",
+    "vychod_slunce": "05:01",
+    "zapad_slunce": "21:12"
+  },
+  {
+    "datum": "07.07",
+    "vychod_slunce": "05:01",
+    "zapad_slunce": "21:12"
+  },
+  {
+    "datum": "08.07",
+    "vychod_slunce": "05:02",
+    "zapad_slunce": "21:11"
+  },
+  {
+    "datum": "09.07",
+    "vychod_slunce": "05:03",
+    "zapad_slunce": "21:10"
+  },
+  {
+    "datum": "10.07",
+    "vychod_slunce": "05:04",
+    "zapad_slunce": "21:10"
+  },
+  {
+    "datum": "11.07",
+    "vychod_slunce": "05:05",
+    "zapad_slunce": "21:09"
+  },
+  {
+    "datum": "12.07",
+    "vychod_slunce": "05:06",
+    "zapad_slunce": "21:08"
+  },
+  {
+    "datum": "13.07",
+    "vychod_slunce": "05:07",
+    "zapad_slunce": "21:07"
+  },
+  {
+    "datum": "14.07",
+    "vychod_slunce": "05:08",
+    "zapad_slunce": "21:06"
+  },
+  {
+    "datum": "15.07",
+    "vychod_slunce": "05:10",
+    "zapad_slunce": "21:05"
+  },
+  {
+    "datum": "16.07",
+    "vychod_slunce": "05:11",
+    "zapad_slunce": "21:04"
+  },
+  {
+    "datum": "17.07",
+    "vychod_slunce": "05:12",
+    "zapad_slunce": "21:03"
+  },
+  {
+    "datum": "18.07",
+    "vychod_slunce": "05:13",
+    "zapad_slunce": "21:02"
+  },
+  {
+    "datum": "19.07",
+    "vychod_slunce": "05:14",
+    "zapad_slunce": "21:01"
+  },
+  {
+    "datum": "20.07",
+    "vychod_slunce": "05:15",
+    "zapad_slunce": "21:00"
+  },
+  {
+    "datum": "21.07",
+    "vychod_slunce": "05:17",
+    "zapad_slunce": "20:59"
+  },
+  {
+    "datum": "22.07",
+    "vychod_slunce": "05:18",
+    "zapad_slunce": "20:58"
+  },
+  {
+    "datum": "23.07",
+    "vychod_slunce": "05:19",
+    "zapad_slunce": "20:57"
+  },
+  {
+    "datum": "24.07",
+    "vychod_slunce": "05:21",
+    "zapad_slunce": "20:55"
+  },
+  {
+    "datum": "25.07",
+    "vychod_slunce": "05:22",
+    "zapad_slunce": "20:54"
+  },
+  {
+    "datum": "26.07",
+    "vychod_slunce": "05:23",
+    "zapad_slunce": "20:53"
+  },
+  {
+    "datum": "27.07",
+    "vychod_slunce": "05:25",
+    "zapad_slunce": "20:51"
+  },
+  {
+    "datum": "28.07",
+    "vychod_slunce": "05:26",
+    "zapad_slunce": "20:50"
+  },
+  {
+    "datum": "29.07",
+    "vychod_slunce": "05:27",
+    "zapad_slunce": "20:48"
+  },
+  {
+    "datum": "30.07",
+    "vychod_slunce": "05:29",
+    "zapad_slunce": "20:47"
+  },
+  {
+    "datum": "31.07",
+    "vychod_slunce": "05:30",
+    "zapad_slunce": "20:45"
+  },
+  {
+    "datum": "01.08",
+    "vychod_slunce": "05:32",
+    "zapad_slunce": "20:44"
+  },
+  {
+    "datum": "02.08",
+    "vychod_slunce": "05:33",
+    "zapad_slunce": "20:42"
+  },
+  {
+    "datum": "03.08",
+    "vychod_slunce": "05:34",
+    "zapad_slunce": "20:41"
+  },
+  {
+    "datum": "04.08",
+    "vychod_slunce": "05:36",
+    "zapad_slunce": "20:39"
+  },
+  {
+    "datum": "05.08",
+    "vychod_slunce": "05:37",
+    "zapad_slunce": "20:37"
+  },
+  {
+    "datum": "06.08",
+    "vychod_slunce": "05:39",
+    "zapad_slunce": "20:36"
+  },
+  {
+    "datum": "07.08",
+    "vychod_slunce": "05:40",
+    "zapad_slunce": "20:34"
+  },
+  {
+    "datum": "08.08",
+    "vychod_slunce": "05:42",
+    "zapad_slunce": "20:32"
+  },
+  {
+    "datum": "09.08",
+    "vychod_slunce": "05:43",
+    "zapad_slunce": "20:30"
+  },
+  {
+    "datum": "10.08",
+    "vychod_slunce": "05:45",
+    "zapad_slunce": "20:29"
+  },
+  {
+    "datum": "11.08",
+    "vychod_slunce": "05:46",
+    "zapad_slunce": "20:27"
+  },
+  {
+    "datum": "12.08",
+    "vychod_slunce": "05:48",
+    "zapad_slunce": "20:25"
+  },
+  {
+    "datum": "13.08",
+    "vychod_slunce": "05:49",
+    "zapad_slunce": "20:23"
+  },
+  {
+    "datum": "14.08",
+    "vychod_slunce": "05:50",
+    "zapad_slunce": "20:21"
+  },
+  {
+    "datum": "15.08",
+    "vychod_slunce": "05:52",
+    "zapad_slunce": "20:19"
+  },
+  {
+    "datum": "16.08",
+    "vychod_slunce": "05:53",
+    "zapad_slunce": "20:17"
+  },
+  {
+    "datum": "17.08",
+    "vychod_slunce": "05:55",
+    "zapad_slunce": "20:15"
+  },
+  {
+    "datum": "18.08",
+    "vychod_slunce": "05:56",
+    "zapad_slunce": "20:14"
+  },
+  {
+    "datum": "19.08",
+    "vychod_slunce": "05:58",
+    "zapad_slunce": "20:12"
+  },
+  {
+    "datum": "20.08",
+    "vychod_slunce": "05:59",
+    "zapad_slunce": "20:10"
+  },
+  {
+    "datum": "21.08",
+    "vychod_slunce": "06:01",
+    "zapad_slunce": "20:08"
+  },
+  {
+    "datum": "22.08",
+    "vychod_slunce": "06:02",
+    "zapad_slunce": "20:06"
+  },
+  {
+    "datum": "23.08",
+    "vychod_slunce": "06:04",
+    "zapad_slunce": "20:04"
+  },
+  {
+    "datum": "24.08",
+    "vychod_slunce": "06:05",
+    "zapad_slunce": "20:01"
+  },
+  {
+    "datum": "25.08",
+    "vychod_slunce": "06:07",
+    "zapad_slunce": "19:59"
+  },
+  {
+    "datum": "26.08",
+    "vychod_slunce": "06:08",
+    "zapad_slunce": "19:57"
+  },
+  {
+    "datum": "27.08",
+    "vychod_slunce": "06:10",
+    "zapad_slunce": "19:55"
+  },
+  {
+    "datum": "28.08",
+    "vychod_slunce": "06:11",
+    "zapad_slunce": "19:53"
+  },
+  {
+    "datum": "29.08",
+    "vychod_slunce": "06:13",
+    "zapad_slunce": "19:51"
+  },
+  {
+    "datum": "30.08",
+    "vychod_slunce": "06:14",
+    "zapad_slunce": "19:49"
+  },
+  {
+    "datum": "31.08",
+    "vychod_slunce": "06:16",
+    "zapad_slunce": "19:47"
+  },
+  {
+    "datum": "01.09",
+    "vychod_slunce": "06:17",
+    "zapad_slunce": "19:45"
+  },
+  {
+    "datum": "02.09",
+    "vychod_slunce": "06:19",
+    "zapad_slunce": "19:43"
+  },
+  {
+    "datum": "03.09",
+    "vychod_slunce": "06:20",
+    "zapad_slunce": "19:40"
+  },
+  {
+    "datum": "04.09",
+    "vychod_slunce": "06:22",
+    "zapad_slunce": "19:38"
+  },
+  {
+    "datum": "05.09",
+    "vychod_slunce": "06:23",
+    "zapad_slunce": "19:36"
+  },
+  {
+    "datum": "06.09",
+    "vychod_slunce": "06:25",
+    "zapad_slunce": "19:34"
+  },
+  {
+    "datum": "07.09",
+    "vychod_slunce": "06:26",
+    "zapad_slunce": "19:32"
+  },
+  {
+    "datum": "08.09",
+    "vychod_slunce": "06:28",
+    "zapad_slunce": "19:30"
+  },
+  {
+    "datum": "09.09",
+    "vychod_slunce": "06:29",
+    "zapad_slunce": "19:27"
+  },
+  {
+    "datum": "10.09",
+    "vychod_slunce": "06:31",
+    "zapad_slunce": "19:25"
+  },
+  {
+    "datum": "11.09",
+    "vychod_slunce": "06:32",
+    "zapad_slunce": "19:23"
+  },
+  {
+    "datum": "12.09",
+    "vychod_slunce": "06:34",
+    "zapad_slunce": "19:21"
+  },
+  {
+    "datum": "13.09",
+    "vychod_slunce": "06:35",
+    "zapad_slunce": "19:19"
+  },
+  {
+    "datum": "14.09",
+    "vychod_slunce": "06:37",
+    "zapad_slunce": "19:16"
+  },
+  {
+    "datum": "15.09",
+    "vychod_slunce": "06:38",
+    "zapad_slunce": "19:14"
+  },
+  {
+    "datum": "16.09",
+    "vychod_slunce": "06:40",
+    "zapad_slunce": "19:12"
+  },
+  {
+    "datum": "17.09",
+    "vychod_slunce": "06:41",
+    "zapad_slunce": "19:10"
+  },
+  {
+    "datum": "18.09",
+    "vychod_slunce": "06:43",
+    "zapad_slunce": "19:08"
+  },
+  {
+    "datum": "19.09",
+    "vychod_slunce": "06:44",
+    "zapad_slunce": "19:05"
+  },
+  {
+    "datum": "20.09",
+    "vychod_slunce": "06:46",
+    "zapad_slunce": "19:03"
+  },
+  {
+    "datum": "21.09",
+    "vychod_slunce": "06:47",
+    "zapad_slunce": "19:01"
+  },
+  {
+    "datum": "22.09",
+    "vychod_slunce": "06:49",
+    "zapad_slunce": "18:59"
+  },
+  {
+    "datum": "23.09",
+    "vychod_slunce": "06:50",
+    "zapad_slunce": "18:56"
+  },
+  {
+    "datum": "24.09",
+    "vychod_slunce": "06:52",
+    "zapad_slunce": "18:54"
+  },
+  {
+    "datum": "25.09",
+    "vychod_slunce": "06:53",
+    "zapad_slunce": "18:52"
+  },
+  {
+    "datum": "26.09",
+    "vychod_slunce": "06:55",
+    "zapad_slunce": "18:50"
+  },
+  {
+    "datum": "27.09",
+    "vychod_slunce": "06:56",
+    "zapad_slunce": "18:48"
+  },
+  {
+    "datum": "28.09",
+    "vychod_slunce": "06:58",
+    "zapad_slunce": "18:45"
+  },
+  {
+    "datum": "29.09",
+    "vychod_slunce": "06:59",
+    "zapad_slunce": "18:43"
+  },
+  {
+    "datum": "30.09",
+    "vychod_slunce": "07:01",
+    "zapad_slunce": "18:41"
+  },
+  {
+    "datum": "01.10",
+    "vychod_slunce": "07:03",
+    "zapad_slunce": "18:39"
+  },
+  {
+    "datum": "02.10",
+    "vychod_slunce": "07:04",
+    "zapad_slunce": "18:37"
+  },
+  {
+    "datum": "03.10",
+    "vychod_slunce": "07:06",
+    "zapad_slunce": "18:35"
+  },
+  {
+    "datum": "04.10",
+    "vychod_slunce": "07:07",
+    "zapad_slunce": "18:32"
+  },
+  {
+    "datum": "05.10",
+    "vychod_slunce": "07:09",
+    "zapad_slunce": "18:30"
+  },
+  {
+    "datum": "06.10",
+    "vychod_slunce": "07:10",
+    "zapad_slunce": "18:28"
+  },
+  {
+    "datum": "07.10",
+    "vychod_slunce": "07:12",
+    "zapad_slunce": "18:26"
+  },
+  {
+    "datum": "08.10",
+    "vychod_slunce": "07:13",
+    "zapad_slunce": "18:24"
+  },
+  {
+    "datum": "09.10",
+    "vychod_slunce": "07:15",
+    "zapad_slunce": "18:22"
+  },
+  {
+    "datum": "10.10",
+    "vychod_slunce": "07:17",
+    "zapad_slunce": "18:20"
+  },
+  {
+    "datum": "11.10",
+    "vychod_slunce": "07:18",
+    "zapad_slunce": "18:18"
+  },
+  {
+    "datum": "12.10",
+    "vychod_slunce": "07:20",
+    "zapad_slunce": "18:16"
+  },
+  {
+    "datum": "13.10",
+    "vychod_slunce": "07:21",
+    "zapad_slunce": "18:13"
+  },
+  {
+    "datum": "14.10",
+    "vychod_slunce": "07:23",
+    "zapad_slunce": "18:11"
+  },
+  {
+    "datum": "15.10",
+    "vychod_slunce": "07:25",
+    "zapad_slunce": "18:09"
+  },
+  {
+    "datum": "16.10",
+    "vychod_slunce": "07:26",
+    "zapad_slunce": "18:07"
+  },
+  {
+    "datum": "17.10",
+    "vychod_slunce": "07:28",
+    "zapad_slunce": "18:05"
+  },
+  {
+    "datum": "18.10",
+    "vychod_slunce": "07:29",
+    "zapad_slunce": "18:03"
+  },
+  {
+    "datum": "19.10",
+    "vychod_slunce": "07:31",
+    "zapad_slunce": "18:01"
+  },
+  {
+    "datum": "20.10",
+    "vychod_slunce": "07:33",
+    "zapad_slunce": "17:59"
+  },
+  {
+    "datum": "21.10",
+    "vychod_slunce": "07:34",
+    "zapad_slunce": "17:57"
+  },
+  {
+    "datum": "22.10",
+    "vychod_slunce": "07:36",
+    "zapad_slunce": "17:56"
+  },
+  {
+    "datum": "23.10",
+    "vychod_slunce": "07:38",
+    "zapad_slunce": "17:54"
+  },
+  {
+    "datum": "24.10",
+    "vychod_slunce": "07:39",
+    "zapad_slunce": "17:52"
+  },
+  {
+    "datum": "25.10",
+    "vychod_slunce": "07:41",
+    "zapad_slunce": "17:50"
+  },
+  {
+    "datum": "26.10",
+    "vychod_slunce": "07:43",
+    "zapad_slunce": "17:48"
+  },
+  {
+    "datum": "27.10",
+    "vychod_slunce": "06:44",
+    "zapad_slunce": "16:46"
+  },
+  {
+    "datum": "28.10",
+    "vychod_slunce": "06:46",
+    "zapad_slunce": "16:44"
+  },
+  {
+    "datum": "29.10",
+    "vychod_slunce": "06:48",
+    "zapad_slunce": "16:43"
+  },
+  {
+    "datum": "30.10",
+    "vychod_slunce": "06:49",
+    "zapad_slunce": "16:41"
+  },
+  {
+    "datum": "31.10",
+    "vychod_slunce": "06:51",
+    "zapad_slunce": "16:39"
+  },
+  {
+    "datum": "01.11",
+    "vychod_slunce": "06:53",
+    "zapad_slunce": "16:37"
+  },
+  {
+    "datum": "02.11",
+    "vychod_slunce": "06:54",
+    "zapad_slunce": "16:36"
+  },
+  {
+    "datum": "03.11",
+    "vychod_slunce": "06:56",
+    "zapad_slunce": "16:34"
+  },
+  {
+    "datum": "04.11",
+    "vychod_slunce": "06:58",
+    "zapad_slunce": "16:32"
+  },
+  {
+    "datum": "05.11",
+    "vychod_slunce": "06:59",
+    "zapad_slunce": "16:31"
+  },
+  {
+    "datum": "06.11",
+    "vychod_slunce": "07:01",
+    "zapad_slunce": "16:29"
+  },
+  {
+    "datum": "07.11",
+    "vychod_slunce": "07:03",
+    "zapad_slunce": "16:28"
+  },
+  {
+    "datum": "08.11",
+    "vychod_slunce": "07:04",
+    "zapad_slunce": "16:26"
+  },
+  {
+    "datum": "09.11",
+    "vychod_slunce": "07:06",
+    "zapad_slunce": "16:25"
+  },
+  {
+    "datum": "10.11",
+    "vychod_slunce": "07:07",
+    "zapad_slunce": "16:23"
+  },
+  {
+    "datum": "11.11",
+    "vychod_slunce": "07:09",
+    "zapad_slunce": "16:22"
+  },
+  {
+    "datum": "12.11",
+    "vychod_slunce": "07:11",
+    "zapad_slunce": "16:21"
+  },
+  {
+    "datum": "13.11",
+    "vychod_slunce": "07:12",
+    "zapad_slunce": "16:19"
+  },
+  {
+    "datum": "14.11",
+    "vychod_slunce": "07:14",
+    "zapad_slunce": "16:18"
+  },
+  {
+    "datum": "15.11",
+    "vychod_slunce": "07:16",
+    "zapad_slunce": "16:17"
+  },
+  {
+    "datum": "16.11",
+    "vychod_slunce": "07:17",
+    "zapad_slunce": "16:15"
+  },
+  {
+    "datum": "17.11",
+    "vychod_slunce": "07:19",
+    "zapad_slunce": "16:14"
+  },
+  {
+    "datum": "18.11",
+    "vychod_slunce": "07:20",
+    "zapad_slunce": "16:13"
+  },
+  {
+    "datum": "19.11",
+    "vychod_slunce": "07:22",
+    "zapad_slunce": "16:12"
+  },
+  {
+    "datum": "20.11",
+    "vychod_slunce": "07:24",
+    "zapad_slunce": "16:11"
+  },
+  {
+    "datum": "21.11",
+    "vychod_slunce": "07:25",
+    "zapad_slunce": "16:10"
+  },
+  {
+    "datum": "22.11",
+    "vychod_slunce": "07:27",
+    "zapad_slunce": "16:09"
+  },
+  {
+    "datum": "23.11",
+    "vychod_slunce": "07:28",
+    "zapad_slunce": "16:08"
+  },
+  {
+    "datum": "24.11",
+    "vychod_slunce": "07:30",
+    "zapad_slunce": "16:07"
+  },
+  {
+    "datum": "25.11",
+    "vychod_slunce": "07:31",
+    "zapad_slunce": "16:06"
+  },
+  {
+    "datum": "26.11",
+    "vychod_slunce": "07:33",
+    "zapad_slunce": "16:05"
+  },
+  {
+    "datum": "27.11",
+    "vychod_slunce": "07:34",
+    "zapad_slunce": "16:05"
+  },
+  {
+    "datum": "28.11",
+    "vychod_slunce": "07:35",
+    "zapad_slunce": "16:04"
+  },
+  {
+    "datum": "29.11",
+    "vychod_slunce": "07:37",
+    "zapad_slunce": "16:03"
+  },
+  {
+    "datum": "30.11",
+    "vychod_slunce": "07:38",
+    "zapad_slunce": "16:03"
+  },
+  {
+    "datum": "01.12",
+    "vychod_slunce": "07:40",
+    "zapad_slunce": "16:02"
+  },
+  {
+    "datum": "02.12",
+    "vychod_slunce": "07:41",
+    "zapad_slunce": "16:02"
+  },
+  {
+    "datum": "03.12",
+    "vychod_slunce": "07:42",
+    "zapad_slunce": "16:01"
+  },
+  {
+    "datum": "04.12",
+    "vychod_slunce": "07:43",
+    "zapad_slunce": "16:01"
+  },
+  {
+    "datum": "05.12",
+    "vychod_slunce": "07:45",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "06.12",
+    "vychod_slunce": "07:46",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "07.12",
+    "vychod_slunce": "07:47",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "08.12",
+    "vychod_slunce": "07:48",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "09.12",
+    "vychod_slunce": "07:49",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "10.12",
+    "vychod_slunce": "07:50",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "11.12",
+    "vychod_slunce": "07:51",
+    "zapad_slunce": "15:59"
+  },
+  {
+    "datum": "12.12",
+    "vychod_slunce": "07:52",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "13.12",
+    "vychod_slunce": "07:53",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "14.12",
+    "vychod_slunce": "07:54",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "15.12",
+    "vychod_slunce": "07:55",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "16.12",
+    "vychod_slunce": "07:55",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "17.12",
+    "vychod_slunce": "07:56",
+    "zapad_slunce": "16:00"
+  },
+  {
+    "datum": "18.12",
+    "vychod_slunce": "07:57",
+    "zapad_slunce": "16:01"
+  },
+  {
+    "datum": "19.12",
+    "vychod_slunce": "07:57",
+    "zapad_slunce": "16:01"
+  },
+  {
+    "datum": "20.12",
+    "vychod_slunce": "07:58",
+    "zapad_slunce": "16:02"
+  },
+  {
+    "datum": "21.12",
+    "vychod_slunce": "07:58",
+    "zapad_slunce": "16:02"
+  },
+  {
+    "datum": "22.12",
+    "vychod_slunce": "07:59",
+    "zapad_slunce": "16:03"
+  },
+  {
+    "datum": "23.12",
+    "vychod_slunce": "07:59",
+    "zapad_slunce": "16:03"
+  },
+  {
+    "datum": "24.12",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:04"
+  },
+  {
+    "datum": "25.12",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:05"
+  },
+  {
+    "datum": "26.12",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:05"
+  },
+  {
+    "datum": "27.12",
+    "vychod_slunce": "08:00",
+    "zapad_slunce": "16:06"
+  },
+  {
+    "datum": "28.12",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:07"
+  },
+  {
+    "datum": "29.12",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:08"
+  },
+  {
+    "datum": "30.12",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:09"
+  },
+  {
+    "datum": "31.12",
+    "vychod_slunce": "08:01",
+    "zapad_slunce": "16:10"
+  }
+]

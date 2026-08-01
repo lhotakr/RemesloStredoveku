@@ -1,0 +1,1108 @@
+fileFormatVersion: 2
+guid: 37f9c5ba490e7d34babb41d8b0393340
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_0
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 928
+        width: 163
+        height: 159
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 70294bd04af1fc74a9696fa03262a929
+      internalID: -1172757002
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_1
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 927
+        width: 161
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4438b571767f7ca40818cdf6ba62eb6e
+      internalID: -334388576
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_2
+      rect:
+        serializedVersion: 2
+        x: 373
+        y: 800
+        width: 256
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f9b74b1e8b7b54a42bc4b4c0ca064e21
+      internalID: -1947296683
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_3
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 926
+        width: 256
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: df536582814170f478a8f5df3158ae25
+      internalID: -634951471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_4
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 765
+        width: 157
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 297f1d3a2035ac044a6e428d6c8443db
+      internalID: -778284486
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_5
+      rect:
+        serializedVersion: 2
+        x: 184
+        y: 762
+        width: 165
+        height: 162
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 884f2924ccdedaa499b64cb3f6d1d4af
+      internalID: -661287674
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_6
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 736
+        width: 256
+        height: 160
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3adc97ecb94ef204d824013c61915668
+      internalID: 2095391035
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_7
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 638
+        width: 256
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c31a50f47976f9b43bcb5afdd6099b2c
+      internalID: 148766353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_8
+      rect:
+        serializedVersion: 2
+        x: 293
+        y: 639
+        width: 33
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0640d5f9fcd0434482e70a6d3aa8d91
+      internalID: 957895235
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_9
+      rect:
+        serializedVersion: 2
+        x: 371
+        y: 501
+        width: 66
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 45c5bd34146fb6647b7cfe5edfff74df
+      internalID: -449810173
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_10
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 501
+        width: 66
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e6fd3cce8d8785d43b2b71d354f96756
+      internalID: 522151236
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_11
+      rect:
+        serializedVersion: 2
+        x: 579
+        y: 474
+        width: 131
+        height: 256
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 25571371969903746961a28cb56a1fd7
+      internalID: -1877117082
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_12
+      rect:
+        serializedVersion: 2
+        x: 789
+        y: 572
+        width: 53
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 959220872ce0ffd4eb0fe34e5104797c
+      internalID: -706222476
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_13
+      rect:
+        serializedVersion: 2
+        x: 863
+        y: 572
+        width: 58
+        height: 121
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 66fbb5a1f3e940043a5f438729781be3
+      internalID: -1966975372
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_14
+      rect:
+        serializedVersion: 2
+        x: 24
+        y: 551
+        width: 256
+        height: 66
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: b4fcc5f83f3dc42479976563dafce5af
+      internalID: -1248259982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_15
+      rect:
+        serializedVersion: 2
+        x: 295
+        y: 553
+        width: 33
+        height: 63
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 46302e54e7986014593591ce92362fdb
+      internalID: -441811934
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_16
+      rect:
+        serializedVersion: 2
+        x: 731
+        y: 494
+        width: 52
+        height: 60
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 170ceb8e1e8be0342b3494839b4febf3
+      internalID: 524019903
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_17
+      rect:
+        serializedVersion: 2
+        x: 31
+        y: 508
+        width: 60
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9b015ba036198ea4b9a750e8fcaeedd2
+      internalID: 546386206
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_18
+      rect:
+        serializedVersion: 2
+        x: 112
+        y: 508
+        width: 60
+        height: 31
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 2d658e46cffa9744fa922d9834c94905
+      internalID: 2109555198
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_19
+      rect:
+        serializedVersion: 2
+        x: 795
+        y: 501
+        width: 126
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d2b2f43096c6ec34f990e3a80700ab62
+      internalID: 421203267
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_20
+      rect:
+        serializedVersion: 2
+        x: 18
+        y: 367
+        width: 199
+        height: 97
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: af354c8e112a41d459cfbb4adb30ff30
+      internalID: 441853079
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_21
+      rect:
+        serializedVersion: 2
+        x: 265
+        y: 429
+        width: 68
+        height: 43
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3489a44455063a4a884d2bcf71e6649
+      internalID: 63015477
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_22
+      rect:
+        serializedVersion: 2
+        x: 412
+        y: 328
+        width: 256
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fb71332d299ea394c94ec3adfb830611
+      internalID: 332838466
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_23
+      rect:
+        serializedVersion: 2
+        x: 684
+        y: 328
+        width: 256
+        height: 130
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5a30649fbe776c249b3db671932cad1d
+      internalID: 573246534
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_24
+      rect:
+        serializedVersion: 2
+        x: 13
+        y: 293
+        width: 99
+        height: 59
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1853b2dd89fbfdd4297cc1094de984d3
+      internalID: 742345715
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_25
+      rect:
+        serializedVersion: 2
+        x: 241
+        y: 323
+        width: 130
+        height: 87
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: fd54ef57020e8f64fbc379e192738d0a
+      internalID: -1773647775
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_26
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 184
+        width: 160
+        height: 88
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: afaaa3799d4e60a4bb30a50f3fda19d7
+      internalID: -668101961
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_27
+      rect:
+        serializedVersion: 2
+        x: 167
+        y: 139
+        width: 285
+        height: 178
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f99022d25ae6ad448a85e63f37e1065
+      internalID: -2076065412
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_28
+      rect:
+        serializedVersion: 2
+        x: 458
+        y: 186
+        width: 123
+        height: 125
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec046b23fc950f842ad9a7c98f41437b
+      internalID: -797351965
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_29
+      rect:
+        serializedVersion: 2
+        x: 585
+        y: 64
+        width: 344
+        height: 247
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8fd86ac8f240d5b42b1a635b60a2fab4
+      internalID: 1235850915
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_30
+      rect:
+        serializedVersion: 2
+        x: 463
+        y: 136
+        width: 39
+        height: 28
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7979b827f308b1846b25856fa7cde830
+      internalID: -709111184
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_31
+      rect:
+        serializedVersion: 2
+        x: 528
+        y: 136
+        width: 31
+        height: 16
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a00fa50585f32104d82081752f3a6fc9
+      internalID: 1820370273
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_32
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 44
+        width: 135
+        height: 91
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6aaccd7188631554ba97104800242b03
+      internalID: -944209471
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_33
+      rect:
+        serializedVersion: 2
+        x: 182
+        y: 11
+        width: 160
+        height: 119
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5400a272480b91643b10ba1b9fe6ac30
+      internalID: -301294157
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_34
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 73
+        width: 38
+        height: 61
+      alignment: 9
+      pivot: {x: 0.50810724, y: 0.22694221}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9ee9ebf9ee7160d40ba4fde87b6d197b
+      internalID: -733149388
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_35
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 23
+        width: 41
+        height: 33
+      alignment: 9
+      pivot: {x: 0.50548637, y: 0.4999998}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 18954ad877a865040a6032ac8164a6fd
+      internalID: 1973448306
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_36
+      rect:
+        serializedVersion: 2
+        x: 418
+        y: 71
+        width: 41
+        height: 62
+      alignment: 9
+      pivot: {x: 0.53010744, y: 0.2690496}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 48856bd284f68e24894ec5c26feca6b1
+      internalID: -915844686
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_37
+      rect:
+        serializedVersion: 2
+        x: 464
+        y: 71
+        width: 23
+        height: 50
+      alignment: 9
+      pivot: {x: 0.5, y: 0.17412125}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: bd78d1a30cc3d3b46955c0510630a93a
+      internalID: -1340359967
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_38
+      rect:
+        serializedVersion: 2
+        x: 423
+        y: 13
+        width: 69
+        height: 48
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ec40281c20573b84cbb6059734e521f3
+      internalID: -1981107141
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_39
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 14
+        width: 65
+        height: 50
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f0391abc8eca24e41a8397ceef364a61
+      internalID: -534382392
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_40
+      rect:
+        serializedVersion: 2
+        x: 550
+        y: 72
+        width: 21
+        height: 15
+      alignment: 9
+      pivot: {x: 0.49235025, y: 0.360938}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a51a846138af5d4587bb34ca836aa24
+      internalID: -1635461865
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_41
+      rect:
+        serializedVersion: 2
+        x: 523
+        y: 70
+        width: 25
+        height: 39
+      alignment: 9
+      pivot: {x: 0.5320874, y: 0.26137564}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 75ab7685f16f70e4db2dc30b088ce1a1
+      internalID: 2001469957
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_42
+      rect:
+        serializedVersion: 2
+        x: 491
+        y: 70
+        width: 27
+        height: 52
+      alignment: 9
+      pivot: {x: 0.54159206, y: 0.16674893}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a57b16baa9f4cc5429c943300554bd90
+      internalID: -214652446
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: RoadsAndGrassSprites_43
+      rect:
+        serializedVersion: 2
+        x: 257
+        y: 487
+        width: 77
+        height: 53
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1eb588666cade964daae7ce43a50877a
+      internalID: 1429062073
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      RoadsAndGrassSprites_0: -1172757002
+      RoadsAndGrassSprites_1: -334388576
+      RoadsAndGrassSprites_10: 522151236
+      RoadsAndGrassSprites_11: -1877117082
+      RoadsAndGrassSprites_12: -706222476
+      RoadsAndGrassSprites_13: -1966975372
+      RoadsAndGrassSprites_14: -1248259982
+      RoadsAndGrassSprites_15: -441811934
+      RoadsAndGrassSprites_16: 524019903
+      RoadsAndGrassSprites_17: 546386206
+      RoadsAndGrassSprites_18: 2109555198
+      RoadsAndGrassSprites_19: 421203267
+      RoadsAndGrassSprites_2: -1947296683
+      RoadsAndGrassSprites_20: 441853079
+      RoadsAndGrassSprites_21: 63015477
+      RoadsAndGrassSprites_22: 332838466
+      RoadsAndGrassSprites_23: 573246534
+      RoadsAndGrassSprites_24: 742345715
+      RoadsAndGrassSprites_25: -1773647775
+      RoadsAndGrassSprites_26: -668101961
+      RoadsAndGrassSprites_27: -2076065412
+      RoadsAndGrassSprites_28: -797351965
+      RoadsAndGrassSprites_29: 1235850915
+      RoadsAndGrassSprites_3: -634951471
+      RoadsAndGrassSprites_30: -709111184
+      RoadsAndGrassSprites_31: 1820370273
+      RoadsAndGrassSprites_32: -944209471
+      RoadsAndGrassSprites_33: -301294157
+      RoadsAndGrassSprites_34: -733149388
+      RoadsAndGrassSprites_35: 1973448306
+      RoadsAndGrassSprites_36: -915844686
+      RoadsAndGrassSprites_37: -1340359967
+      RoadsAndGrassSprites_38: -1981107141
+      RoadsAndGrassSprites_39: -534382392
+      RoadsAndGrassSprites_4: -778284486
+      RoadsAndGrassSprites_40: -1635461865
+      RoadsAndGrassSprites_41: 2001469957
+      RoadsAndGrassSprites_42: -214652446
+      RoadsAndGrassSprites_43: 1429062073
+      RoadsAndGrassSprites_5: -661287674
+      RoadsAndGrassSprites_6: 2095391035
+      RoadsAndGrassSprites_7: 148766353
+      RoadsAndGrassSprites_8: 957895235
+      RoadsAndGrassSprites_9: -449810173
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

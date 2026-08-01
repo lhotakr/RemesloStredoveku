@@ -1,0 +1,1 @@
+Před spuštěním smaž starý houska_courtyard_ground.json v této složce. Mapa se musí znovu zkompilovat z V23 zdroje.

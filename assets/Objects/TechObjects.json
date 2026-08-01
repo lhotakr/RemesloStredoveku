@@ -1,0 +1,146 @@
+{
+  "image": "",
+  "objects": [
+    {
+      "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "spawn_default",
+      "name": "Default player spawn",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "spawn",
+        "player"
+      ],
+      "unique": true
+    },
+    {
+      "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "spawn_from_Houska_in_Blatce",
+      "name": "Player spawn Houska --> Blatce",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "spawn",
+        "player"
+      ]
+    },
+    {
+      "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "spawn_from_Blatce_in_Houska",
+      "name": "Player spawn Blatce --> Houska",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "spawn",
+        "player"
+      ]
+    },
+    {
+      "collider": {
+        "enabled": true,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "map_link_path",
+      "name": "Map Link Path",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 0,
+        "w": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "map_link"
+      ]
+    },
+    {
+      "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "quest_matej_water_source",
+      "name": "Quest trigger - Matěj water source",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "quest_trigger",
+        "quest_matej_water",
+        "quest_source"
+      ]
+    }
+  ]
+}

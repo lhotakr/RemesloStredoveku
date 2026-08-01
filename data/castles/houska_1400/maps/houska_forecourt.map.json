@@ -1,0 +1,611 @@
+{
+  "schema_version": 1,
+  "id": "houska_forecourt",
+  "display_name": "Houska – jižní předhradí V14 – široká brána a čisté povrchy",
+  "map_kind": "exterior_25d",
+  "size": [
+    56,
+    42
+  ],
+  "cell_size": 1.0,
+  "fov_degrees": 74.0,
+  "eye_height": 0.62,
+  "default_solid_material": "sandstone_cliff_local",
+  "default_sector": "forecourt_ground",
+  "sky_material": "sky_north_bohemia_overcast",
+  "historical": {
+    "certainty": "probable",
+    "phase": "late_gothic_1390_1410",
+    "active_from": 1390,
+    "active_to": 1410,
+    "sources": [
+      "project_historical_brief"
+    ],
+    "note": "Funkční rekonstrukce předhradí. Příkop je základní dispoziční prvek; přesná poloha a podoba hospodářských staveb, mostu a bran jsou pravděpodobné nebo interpretační."
+  },
+  "sectors": [
+    {
+      "id": "south_gate_yard",
+      "display_name": "Jižní vstupní prostor",
+      "room_id": "forecourt_south_gate",
+      "room_function": "gate_yard",
+      "floor": {
+        "height": 0.18,
+        "material": "packed_earth_path"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_limewashed",
+      "wall_height": 3.3,
+      "ambient": 1.05,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "forecourt_ground",
+      "display_name": "Hospodářský dvůr předhradí",
+      "room_id": "forecourt_ground",
+      "room_function": "service_yard",
+      "floor": {
+        "height": 0.22,
+        "material": "packed_earth_path"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 3.2,
+      "ambient": 1.06,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "guardhouse_interior",
+      "display_name": "Strážnice předhradí",
+      "room_id": "forecourt_guardhouse",
+      "room_function": "guard",
+      "floor": {
+        "height": 0.22,
+        "material": "stable_floor"
+      },
+      "ceiling": {
+        "height": 2.45,
+        "material": "dark_shingle_ceiling"
+      },
+      "boundary_material": "oak_timber_wall",
+      "wall_height": 2.45,
+      "ambient": 0.72,
+      "sky_ceiling": false,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Přesná poloha strážnice v předhradí není doložená."
+      }
+    },
+    {
+      "id": "stables_interior",
+      "display_name": "Stáje",
+      "room_id": "forecourt_stables",
+      "room_function": "stable",
+      "floor": {
+        "height": 0.22,
+        "material": "stable_floor"
+      },
+      "ceiling": {
+        "height": 2.75,
+        "material": "dark_shingle_ceiling"
+      },
+      "boundary_material": "oak_timber_wall",
+      "wall_height": 2.75,
+      "ambient": 0.7,
+      "sky_ceiling": false,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "feed_shed",
+      "display_name": "Sklad krmiva a přístřešek",
+      "room_id": "forecourt_feed_storage",
+      "room_function": "feed_storage",
+      "floor": {
+        "height": 0.22,
+        "material": "stable_floor"
+      },
+      "ceiling": {
+        "height": 2.35,
+        "material": "dark_shingle_ceiling"
+      },
+      "boundary_material": "oak_timber_wall",
+      "wall_height": 2.35,
+      "ambient": 0.78,
+      "sky_ceiling": false,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "ditch_bottom",
+      "display_name": "Skalní příkop",
+      "room_id": "forecourt_rock_ditch",
+      "room_function": "rock_cut_ditch",
+      "floor": {
+        "height": -2.15,
+        "material": "rock_cut_ditch_floor"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 3.0,
+      "ambient": 0.88,
+      "sky_ceiling": true,
+      "npc_access": false,
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "timber_bridge",
+      "display_name": "Dřevěný most přes příkop",
+      "room_id": "forecourt_bridge",
+      "room_function": "bridge",
+      "floor": {
+        "height": 0.24,
+        "material": "oak_bridge_planks"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "oak_timber_wall",
+      "wall_height": 1.0,
+      "ambient": 1.02,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Existence přechodu je nutná, přesná konstrukce mostu je rekonstrukční."
+      }
+    },
+    {
+      "id": "north_gate_threshold",
+      "display_name": "Před bránou hradního jádra",
+      "room_id": "forecourt_core_gate",
+      "room_function": "core_gate_threshold",
+      "floor": {
+        "height": 0.24,
+        "material": "sandstone_plateau_surface"
+      },
+      "ceiling": {
+        "height": 14.0,
+        "material": "sky_north_bohemia_overcast"
+      },
+      "boundary_material": "sandstone_limewashed",
+      "wall_height": 4.2,
+      "ambient": 1.02,
+      "sky_ceiling": true,
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    }
+  ],
+  "raster": {
+    "walkable_regions": [
+      {
+        "sector": "south_gate_yard",
+        "rect": [
+          20,
+          34,
+          16,
+          7
+        ]
+      },
+      {
+        "sector": "forecourt_ground",
+        "rect": [
+          6,
+          20,
+          44,
+          15
+        ]
+      },
+      {
+        "sector": "ditch_bottom",
+        "rect": [
+          8,
+          15,
+          40,
+          5
+        ]
+      },
+      {
+        "sector": "timber_bridge",
+        "rect": [
+          25,
+          15,
+          6,
+          5
+        ]
+      },
+      {
+        "sector": "north_gate_threshold",
+        "rect": [
+          20,
+          10,
+          16,
+          5
+        ]
+      },
+      {
+        "sector": "guardhouse_interior",
+        "rect": [
+          8,
+          26,
+          9,
+          7
+        ]
+      },
+      {
+        "sector": "stables_interior",
+        "rect": [
+          38,
+          25,
+          10,
+          8
+        ]
+      },
+      {
+        "sector": "feed_shed",
+        "rect": [
+          37,
+          20,
+          9,
+          4
+        ]
+      }
+    ],
+    "solid_regions": [
+      {
+        "material": "sandstone_limewashed",
+        "sector": "south_gate_yard",
+        "rect": [
+          18,
+          40,
+          20,
+          1
+        ]
+      },
+      {
+        "material": "sandstone_limewashed",
+        "sector": "north_gate_threshold",
+        "rect": [
+          17,
+          9,
+          22,
+          1
+        ]
+      },
+      {
+        "material": "sandstone_cliff_local",
+        "sector": "ditch_bottom",
+        "rect": [
+          8,
+          14,
+          17,
+          1
+        ]
+      },
+      {
+        "material": "sandstone_cliff_local",
+        "sector": "ditch_bottom",
+        "rect": [
+          31,
+          14,
+          17,
+          1
+        ]
+      },
+      {
+        "material": "sandstone_cliff_local",
+        "sector": "forecourt_ground",
+        "rect": [
+          8,
+          20,
+          17,
+          1
+        ]
+      },
+      {
+        "material": "sandstone_cliff_local",
+        "sector": "forecourt_ground",
+        "rect": [
+          31,
+          20,
+          17,
+          1
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "timber_bridge",
+        "rect": [
+          24,
+          15,
+          1,
+          5
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "timber_bridge",
+        "rect": [
+          31,
+          15,
+          1,
+          5
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "guardhouse_interior",
+        "rect": [
+          7,
+          25,
+          11,
+          1
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "guardhouse_interior",
+        "rect": [
+          7,
+          33,
+          11,
+          1
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "guardhouse_interior",
+        "rect": [
+          7,
+          25,
+          1,
+          9
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "guardhouse_interior",
+        "rect": [
+          17,
+          25,
+          1,
+          9
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "stables_interior",
+        "rect": [
+          37,
+          24,
+          12,
+          1
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "stables_interior",
+        "rect": [
+          37,
+          33,
+          12,
+          1
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "stables_interior",
+        "rect": [
+          37,
+          24,
+          1,
+          10
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "stables_interior",
+        "rect": [
+          48,
+          24,
+          1,
+          10
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "feed_shed",
+        "rect": [
+          36,
+          19,
+          11,
+          1
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "feed_shed",
+        "rect": [
+          36,
+          19,
+          1,
+          6
+        ]
+      },
+      {
+        "material": "oak_timber_wall",
+        "sector": "feed_shed",
+        "rect": [
+          46,
+          19,
+          1,
+          6
+        ]
+      }
+    ],
+    "cell_overrides": [
+      {
+        "x": 27,
+        "y": 40,
+        "solid": false,
+        "sector": "south_gate_yard"
+      },
+      {
+        "x": 27,
+        "y": 9,
+        "solid": false,
+        "sector": "north_gate_threshold"
+      },
+      {
+        "x": 12,
+        "y": 33,
+        "solid": false,
+        "sector": "guardhouse_interior"
+      },
+      {
+        "x": 42,
+        "y": 33,
+        "solid": false,
+        "sector": "stables_interior"
+      },
+      {
+        "x": 41,
+        "y": 24,
+        "solid": false,
+        "sector": "feed_shed"
+      }
+    ]
+  },
+  "doors": [
+    {
+      "id": "return_to_exterior",
+      "x": 27,
+      "y": 40,
+      "locked": false,
+      "initially_open": false,
+      "speed": 1.4,
+      "target_location": "castle:houska_1400/houska_exterior",
+      "target_spawn": "forecourt_gate",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "material": "simple_timber_gate",
+      "motion": "transition",
+      "height": 2.35,
+      "span": 1,
+      "axis": "x"
+    },
+    {
+      "id": "core_gate_to_courtyard_v14",
+      "x": 25,
+      "y": 9,
+      "locked": false,
+      "initially_open": false,
+      "speed": 1.2,
+      "target_location": "castle:houska_1400/houska_courtyard_ground",
+      "target_spawn": "south_gate",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Funkční Build-style mapový portál z předhradí do nádvoří V3; použití klávesou E okamžitě načte castle:houska_1400/houska_courtyard_ground / south_gate."
+      },
+      "material": "courtyard_gate_wide",
+      "motion": "transition",
+      "height": 2.55,
+      "span": 5,
+      "axis": "x"
+    }
+  ],
+  "spawns": [
+    {
+      "id": "south_gate",
+      "x": 27.5,
+      "y": 38.0,
+      "angle_degrees": 270.0
+    },
+    {
+      "id": "forecourt_center",
+      "x": 27.5,
+      "y": 28.0,
+      "angle_degrees": 270.0
+    },
+    {
+      "id": "bridge_south",
+      "x": 27.5,
+      "y": 21.5,
+      "angle_degrees": 270.0
+    },
+    {
+      "id": "core_gate",
+      "x": 27.5,
+      "y": 12.5,
+      "angle_degrees": 90.0
+    }
+  ]
+}

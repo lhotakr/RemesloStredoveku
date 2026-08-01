@@ -1,0 +1,202 @@
+{
+  "id": "cellar_chamber",
+  "name": "Sklep pod panským domem",
+  "fov_degrees": 74,
+  "eye_height": 0.54,
+  "spawn": {
+    "x": 7.5,
+    "y": 1.8,
+    "angle_degrees": 90,
+    "pitch": 0.0
+  },
+  "textures": {
+    "1": "assets/Interior/wall_stone.png",
+    "2": "assets/Interior/wall_plaster.png",
+    "3": "assets/Interior/wall_brick.png",
+    "4": "assets/Interior/wall_metal.png",
+    "D": "assets/Interior/door_wood.png",
+    "F": "assets/Interior/floor_boards.png",
+    "S": "assets/Interior/floor_stone.png",
+    "C": "assets/Interior/ceiling_beams.png",
+    "P": "assets/Interior/ceiling_plaster.png",
+    "T": "assets/Interior/sprite_torch.png",
+    "B": "assets/Interior/sprite_barrel.png",
+    "X": "assets/Interior/sprite_crate.png",
+    "R": "assets/Interior/sprite_stairs.png",
+    "K": "assets/Interior/sky_overcast.png"
+  },
+  "grid": [
+    "1111111D1111111",
+    "1.............1",
+    "1....1........1",
+    "1....1........1",
+    "1....1........1",
+    "1....D........1",
+    "1....1........1",
+    "1....1..33D3331",
+    "1....1........1",
+    "1....1........1",
+    "1....1........1",
+    "1.............1",
+    "111111111111111"
+  ],
+  "sector_grid": [
+    "CCCCCCCCCCCCCCC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAAAAAAAAC",
+    "CCCCCCAABBBBBBC",
+    "CCCCCCAABBBBBBC",
+    "CCCCCCAABBBBBBC",
+    "CCCCCCAABBBBBBC",
+    "CCCCCCCCCCCCCCC"
+  ],
+  "sectors": {
+    "A": {
+      "id": "cellar_main",
+      "name": "Hlavní sklep",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        40,
+        39,
+        37
+      ],
+      "ceiling_color": [
+        20,
+        20,
+        21
+      ],
+      "floor_height": -0.35,
+      "ceiling_height": 1.2999999999999998,
+      "ambient": 0.48
+    },
+    "B": {
+      "id": "cellar_deep",
+      "name": "Hlubší komora",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "3",
+      "floor_color": [
+        31,
+        31,
+        30
+      ],
+      "ceiling_color": [
+        16,
+        16,
+        17
+      ],
+      "floor_height": -0.65,
+      "ceiling_height": 0.9999999999999999,
+      "ambient": 0.34
+    },
+    "C": {
+      "id": "cellar_passage",
+      "name": "Úzká chodba",
+      "floor_texture": "S",
+      "ceiling_texture": "C",
+      "boundary_texture": "1",
+      "floor_color": [
+        45,
+        44,
+        41
+      ],
+      "ceiling_color": [
+        22,
+        21,
+        21
+      ],
+      "floor_height": -0.25,
+      "ceiling_height": 1.4,
+      "ambient": 0.58
+    }
+  },
+  "doors": [
+    {
+      "id": "door_back_up",
+      "x": 7,
+      "y": 0,
+      "locked": false,
+      "open": true,
+      "speed": 2.0,
+      "target_interior": "test_chamber",
+      "target_spawn": "cellar_return"
+    },
+    {
+      "id": "door_side_cell",
+      "x": 5,
+      "y": 5,
+      "locked": false,
+      "open": false,
+      "speed": 1.5,
+      "target_interior": "",
+      "target_spawn": ""
+    },
+    {
+      "id": "door_deep_room",
+      "x": 10,
+      "y": 7,
+      "locked": false,
+      "open": false,
+      "speed": 1.4,
+      "target_interior": "",
+      "target_spawn": ""
+    }
+  ],
+  "sprites": [
+    {
+      "id": "torch_cellar",
+      "texture": "T",
+      "x": 7.0,
+      "y": 3.2,
+      "z_offset": 0.18,
+      "scale": 0.62,
+      "solid": false,
+      "interaction_label": "",
+      "target_interior": ""
+    },
+    {
+      "id": "barrel_cellar",
+      "texture": "B",
+      "x": 11.8,
+      "y": 10.0,
+      "z_offset": 0.0,
+      "scale": 0.7,
+      "solid": true,
+      "interaction_label": "Sud páchne po starém pivu.",
+      "target_interior": ""
+    },
+    {
+      "id": "stairs_up",
+      "texture": "R",
+      "x": 7.5,
+      "y": 1.4,
+      "z_offset": 0.0,
+      "scale": 0.72,
+      "solid": false,
+      "interaction_label": "E – vyjít zpět nahoru",
+      "target_interior": "test_chamber",
+      "target_spawn": "cellar_return"
+    }
+  ],
+  "spawns": {
+    "entry": {
+      "x": 7.5,
+      "y": 1.8,
+      "angle_degrees": 90,
+      "pitch": 0.0
+    },
+    "deep_room": {
+      "x": 10.5,
+      "y": 9.0,
+      "angle_degrees": 90,
+      "pitch": 0.0
+    }
+  }
+}

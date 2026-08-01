@@ -1,0 +1,382 @@
+fileFormatVersion: 2
+guid: 1a0973500b87b7a4cb7edb0c4c795d23
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: MonasterySprites_0
+      rect:
+        serializedVersion: 2
+        x: 4
+        y: 360
+        width: 476
+        height: 438
+      alignment: 9
+      pivot: {x: 0.5189076, y: 0.2785388}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f05808e7a2e9746478dc5a4a6990cbac
+      internalID: -1479061060
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_1
+      rect:
+        serializedVersion: 2
+        x: 502
+        y: 549
+        width: 468
+        height: 253
+      alignment: 9
+      pivot: {x: 0.8479893, y: 0.78596807}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0793d0d40c9d763419c85e07ecfdfcbc
+      internalID: 429309155
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_2
+      rect:
+        serializedVersion: 2
+        x: 23
+        y: 12
+        width: 137
+        height: 327
+      alignment: 9
+      pivot: {x: 0.55474454, y: 0.0764526}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9f865a8e50e17544e998b8207631846b
+      internalID: 1347665729
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_3
+      rect:
+        serializedVersion: 2
+        x: 183
+        y: 12
+        width: 137
+        height: 327
+      alignment: 9
+      pivot: {x: 0.4890511, y: 0.0764526}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6f47a4cf78e8ef841bfe19f57f3f16dc
+      internalID: -1556884365
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_4
+      rect:
+        serializedVersion: 2
+        x: 340
+        y: 12
+        width: 137
+        height: 327
+      alignment: 9
+      pivot: {x: 0.50364965, y: 0.076452605}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 023bb0f894d08014cbeebbf63c0223f0
+      internalID: -1217741418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_5
+      rect:
+        serializedVersion: 2
+        x: 496
+        y: 300
+        width: 468
+        height: 239
+      alignment: 9
+      pivot: {x: 0.51345813, y: 0.79812515}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 404d7ab40857cd444973bc4c6241127e
+      internalID: 7142870
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_6
+      rect:
+        serializedVersion: 2
+        x: 548
+        y: 132
+        width: 121
+        height: 137
+      alignment: 9
+      pivot: {x: 0.5074362, y: 0.6042271}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4aab978d37b03e442a14a8106ca3153a
+      internalID: 1952708675
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_7
+      rect:
+        serializedVersion: 2
+        x: 689
+        y: 132
+        width: 121
+        height: 126
+      alignment: 9
+      pivot: {x: 0.4776914, y: 0.70696455}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: cbb7111f284019a419b38a97473d5352
+      internalID: -1856764145
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_8
+      rect:
+        serializedVersion: 2
+        x: 823
+        y: 136
+        width: 49
+        height: 92
+      alignment: 9
+      pivot: {x: 0.48979592, y: 0.23913044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: abc21a211a7f8f14aa6ffce44a764592
+      internalID: -1241901859
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_9
+      rect:
+        serializedVersion: 2
+        x: 882
+        y: 136
+        width: 49
+        height: 92
+      alignment: 9
+      pivot: {x: 0.48979592, y: 0.23913044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 28cc3362fe5d7954c9c85230a19ab4db
+      internalID: -1363022445
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: MonasterySprites_10
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 136
+        width: 45
+        height: 92
+      alignment: 9
+      pivot: {x: 0.53333336, y: 0.23913044}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 77c15a70abfbb644b92935fb1054ab53
+      internalID: 360330031
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      MonasterySprites_0: -1479061060
+      MonasterySprites_1: 429309155
+      MonasterySprites_10: 360330031
+      MonasterySprites_2: 1347665729
+      MonasterySprites_3: -1556884365
+      MonasterySprites_4: -1217741418
+      MonasterySprites_5: 7142870
+      MonasterySprites_6: 1952708675
+      MonasterySprites_7: -1856764145
+      MonasterySprites_8: -1241901859
+      MonasterySprites_9: -1363022445
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

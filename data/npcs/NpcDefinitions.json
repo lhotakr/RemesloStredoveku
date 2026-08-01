@@ -1,0 +1,1001 @@
+{
+  "npcs": [
+    {
+      "npc_id": "matej_sedlak",
+      "type_id": "farmer",
+      "script_id": "matej_intro",
+      "character_id": "Character_2_char_01",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Matěj",
+        "surname": "",
+        "age": 46,
+        "gender": "male",
+        "profession": "farmer",
+        "social_status": "free_peasant",
+        "authority_level": "medium",
+        "temperament": "reserved_practical"
+      },
+
+      "household": {
+        "household_id": "matej_household",
+        "role_in_household": "head"
+      },
+
+      "system_roles": [
+        "survival_anchor",
+        "work_provider",
+        "trust_gatekeeper",
+        "food_access_gate"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "farmyard",
+          "forenoon": "fields",
+          "noon": "house",
+          "afternoon": "fields",
+          "evening": "yard",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "home",
+          "evening": "yard"
+        },
+        "seasonal_focus": {
+          "spring": "sowing",
+          "summer": "haymaking",
+          "autumn": "harvest",
+          "winter": "repairs"
+        }
+      },
+
+      "relationships": {
+        "family": [ "anna_matejova", "maruse_matejova", "pavel_matej" ],
+        "respects": [ "havel_rychtar", "mikulas_knez" ],
+        "trusts": [ "zdislava_bylinarka" ],
+        "tensions": [ "ondrej_mlynar" ]
+      },
+
+      "reputation_sensitivity": {
+        "work_ethic": 0.95,
+        "reliability": 0.9,
+        "honesty": 0.85,
+        "etiquette": 0.2,
+        "education": 0.1,
+        "religious_behavior": 0.35
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "rural_direct",
+        "error_tolerance": 0.5
+      },
+
+      "dialogue_hooks": [
+        "greeting",
+        "offer_work",
+        "evaluate_work",
+        "harvest_status",
+        "village_news"
+      ],
+
+      "quest_hooks": [
+        "carry_water",
+        "repair_fence",
+        "guard_goats",
+        "harvest_help",
+        "carry_grain"
+      ]
+    },
+
+    {
+      "npc_id": "anna_matejova",
+      "type_id": "villager_woman",
+      "script_id": "anna_intro",
+      "character_id": "Character_2_char_02",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Anna",
+        "surname": "",
+        "age": 42,
+        "gender": "female",
+        "profession": "household_manager",
+        "social_status": "farmer_wife",
+        "authority_level": "soft_high",
+        "temperament": "cautious_social"
+      },
+
+      "household": {
+        "household_id": "matej_household",
+        "role_in_household": "wife"
+      },
+
+      "system_roles": [
+        "social_protocol_gate",
+        "household_access_gate",
+        "hygiene_validator",
+        "food_access_filter"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "well",
+          "forenoon": "house",
+          "noon": "kitchen",
+          "afternoon": "yard",
+          "evening": "house",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "house",
+          "evening": "house"
+        },
+        "seasonal_focus": {
+          "spring": "cleaning_and_garden",
+          "summer": "food_processing",
+          "autumn": "storage",
+          "winter": "household_maintenance"
+        }
+      },
+
+      "relationships": {
+        "family": [ "matej_sedlak", "maruse_matejova", "pavel_matej" ],
+        "friends": [ "ludmila_rychtarova" ],
+        "respects": [ "mikulas_knez" ],
+        "distance": [ "zdislava_bylinarka" ]
+      },
+
+      "reputation_sensitivity": {
+        "hygiene": 0.95,
+        "etiquette": 0.9,
+        "social_protocol": 0.9,
+        "religious_behavior": 0.75,
+        "work_ethic": 0.55,
+        "strength": 0.05
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "structured_domestic",
+        "error_tolerance": 0.25
+      },
+
+      "dialogue_hooks": [
+        "greeting",
+        "allow_food",
+        "allow_rest",
+        "warn_about_behavior",
+        "village_customs"
+      ],
+
+      "quest_hooks": [
+        "bring_water",
+        "collect_herbs",
+        "help_with_meal",
+        "carry_bundle",
+        "wash_task"
+      ]
+    },
+
+    {
+      "npc_id": "havel_rychtar",
+      "type_id": "reeve",
+      "script_id": "havel_intro",
+      "character_id": "Character_2_char_03",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Havel",
+        "surname": "",
+        "age": 51,
+        "gender": "male",
+        "profession": "reeve",
+        "social_status": "village_reeve",
+        "authority_level": "very_high",
+        "temperament": "stern_orderly"
+      },
+
+      "household": {
+        "household_id": "havel_household",
+        "role_in_household": "head"
+      },
+
+      "system_roles": [
+        "law_anchor",
+        "forest_rights_authority",
+        "dispute_resolver",
+        "legitimacy_gatekeeper"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "reeve_yard",
+          "forenoon": "village_center",
+          "noon": "house",
+          "afternoon": "forest_edge",
+          "evening": "village_center",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "village_center",
+          "evening": "house"
+        },
+        "seasonal_focus": {
+          "spring": "field_boundaries",
+          "summer": "commons_supervision",
+          "autumn": "harvest_order",
+          "winter": "dispute_resolution"
+        }
+      },
+
+      "relationships": {
+        "family": [ "ludmila_rychtarova", "janek_rychtaruv_syn" ],
+        "respects": [ "mikulas_knez", "matej_sedlak" ],
+        "tensions": [ "ondrej_mlynar" ],
+        "watches": [ "pavel_matej" ]
+      },
+
+      "reputation_sensitivity": {
+        "lawfulness": 0.95,
+        "truthfulness": 0.95,
+        "reeve_trust": 1.0,
+        "religious_behavior": 0.35,
+        "etiquette": 0.55,
+        "physical_strength": 0.05
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "german_partial",
+        "speech_style": "formal_direct",
+        "error_tolerance": 0.3
+      },
+
+      "dialogue_hooks": [
+        "formal_greeting",
+        "report_incident",
+        "boundary_dispute",
+        "forest_rules",
+        "witness_testimony"
+      ],
+
+      "quest_hooks": [
+        "inspect_boundary",
+        "deliver_order",
+        "report_trespass",
+        "find_witness",
+        "escort_message"
+      ]
+    },
+
+    {
+      "npc_id": "mikulas_knez",
+      "type_id": "priest",
+      "script_id": "mikulas_intro",
+      "character_id": "Character_2_char_04",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Mikuláš",
+        "surname": "",
+        "age": 56,
+        "gender": "male",
+        "profession": "priest",
+        "social_status": "clergy",
+        "authority_level": "high_soft",
+        "temperament": "calm_learned"
+      },
+
+      "household": {
+        "household_id": "chapel_household",
+        "role_in_household": "institutional_head"
+      },
+
+      "system_roles": [
+        "church_anchor",
+        "calendar_interpreter",
+        "moral_mediator",
+        "forgiveness_source"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "chapel",
+          "forenoon": "graveyard",
+          "noon": "parish_room",
+          "afternoon": "village_visit",
+          "evening": "chapel",
+          "night": "chapel_house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "church_yard",
+          "evening": "chapel"
+        },
+        "seasonal_focus": {
+          "spring": "blessing_and_calendar",
+          "summer": "feast_guidance",
+          "autumn": "harvest_thanks",
+          "winter": "mourning_and_prayer"
+        }
+      },
+
+      "relationships": {
+        "respects": [ "havel_rychtar", "matej_sedlak" ],
+        "observes": [ "zdislava_bylinarka" ],
+        "guides": [ "anna_matejova", "maruse_matejova" ]
+      },
+
+      "reputation_sensitivity": {
+        "church_trust": 1.0,
+        "religious_behavior": 0.95,
+        "humility": 0.8,
+        "truthfulness": 0.75,
+        "cleanliness": 0.35,
+        "wealth": 0.0
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "german",
+        "learned_language": "latin",
+        "speech_style": "educated_gentle",
+        "error_tolerance": 0.75
+      },
+
+      "dialogue_hooks": [
+        "gentle_greeting",
+        "explain_calendar",
+        "seek_blessing",
+        "illness_interpretation",
+        "burial_talk"
+      ],
+
+      "quest_hooks": [
+        "bring_candle",
+        "deliver_message_before_feast",
+        "visit_sick_person",
+        "assist_burial",
+        "find_chapel_item"
+      ]
+    },
+
+    {
+      "npc_id": "ondrej_mlynar",
+      "type_id": "miller",
+      "script_id": "ondrej_intro",
+      "character_id": "Character_2_char_05",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Ondřej",
+        "surname": "",
+        "age": 44,
+        "gender": "male",
+        "profession": "miller",
+        "social_status": "miller",
+        "authority_level": "high_economic",
+        "temperament": "confident_pragmatic"
+      },
+
+      "household": {
+        "household_id": "mlyn_household",
+        "role_in_household": "head"
+      },
+
+      "system_roles": [
+        "economy_gatekeeper",
+        "grain_processing_node",
+        "rumor_hub",
+        "logistics_provider"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "mill_yard",
+          "forenoon": "mill",
+          "noon": "mill_house",
+          "afternoon": "mill",
+          "evening": "bridge",
+          "night": "mill_house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "mill_yard",
+          "evening": "mill_house"
+        },
+        "seasonal_focus": {
+          "spring": "flow_control",
+          "summer": "grain_queue",
+          "autumn": "peak_processing",
+          "winter": "maintenance"
+        }
+      },
+
+      "relationships": {
+        "family": [ "dorota_mlynarova", "konrad_pacholek" ],
+        "tensions": [ "matej_sedlak", "havel_rychtar" ],
+        "practical_links": [ "benes_kovar" ]
+      },
+
+      "reputation_sensitivity": {
+        "reliability": 0.95,
+        "delivery_accuracy": 0.9,
+        "economic_honesty": 0.9,
+        "work_ethic": 0.65,
+        "etiquette": 0.1,
+        "cleanliness": 0.05
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "brisk_practical",
+        "error_tolerance": 0.4
+      },
+
+      "dialogue_hooks": [
+        "busy_greeting",
+        "accept_delivery",
+        "explain_fee",
+        "market_news",
+        "mill_argument"
+      ],
+
+      "quest_hooks": [
+        "carry_grain",
+        "deliver_flour",
+        "repair_mill_part",
+        "escort_dorota",
+        "bring_message"
+      ]
+    },
+
+    {
+      "npc_id": "zdislava_bylinarka",
+      "type_id": "herbalist",
+      "script_id": "zdislava_intro",
+      "character_id": "Character_2_char_06",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Zdislava",
+        "surname": "",
+        "age": 61,
+        "gender": "female",
+        "profession": "folk_healer",
+        "social_status": "healer",
+        "authority_level": "soft_unofficial_high",
+        "temperament": "calm_symbolic"
+      },
+
+      "household": {
+        "household_id": "zdislava_hut",
+        "role_in_household": "head"
+      },
+
+      "system_roles": [
+        "healing_gate",
+        "herbalism_mentor",
+        "dream_interpreter",
+        "folk_belief_anchor"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "herb_garden",
+          "forenoon": "forest_edge",
+          "noon": "hut",
+          "afternoon": "drying_area",
+          "evening": "hut_fire",
+          "night": "hut"
+        },
+        "sunday": {
+          "morning": "hut",
+          "forenoon": "chapel_edge",
+          "afternoon": "hut",
+          "evening": "hut"
+        },
+        "seasonal_focus": {
+          "spring": "plant_gathering",
+          "summer": "drying_and_remedies",
+          "autumn": "storage",
+          "winter": "treatment"
+        }
+      },
+
+      "relationships": {
+        "trusted_by": [ "matej_sedlak" ],
+        "cautious_distance": [ "anna_matejova", "havel_rychtar" ],
+        "ambivalent_respect": [ "mikulas_knez" ],
+        "interest_from": [ "maruse_matejova" ]
+      },
+
+      "reputation_sensitivity": {
+        "humility": 0.9,
+        "patience": 0.9,
+        "carefulness": 0.85,
+        "reciprocity": 0.8,
+        "wealth": 0.0,
+        "formal_status": 0.05
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "symbolic_folk",
+        "error_tolerance": 0.8
+      },
+
+      "dialogue_hooks": [
+        "quiet_greeting",
+        "treat_wound",
+        "identify_herb",
+        "dream_talk",
+        "forest_warning"
+      ],
+
+      "quest_hooks": [
+        "collect_plant",
+        "bring_clean_water",
+        "dry_herbs",
+        "deliver_remedy",
+        "find_growth_place"
+      ]
+    },
+
+    {
+      "npc_id": "maruse_matejova",
+      "type_id": "villager_girl",
+      "script_id": "maruse_intro",
+      "character_id": "Character_2_char_07",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Maruše",
+        "surname": "",
+        "age": 17,
+        "gender": "female",
+        "profession": "household_helper",
+        "social_status": "farmer_daughter",
+        "authority_level": "low_social_high",
+        "temperament": "observant_warm"
+      },
+
+      "household": {
+        "household_id": "matej_household",
+        "role_in_household": "daughter"
+      },
+
+      "system_roles": [
+        "social_bridge",
+        "rumor_listener",
+        "safe_dialogue_space",
+        "youthful_orientation_node"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "well",
+          "forenoon": "yard",
+          "noon": "kitchen",
+          "afternoon": "garden_path",
+          "evening": "bench",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "church_yard",
+          "evening": "house"
+        },
+        "seasonal_focus": {
+          "spring": "gathering",
+          "summer": "household_help",
+          "autumn": "storage_help",
+          "winter": "indoor_work"
+        }
+      },
+
+      "relationships": {
+        "family": [ "matej_sedlak", "anna_matejova", "pavel_matej" ],
+        "trusts": [ "zdislava_bylinarka" ],
+        "respects": [ "mikulas_knez" ],
+        "curious_about": [ "dorota_mlynarova" ]
+      },
+
+      "reputation_sensitivity": {
+        "kindness": 0.95,
+        "helpfulness": 0.9,
+        "honesty": 0.8,
+        "cleanliness": 0.4,
+        "wealth": 0.0,
+        "formal_authority": 0.05
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "natural_youthful",
+        "error_tolerance": 0.85
+      },
+
+      "dialogue_hooks": [
+        "friendly_greeting",
+        "village_news",
+        "small_help",
+        "festival_talk",
+        "family_talk"
+      ],
+
+      "quest_hooks": [
+        "bring_bucket",
+        "deliver_package",
+        "collect_herbs",
+        "help_prepare_feast",
+        "watch_goats"
+      ]
+    },
+
+    {
+      "npc_id": "pavel_matej",
+      "type_id": "young_farmer",
+      "script_id": "pavel_intro",
+      "character_id": "Character_2_char_08",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Pavel",
+        "surname": "",
+        "age": 19,
+        "gender": "male",
+        "profession": "field_worker",
+        "social_status": "farmer_son",
+        "authority_level": "low_competitive",
+        "temperament": "proud_direct"
+      },
+
+      "household": {
+        "household_id": "matej_household",
+        "role_in_household": "son"
+      },
+
+      "system_roles": [
+        "peer_rival",
+        "labor_reference",
+        "strength_test_node",
+        "youth_group_link"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "yard",
+          "forenoon": "fields",
+          "noon": "house",
+          "afternoon": "fields",
+          "evening": "bench",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "green",
+          "evening": "bench"
+        },
+        "seasonal_focus": {
+          "spring": "plough_help",
+          "summer": "field_work",
+          "autumn": "harvest_work",
+          "winter": "wood_work"
+        }
+      },
+
+      "relationships": {
+        "family": [ "matej_sedlak", "anna_matejova", "maruse_matejova" ],
+        "respects": [ "havel_rychtar" ],
+        "skeptical_of": [ "player" ],
+        "distance": [ "ondrej_mlynar" ]
+      },
+
+      "reputation_sensitivity": {
+        "strength": 0.85,
+        "work_ethic": 0.95,
+        "reliability": 0.8,
+        "confidence": 0.7,
+        "etiquette": 0.05,
+        "religious_formality": 0.05
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "direct_youth_male",
+        "error_tolerance": 0.5
+      },
+
+      "dialogue_hooks": [
+        "testing_greeting",
+        "join_work",
+        "challenge_task",
+        "compare_results",
+        "mock_if_weak"
+      ],
+
+      "quest_hooks": [
+        "carry_logs",
+        "repair_fence",
+        "guard_animals",
+        "race_task",
+        "group_work_event"
+      ]
+    },
+
+    {
+      "npc_id": "ludmila_rychtarova",
+      "type_id": "authority_woman",
+      "script_id": "ludmila_intro",
+      "character_id": "Character_2_char_09",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Ludmila",
+        "surname": "",
+        "age": 48,
+        "gender": "female",
+        "profession": "authority_household_manager",
+        "social_status": "reeve_wife",
+        "authority_level": "high_social_soft",
+        "temperament": "composed_observant"
+      },
+
+      "household": {
+        "household_id": "havel_household",
+        "role_in_household": "wife"
+      },
+
+      "system_roles": [
+        "female_social_protocol_anchor",
+        "reputation_amplifier",
+        "community_memory_keeper",
+        "behavior_observer"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "reeve_yard",
+          "forenoon": "path_between_houses",
+          "noon": "house",
+          "afternoon": "well",
+          "evening": "bench",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "church_yard",
+          "evening": "house"
+        },
+        "seasonal_focus": {
+          "spring": "household_visits",
+          "summer": "festival_coordination",
+          "autumn": "community_storage_talk",
+          "winter": "community_observation"
+        }
+      },
+
+      "relationships": {
+        "family": [ "havel_rychtar", "janek_rychtaruv_syn" ],
+        "friends": [ "anna_matejova" ],
+        "respects": [ "mikulas_knez" ],
+        "distance": [ "zdislava_bylinarka" ]
+      },
+
+      "reputation_sensitivity": {
+        "etiquette": 0.95,
+        "social_protocol": 0.95,
+        "religious_behavior": 0.8,
+        "cleanliness": 0.75,
+        "strength": 0.0,
+        "tools": 0.0
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "structured_social",
+        "error_tolerance": 0.35
+      },
+
+      "dialogue_hooks": [
+        "formal_greeting",
+        "comment_on_reputation",
+        "advise_on_behavior",
+        "festival_talk",
+        "community_news"
+      ],
+
+      "quest_hooks": [
+        "deliver_message_between_households",
+        "bring_clean_cloth",
+        "assist_visit",
+        "prepare_festival_item",
+        "support_household_event"
+      ]
+    },
+
+    {
+      "npc_id": "benes_kovar",
+      "type_id": "blacksmith",
+      "script_id": "benes_intro",
+      "character_id": "Character_2_char_10",
+
+      "access_profile": {
+        "allows_public_talk": true,
+        "allows_yard_talk": true,
+        "allows_house_talk": false,
+        "requires_trust_for_house": true,
+        "min_trust_for_house": 20.0
+      },
+
+      "identity": {
+        "name": "Beneš",
+        "surname": "",
+        "age": 38,
+        "gender": "male",
+        "profession": "blacksmith",
+        "social_status": "craftsman",
+        "authority_level": "medium_economic",
+        "temperament": "focused_practical"
+      },
+
+      "household": {
+        "household_id": "forge_household",
+        "role_in_household": "head"
+      },
+
+      "system_roles": [
+        "tool_access_gate",
+        "repair_center",
+        "craft_progression_anchor",
+        "metalwork_reference"
+      ],
+
+      "schedule_profile": {
+        "default": {
+          "morning": "forge",
+          "forenoon": "forge",
+          "noon": "forge_house",
+          "afternoon": "forge",
+          "evening": "forge_yard",
+          "night": "house"
+        },
+        "sunday": {
+          "morning": "church",
+          "forenoon": "church",
+          "afternoon": "house",
+          "evening": "forge_yard"
+        },
+        "seasonal_focus": {
+          "spring": "tool_repairs",
+          "summer": "harvest_tool_prep",
+          "autumn": "wagon_repairs",
+          "winter": "metal_stock_work"
+        }
+      },
+
+      "relationships": {
+        "practical_links": [ "matej_sedlak", "ondrej_mlynar" ],
+        "respects": [ "havel_rychtar", "mikulas_knez" ],
+        "observed_by": [ "pavel_matej" ]
+      },
+
+      "reputation_sensitivity": {
+        "tool_care": 0.95,
+        "material_quality": 0.9,
+        "honesty": 0.8,
+        "practical_skill": 0.75,
+        "etiquette": 0.1,
+        "social_charm": 0.0
+      },
+
+      "language_profile": {
+        "primary_language": "medieval_czech",
+        "secondary_language": "",
+        "speech_style": "work_direct",
+        "error_tolerance": 0.5
+      },
+
+      "dialogue_hooks": [
+        "busy_greeting",
+        "repair_tool",
+        "make_nails",
+        "request_material",
+        "craft_talk"
+      ],
+
+      "quest_hooks": [
+        "bring_charcoal",
+        "bring_iron_piece",
+        "deliver_tool",
+        "repair_handle",
+        "assist_forge_day"
+      ]
+    }
+  ]
+}

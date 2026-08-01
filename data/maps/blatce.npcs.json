@@ -1,0 +1,28 @@
+{
+  "npcs": [
+    {
+      "character_id": "Character_3_char_01",
+      "hp": 100,
+      "id": "Sedlak01",
+      "mood": 50,
+      "name": "Matěj",
+      "script_id": "matej_intro",
+      "surname": "z Lípy",
+      "tile_x": 100,
+      "tile_y": 15,
+      "type_id": "farmer"
+    },
+    {
+      "character_id": "Character_1_char_07",
+      "hp": 100,
+      "id": "Selka1",
+      "mood": 50,
+      "name": "Matylda",
+      "script_id": "Smir_welcome",
+      "surname": "z Lípy",
+      "tile_x": 103,
+      "tile_y": 42,
+      "type_id": "farmer"
+    }
+  ]
+}

@@ -1,0 +1,4522 @@
+[
+  {
+    "uid": "adbfa76acf47_TileGrass_0_0",
+    "atlas_x": 0,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "f964842b30d9_TileGrass_1_0",
+    "atlas_x": 1,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "ac05b5f9fb70_TileGrass_2_0",
+    "atlas_x": 2,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c1b083745249_TileGrass_3_0",
+    "atlas_x": 3,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "633f15c8f760_TileGrass_4_0",
+    "atlas_x": 4,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "d7e5a85852de_TileGrass_5_0",
+    "atlas_x": 5,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "069fc07eb5d7_TileGrass_6_0",
+    "atlas_x": 6,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9ab5c4f6eb9d_TileGrass_7_0",
+    "atlas_x": 7,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "14e0dccf6e14_TileGrass_8_0",
+    "atlas_x": 8,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "f53c2a2b0c4f_TileGrass_9_0",
+    "atlas_x": 9,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9b9545d31799_TileGrass_0_1",
+    "atlas_x": 10,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a6e74b29fbed_TileGrass_1_1",
+    "atlas_x": 11,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7255a2906483_TileGrass_2_1",
+    "atlas_x": 12,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c7fd9dfacb60_TileGrass_3_1",
+    "atlas_x": 13,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "3ea1136c9903_TileGrass_4_1",
+    "atlas_x": 14,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "79ddb9820221_TileGrass_5_1",
+    "atlas_x": 15,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "b6765f82b19a_TileGrass_6_1",
+    "atlas_x": 16,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "45f054f7c866_TileGrass_7_1",
+    "atlas_x": 17,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "61c163ed3c30_TileGrass_8_1",
+    "atlas_x": 18,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "187a6ea19926_TileGrass_9_1",
+    "atlas_x": 19,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "0dd4f6e181cf_TileGrass_0_2",
+    "atlas_x": 20,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9c0b75d6f65c_TileGrass_1_2",
+    "atlas_x": 21,
+    "atlas_y": 0,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "3c1be32d5dfb_TileGrass_2_2",
+    "atlas_x": 0,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "b14fad271d1d_TileGrass_3_2",
+    "atlas_x": 1,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "122c11dbfb6c_TileGrass_4_2",
+    "atlas_x": 2,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "694263a3392a_TileGrass_5_2",
+    "atlas_x": 3,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "955ce60b94a3_TileGrass_6_2",
+    "atlas_x": 4,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "cab98e53a00d_TileGrass_7_2",
+    "atlas_x": 5,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "082c3ae7993e_TileGrass_8_2",
+    "atlas_x": 6,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "6a27a1fc900a_TileGrass_9_2",
+    "atlas_x": 7,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "896f2faa1f0f_TileGrass_0_3",
+    "atlas_x": 8,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "76e0451e0360_TileGrass_2_3",
+    "atlas_x": 9,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 2,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9cbbd8dfc44c_TileGrass_3_3",
+    "atlas_x": 10,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "07eec59fd77c_TileGrass_4_3",
+    "atlas_x": 11,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7de269f65c68_TileGrass_5_3",
+    "atlas_x": 12,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a398205868cb_TileGrass_6_3",
+    "atlas_x": 13,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "4c456d70ba1a_TileGrass_7_3",
+    "atlas_x": 14,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "54df1eb314b3_TileGrass_8_3",
+    "atlas_x": 15,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "6b3ff25936d1_TileGrass_9_3",
+    "atlas_x": 16,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "b0f1527c1e9f_TileGrass_0_4",
+    "atlas_x": 17,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fa127214da07_TileGrass_1_4",
+    "atlas_x": 18,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "96bc70d10035_TileGrass_2_4",
+    "atlas_x": 19,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 2,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "b5eb1b2c31d9_TileGrass_3_4",
+    "atlas_x": 20,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "126c0da62450_TileGrass_4_4",
+    "atlas_x": 21,
+    "atlas_y": 1,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "19d2e4116e64_TileGrass_5_4",
+    "atlas_x": 0,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "1659ed22cc7b_TileGrass_6_4",
+    "atlas_x": 1,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "f3dac2f610e6_TileGrass_7_4",
+    "atlas_x": 2,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a4b6abebabb9_TileGrass_8_4",
+    "atlas_x": 3,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c28da5ade753_TileGrass_9_4",
+    "atlas_x": 4,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c9e8fbd772c4_TileGrass_0_5",
+    "atlas_x": 5,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "2db08aed360c_TileGrass_1_5",
+    "atlas_x": 6,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7507ff42ba99_TileGrass_3_5",
+    "atlas_x": 7,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fbfe90aa3dce_TileGrass_4_5",
+    "atlas_x": 8,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "21a041b6f204_TileGrass_5_5",
+    "atlas_x": 9,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7905038bbd69_TileGrass_6_5",
+    "atlas_x": 10,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fbee67a95aa4_TileGrass_7_5",
+    "atlas_x": 11,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fa8d7c032fb7_TileGrass_8_5",
+    "atlas_x": 12,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fcfec6d9bb68_TileGrass_9_5",
+    "atlas_x": 13,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9eddc00e2c7a_TileGrass_0_6",
+    "atlas_x": 14,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fd7d3f86226b_TileGrass_1_6",
+    "atlas_x": 15,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "51cec3c3f258_TileGrass_3_6",
+    "atlas_x": 16,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 3,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c2a3a63501e2_TileGrass_4_6",
+    "atlas_x": 17,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 4,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "4a2ef572dd7c_TileGrass_5_6",
+    "atlas_x": 18,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 5,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "d2fa8d70199d_TileGrass_6_6",
+    "atlas_x": 19,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7f9ac253eba5_TileGrass_7_6",
+    "atlas_x": 20,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "035afbfe6349_TileGrass_8_6",
+    "atlas_x": 21,
+    "atlas_y": 2,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "2854fdde7977_TileGrass_9_6",
+    "atlas_x": 0,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "55be6389b311_TileGrass_0_7",
+    "atlas_x": 1,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 0,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a08cfe558841_TileGrass_1_7",
+    "atlas_x": 2,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 1,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "359bc7a9332b_TileGrass_2_7",
+    "atlas_x": 3,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 2,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "848ea597d782_TileGrass_6_7",
+    "atlas_x": 4,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 6,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "384e2d2b9e04_TileGrass_7_7",
+    "atlas_x": 5,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 7,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "41a41869aee1_TileGrass_8_7",
+    "atlas_x": 6,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 8,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "570c770ac17b_TileGrass_9_7",
+    "atlas_x": 7,
+    "atlas_y": 3,
+    "source": "TileGrass",
+    "source_x": 9,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "822386e83af1_TileGrassStrong_0_0",
+    "atlas_x": 8,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e7038f52ae9e_TileGrassStrong_1_0",
+    "atlas_x": 9,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "6f1b5738253a_TileGrassStrong_2_0",
+    "atlas_x": 10,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "5243dd12bed5_TileGrassStrong_3_0",
+    "atlas_x": 11,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "7e116425ea43_TileGrassStrong_4_0",
+    "atlas_x": 12,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "8cca67dbaee2_TileGrassStrong_5_0",
+    "atlas_x": 13,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4a9a6f8b9975_TileGrassStrong_6_0",
+    "atlas_x": 14,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "dd8d1dab24eb_TileGrassStrong_7_0",
+    "atlas_x": 15,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "44f498af62ff_TileGrassStrong_8_0",
+    "atlas_x": 16,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d5398b87ba98_TileGrassStrong_9_0",
+    "atlas_x": 17,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c256ac39b33b_TileGrassStrong_0_1",
+    "atlas_x": 18,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c7914d1d7c36_TileGrassStrong_1_1",
+    "atlas_x": 19,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "57d4dda3f4e0_TileGrassStrong_2_1",
+    "atlas_x": 20,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "36dd1e54586c_TileGrassStrong_3_1",
+    "atlas_x": 21,
+    "atlas_y": 3,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "cc8342043936_TileGrassStrong_4_1",
+    "atlas_x": 0,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "7f5798ba2a9f_TileGrassStrong_5_1",
+    "atlas_x": 1,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "21ae8b8d41e3_TileGrassStrong_6_1",
+    "atlas_x": 2,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3a7e7808166d_TileGrassStrong_7_1",
+    "atlas_x": 3,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "2f9e0ada7f41_TileGrassStrong_8_1",
+    "atlas_x": 4,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "8c79022627d1_TileGrassStrong_9_1",
+    "atlas_x": 5,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "b3df3d82b6a7_TileGrassStrong_0_2",
+    "atlas_x": 6,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "642383c6d8ba_TileGrassStrong_1_2",
+    "atlas_x": 7,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "b105fdff7a76_TileGrassStrong_2_2",
+    "atlas_x": 8,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "2a07e4df4d58_TileGrassStrong_3_2",
+    "atlas_x": 9,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "aa58ec9facf9_TileGrassStrong_4_2",
+    "atlas_x": 10,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c99090c6e251_TileGrassStrong_5_2",
+    "atlas_x": 11,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "dc5dc3cee60f_TileGrassStrong_6_2",
+    "atlas_x": 12,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "99c6012f9d78_TileGrassStrong_7_2",
+    "atlas_x": 13,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "733fc4c69213_TileGrassStrong_8_2",
+    "atlas_x": 14,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "393b8b556c08_TileGrassStrong_9_2",
+    "atlas_x": 15,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "0fc925973713_TileGrassStrong_0_3",
+    "atlas_x": 16,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d62e17869a1f_TileGrassStrong_2_3",
+    "atlas_x": 17,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 2,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "31207b705f95_TileGrassStrong_3_3",
+    "atlas_x": 18,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4048bfac01f5_TileGrassStrong_4_3",
+    "atlas_x": 19,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4c67aee45f4b_TileGrassStrong_5_3",
+    "atlas_x": 20,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "30c9c8a7470d_TileGrassStrong_6_3",
+    "atlas_x": 21,
+    "atlas_y": 4,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "fd58d0d0b6aa_TileGrassStrong_7_3",
+    "atlas_x": 0,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c43aaf0b3499_TileGrassStrong_8_3",
+    "atlas_x": 1,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "341e685be7fb_TileGrassStrong_9_3",
+    "atlas_x": 2,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "267057ab2438_TileGrassStrong_0_4",
+    "atlas_x": 3,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3c2edc3bf25d_TileGrassStrong_1_4",
+    "atlas_x": 4,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c028d5cb8bce_TileGrassStrong_2_4",
+    "atlas_x": 5,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 2,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "2e83e7d705de_TileGrassStrong_3_4",
+    "atlas_x": 6,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3863031e5a9b_TileGrassStrong_4_4",
+    "atlas_x": 7,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "a4e9502dcf63_TileGrassStrong_5_4",
+    "atlas_x": 8,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "09da49d5fdca_TileGrassStrong_6_4",
+    "atlas_x": 9,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "96dc6a1abf58_TileGrassStrong_7_4",
+    "atlas_x": 10,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "cdfafb97e16f_TileGrassStrong_8_4",
+    "atlas_x": 11,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "145b5d684d6b_TileGrassStrong_9_4",
+    "atlas_x": 12,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d24672c1b036_TileGrassStrong_0_5",
+    "atlas_x": 13,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "0a8f36e82725_TileGrassStrong_1_5",
+    "atlas_x": 14,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f45ad6ab7d59_TileGrassStrong_3_5",
+    "atlas_x": 15,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d3371d350f8a_TileGrassStrong_4_5",
+    "atlas_x": 16,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f94a74c415e2_TileGrassStrong_5_5",
+    "atlas_x": 17,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "621a73c189a4_TileGrassStrong_6_5",
+    "atlas_x": 18,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "64e7f8164ecc_TileGrassStrong_7_5",
+    "atlas_x": 19,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "7b0515ea31c6_TileGrassStrong_8_5",
+    "atlas_x": 20,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3095c658d43f_TileGrassStrong_9_5",
+    "atlas_x": 21,
+    "atlas_y": 5,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "7b8915dcf97f_TileGrassStrong_0_6",
+    "atlas_x": 0,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3f95bd218639_TileGrassStrong_1_6",
+    "atlas_x": 1,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "2a204c88158b_TileGrassStrong_3_6",
+    "atlas_x": 2,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 3,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d40e673674fd_TileGrassStrong_4_6",
+    "atlas_x": 3,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 4,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e95fc0fb9c4b_TileGrassStrong_5_6",
+    "atlas_x": 4,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 5,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "1f4def8c4e0b_TileGrassStrong_6_6",
+    "atlas_x": 5,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e5f9ca32bbfb_TileGrassStrong_7_6",
+    "atlas_x": 6,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "bf5621a2ab19_TileGrassStrong_8_6",
+    "atlas_x": 7,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c94aadbbd151_TileGrassStrong_9_6",
+    "atlas_x": 8,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "7b8d5507c1bd_TileGrassStrong_0_7",
+    "atlas_x": 9,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 0,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "821fc4523673_TileGrassStrong_1_7",
+    "atlas_x": 10,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 1,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "aa445d2f9c5d_TileGrassStrong_2_7",
+    "atlas_x": 11,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 2,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "07e322968286_TileGrassStrong_6_7",
+    "atlas_x": 12,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 6,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "262020e44e7b_TileGrassStrong_7_7",
+    "atlas_x": 13,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 7,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "cd8f62ca55ae_TileGrassStrong_8_7",
+    "atlas_x": 14,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 8,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "a6da8d658daa_TileGrassStrong_9_7",
+    "atlas_x": 15,
+    "atlas_y": 6,
+    "source": "TileGrassStrong",
+    "source_x": 9,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "adbfa76acf47_TileGrassFall_0_0",
+    "atlas_x": 16,
+    "atlas_y": 6,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f964842b30d9_TileGrassFall_1_0",
+    "atlas_x": 17,
+    "atlas_y": 6,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "ac05b5f9fb70_TileGrassFall_2_0",
+    "atlas_x": 18,
+    "atlas_y": 6,
+    "source": "TileGrassFall",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c1b083745249_TileGrassFall_3_0",
+    "atlas_x": 19,
+    "atlas_y": 6,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "47809380b35a_TileGrassFall_4_0",
+    "atlas_x": 20,
+    "atlas_y": 6,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "7b6709b3c9fa_TileGrassFall_5_0",
+    "atlas_x": 21,
+    "atlas_y": 6,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "b3a164e1e945_TileGrassFall_6_0",
+    "atlas_x": 0,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "2e806be2046d_TileGrassFall_7_0",
+    "atlas_x": 1,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "14e0dccf6e14_TileGrassFall_8_0",
+    "atlas_x": 2,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f53c2a2b0c4f_TileGrassFall_9_0",
+    "atlas_x": 3,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 0,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "9b9545d31799_TileGrassFall_0_1",
+    "atlas_x": 4,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a6e74b29fbed_TileGrassFall_1_1",
+    "atlas_x": 5,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "7255a2906483_TileGrassFall_2_1",
+    "atlas_x": 6,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "70be2925be41_TileGrassFall_3_1",
+    "atlas_x": 7,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a49e0e8f4c91_TileGrassFall_4_1",
+    "atlas_x": 8,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "be887a677620_TileGrassFall_5_1",
+    "atlas_x": 9,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "b40ab2acc495_TileGrassFall_6_1",
+    "atlas_x": 10,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0074f6dcd512_TileGrassFall_7_1",
+    "atlas_x": 11,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "61c163ed3c30_TileGrassFall_8_1",
+    "atlas_x": 12,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "187a6ea19926_TileGrassFall_9_1",
+    "atlas_x": 13,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 1,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "63719901e0fa_TileGrassFall_0_2",
+    "atlas_x": 14,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "17f1f6f1f9eb_TileGrassFall_1_2",
+    "atlas_x": 15,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "508ad85b9b61_TileGrassFall_2_2",
+    "atlas_x": 16,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "b2f8bf5737e2_TileGrassFall_3_2",
+    "atlas_x": 17,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "7a5df2b265a6_TileGrassFall_4_2",
+    "atlas_x": 18,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "6e566c565106_TileGrassFall_5_2",
+    "atlas_x": 19,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "d52b111383ed_TileGrassFall_6_2",
+    "atlas_x": 20,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "7527715d8922_TileGrassFall_7_2",
+    "atlas_x": 21,
+    "atlas_y": 7,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a0617ac1204a_TileGrassFall_8_2",
+    "atlas_x": 0,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "334e142908eb_TileGrassFall_9_2",
+    "atlas_x": 1,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 2,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "60f166b94d24_TileGrassFall_0_3",
+    "atlas_x": 2,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "ef53b35d0ea1_TileGrassFall_2_3",
+    "atlas_x": 3,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 2,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "6afdaf3fb893_TileGrassFall_3_3",
+    "atlas_x": 4,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "52b623771869_TileGrassFall_4_3",
+    "atlas_x": 5,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c273f0b4020c_TileGrassFall_5_3",
+    "atlas_x": 6,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "67dbdd924b06_TileGrassFall_6_3",
+    "atlas_x": 7,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4809e89dd4b0_TileGrassFall_7_3",
+    "atlas_x": 8,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "fbcb0d7480d0_TileGrassFall_8_3",
+    "atlas_x": 9,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "cfaaca32a4f6_TileGrassFall_9_3",
+    "atlas_x": 10,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 3,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c2564322066b_TileGrassFall_0_4",
+    "atlas_x": 11,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "08b97c1bfe2c_TileGrassFall_1_4",
+    "atlas_x": 12,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f14ae7ebafab_TileGrassFall_2_4",
+    "atlas_x": 13,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 2,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "cddeddf8ac25_TileGrassFall_3_4",
+    "atlas_x": 14,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4b307cf65a9e_TileGrassFall_4_4",
+    "atlas_x": 15,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a2f8ee0a2741_TileGrassFall_5_4",
+    "atlas_x": 16,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0a34e09bd913_TileGrassFall_6_4",
+    "atlas_x": 17,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0e596fd27291_TileGrassFall_7_4",
+    "atlas_x": 18,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "2332c1e18609_TileGrassFall_8_4",
+    "atlas_x": 19,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f081bcca0fdf_TileGrassFall_9_4",
+    "atlas_x": 20,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 4,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f5fd64cd4d04_TileGrassFall_0_5",
+    "atlas_x": 21,
+    "atlas_y": 8,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "485712708fb9_TileGrassFall_1_5",
+    "atlas_x": 0,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4e33fed78161_TileGrassFall_3_5",
+    "atlas_x": 1,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "2155e23d1569_TileGrassFall_4_5",
+    "atlas_x": 2,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "7c35d2cdc3cb_TileGrassFall_5_5",
+    "atlas_x": 3,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "173635fa8e09_TileGrassFall_6_5",
+    "atlas_x": 4,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "2797c3f1a2ea_TileGrassFall_7_5",
+    "atlas_x": 5,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a328a47f5b42_TileGrassFall_8_5",
+    "atlas_x": 6,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "85eaa2ec9e53_TileGrassFall_9_5",
+    "atlas_x": 7,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 5,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "089f9b8a55d5_TileGrassFall_0_6",
+    "atlas_x": 8,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "20cdb5b2632f_TileGrassFall_1_6",
+    "atlas_x": 9,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "dbbe66046d35_TileGrassFall_3_6",
+    "atlas_x": 10,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 3,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "1526be3a382e_TileGrassFall_4_6",
+    "atlas_x": 11,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 4,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3e3095132ad2_TileGrassFall_5_6",
+    "atlas_x": 12,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 5,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "aff5f88c1ae6_TileGrassFall_6_6",
+    "atlas_x": 13,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f06e603fa55a_TileGrassFall_7_6",
+    "atlas_x": 14,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "5be75672390b_TileGrassFall_8_6",
+    "atlas_x": 15,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "d76d56e1afe4_TileGrassFall_9_6",
+    "atlas_x": 16,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 6,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0bd71cf4cbab_TileGrassFall_0_7",
+    "atlas_x": 17,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 0,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c03e39aea3e6_TileGrassFall_1_7",
+    "atlas_x": 18,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 1,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3bbb04edaa1c_TileGrassFall_2_7",
+    "atlas_x": 19,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 2,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "8c1358b31490_TileGrassFall_6_7",
+    "atlas_x": 20,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 6,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "2ed2d7da3342_TileGrassFall_7_7",
+    "atlas_x": 21,
+    "atlas_y": 9,
+    "source": "TileGrassFall",
+    "source_x": 7,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "6d9a6aec1f2a_TileGrassFall_8_7",
+    "atlas_x": 0,
+    "atlas_y": 10,
+    "source": "TileGrassFall",
+    "source_x": 8,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0a534287deb1_TileGrassFall_9_7",
+    "atlas_x": 1,
+    "atlas_y": 10,
+    "source": "TileGrassFall",
+    "source_x": 9,
+    "source_y": 7,
+    "surface_hint": "grass",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "444fbcfeeeff_TileCliff_0_0",
+    "atlas_x": 2,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "06636becbdcd_TileCliff_1_0",
+    "atlas_x": 3,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "010351b1df41_TileCliff_2_0",
+    "atlas_x": 4,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "b2299178535f_TileCliff_3_0",
+    "atlas_x": 5,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "641dd847d17d_TileCliff_4_0",
+    "atlas_x": 6,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9e89e77d458d_TileCliff_5_0",
+    "atlas_x": 7,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9b514e4d8d64_TileCliff_6_0",
+    "atlas_x": 8,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c1273792b554_TileCliff_7_0",
+    "atlas_x": 9,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "ce451462bd02_TileCliff_0_1",
+    "atlas_x": 10,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9fa962b0a400_TileCliff_2_1",
+    "atlas_x": 11,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7d236b332a45_TileCliff_3_1",
+    "atlas_x": 12,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "0ee78dd0afce_TileCliff_4_1",
+    "atlas_x": 13,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "cde477ab6bc7_TileCliff_5_1",
+    "atlas_x": 14,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "619c24f71ea7_TileCliff_6_1",
+    "atlas_x": 15,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "1020b65eecee_TileCliff_7_1",
+    "atlas_x": 16,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a402fc77e5c7_TileCliff_0_2",
+    "atlas_x": 17,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c1273792b554_TileCliff_1_2",
+    "atlas_x": 18,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "515fe1053cd5_TileCliff_2_2",
+    "atlas_x": 19,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "e7d6a68ecfab_TileCliff_3_2",
+    "atlas_x": 20,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "59aca1c90a0e_TileCliff_4_2",
+    "atlas_x": 21,
+    "atlas_y": 10,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "3ded79e36617_TileCliff_5_2",
+    "atlas_x": 0,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "8cf065a516d7_TileCliff_6_2",
+    "atlas_x": 1,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "d838d8c0361e_TileCliff_7_2",
+    "atlas_x": 2,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "662ee63bd352_TileCliff_0_3",
+    "atlas_x": 3,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "3ded79e36617_TileCliff_1_3",
+    "atlas_x": 4,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "9a21fefd8662_TileCliff_2_3",
+    "atlas_x": 5,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "e13099f963e9_TileCliff_3_3",
+    "atlas_x": 6,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "eba01e571d9f_TileCliff_4_3",
+    "atlas_x": 7,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "914a1c117f25_TileCliff_5_3",
+    "atlas_x": 8,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "bb9ab3b68a92_TileCliff_6_3",
+    "atlas_x": 9,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "0815db713e47_TileCliff_7_3",
+    "atlas_x": 10,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "2661af340b4e_TileCliff_0_4",
+    "atlas_x": 11,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fff0e5f73857_TileCliff_1_4",
+    "atlas_x": 12,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "6e952e351707_TileCliff_2_4",
+    "atlas_x": 13,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "8fb8d26c12c4_TileCliff_3_4",
+    "atlas_x": 14,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c106cb55c634_TileCliff_7_4",
+    "atlas_x": 15,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "4da68935e6c5_TileCliff_0_5",
+    "atlas_x": 16,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "239c736608eb_TileCliff_1_5",
+    "atlas_x": 17,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "d3e18c574c01_TileCliff_2_5",
+    "atlas_x": 18,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "88f005314a68_TileCliff_3_5",
+    "atlas_x": 19,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "bd32894d4c84_TileCliff_4_5",
+    "atlas_x": 20,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "d4a4c0ec0175_TileCliff_5_5",
+    "atlas_x": 21,
+    "atlas_y": 11,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "827961a5f819_TileCliff_6_5",
+    "atlas_x": 0,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "f935fb7ebfd8_TileCliff_7_5",
+    "atlas_x": 1,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "1ff192f8496f_TileCliff_0_6",
+    "atlas_x": 2,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "10e95761af5d_TileCliff_2_6",
+    "atlas_x": 3,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "492b6bbc0026_TileCliff_3_6",
+    "atlas_x": 4,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "337054883f04_TileCliff_4_6",
+    "atlas_x": 5,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "3ec88f059741_TileCliff_5_6",
+    "atlas_x": 6,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "ce9ab0794508_TileCliff_6_6",
+    "atlas_x": 7,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "6de8c4e23375_TileCliff_7_6",
+    "atlas_x": 8,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "e131170c7d0d_TileCliff_0_7",
+    "atlas_x": 9,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "f300e36b05fc_TileCliff_1_7",
+    "atlas_x": 10,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "d251812907d6_TileCliff_2_7",
+    "atlas_x": 11,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "e35b94e22147_TileCliff_3_7",
+    "atlas_x": 12,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "2671fed6aa20_TileCliff_4_7",
+    "atlas_x": 13,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "aac871f2db9b_TileCliff_5_7",
+    "atlas_x": 14,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "804f94c3d09e_TileCliff_6_7",
+    "atlas_x": 15,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "639ed8b2b020_TileCliff_7_7",
+    "atlas_x": 16,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "33f5da16b896_TileCliff_0_8",
+    "atlas_x": 17,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "072f7a6a70e8_TileCliff_1_8",
+    "atlas_x": 18,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "72cfbbf37793_TileCliff_2_8",
+    "atlas_x": 19,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "04275c0d3fdf_TileCliff_3_8",
+    "atlas_x": 20,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a757ac003604_TileCliff_4_8",
+    "atlas_x": 21,
+    "atlas_y": 12,
+    "source": "TileCliff",
+    "source_x": 4,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "6f40d56620ec_TileCliff_5_8",
+    "atlas_x": 0,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 5,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "dcaa5c8a51d5_TileCliff_6_8",
+    "atlas_x": 1,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 6,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "58c716a08002_TileCliff_7_8",
+    "atlas_x": 2,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fa707b007d58_TileCliff_0_9",
+    "atlas_x": 3,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 0,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "c190671d5e26_TileCliff_1_9",
+    "atlas_x": 4,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 1,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a1e3c9328eac_TileCliff_2_9",
+    "atlas_x": 5,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 2,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "e3405c70c82a_TileCliff_3_9",
+    "atlas_x": 6,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 3,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "4ae3dc540857_TileCliff_7_9",
+    "atlas_x": 7,
+    "atlas_y": 13,
+    "source": "TileCliff",
+    "source_x": 7,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "ca7f51153247_TileCliffStrong_0_0",
+    "atlas_x": 8,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c9fdc9012b38_TileCliffStrong_1_0",
+    "atlas_x": 9,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "280d497b8331_TileCliffStrong_2_0",
+    "atlas_x": 10,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e937b46e1bd9_TileCliffStrong_3_0",
+    "atlas_x": 11,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "2f5ddabdf44e_TileCliffStrong_4_0",
+    "atlas_x": 12,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "41d9b11b0945_TileCliffStrong_5_0",
+    "atlas_x": 13,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "14ca96d53994_TileCliffStrong_6_0",
+    "atlas_x": 14,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "ef78b4b7d12c_TileCliffStrong_7_0",
+    "atlas_x": 15,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f69d469111ac_TileCliffStrong_0_1",
+    "atlas_x": 16,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "32fcd3b008ed_TileCliffStrong_2_1",
+    "atlas_x": 17,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f52c06b51ebe_TileCliffStrong_3_1",
+    "atlas_x": 18,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3fc295bb3856_TileCliffStrong_4_1",
+    "atlas_x": 19,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "411f24a88a00_TileCliffStrong_5_1",
+    "atlas_x": 20,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "81a1426bd860_TileCliffStrong_6_1",
+    "atlas_x": 21,
+    "atlas_y": 13,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "19b21571f7e7_TileCliffStrong_7_1",
+    "atlas_x": 0,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4a595d872e2d_TileCliffStrong_0_2",
+    "atlas_x": 1,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "ef78b4b7d12c_TileCliffStrong_1_2",
+    "atlas_x": 2,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "1b04c9bfd48b_TileCliffStrong_2_2",
+    "atlas_x": 3,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "2de523c1fef1_TileCliffStrong_3_2",
+    "atlas_x": 4,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "06ada754bcd5_TileCliffStrong_4_2",
+    "atlas_x": 5,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "51a9d5008ff0_TileCliffStrong_5_2",
+    "atlas_x": 6,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "792961f411e0_TileCliffStrong_6_2",
+    "atlas_x": 7,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "933e955b20e2_TileCliffStrong_7_2",
+    "atlas_x": 8,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "ef322923d120_TileCliffStrong_0_3",
+    "atlas_x": 9,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "51a9d5008ff0_TileCliffStrong_1_3",
+    "atlas_x": 10,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "934a3a1bd27d_TileCliffStrong_2_3",
+    "atlas_x": 11,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "de29736bea69_TileCliffStrong_3_3",
+    "atlas_x": 12,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "bcd4353ce4b4_TileCliffStrong_4_3",
+    "atlas_x": 13,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c61c28feaa71_TileCliffStrong_5_3",
+    "atlas_x": 14,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "0c6059dcba2a_TileCliffStrong_6_3",
+    "atlas_x": 15,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "60ceeb84d24c_TileCliffStrong_7_3",
+    "atlas_x": 16,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "b079bc1d4a80_TileCliffStrong_0_4",
+    "atlas_x": 17,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "402f1aad18ab_TileCliffStrong_1_4",
+    "atlas_x": 18,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f7faa2e7a09f_TileCliffStrong_2_4",
+    "atlas_x": 19,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "3b6ab17306c3_TileCliffStrong_3_4",
+    "atlas_x": 20,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "a07feefe2c18_TileCliffStrong_7_4",
+    "atlas_x": 21,
+    "atlas_y": 14,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e393934bcf54_TileCliffStrong_0_5",
+    "atlas_x": 0,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "c5d36419190f_TileCliffStrong_1_5",
+    "atlas_x": 1,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "056f350e5f0b_TileCliffStrong_2_5",
+    "atlas_x": 2,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e221523c9b65_TileCliffStrong_3_5",
+    "atlas_x": 3,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4bc6be18834e_TileCliffStrong_4_5",
+    "atlas_x": 4,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "ab14c168c9b4_TileCliffStrong_5_5",
+    "atlas_x": 5,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e18526b87a03_TileCliffStrong_6_5",
+    "atlas_x": 6,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e7c616b959e5_TileCliffStrong_7_5",
+    "atlas_x": 7,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "96634f1cf7c4_TileCliffStrong_0_6",
+    "atlas_x": 8,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "7e53767e832f_TileCliffStrong_2_6",
+    "atlas_x": 9,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "dc13d6ad8fdc_TileCliffStrong_3_6",
+    "atlas_x": 10,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "dd640c7ac09f_TileCliffStrong_4_6",
+    "atlas_x": 11,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "03644c48471a_TileCliffStrong_5_6",
+    "atlas_x": 12,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d2c0b8b0ae22_TileCliffStrong_6_6",
+    "atlas_x": 13,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d8a17fd257e8_TileCliffStrong_7_6",
+    "atlas_x": 14,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "099c2e48417e_TileCliffStrong_0_7",
+    "atlas_x": 15,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "592025c0f0a2_TileCliffStrong_1_7",
+    "atlas_x": 16,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "1b132bf33a04_TileCliffStrong_2_7",
+    "atlas_x": 17,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "61fd50e9df31_TileCliffStrong_3_7",
+    "atlas_x": 18,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d1dee6be8502_TileCliffStrong_4_7",
+    "atlas_x": 19,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4aa0afe85cfb_TileCliffStrong_5_7",
+    "atlas_x": 20,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f500662a0a92_TileCliffStrong_6_7",
+    "atlas_x": 21,
+    "atlas_y": 15,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d90874b4690c_TileCliffStrong_7_7",
+    "atlas_x": 0,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "ad53b1120984_TileCliffStrong_0_8",
+    "atlas_x": 1,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "99a7614d84ab_TileCliffStrong_1_8",
+    "atlas_x": 2,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "8c58930108be_TileCliffStrong_2_8",
+    "atlas_x": 3,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "cb47b0774530_TileCliffStrong_3_8",
+    "atlas_x": 4,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4214effa4cef_TileCliffStrong_4_8",
+    "atlas_x": 5,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 4,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f7ace94bc8b1_TileCliffStrong_5_8",
+    "atlas_x": 6,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 5,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f44ba744fefa_TileCliffStrong_6_8",
+    "atlas_x": 7,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 6,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "d4f952481b85_TileCliffStrong_7_8",
+    "atlas_x": 8,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "5f9f77acf226_TileCliffStrong_0_9",
+    "atlas_x": 9,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 0,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "8f3079d6cc8c_TileCliffStrong_1_9",
+    "atlas_x": 10,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 1,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "e3f27250a121_TileCliffStrong_2_9",
+    "atlas_x": 11,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 2,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "fb17e099bdfd_TileCliffStrong_3_9",
+    "atlas_x": 12,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 3,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "4d05a013d7c1_TileCliffStrong_7_9",
+    "atlas_x": 13,
+    "atlas_y": 16,
+    "source": "TileCliffStrong",
+    "source_x": 7,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "strong"
+  },
+  {
+    "uid": "f3f11e52674a_TileCliffFall_0_0",
+    "atlas_x": 14,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a790cd7ad158_TileCliffFall_1_0",
+    "atlas_x": 15,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "e6772736e015_TileCliffFall_2_0",
+    "atlas_x": 16,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f5f0ecf566de_TileCliffFall_3_0",
+    "atlas_x": 17,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "1aa0a142f7ea_TileCliffFall_4_0",
+    "atlas_x": 18,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "9e89e77d458d_TileCliffFall_5_0",
+    "atlas_x": 19,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "427cf65ce5ec_TileCliffFall_6_0",
+    "atlas_x": 20,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0c2afe5676d3_TileCliffFall_7_0",
+    "atlas_x": 21,
+    "atlas_y": 16,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 0,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "51796877f95b_TileCliffFall_0_1",
+    "atlas_x": 0,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "9745988ec71e_TileCliffFall_2_1",
+    "atlas_x": 1,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "7d236b332a45_TileCliffFall_3_1",
+    "atlas_x": 2,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "dacc90334abb_TileCliffFall_4_1",
+    "atlas_x": 3,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4cf46f973949_TileCliffFall_5_1",
+    "atlas_x": 4,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c2b03a96be99_TileCliffFall_6_1",
+    "atlas_x": 5,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "1020b65eecee_TileCliffFall_7_1",
+    "atlas_x": 6,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 1,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f7d880dcdac6_TileCliffFall_0_2",
+    "atlas_x": 7,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0c2afe5676d3_TileCliffFall_1_2",
+    "atlas_x": 8,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "687bd281da6e_TileCliffFall_2_2",
+    "atlas_x": 9,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4cc91ee30fa4_TileCliffFall_3_2",
+    "atlas_x": 10,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "bf49708a1aa9_TileCliffFall_4_2",
+    "atlas_x": 11,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3ded79e36617_TileCliffFall_5_2",
+    "atlas_x": 12,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3ecddace5721_TileCliffFall_6_2",
+    "atlas_x": 13,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "fac05890c08a_TileCliffFall_7_2",
+    "atlas_x": 14,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 2,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "662ee63bd352_TileCliffFall_0_3",
+    "atlas_x": 15,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3ded79e36617_TileCliffFall_1_3",
+    "atlas_x": 16,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "48fcf5d88d22_TileCliffFall_2_3",
+    "atlas_x": 17,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "addbd7a0ee98_TileCliffFall_3_3",
+    "atlas_x": 18,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "54356c8fd50b_TileCliffFall_4_3",
+    "atlas_x": 19,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "6008a14dc44d_TileCliffFall_5_3",
+    "atlas_x": 20,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "5333c4816673_TileCliffFall_6_3",
+    "atlas_x": 21,
+    "atlas_y": 17,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c068932405b2_TileCliffFall_7_3",
+    "atlas_x": 0,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 3,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "97493910f9d0_TileCliffFall_0_4",
+    "atlas_x": 1,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "d0d0e4a73bec_TileCliffFall_1_4",
+    "atlas_x": 2,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3cc2834bafd8_TileCliffFall_2_4",
+    "atlas_x": 3,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "50911d7a5552_TileCliffFall_3_4",
+    "atlas_x": 4,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "0e30940b30c4_TileCliffFall_7_4",
+    "atlas_x": 5,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 4,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4da68935e6c5_TileCliffFall_0_5",
+    "atlas_x": 6,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "239c736608eb_TileCliffFall_1_5",
+    "atlas_x": 7,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "d3e18c574c01_TileCliffFall_2_5",
+    "atlas_x": 8,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "88f005314a68_TileCliffFall_3_5",
+    "atlas_x": 9,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "bd32894d4c84_TileCliffFall_4_5",
+    "atlas_x": 10,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "d4a4c0ec0175_TileCliffFall_5_5",
+    "atlas_x": 11,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "827961a5f819_TileCliffFall_6_5",
+    "atlas_x": 12,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f935fb7ebfd8_TileCliffFall_7_5",
+    "atlas_x": 13,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 5,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "1ff192f8496f_TileCliffFall_0_6",
+    "atlas_x": 14,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "10e95761af5d_TileCliffFall_2_6",
+    "atlas_x": 15,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "492b6bbc0026_TileCliffFall_3_6",
+    "atlas_x": 16,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "337054883f04_TileCliffFall_4_6",
+    "atlas_x": 17,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "3ec88f059741_TileCliffFall_5_6",
+    "atlas_x": 18,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "ce9ab0794508_TileCliffFall_6_6",
+    "atlas_x": 19,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "6de8c4e23375_TileCliffFall_7_6",
+    "atlas_x": 20,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 6,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "e131170c7d0d_TileCliffFall_0_7",
+    "atlas_x": 21,
+    "atlas_y": 18,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "f300e36b05fc_TileCliffFall_1_7",
+    "atlas_x": 0,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "d251812907d6_TileCliffFall_2_7",
+    "atlas_x": 1,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "e35b94e22147_TileCliffFall_3_7",
+    "atlas_x": 2,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "2671fed6aa20_TileCliffFall_4_7",
+    "atlas_x": 3,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "aac871f2db9b_TileCliffFall_5_7",
+    "atlas_x": 4,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "804f94c3d09e_TileCliffFall_6_7",
+    "atlas_x": 5,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "639ed8b2b020_TileCliffFall_7_7",
+    "atlas_x": 6,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 7,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "33f5da16b896_TileCliffFall_0_8",
+    "atlas_x": 7,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "072f7a6a70e8_TileCliffFall_1_8",
+    "atlas_x": 8,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "72cfbbf37793_TileCliffFall_2_8",
+    "atlas_x": 9,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "04275c0d3fdf_TileCliffFall_3_8",
+    "atlas_x": 10,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a757ac003604_TileCliffFall_4_8",
+    "atlas_x": 11,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 4,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "6f40d56620ec_TileCliffFall_5_8",
+    "atlas_x": 12,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 5,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "dcaa5c8a51d5_TileCliffFall_6_8",
+    "atlas_x": 13,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 6,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "58c716a08002_TileCliffFall_7_8",
+    "atlas_x": 14,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 8,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "fa707b007d58_TileCliffFall_0_9",
+    "atlas_x": 15,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 0,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "c190671d5e26_TileCliffFall_1_9",
+    "atlas_x": 16,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 1,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "a1e3c9328eac_TileCliffFall_2_9",
+    "atlas_x": 17,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 2,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "e3405c70c82a_TileCliffFall_3_9",
+    "atlas_x": 18,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 3,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "4ae3dc540857_TileCliffFall_7_9",
+    "atlas_x": 19,
+    "atlas_y": 19,
+    "source": "TileCliffFall",
+    "source_x": 7,
+    "source_y": 9,
+    "surface_hint": "cliff",
+    "feature_hint": "fall"
+  },
+  {
+    "uid": "61cb97aa6170_TileWater_0_0",
+    "atlas_x": 20,
+    "atlas_y": 19,
+    "source": "TileWater",
+    "source_x": 0,
+    "source_y": 0,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "8188829191b2_TileWater_1_0",
+    "atlas_x": 21,
+    "atlas_y": 19,
+    "source": "TileWater",
+    "source_x": 1,
+    "source_y": 0,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "e51d97018b37_TileWater_2_0",
+    "atlas_x": 0,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 2,
+    "source_y": 0,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "bd4d317c0c21_TileWater_3_0",
+    "atlas_x": 1,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 3,
+    "source_y": 0,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "f3349d3518f5_TileWater_4_0",
+    "atlas_x": 2,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 4,
+    "source_y": 0,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "ed684e2d71f1_TileWater_0_1",
+    "atlas_x": 3,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 0,
+    "source_y": 1,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "1ac79af8392b_TileWater_1_1",
+    "atlas_x": 4,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 1,
+    "source_y": 1,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "09fdf9105553_TileWater_2_1",
+    "atlas_x": 5,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 2,
+    "source_y": 1,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "a862506acb03_TileWater_4_1",
+    "atlas_x": 6,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 4,
+    "source_y": 1,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "b24abd177477_TileWater_0_2",
+    "atlas_x": 7,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 0,
+    "source_y": 2,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "7dadd56c882e_TileWater_1_2",
+    "atlas_x": 8,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 1,
+    "source_y": 2,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "37c98e976f04_TileWater_2_2",
+    "atlas_x": 9,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 2,
+    "source_y": 2,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "096e7ed7017e_TileWater_3_2",
+    "atlas_x": 10,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 3,
+    "source_y": 2,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  },
+  {
+    "uid": "fc41feeeaaa1_TileWater_4_2",
+    "atlas_x": 11,
+    "atlas_y": 20,
+    "source": "TileWater",
+    "source_x": 4,
+    "source_y": 2,
+    "surface_hint": "water",
+    "feature_hint": "normal"
+  }
+]

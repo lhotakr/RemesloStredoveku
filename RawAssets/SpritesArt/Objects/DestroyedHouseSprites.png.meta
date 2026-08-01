@@ -1,0 +1,471 @@
+fileFormatVersion: 2
+guid: 2b733646016270e48818122e99252413
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 1024
+    resizeAlgorithm: 0
+    textureFormat: 4
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_0
+      rect:
+        serializedVersion: 2
+        x: 10
+        y: 143
+        width: 73
+        height: 38
+      alignment: 9
+      pivot: {x: 0.50000006, y: 0.4374241}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: e3f26eb04ecb012428805b3cfa409400
+      internalID: -1392658473
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_1
+      rect:
+        serializedVersion: 2
+        x: 114
+        y: 79
+        width: 73
+        height: 105
+      alignment: 9
+      pivot: {x: 0.74340045, y: 0.15778743}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 620beb4b173777742bc3c488f42441f8
+      internalID: -1885959070
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_2
+      rect:
+        serializedVersion: 2
+        x: 205
+        y: 1
+        width: 96
+        height: 191
+      alignment: 9
+      pivot: {x: 0.50098467, y: 0.052784756}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3c97cfc88b2330c4f948a0abb80f0e41
+      internalID: -1601650857
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_3
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 151
+        width: 27
+        height: 26
+      alignment: 9
+      pivot: {x: 0.5, y: 0.21768776}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 293253a5a0f35c64bb16a9079937302d
+      internalID: -418924666
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_4
+      rect:
+        serializedVersion: 2
+        x: 369
+        y: 174
+        width: 10
+        height: 12
+      alignment: 9
+      pivot: {x: 0.452182, y: 0.41174698}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 68db779e7eb413340b9ea3f167a3b73d
+      internalID: -946215401
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_5
+      rect:
+        serializedVersion: 2
+        x: 383
+        y: 175
+        width: 11
+        height: 12
+      alignment: 9
+      pivot: {x: 0.5579584, y: 0.42502847}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 74f9dde6b5d939a408019fbc2762f849
+      internalID: -606381390
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_6
+      rect:
+        serializedVersion: 2
+        x: 366
+        y: 149
+        width: 28
+        height: 15
+      alignment: 9
+      pivot: {x: 0.4865243, y: 0.37732443}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d8411250d084c2f4ea0b96c22a43d048
+      internalID: -731346160
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_7
+      rect:
+        serializedVersion: 2
+        x: 3
+        y: 82
+        width: 93
+        height: 50
+      alignment: 9
+      pivot: {x: 0.5281565, y: 0.46223128}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 7a9fa56c3a7d9cd44af1c479e1dda2cc
+      internalID: -97874638
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_8
+      rect:
+        serializedVersion: 2
+        x: 325
+        y: 2
+        width: 86
+        height: 136
+      alignment: 9
+      pivot: {x: 0.5087749, y: 0.7102576}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53bc743a74e66b14499911b4732d32bc
+      internalID: 1209603669
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_9
+      rect:
+        serializedVersion: 2
+        x: 7
+        y: 44
+        width: 69
+        height: 33
+      alignment: 9
+      pivot: {x: 0.49505, y: 0.32430035}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 3e52c8945369fff4dae0d164bff85fab
+      internalID: 1670739328
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_10
+      rect:
+        serializedVersion: 2
+        x: 97
+        y: 53
+        width: 39
+        height: 17
+      alignment: 9
+      pivot: {x: 0.5292212, y: 0.5180173}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 770b0503c8853c04ebdd8db981becd2e
+      internalID: -1896334151
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_12
+      rect:
+        serializedVersion: 2
+        x: 152
+        y: 44
+        width: 35
+        height: 25
+      alignment: 9
+      pivot: {x: 0.54116213, y: 0.41299102}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d569cef5bdcec6e42b6ffaec338938b2
+      internalID: 1516188699
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_13
+      rect:
+        serializedVersion: 2
+        x: 15
+        y: 3
+        width: 55
+        height: 31
+      alignment: 9
+      pivot: {x: 0.52147275, y: 0.59049815}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5329332052d2fab48835224a219d0664
+      internalID: -2044926706
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_14
+      rect:
+        serializedVersion: 2
+        x: 94
+        y: 7
+        width: 36
+        height: 41
+      alignment: 9
+      pivot: {x: 0.5082016, y: 0.21603575}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6719ee0b56c9788428ef6779d743cf0e
+      internalID: -1743189052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: DestroyedHouseSprites_15
+      rect:
+        serializedVersion: 2
+        x: 145
+        y: 8
+        width: 38
+        height: 35
+      alignment: 9
+      pivot: {x: 0.476691, y: 0.32055584}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 0cd4a54885d19194eb52c53190fe3834
+      internalID: 1297053511
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      DestroyedHouseSprites_0: -1392658473
+      DestroyedHouseSprites_1: -1885959070
+      DestroyedHouseSprites_10: -1896334151
+      DestroyedHouseSprites_11: -352249235
+      DestroyedHouseSprites_12: 1516188699
+      DestroyedHouseSprites_13: -2044926706
+      DestroyedHouseSprites_14: -1743189052
+      DestroyedHouseSprites_15: 1297053511
+      DestroyedHouseSprites_2: -1601650857
+      DestroyedHouseSprites_3: -418924666
+      DestroyedHouseSprites_4: -946215401
+      DestroyedHouseSprites_5: -606381390
+      DestroyedHouseSprites_6: -731346160
+      DestroyedHouseSprites_7: -97874638
+      DestroyedHouseSprites_8: 1209603669
+      DestroyedHouseSprites_9: 1670739328
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

@@ -1,0 +1,273 @@
+{
+  "schema_version": 1,
+  "id": "houska_north_chapel",
+  "display_name": "Houska – severní kaple",
+  "map_kind": "interior_25d",
+  "size": [
+    24,
+    18
+  ],
+  "cell_size": 1.0,
+  "fov_degrees": 72.0,
+  "eye_height": 0.6,
+  "default_solid_material": "interior_lime_plaster",
+  "default_sector": "chapel_nave",
+  "sky_material": "sky_north_bohemia_overcast",
+  "historical": {
+    "certainty": "probable",
+    "phase": "late_gothic_1390_1410",
+    "active_from": 1390,
+    "active_to": 1410,
+    "sources": [
+      "project_historical_brief"
+    ],
+    "note": "Kaple je opravena do jednodušší a stabilnější podoby: vysoká loď, menší presbytář, úzká gotická okna a jen střídmý mobiliář. Opuštěno bylo problematické podkruchtí, které zlobilo vykreslování stropu."
+  },
+  "sectors": [
+    {
+      "id": "chapel_nave",
+      "display_name": "Loď kaple",
+      "room_id": "chapel_nave",
+      "room_function": "chapel_nave",
+      "floor": {
+        "height": 0.0,
+        "material": "chapel_brick_floor"
+      },
+      "ceiling": {
+        "height": 5.6,
+        "material": "chapel_rib_vault"
+      },
+      "boundary_material": "interior_lime_plaster",
+      "wall_height": 5.1,
+      "ambient": 0.66,
+      "sky_ceiling": false,
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    },
+    {
+      "id": "chapel_presbytery",
+      "display_name": "Presbytář",
+      "room_id": "chapel_presbytery",
+      "room_function": "chapel_presbytery",
+      "floor": {
+        "height": 0.0,
+        "material": "chapel_brick_floor"
+      },
+      "ceiling": {
+        "height": 6.0,
+        "material": "chapel_rib_vault"
+      },
+      "boundary_material": "chapel_mural_fragment",
+      "wall_height": 5.5,
+      "ambient": 0.7,
+      "sky_ceiling": false,
+      "npc_access": true,
+      "historical": {
+        "certainty": "documented",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ]
+      }
+    }
+  ],
+  "raster": {
+    "walkable_regions": [
+      {
+        "sector": "chapel_presbytery",
+        "rect": [
+          7,
+          2,
+          10,
+          4
+        ]
+      },
+      {
+        "sector": "chapel_nave",
+        "rect": [
+          5,
+          6,
+          14,
+          10
+        ]
+      }
+    ],
+    "solid_regions": [
+      {
+        "material": "chapel_mural_fragment",
+        "sector": "chapel_presbytery",
+        "rect": [
+          6,
+          1,
+          12,
+          1
+        ]
+      },
+      {
+        "material": "chapel_mural_fragment",
+        "sector": "chapel_presbytery",
+        "rect": [
+          6,
+          2,
+          1,
+          4
+        ]
+      },
+      {
+        "material": "chapel_mural_fragment",
+        "sector": "chapel_presbytery",
+        "rect": [
+          17,
+          2,
+          1,
+          4
+        ]
+      },
+      {
+        "material": "chapel_tall_window",
+        "sector": "chapel_presbytery",
+        "rect": [
+          11,
+          1,
+          2,
+          1
+        ]
+      },
+      {
+        "material": "interior_lime_plaster",
+        "sector": "chapel_nave",
+        "rect": [
+          4,
+          6,
+          1,
+          10
+        ]
+      },
+      {
+        "material": "interior_lime_plaster",
+        "sector": "chapel_nave",
+        "rect": [
+          19,
+          6,
+          1,
+          10
+        ]
+      },
+      {
+        "material": "chapel_tall_window",
+        "sector": "chapel_nave",
+        "rect": [
+          4,
+          7,
+          1,
+          2
+        ]
+      },
+      {
+        "material": "chapel_tall_window",
+        "sector": "chapel_nave",
+        "rect": [
+          19,
+          7,
+          1,
+          2
+        ]
+      },
+      {
+        "material": "chapel_tall_window",
+        "sector": "chapel_nave",
+        "rect": [
+          4,
+          11,
+          1,
+          2
+        ]
+      },
+      {
+        "material": "chapel_tall_window",
+        "sector": "chapel_nave",
+        "rect": [
+          19,
+          11,
+          1,
+          2
+        ]
+      },
+      {
+        "material": "interior_lime_plaster",
+        "sector": "chapel_nave",
+        "rect": [
+          5,
+          16,
+          14,
+          1
+        ]
+      }
+    ],
+    "cell_overrides": [
+      {
+        "x": 11,
+        "y": 16,
+        "solid": false,
+        "sector": "chapel_nave"
+      },
+      {
+        "x": 12,
+        "y": 16,
+        "solid": false,
+        "sector": "chapel_nave"
+      }
+    ]
+  },
+  "doors": [
+    {
+      "id": "courtyard_return",
+      "x": 11,
+      "y": 16,
+      "axis": "x",
+      "span": 2,
+      "height": 1.45,
+      "locked": false,
+      "initially_open": false,
+      "speed": 1.1,
+      "target_location": "castle:houska_1400/houska_courtyard_ground",
+      "target_spawn": "chapel_front",
+      "material": "heavy_oak_door",
+      "motion": "transition",
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410",
+        "sources": [
+          "project_historical_brief"
+        ],
+        "note": "Dvojice menších dubových dveří zpět do severního křídla nádvoří."
+      }
+    }
+  ],
+  "spawns": [
+    {
+      "id": "courtyard_entry",
+      "x": 12.0,
+      "y": 14.8,
+      "angle_degrees": 270.0
+    },
+    {
+      "id": "nave_center",
+      "x": 12.0,
+      "y": 10.2,
+      "angle_degrees": 270.0
+    },
+    {
+      "id": "altar",
+      "x": 12.0,
+      "y": 3.6,
+      "angle_degrees": 90.0
+    }
+  ]
+}

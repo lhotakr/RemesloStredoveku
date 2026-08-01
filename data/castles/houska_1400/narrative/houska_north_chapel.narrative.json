@@ -1,0 +1,16 @@
+{
+  "schema_version": 1,
+  "historical_layer": {
+    "enabled": true,
+    "notes": [
+      "Kaple byla opravena do jednodušší a čistší herní rekonstrukce s vysokou lodí a menším presbytářem.",
+      "Používá úzká vysoká okna, vápennou omítku, fragmenty nástěnné malby a střídmý mobiliář bez přestavby celého projektu.",
+      "Odstraněné podkruchtí pomáhá stabilnějšímu vykreslení klenby v tomto 2.5D enginu."
+    ]
+  },
+  "legendary_layer": {
+    "enabled_by_default": false,
+    "events": [],
+    "notes": ["Kaple je nyní čistě historická, bez legendárních jevů."]
+  }
+}

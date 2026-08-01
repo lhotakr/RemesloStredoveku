@@ -1,0 +1,47 @@
+Scripts:
+
+EnemyEntity - Responsible for character animations.Movement.
+
+	In order for the character to somehow react to events on the map, you need to drag the "enemy entity" into the inspector. Also set up colliders like other characters.
+	On the Scene, select a character, drag the Graphics, Player (whom he will attack), Enemi (himself) into the character, set the values (Speed, Distance Between, Attack Distance).
+
+EnemyPatrol - Responsible for the character's movement along the X-axis. (patrolling)
+
+	Create an empty element, create a component with a script in it. Drag your character under the element and also two dots (empty elements) with names: leftEdge, rightEdge.
+
+	Example: EnemyPatrol prefab.
+
+Player - Responsible for character movement and animations.
+
+PlayerFlip - Mirroring the character along the X axis, relative to the mouse position on the screen.
+
+Box - Destruction of objects on impact, destruction and animation.
+
+BushShake - Bushes moving when in contact with the character.
+
+Character - Character recognition when colliding with a collider, associated with the "Feder" Script.
+
+Fader/FaderBuildings - Object (sprite) transparency, used for trees and buildings. 
+
+	For the script to work, the object must have a collider with the "triggered" checkbox. Add the "Character" script to your hero.
+
+GateOpens - Opening the gate when the player approaches it, closing it when he moves away (used for the Stone Gates").
+
+	For the script to work, the object must have a collider with the "triggered" checkbox.
+
+SceneTransition - Moving your character around the scene or to another scene.
+
+	Specify in the transition scene where you want to move the character and also by what coordinates, if the scene is different, then a prefab of your character with an attached 
+	camera should be prepared there. Example on the Demo scene.
+
+
+____________________________________________________________________________________________________________________________________________________________________________________________
+
+Sprite Layering: https://www.youtube.com/watch?v=9vBbg1-Bxcw
+Fade Script: https://youtu.be/v3fyQ6HBSyk?si=5Xt2kIHjpwTxBTlx
+Patrol System: https://www.youtube.com/watch?v=d002CljR-KU&t
+Scene Transition: https://www.youtube.com/watch?v=wNl--exin90&t
+Cinemachine (Virtual Camera): https://www.youtube.com/shorts/2KWHMSCxibA
+
+
+

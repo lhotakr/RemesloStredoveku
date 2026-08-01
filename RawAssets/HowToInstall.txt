@@ -1,0 +1,47 @@
+How to install
+
+!!! ATTENTION !!!
+
+- If you already have a ready project and you replace the "Project Settings" folder, this will clear information about your project settings. 
+- It is recommended to use only for a new project.
+- It is recommended to create your own system of enemy unit behavior using Nav mesh. The main value of the package is Sprites.
+
+1) Install three assets in the package manager:
+
+	Universal RP
+	Cinemachine
+	2D Pixel Perfect
+
+2) Replace the contents of the "ProjectSettings" Assets folder in your Project "ProjectSettings" folder.
+
+3) Delete "Project Settings" in your "Assets" folder
+
+--- If the camera does not follow the player ---
+
+   	In the Scene hierarchy, go to "Virtual Camera".
+   	Drag the "Player" from the hierarchy into the inspector to the "Follows" section.
+
+--- If your player is not in the starting position. ---
+
+	Go to the "Scripts" folder - "Scriptable Objects", Select the "Player Position"
+	Set the values ​​to zero in the Inspector.
+
+____________________________________________________________________________________________
+
+	!!! Video Guide: https://youtu.be/5CpXCEb9pEI !!!
+_____________________________________________________________________________________________
+
+Tutorials used to create the Demo Scene:
+
+Sprite Layering: https://www.youtube.com/watch?v=9vBbg1-Bxcw
+Fade Script: https://youtu.be/v3fyQ6HBSyk?si=5Xt2kIHjpwTxBTlx
+Patrol System: https://www.youtube.com/watch?v=d002CljR-KU&t
+Scene Transition: https://www.youtube.com/watch?v=wNl--exin90&t
+Cinemachine (Virtual Camera): https://www.youtube.com/shorts/2KWHMSCxibA
+
+Support: ponetisup@gmail.com 
+
+Please attach your invoice to the message in the email. (purchase number)
+
+
+

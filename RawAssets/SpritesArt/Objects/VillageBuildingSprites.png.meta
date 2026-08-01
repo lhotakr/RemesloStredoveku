@@ -1,0 +1,750 @@
+fileFormatVersion: 2
+guid: f24bb3cf1da91f8479513177c3ce6b3b
+TextureImporter:
+  internalIDToNameTable: []
+  externalObjects: {}
+  serializedVersion: 13
+  mipmaps:
+    mipMapMode: 0
+    enableMipMap: 0
+    sRGBTexture: 1
+    linearTexture: 0
+    fadeOut: 0
+    borderMipMap: 0
+    mipMapsPreserveCoverage: 0
+    alphaTestReferenceValue: 0.5
+    mipMapFadeDistanceStart: 1
+    mipMapFadeDistanceEnd: 3
+  bumpmap:
+    convertToNormalMap: 0
+    externalNormalMap: 0
+    heightScale: 0.25
+    normalMapFilter: 0
+    flipGreenChannel: 0
+  isReadable: 0
+  streamingMipmaps: 0
+  streamingMipmapsPriority: 0
+  vTOnly: 0
+  ignoreMipmapLimit: 0
+  grayScaleToAlpha: 0
+  generateCubemap: 6
+  cubemapConvolution: 0
+  seamlessCubemap: 0
+  textureFormat: 1
+  maxTextureSize: 2048
+  textureSettings:
+    serializedVersion: 2
+    filterMode: 0
+    aniso: 1
+    mipBias: 0
+    wrapU: 1
+    wrapV: 1
+    wrapW: 1
+  nPOTScale: 0
+  lightmap: 0
+  compressionQuality: 50
+  spriteMode: 2
+  spriteExtrude: 1
+  spriteMeshType: 1
+  alignment: 0
+  spritePivot: {x: 0.5, y: 0.5}
+  spritePixelsToUnits: 32
+  spriteBorder: {x: 0, y: 0, z: 0, w: 0}
+  spriteGenerateFallbackPhysicsShape: 1
+  alphaUsage: 1
+  alphaIsTransparency: 1
+  spriteTessellationDetail: -1
+  textureType: 8
+  textureShape: 1
+  singleChannelComponent: 0
+  flipbookRows: 1
+  flipbookColumns: 1
+  maxTextureSizeSet: 0
+  compressionQualitySet: 0
+  textureFormatSet: 0
+  ignorePngGamma: 0
+  applyGammaDecoding: 0
+  swizzle: 50462976
+  cookieLightType: 0
+  platformSettings:
+  - serializedVersion: 3
+    buildTarget: DefaultTexturePlatform
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 2
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Standalone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: iPhone
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  - serializedVersion: 3
+    buildTarget: Android
+    maxTextureSize: 2048
+    resizeAlgorithm: 0
+    textureFormat: -1
+    textureCompression: 1
+    compressionQuality: 50
+    crunchedCompression: 0
+    allowsAlphaSplitting: 0
+    overridden: 0
+    ignorePlatformSupport: 0
+    androidETC2FallbackOverride: 0
+    forceMaximumCompressionQuality_BC6H_BC7: 0
+  spriteSheet:
+    serializedVersion: 2
+    sprites:
+    - serializedVersion: 2
+      name: VillageBuildingSprites_0
+      rect:
+        serializedVersion: 2
+        x: 9
+        y: 1067
+        width: 172
+        height: 144
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c221d7200453ff04687153973c5b94c3
+      internalID: -1521445759
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_1
+      rect:
+        serializedVersion: 2
+        x: 197
+        y: 1063
+        width: 176
+        height: 142
+      alignment: 9
+      pivot: {x: 0.4946837, y: 0.076875925}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: ed3d4cab8c9d4b546be648d1ac9d772e
+      internalID: -1257057462
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_2
+      rect:
+        serializedVersion: 2
+        x: 396
+        y: 960
+        width: 134
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c3a26824a44f0ed4c8a68f72247635a5
+      internalID: -450263208
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_3
+      rect:
+        serializedVersion: 2
+        x: 543
+        y: 960
+        width: 122
+        height: 256
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1ee8c4914c5917e47a0b33cced9da4ca
+      internalID: 1548564052
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_5
+      rect:
+        serializedVersion: 2
+        x: 955
+        y: 901
+        width: 381
+        height: 310
+      alignment: 9
+      pivot: {x: 0.49343833, y: 0.2451613}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8e66add184e438e4c8cb81cede188588
+      internalID: -1291446671
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_6
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 832
+        width: 159
+        height: 109
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4b3c64a7864ad88439e4713c99bc605d
+      internalID: 1771037722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_7
+      rect:
+        serializedVersion: 2
+        x: 17
+        y: 947
+        width: 159
+        height: 116
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6e6e06033e07c224aa18a9c997a6560c
+      internalID: -1976552418
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_8
+      rect:
+        serializedVersion: 2
+        x: 207
+        y: 916
+        width: 161
+        height: 140
+      alignment: 9
+      pivot: {x: 0.51499665, y: 0.75308055}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 03d19cc58974fa3419f438f6c252e6a7
+      internalID: 1749969705
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_9
+      rect:
+        serializedVersion: 2
+        x: 409
+        y: 755
+        width: 134
+        height: 193
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: d482a1184284b7a418e486fe2a376de1
+      internalID: -448728982
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_10
+      rect:
+        serializedVersion: 2
+        x: 559
+        y: 755
+        width: 119
+        height: 192
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: de9568d25047eb24b8690628e2d594a5
+      internalID: -1294782459
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_11
+      rect:
+        serializedVersion: 2
+        x: 680
+        y: 958
+        width: 124
+        height: 206
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: f510dc5f9be5a9b48a18c5acd2aa87b1
+      internalID: -187718161
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_12
+      rect:
+        serializedVersion: 2
+        x: 804
+        y: 958
+        width: 101
+        height: 178
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9a4dab4d9810a8c49b178f797dc5d23f
+      internalID: -385983482
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_13
+      rect:
+        serializedVersion: 2
+        x: 28
+        y: 558
+        width: 318
+        height: 258
+      alignment: 9
+      pivot: {x: 0.5251572, y: 0.17829457}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 9c4aba52cf058f7459f02b4475171667
+      internalID: -640648585
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_15
+      rect:
+        serializedVersion: 2
+        x: 688
+        y: 755
+        width: 86
+        height: 136
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20242102edc31f04eabf34798cfcd29c
+      internalID: 1633061210
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_16
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 632
+        width: 374
+        height: 266
+      alignment: 9
+      pivot: {x: 0.5011019, y: 0.8002512}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: c9a68232717136b4dafd56e9f6d949a8
+      internalID: -135770875
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_17
+      rect:
+        serializedVersion: 2
+        x: 29
+        y: 280
+        width: 356
+        height: 274
+      alignment: 9
+      pivot: {x: 0.48483413, y: 0.72906804}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4cf23f5a411c14545af1624e6d45eda6
+      internalID: 357535319
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_19
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 538
+        width: 197
+        height: 198
+      alignment: 9
+      pivot: {x: 0.52284265, y: 0.42929292}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 6d9b44f51cb2df8418e73732931fa0c8
+      internalID: 1170665043
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_20
+      rect:
+        serializedVersion: 2
+        x: 624
+        y: 468
+        width: 306
+        height: 280
+      alignment: 9
+      pivot: {x: 0.50980395, y: 0.21785714}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 1b8e5af862915e847b9d396881d6c76b
+      internalID: -560488304
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_21
+      rect:
+        serializedVersion: 2
+        x: 941
+        y: 379
+        width: 379
+        height: 249
+      alignment: 9
+      pivot: {x: 0.5059264, y: 0.8853071}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 20bfc3b2b30f1c549a533472fba1cc1a
+      internalID: 402927115
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_22
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 308
+        width: 203
+        height: 223
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 216992e96e2cb1e43ba45b74bb50bb80
+      internalID: 1598988888
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_24
+      rect:
+        serializedVersion: 2
+        x: 916
+        y: 468
+        width: 4
+        height: 4
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eae39c9ffdb0afd4e9293d2b31155276
+      internalID: -2082250244
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_28
+      rect:
+        serializedVersion: 2
+        x: 665
+        y: 24
+        width: 145
+        height: 344
+      alignment: 9
+      pivot: {x: 0.4827586, y: 0.10174418}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: eb5d5b1cf5fc3c84a85222165acdaaca
+      internalID: 1405705926
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_29
+      rect:
+        serializedVersion: 2
+        x: 835
+        y: 25
+        width: 137
+        height: 343
+      alignment: 9
+      pivot: {x: 0.4890511, y: 0.10204082}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 5b1cf1f9e8d85fe40b34e6d1b5322805
+      internalID: 219825660
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_32
+      rect:
+        serializedVersion: 2
+        x: 1011
+        y: 25
+        width: 150
+        height: 328
+      alignment: 9
+      pivot: {x: 0.49333334, y: 0.19512194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 53359075c27cdc246979552f55d750fa
+      internalID: -1723555722
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_33
+      rect:
+        serializedVersion: 2
+        x: 1188
+        y: 24
+        width: 151
+        height: 328
+      alignment: 9
+      pivot: {x: 0.49006623, y: 0.19512194}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 8de30a4424cb5a24bb3331f38a431e23
+      internalID: 655802909
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_34
+      rect:
+        serializedVersion: 2
+        x: 0
+        y: 0
+        width: 352
+        height: 275
+      alignment: 9
+      pivot: {x: 0.5383455, y: 0.7264168}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 27b3957fa5e7baf4784cf87dc4ffd939
+      internalID: -197371353
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    - serializedVersion: 2
+      name: VillageBuildingSprites_35
+      rect:
+        serializedVersion: 2
+        x: 416
+        y: 48
+        width: 203
+        height: 247
+      alignment: 7
+      pivot: {x: 0.5, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 4182e0ac671ea5f4ca066b126cc864b2
+      internalID: 2093836520
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
+    outline: []
+    physicsShape: []
+    bones: []
+    spriteID: 5e97eb03825dee720800000000000000
+    internalID: 0
+    vertices: []
+    indices: 
+    edges: []
+    weights: []
+    secondaryTextures: []
+    nameFileIdTable:
+      VillageBuildingSprites_0: -1521445759
+      VillageBuildingSprites_1: -1257057462
+      VillageBuildingSprites_10: -1294782459
+      VillageBuildingSprites_11: -187718161
+      VillageBuildingSprites_12: -385983482
+      VillageBuildingSprites_13: -640648585
+      VillageBuildingSprites_14: 1841523264
+      VillageBuildingSprites_15: 1633061210
+      VillageBuildingSprites_16: -135770875
+      VillageBuildingSprites_17: 357535319
+      VillageBuildingSprites_18: -1286402584
+      VillageBuildingSprites_19: 1170665043
+      VillageBuildingSprites_2: -450263208
+      VillageBuildingSprites_20: -560488304
+      VillageBuildingSprites_21: 402927115
+      VillageBuildingSprites_22: 1598988888
+      VillageBuildingSprites_23: -1275363012
+      VillageBuildingSprites_24: -2082250244
+      VillageBuildingSprites_25: 1530915721
+      VillageBuildingSprites_26: -112716406
+      VillageBuildingSprites_27: 840910260
+      VillageBuildingSprites_28: 1405705926
+      VillageBuildingSprites_29: 219825660
+      VillageBuildingSprites_3: 1548564052
+      VillageBuildingSprites_30: -1587243841
+      VillageBuildingSprites_31: -1960429023
+      VillageBuildingSprites_32: -1723555722
+      VillageBuildingSprites_33: 655802909
+      VillageBuildingSprites_34: -197371353
+      VillageBuildingSprites_35: 2093836520
+      VillageBuildingSprites_36: -531782871
+      VillageBuildingSprites_37: -1797064974
+      VillageBuildingSprites_38: -1629345783
+      VillageBuildingSprites_39: 944545626
+      VillageBuildingSprites_4: 1637572519
+      VillageBuildingSprites_40: -461264622
+      VillageBuildingSprites_41: -1974367140
+      VillageBuildingSprites_42: -450744979
+      VillageBuildingSprites_5: -1291446671
+      VillageBuildingSprites_6: 1771037722
+      VillageBuildingSprites_7: -1976552418
+      VillageBuildingSprites_8: 1749969705
+      VillageBuildingSprites_9: -448728982
+  mipmapLimitGroupName: 
+  pSDRemoveMatte: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

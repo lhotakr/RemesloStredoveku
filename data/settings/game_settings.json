@@ -1,0 +1,21 @@
+{
+  "controls": {
+    "always_mouse_look": true,
+    "inventory": 12,
+    "invert_mouse_y": false,
+    "journal": 20,
+    "jump": 44,
+    "mouse_sensitivity": 1.0,
+    "move_backward": 22,
+    "move_forward": 26,
+    "move_left": 4,
+    "move_right": 7,
+    "run": 225,
+    "use": 8
+  },
+  "language": "cs",
+  "music_volume": 1,
+  "sfx_volume": 80,
+  "show_fps": true,
+  "voice_volume": 80
+}

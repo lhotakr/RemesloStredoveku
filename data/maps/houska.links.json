@@ -1,0 +1,9 @@
+{
+  "links": [
+    {
+      "id": 1,
+      "target_map": "blatce.rvm",
+      "target_spawn_id": "spawn_from_Houska_in_Blatce"
+    }
+  ]
+}
