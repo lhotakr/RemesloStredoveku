@@ -125,6 +125,12 @@ struct EditorForageArchetype
 
 struct EditorForageSpecies
 {
+    EditorForageSpecies() = default;
+    EditorForageSpecies(const EditorForageSpecies&) = default;
+    EditorForageSpecies& operator=(const EditorForageSpecies&) = default;
+    EditorForageSpecies(EditorForageSpecies&&) noexcept = default;
+    EditorForageSpecies& operator=(EditorForageSpecies&&) noexcept = default;
+
     std::string id;
     std::string archetypeId;
 

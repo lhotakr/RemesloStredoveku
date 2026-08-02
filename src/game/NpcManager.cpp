@@ -7,13 +7,28 @@
 #include <fstream>
 #include <cmath>
 #include <sstream>
-#include <cstdlib>
+#include <random>
 
 #ifdef _WIN32
 #include <windows.h>
 #endif
 
 using json = nlohmann::json;
+
+namespace
+{
+std::mt19937& NpcRandomEngine()
+{
+    static std::mt19937 engine{std::random_device{}()};
+    return engine;
+}
+
+int RandomInt(int minInclusive, int maxInclusive)
+{
+    std::uniform_int_distribution<int> distribution(minInclusive, maxInclusive);
+    return distribution(NpcRandomEngine());
+}
+}
 
 static float computeFacing(float npcX, float npcY, float playerX, float playerY)
 {
@@ -427,7 +442,7 @@ void NpcManager::updateMovement(float dt, int tileSize)
         if (npc.idleTimer > 0.0f)
             continue;
 
-        npc.idleTimer = 2.0f + (rand() % 300) / 100.0f;
+        npc.idleTimer = 2.0f + static_cast<float>(RandomInt(0, 299)) / 100.0f;
 
         if (npc.currentZone.empty())
         {
@@ -453,8 +468,8 @@ void NpcManager::updateMovement(float dt, int tileSize)
             continue;
         }
 
-        const int tx = zone.minX + rand() % (zone.maxX - zone.minX + 1);
-        const int ty = zone.minY + rand() % (zone.maxY - zone.minY + 1);
+        const int tx = RandomInt(zone.minX, zone.maxX);
+        const int ty = RandomInt(zone.minY, zone.maxY);
 
         npc.targetX = tx * tileSize + tileSize * 0.5f;
         npc.targetY = ty * tileSize + (float)tileSize;

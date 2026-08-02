@@ -8,8 +8,8 @@
       "name": "Matěj",
       "script_id": "matej_intro",
       "surname": "z Lípy",
-      "tile_x": 100,
-      "tile_y": 15,
+      "tile_x": 23,
+      "tile_y": 9,
       "type_id": "farmer"
     },
     {
@@ -18,10 +18,10 @@
       "id": "Selka1",
       "mood": 50,
       "name": "Matylda",
-      "script_id": "Smir_welcome",
+      "script_id": "new_dialog",
       "surname": "z Lípy",
-      "tile_x": 103,
-      "tile_y": 42,
+      "tile_x": 5,
+      "tile_y": 13,
       "type_id": "farmer"
     }
   ]

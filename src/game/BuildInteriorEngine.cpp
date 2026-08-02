@@ -2821,8 +2821,9 @@ std::vector<std::array<int, 3>> BuildInteriorEngine::triangulatePolygon(
     };
 
     int guard = count * count;
-    while (remaining.size() > 3 && guard-- > 0)
+    while (remaining.size() > 3 && guard > 0)
     {
+        --guard;
         bool removedEar = false;
         for (std::size_t i = 0; i < remaining.size(); ++i)
         {

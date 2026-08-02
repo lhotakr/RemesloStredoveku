@@ -112,7 +112,6 @@ add_executable(RemesloValky
         src/game/EditorQuests.cpp
         src/game/ObjectEditor.cpp
         src/game/ObjectEditor.h
-        src/game/BuildInteriorEngine.cpp
         src/game/interior/LocationRouter.h
 
 )

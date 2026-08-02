@@ -45,6 +45,12 @@ struct NpcSeasonSchedule
 
 struct NpcSpecialSchedule
 {
+    NpcSpecialSchedule() = default;
+    NpcSpecialSchedule(const NpcSpecialSchedule&) = default;
+    NpcSpecialSchedule& operator=(const NpcSpecialSchedule&) = default;
+    NpcSpecialSchedule(NpcSpecialSchedule&&) noexcept = default;
+    NpcSpecialSchedule& operator=(NpcSpecialSchedule&&) noexcept = default;
+
     std::vector<NpcPhaseScheduleEntry> sunday;
     std::vector<NpcPhaseScheduleEntry> feastDefault;
     std::unordered_map<std::string, std::vector<NpcPhaseScheduleEntry>> feastById;
@@ -53,6 +59,12 @@ struct NpcSpecialSchedule
 
 struct NpcInstance
 {   
+    NpcInstance() = default;
+    NpcInstance(const NpcInstance&) = default;
+    NpcInstance& operator=(const NpcInstance&) = default;
+    NpcInstance(NpcInstance&&) noexcept = default;
+    NpcInstance& operator=(NpcInstance&&) noexcept = default;
+
 	std::string id;     // unikátní id instance, pro referenci a debug, musí být unikátní mezi všemi NPC v mapì  
 	std::string npcId;  // pùvodní id z mapy, pro referenci a debug, nemusí být unikátní
 	std::string typeId; // odkaz na typ NPC, pro získání spoleèných vlastností a chování
