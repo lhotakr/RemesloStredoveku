@@ -272,6 +272,22 @@ namespace interior
                 report.warnings.push_back("Stair " + stair.id + " requests many generated sectors; it may exceed the 26-sector legacy limit.");
         }
 
+        std::unordered_set<std::string> wallSegmentIds;
+        for (const WallSegmentDef& wall : map.wallSegments)
+        {
+            if (!wallSegmentIds.insert(wall.id).second)
+                report.errors.push_back("Duplicate wall segment id: " + wall.id);
+            if (wall.start.x < 0.0 || wall.start.y < 0.0 ||
+                wall.start.x >= map.width || wall.start.y >= map.height ||
+                wall.end.x < 0.0 || wall.end.y < 0.0 ||
+                wall.end.x >= map.width || wall.end.y >= map.height)
+                report.errors.push_back("Wall segment outside map bounds: " + wall.id);
+            if (!wall.materialId.empty() && project.materials.find(wall.materialId) == project.materials.end())
+                report.errors.push_back("Wall segment " + wall.id + " uses unknown material: " + wall.materialId);
+            if (wall.top <= wall.bottom + 0.02)
+                report.errors.push_back("Wall segment " + wall.id + " has invalid vertical span.");
+        }
+
         std::unordered_set<std::string> doorIds;
         for (const DoorDef& door : map.doors)
         {

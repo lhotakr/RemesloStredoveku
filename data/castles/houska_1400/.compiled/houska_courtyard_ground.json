@@ -139,8 +139,8 @@
       "open": false,
       "segment": [
         [
-          56.32431394084608,
-          37.84813172394839
+          56.3697119100711,
+          38.059988913665165
         ],
         [
           56.464,
@@ -175,8 +175,8 @@
           38.5
         ],
         [
-          56.603686059153915,
-          39.15186827605161
+          56.558288089928894,
+          38.940011086334835
         ]
       ],
       "span": 1,
@@ -549,7 +549,7 @@
   "fov_degrees": 72.0,
   "grid_codes": [
     [
-      272,
+      46,
       272,
       272,
       272,
@@ -816,7 +816,6 @@
       0,
       0,
       0,
-      272,
       0,
       0,
       0,
@@ -828,43 +827,6 @@
       0,
       0,
       0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272
-    ],
-    [
-      272,
-      272,
-      272,
-      272,
       0,
       0,
       0,
@@ -880,46 +842,6 @@
       0,
       0,
       272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
       272,
       272,
       272,
@@ -972,7 +894,7 @@
       0,
       0,
       0,
-      272,
+      0,
       0,
       0,
       0,
@@ -1050,7 +972,85 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272
+    ],
+    [
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       0,
       0,
       0,
@@ -1128,7 +1128,7 @@
       0,
       0,
       0,
-      272,
+      0,
       0,
       0,
       0,
@@ -1206,7 +1206,6 @@
       0,
       0,
       0,
-      272,
       0,
       0,
       0,
@@ -1232,84 +1231,7 @@
       0,
       0,
       0,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272
-    ],
-    [
-      272,
-      272,
-      272,
-      272,
       0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
       272,
       272,
       272,
@@ -1362,7 +1284,85 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272
+    ],
+    [
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       0,
       0,
       0,
@@ -3337,7 +3337,7 @@
       0,
       272,
       272,
-      0,
+      272,
       0,
       0,
       0,
@@ -3415,9 +3415,9 @@
       0,
       272,
       272,
-      0,
-      0,
-      0,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -3491,8 +3491,8 @@
       0,
       0,
       0,
-      272,
-      272,
+      0,
+      0,
       0,
       0,
       0,
@@ -3726,12 +3726,12 @@
       0,
       0,
       0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -3804,12 +3804,12 @@
       272,
       272,
       272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -3883,11 +3883,11 @@
       272,
       272,
       272,
-      0,
-      0,
-      0,
-      0,
-      0,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -3961,89 +3961,11 @@
       272,
       272,
       272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272
-    ],
-    [
       272,
       272,
       272,
       272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
       272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -4087,18 +4009,6 @@
       0,
       0,
       0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -4114,6 +4024,21 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
       272,
       272,
       272,
@@ -4122,6 +4047,81 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272
+    ],
+    [
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -4165,18 +4165,6 @@
       0,
       0,
       0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -4192,14 +4180,26 @@
       0,
       0,
       0,
-      272,
-      272,
-      272,
-      272,
+      0,
+      0,
+      0,
+      0,
       272,
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -4243,18 +4243,6 @@
       0,
       0,
       0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -4270,14 +4258,26 @@
       0,
       0,
       0,
-      272,
-      272,
-      272,
-      272,
-      272,
+      0,
+      0,
+      0,
+      0,
       272,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -4321,18 +4321,6 @@
       0,
       0,
       0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -4348,14 +4336,26 @@
       0,
       0,
       0,
-      272,
-      272,
-      272,
-      272,
-      272,
+      0,
+      0,
+      0,
+      0,
       272,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
       0,
       0,
       0,
@@ -4399,85 +4399,7 @@
       0,
       0,
       0,
-      272,
       0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272,
-      272
-    ],
-    [
-      272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      272,
-      272,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
       0,
       0,
       0,
@@ -4513,7 +4435,7 @@
       272,
       272,
       0,
-      272,
+      0,
       272,
       272,
       272,
@@ -4555,18 +4477,6 @@
       0,
       0,
       0,
-      272,
-      0,
-      0,
-      0,
-      0,
-      0,
-      0,
-      272,
-      0,
-      0,
-      0,
-      0,
       0,
       0,
       0,
@@ -4582,6 +4492,18 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       272,
       272,
       272,
@@ -4590,7 +4512,7 @@
       272,
       272,
       272,
-      272,
+      0,
       272,
       272,
       272,
@@ -4633,7 +4555,85 @@
       0,
       0,
       0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272,
+      272
+    ],
+    [
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
+      272,
+      272,
+      272,
+      272,
+      0,
+      0,
+      0,
+      0,
+      0,
+      0,
       0,
       0,
       0,
@@ -5104,9 +5104,9 @@
         {
           "bottom": 0.0,
           "edge": 1,
-          "end": 0.9339932049809372,
+          "end": 0.9264268767767667,
           "height": 1.6999999999999997,
-          "start": 0.8874311852629653
+          "start": 0.8949975134671357
         },
         {
           "bottom": 0.0,
@@ -5325,10 +5325,10 @@
       "edge_openings": [
         {
           "bottom": 0.0,
-          "edge": 4,
-          "end": 0.5005182437891571,
-          "height": 1.6999999999999997,
-          "start": 0.2813195940486807
+          "edge": 5,
+          "end": 0.9999999999999997,
+          "height": 2.8,
+          "start": 3.3306690738754696e-16
         }
       ],
       "has_support_bottom": false,
@@ -5336,6 +5336,10 @@
       "sector": "E",
       "support_bottom_z": 0.0,
       "vertices": [
+        [
+          63.15,
+          37.61
+        ],
         [
           58.0,
           35.0
@@ -5353,8 +5357,53 @@
           51.0
         ],
         [
-          57.0,
-          41.0
+          63.15,
+          39.39
+        ]
+      ],
+      "wall_ambient": 0.5,
+      "wall_texture_key": 294,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": true,
+      "cuts_underlying_floor": false,
+      "edge_openings": [
+        {
+          "bottom": 0.0,
+          "edge": 3,
+          "end": 0.725,
+          "height": 1.6999999999999997,
+          "start": 0.275
+        },
+        {
+          "bottom": 1.15,
+          "edge": 1,
+          "end": 0.9999999999999997,
+          "height": 2.8,
+          "start": 3.3306690738754696e-16
+        }
+      ],
+      "has_support_bottom": false,
+      "id": "room_04_entry_stairwell",
+      "sector": "F",
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          56.254470911269124,
+          37.52219758592259
+        ],
+        [
+          63.15,
+          37.61
+        ],
+        [
+          63.15,
+          39.39
+        ],
+        [
+          56.673529088730874,
+          39.47780241407741
         ]
       ],
       "wall_ambient": 0.5,
@@ -5389,7 +5438,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_05_east_main",
-      "sector": "F",
+      "sector": "G",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5427,7 +5476,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_06_east_inner",
-      "sector": "G",
+      "sector": "H",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5465,7 +5514,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_07_tower_corridor",
-      "sector": "H",
+      "sector": "I",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5511,7 +5560,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_08_chapel",
-      "sector": "I",
+      "sector": "J",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5557,7 +5606,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_09_north_stair",
-      "sector": "J",
+      "sector": "K",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5595,7 +5644,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_10_west_north",
-      "sector": "K",
+      "sector": "L",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5640,7 +5689,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_11_west_mid_north",
-      "sector": "L",
+      "sector": "M",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5692,7 +5741,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_12_west_entry",
-      "sector": "M",
+      "sector": "N",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5737,7 +5786,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_13_west_mid_south",
-      "sector": "N",
+      "sector": "O",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5775,7 +5824,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_14_west_south",
-      "sector": "O",
+      "sector": "P",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5813,7 +5862,7 @@
       ],
       "has_support_bottom": false,
       "id": "room_15_gate_stair",
-      "sector": "P",
+      "sector": "Q",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -5856,44 +5905,44 @@
           "start": 0.0
         },
         {
-          "bottom": 1.0222222222222221,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.8222222222222224,
           "start": 0.0
         },
         {
-          "bottom": 1.0222222222222221,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.8222222222222224,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_1",
-      "sector": "Q",
+      "sector": "R",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           56.55,
-          38.0
+          37.61
         ],
         [
           56.55,
-          39.0
+          39.39
         ],
         [
           57.28333333333333,
-          39.0
+          39.39
         ],
         [
           57.28333333333333,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -5915,44 +5964,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.8944444444444444,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.6944444444444446,
           "start": 0.0
         },
         {
-          "bottom": 0.8944444444444444,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.6944444444444446,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_2",
-      "sector": "R",
+      "sector": "S",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           57.28333333333333,
-          38.0
+          37.61
         ],
         [
           57.28333333333333,
-          39.0
+          39.39
         ],
         [
           58.016666666666666,
-          39.0
+          39.39
         ],
         [
           58.016666666666666,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -5974,44 +6023,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.7666666666666666,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.566666666666667,
           "start": 0.0
         },
         {
-          "bottom": 0.7666666666666666,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.566666666666667,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_3",
-      "sector": "S",
+      "sector": "T",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           58.016666666666666,
-          38.0
+          37.61
         ],
         [
           58.016666666666666,
-          39.0
+          39.39
         ],
         [
           58.75,
-          39.0
+          39.39
         ],
         [
           58.75,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -6033,44 +6082,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.6388888888888888,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.438888888888889,
           "start": 0.0
         },
         {
-          "bottom": 0.6388888888888888,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.438888888888889,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_4",
-      "sector": "T",
+      "sector": "U",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           58.75,
-          38.0
+          37.61
         ],
         [
           58.75,
-          39.0
+          39.39
         ],
         [
           59.483333333333334,
-          39.0
+          39.39
         ],
         [
           59.483333333333334,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -6092,44 +6141,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.5111111111111111,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.3111111111111113,
           "start": 0.0
         },
         {
-          "bottom": 0.5111111111111111,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.3111111111111113,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_5",
-      "sector": "U",
+      "sector": "V",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           59.483333333333334,
-          38.0
+          37.61
         ],
         [
           59.483333333333334,
-          39.0
+          39.39
         ],
         [
           60.21666666666666,
-          39.0
+          39.39
         ],
         [
           60.21666666666666,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -6151,44 +6200,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.3833333333333333,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.1833333333333336,
           "start": 0.0
         },
         {
-          "bottom": 0.3833333333333333,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.1833333333333336,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_6",
-      "sector": "V",
+      "sector": "W",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           60.21666666666666,
-          38.0
+          37.61
         ],
         [
           60.21666666666666,
-          39.0
+          39.39
         ],
         [
           60.949999999999996,
-          39.0
+          39.39
         ],
         [
           60.949999999999996,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -6210,44 +6259,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.25555555555555554,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.055555555555556,
           "start": 0.0
         },
         {
-          "bottom": 0.25555555555555554,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 3.055555555555556,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_7",
-      "sector": "W",
+      "sector": "X",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           60.949999999999996,
-          38.0
+          37.61
         ],
         [
           60.949999999999996,
-          39.0
+          39.39
         ],
         [
           61.68333333333333,
-          39.0
+          39.39
         ],
         [
           61.68333333333333,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -6269,44 +6318,44 @@
           "start": 0.0
         },
         {
-          "bottom": 0.12777777777777777,
+          "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 2.927777777777778,
           "start": 0.0
         },
         {
-          "bottom": 0.12777777777777777,
+          "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 2.927777777777778,
           "start": 0.0
         }
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_8",
-      "sector": "X",
+      "sector": "Y",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           61.68333333333333,
-          38.0
+          37.61
         ],
         [
           61.68333333333333,
-          39.0
+          39.39
         ],
         [
           62.416666666666664,
-          39.0
+          39.39
         ],
         [
           62.416666666666664,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
@@ -6344,33 +6393,33 @@
       ],
       "has_support_bottom": true,
       "id": "stairs_04_entry_polygon_9",
-      "sector": "Y",
+      "sector": "Z",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           62.416666666666664,
-          38.0
+          37.61
         ],
         [
           62.416666666666664,
-          39.0
+          39.39
         ],
         [
           63.15,
-          39.0
+          39.39
         ],
         [
           63.15,
-          38.0
+          37.61
         ]
       ],
       "wall_ambient": 0.5,
-      "wall_texture_key": 284,
+      "wall_texture_key": 294,
       "wall_texture_scale": 1.0
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -6401,9 +6450,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_1",
-      "sector": "Z",
+      "sector": "a",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -6429,7 +6478,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -6460,9 +6509,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_2",
-      "sector": "a",
+      "sector": "b",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -6488,7 +6537,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -6519,9 +6568,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_3",
-      "sector": "b",
+      "sector": "c",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -6547,7 +6596,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -6578,9 +6627,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_4",
-      "sector": "c",
+      "sector": "d",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -6606,7 +6655,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -6637,85 +6686,26 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_5",
-      "sector": "d",
-      "support_bottom_z": 0.0,
-      "vertices": [
-        [
-          32.0,
-          8.444444444444445
-        ],
-        [
-          33.0,
-          8.444444444444445
-        ],
-        [
-          33.0,
-          8.055555555555555
-        ],
-        [
-          32.0,
-          8.055555555555555
-        ]
-      ],
-      "wall_ambient": 0.62,
-      "wall_texture_key": 294,
-      "wall_texture_scale": 1.0
-    },
-    {
-      "boundary_solid": false,
-      "cuts_underlying_floor": false,
-      "edge_openings": [
-        {
-          "bottom": 0.0,
-          "edge": 0,
-          "end": 1.0,
-          "height": 3.333333333333334,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.1777777777777778,
-          "edge": 2,
-          "end": 1.0,
-          "height": 3.155555555555556,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 1,
-          "end": 1.0,
-          "height": 3.333333333333334,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 3,
-          "end": 1.0,
-          "height": 3.333333333333334,
-          "start": 0.0
-        }
-      ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_6",
       "sector": "e",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
-          8.055555555555555
+          8.444444444444445
+        ],
+        [
+          33.0,
+          8.444444444444445
         ],
         [
           33.0,
           8.055555555555555
-        ],
-        [
-          33.0,
-          7.666666666666667
         ],
         [
           32.0,
-          7.666666666666667
+          8.055555555555555
         ]
       ],
       "wall_ambient": 0.62,
@@ -6724,57 +6714,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 3.155555555555556,
+          "height": 3.333333333333334,
           "start": 0.0
         },
         {
           "bottom": 0.1777777777777778,
           "edge": 2,
           "end": 1.0,
-          "height": 2.977777777777778,
+          "height": 3.155555555555556,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 3.155555555555556,
+          "height": 3.333333333333334,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 3.155555555555556,
+          "height": 3.333333333333334,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_7",
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_6",
       "sector": "f",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
-          7.666666666666667
+          8.055555555555555
+        ],
+        [
+          33.0,
+          8.055555555555555
         ],
         [
           33.0,
           7.666666666666667
-        ],
-        [
-          33.0,
-          7.277777777777778
         ],
         [
           32.0,
-          7.277777777777778
+          7.666666666666667
         ]
       ],
       "wall_ambient": 0.62,
@@ -6783,57 +6773,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.977777777777778,
+          "height": 3.155555555555556,
           "start": 0.0
         },
         {
           "bottom": 0.1777777777777778,
           "edge": 2,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 2.977777777777778,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.977777777777778,
+          "height": 3.155555555555556,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.977777777777778,
+          "height": 3.155555555555556,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_8",
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_7",
       "sector": "g",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
-          7.277777777777778
+          7.666666666666667
+        ],
+        [
+          33.0,
+          7.666666666666667
         ],
         [
           33.0,
           7.277777777777778
-        ],
-        [
-          33.0,
-          6.888888888888889
         ],
         [
           32.0,
-          6.888888888888889
+          7.277777777777778
         ]
       ],
       "wall_ambient": 0.62,
@@ -6842,44 +6832,103 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 2.977777777777778,
           "start": 0.0
         },
         {
           "bottom": 0.1777777777777778,
           "edge": 2,
           "end": 1.0,
-          "height": 2.6222222222222227,
+          "height": 2.8000000000000003,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 2.977777777777778,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.8000000000000003,
+          "height": 2.977777777777778,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_9",
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_8",
       "sector": "h",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
+          7.277777777777778
+        ],
+        [
+          33.0,
+          7.277777777777778
+        ],
+        [
+          33.0,
+          6.888888888888889
+        ],
+        [
+          32.0,
+          6.888888888888889
+        ]
+      ],
+      "wall_ambient": 0.62,
+      "wall_texture_key": 294,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": false,
+      "cuts_underlying_floor": true,
+      "edge_openings": [
+        {
+          "bottom": 0.0,
+          "edge": 0,
+          "end": 1.0,
+          "height": 2.8000000000000003,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.1777777777777778,
+          "edge": 2,
+          "end": 1.0,
+          "height": 2.6222222222222227,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 1,
+          "end": 1.0,
+          "height": 2.8000000000000003,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 3,
+          "end": 1.0,
+          "height": 2.8000000000000003,
+          "start": 0.0
+        }
+      ],
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_9",
+      "sector": "i",
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          32.0,
           6.888888888888889
         ],
         [
@@ -6901,7 +6950,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -6932,85 +6981,26 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_10",
-      "sector": "i",
-      "support_bottom_z": 0.0,
-      "vertices": [
-        [
-          32.0,
-          6.5
-        ],
-        [
-          33.0,
-          6.5
-        ],
-        [
-          33.0,
-          6.111111111111111
-        ],
-        [
-          32.0,
-          6.111111111111111
-        ]
-      ],
-      "wall_ambient": 0.62,
-      "wall_texture_key": 294,
-      "wall_texture_scale": 1.0
-    },
-    {
-      "boundary_solid": false,
-      "cuts_underlying_floor": false,
-      "edge_openings": [
-        {
-          "bottom": 0.0,
-          "edge": 0,
-          "end": 1.0,
-          "height": 2.4444444444444446,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.1777777777777776,
-          "edge": 2,
-          "end": 1.0,
-          "height": 2.266666666666667,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 1,
-          "end": 1.0,
-          "height": 2.4444444444444446,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 3,
-          "end": 1.0,
-          "height": 2.4444444444444446,
-          "start": 0.0
-        }
-      ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_11",
       "sector": "j",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
-          6.111111111111111
+          6.5
+        ],
+        [
+          33.0,
+          6.5
         ],
         [
           33.0,
           6.111111111111111
-        ],
-        [
-          33.0,
-          5.722222222222221
         ],
         [
           32.0,
-          5.722222222222221
+          6.111111111111111
         ]
       ],
       "wall_ambient": 0.62,
@@ -7019,57 +7009,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.266666666666667,
+          "height": 2.4444444444444446,
           "start": 0.0
         },
         {
-          "bottom": 0.17777777777777803,
+          "bottom": 0.1777777777777776,
           "edge": 2,
           "end": 1.0,
-          "height": 2.088888888888889,
+          "height": 2.266666666666667,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.266666666666667,
+          "height": 2.4444444444444446,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.266666666666667,
+          "height": 2.4444444444444446,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_12",
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_11",
       "sector": "k",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
-          5.722222222222221
+          6.111111111111111
+        ],
+        [
+          33.0,
+          6.111111111111111
         ],
         [
           33.0,
           5.722222222222221
-        ],
-        [
-          33.0,
-          5.333333333333334
         ],
         [
           32.0,
-          5.333333333333334
+          5.722222222222221
         ]
       ],
       "wall_ambient": 0.62,
@@ -7078,57 +7068,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.088888888888889,
+          "height": 2.266666666666667,
           "start": 0.0
         },
         {
-          "bottom": 0.1777777777777776,
+          "bottom": 0.17777777777777803,
           "edge": 2,
           "end": 1.0,
-          "height": 2.072222222222223,
+          "height": 2.088888888888889,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.088888888888889,
+          "height": 2.266666666666667,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.088888888888889,
+          "height": 2.266666666666667,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_13",
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_12",
       "sector": "l",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
-          5.333333333333334
+          5.722222222222221
+        ],
+        [
+          33.0,
+          5.722222222222221
         ],
         [
           33.0,
           5.333333333333334
-        ],
-        [
-          33.0,
-          4.944444444444445
         ],
         [
           32.0,
-          4.944444444444445
+          5.333333333333334
         ]
       ],
       "wall_ambient": 0.62,
@@ -7137,44 +7127,103 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.072222222222223,
+          "height": 2.088888888888889,
           "start": 0.0
         },
         {
-          "bottom": 0.17777777777777803,
+          "bottom": 0.1777777777777776,
           "edge": 2,
           "end": 1.0,
-          "height": 2.072222222222222,
+          "height": 2.072222222222223,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 1.9111111111111114,
+          "height": 2.088888888888889,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 1.9111111111111114,
+          "height": 2.088888888888889,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_09_internal_polygon_14",
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_13",
       "sector": "m",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           32.0,
+          5.333333333333334
+        ],
+        [
+          33.0,
+          5.333333333333334
+        ],
+        [
+          33.0,
+          4.944444444444445
+        ],
+        [
+          32.0,
+          4.944444444444445
+        ]
+      ],
+      "wall_ambient": 0.62,
+      "wall_texture_key": 294,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": false,
+      "cuts_underlying_floor": true,
+      "edge_openings": [
+        {
+          "bottom": 0.0,
+          "edge": 0,
+          "end": 1.0,
+          "height": 2.072222222222223,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.17777777777777803,
+          "edge": 2,
+          "end": 1.0,
+          "height": 2.072222222222222,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 1,
+          "end": 1.0,
+          "height": 1.9111111111111114,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 3,
+          "end": 1.0,
+          "height": 1.9111111111111114,
+          "start": 0.0
+        }
+      ],
+      "has_support_bottom": true,
+      "id": "stairs_09_internal_polygon_14",
+      "sector": "n",
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          32.0,
           4.944444444444445
         ],
         [
@@ -7196,7 +7245,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7227,9 +7276,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_15",
-      "sector": "n",
+      "sector": "o",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -7255,7 +7304,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7286,9 +7335,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_16",
-      "sector": "o",
+      "sector": "p",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -7314,7 +7363,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7345,9 +7394,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_17",
-      "sector": "p",
+      "sector": "q",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -7373,7 +7422,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7404,9 +7453,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_09_internal_polygon_18",
-      "sector": "q",
+      "sector": "r",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -7432,7 +7481,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7463,9 +7512,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_1",
-      "sector": "r",
+      "sector": "s",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -7491,7 +7540,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7522,9 +7571,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_2",
-      "sector": "s",
+      "sector": "t",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -7550,7 +7599,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7581,85 +7630,26 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_3",
-      "sector": "t",
-      "support_bottom_z": 0.0,
-      "vertices": [
-        [
-          27.0,
-          51.05882352941177
-        ],
-        [
-          28.0,
-          51.05882352941177
-        ],
-        [
-          28.0,
-          50.588235294117645
-        ],
-        [
-          27.0,
-          50.588235294117645
-        ]
-      ],
-      "wall_ambient": 0.6,
-      "wall_texture_key": 294,
-      "wall_texture_scale": 1.0
-    },
-    {
-      "boundary_solid": false,
-      "cuts_underlying_floor": false,
-      "edge_openings": [
-        {
-          "bottom": 0.0,
-          "edge": 0,
-          "end": 1.0,
-          "height": 3.9941176470588236,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.17647058823529416,
-          "edge": 2,
-          "end": 1.0,
-          "height": 3.8176470588235296,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 1,
-          "end": 1.0,
-          "height": 3.9941176470588236,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 3,
-          "end": 1.0,
-          "height": 3.9941176470588236,
-          "start": 0.0
-        }
-      ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_4",
       "sector": "u",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          50.588235294117645
+          51.05882352941177
+        ],
+        [
+          28.0,
+          51.05882352941177
         ],
         [
           28.0,
           50.588235294117645
-        ],
-        [
-          28.0,
-          50.11764705882353
         ],
         [
           27.0,
-          50.11764705882353
+          50.588235294117645
         ]
       ],
       "wall_ambient": 0.6,
@@ -7668,44 +7658,103 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 3.8176470588235296,
+          "height": 3.9941176470588236,
           "start": 0.0
         },
         {
           "bottom": 0.17647058823529416,
           "edge": 2,
           "end": 1.0,
-          "height": 3.6411764705882357,
+          "height": 3.8176470588235296,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 3.8176470588235296,
+          "height": 3.9941176470588236,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 3.8176470588235296,
+          "height": 3.9941176470588236,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_5",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_4",
       "sector": "v",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
+          50.588235294117645
+        ],
+        [
+          28.0,
+          50.588235294117645
+        ],
+        [
+          28.0,
+          50.11764705882353
+        ],
+        [
+          27.0,
+          50.11764705882353
+        ]
+      ],
+      "wall_ambient": 0.6,
+      "wall_texture_key": 294,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": false,
+      "cuts_underlying_floor": true,
+      "edge_openings": [
+        {
+          "bottom": 0.0,
+          "edge": 0,
+          "end": 1.0,
+          "height": 3.8176470588235296,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.17647058823529416,
+          "edge": 2,
+          "end": 1.0,
+          "height": 3.6411764705882357,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 1,
+          "end": 1.0,
+          "height": 3.8176470588235296,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 3,
+          "end": 1.0,
+          "height": 3.8176470588235296,
+          "start": 0.0
+        }
+      ],
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_5",
+      "sector": "w",
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          27.0,
           50.11764705882353
         ],
         [
@@ -7727,7 +7776,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -7758,85 +7807,26 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_6",
-      "sector": "w",
-      "support_bottom_z": 0.0,
-      "vertices": [
-        [
-          27.0,
-          49.64705882352941
-        ],
-        [
-          28.0,
-          49.64705882352941
-        ],
-        [
-          28.0,
-          49.1764705882353
-        ],
-        [
-          27.0,
-          49.1764705882353
-        ]
-      ],
-      "wall_ambient": 0.6,
-      "wall_texture_key": 294,
-      "wall_texture_scale": 1.0
-    },
-    {
-      "boundary_solid": false,
-      "cuts_underlying_floor": false,
-      "edge_openings": [
-        {
-          "bottom": 0.0,
-          "edge": 0,
-          "end": 1.0,
-          "height": 3.4647058823529413,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.17647058823529393,
-          "edge": 2,
-          "end": 1.0,
-          "height": 3.2882352941176474,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 1,
-          "end": 1.0,
-          "height": 3.4647058823529413,
-          "start": 0.0
-        },
-        {
-          "bottom": 0.0,
-          "edge": 3,
-          "end": 1.0,
-          "height": 3.4647058823529413,
-          "start": 0.0
-        }
-      ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_7",
       "sector": "x",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          49.1764705882353
+          49.64705882352941
+        ],
+        [
+          28.0,
+          49.64705882352941
         ],
         [
           28.0,
           49.1764705882353
-        ],
-        [
-          28.0,
-          48.705882352941174
         ],
         [
           27.0,
-          48.705882352941174
+          49.1764705882353
         ]
       ],
       "wall_ambient": 0.6,
@@ -7845,57 +7835,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 3.2882352941176474,
+          "height": 3.4647058823529413,
           "start": 0.0
         },
         {
-          "bottom": 0.17647058823529438,
+          "bottom": 0.17647058823529393,
           "edge": 2,
           "end": 1.0,
-          "height": 3.111764705882353,
+          "height": 3.2882352941176474,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 3.2882352941176474,
+          "height": 3.4647058823529413,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 3.2882352941176474,
+          "height": 3.4647058823529413,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_8",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_7",
       "sector": "y",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          48.705882352941174
+          49.1764705882353
+        ],
+        [
+          28.0,
+          49.1764705882353
         ],
         [
           28.0,
           48.705882352941174
-        ],
-        [
-          28.0,
-          48.23529411764706
         ],
         [
           27.0,
-          48.23529411764706
+          48.705882352941174
         ]
       ],
       "wall_ambient": 0.6,
@@ -7904,57 +7894,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 3.111764705882353,
+          "height": 3.2882352941176474,
           "start": 0.0
         },
         {
-          "bottom": 0.17647058823529393,
+          "bottom": 0.17647058823529438,
           "edge": 2,
           "end": 1.0,
-          "height": 2.935294117647059,
+          "height": 3.111764705882353,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 3.111764705882353,
+          "height": 3.2882352941176474,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 3.111764705882353,
+          "height": 3.2882352941176474,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_9",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_8",
       "sector": "z",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          48.23529411764706
+          48.705882352941174
+        ],
+        [
+          28.0,
+          48.705882352941174
         ],
         [
           28.0,
           48.23529411764706
-        ],
-        [
-          28.0,
-          47.76470588235294
         ],
         [
           27.0,
-          47.76470588235294
+          48.23529411764706
         ]
       ],
       "wall_ambient": 0.6,
@@ -7963,57 +7953,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.935294117647059,
+          "height": 3.111764705882353,
           "start": 0.0
         },
         {
-          "bottom": 0.17647058823529438,
+          "bottom": 0.17647058823529393,
           "edge": 2,
           "end": 1.0,
-          "height": 2.7588235294117647,
+          "height": 2.935294117647059,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.935294117647059,
+          "height": 3.111764705882353,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.935294117647059,
+          "height": 3.111764705882353,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_10",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_9",
       "sector": "0",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          47.76470588235294
+          48.23529411764706
+        ],
+        [
+          28.0,
+          48.23529411764706
         ],
         [
           28.0,
           47.76470588235294
-        ],
-        [
-          28.0,
-          47.294117647058826
         ],
         [
           27.0,
-          47.294117647058826
+          47.76470588235294
         ]
       ],
       "wall_ambient": 0.6,
@@ -8022,57 +8012,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.7588235294117647,
+          "height": 2.935294117647059,
           "start": 0.0
         },
         {
-          "bottom": 0.17647058823529393,
+          "bottom": 0.17647058823529438,
           "edge": 2,
           "end": 1.0,
-          "height": 2.5823529411764707,
+          "height": 2.7588235294117647,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.7588235294117647,
+          "height": 2.935294117647059,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.7588235294117647,
+          "height": 2.935294117647059,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_11",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_10",
       "sector": "1",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          47.294117647058826
+          47.76470588235294
+        ],
+        [
+          28.0,
+          47.76470588235294
         ],
         [
           28.0,
           47.294117647058826
-        ],
-        [
-          28.0,
-          46.8235294117647
         ],
         [
           27.0,
-          46.8235294117647
+          47.294117647058826
         ]
       ],
       "wall_ambient": 0.6,
@@ -8081,57 +8071,57 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.5823529411764707,
+          "height": 2.7588235294117647,
           "start": 0.0
         },
         {
           "bottom": 0.17647058823529393,
           "edge": 2,
           "end": 1.0,
-          "height": 2.405882352941177,
+          "height": 2.5823529411764707,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.5823529411764707,
+          "height": 2.7588235294117647,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.5823529411764707,
+          "height": 2.7588235294117647,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_12",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_11",
       "sector": "2",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
-          46.8235294117647
+          47.294117647058826
+        ],
+        [
+          28.0,
+          47.294117647058826
         ],
         [
           28.0,
           46.8235294117647
-        ],
-        [
-          28.0,
-          46.35294117647059
         ],
         [
           27.0,
-          46.35294117647059
+          46.8235294117647
         ]
       ],
       "wall_ambient": 0.6,
@@ -8140,44 +8130,103 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
           "edge": 0,
           "end": 1.0,
-          "height": 2.405882352941177,
+          "height": 2.5823529411764707,
           "start": 0.0
         },
         {
-          "bottom": 0.17647058823529438,
+          "bottom": 0.17647058823529393,
           "edge": 2,
           "end": 1.0,
-          "height": 2.2294117647058824,
+          "height": 2.405882352941177,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 1,
           "end": 1.0,
-          "height": 2.405882352941177,
+          "height": 2.5823529411764707,
           "start": 0.0
         },
         {
           "bottom": 0.0,
           "edge": 3,
           "end": 1.0,
-          "height": 2.405882352941177,
+          "height": 2.5823529411764707,
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
-      "id": "stairs_15_internal_polygon_13",
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_12",
       "sector": "3",
       "support_bottom_z": 0.0,
       "vertices": [
         [
           27.0,
+          46.8235294117647
+        ],
+        [
+          28.0,
+          46.8235294117647
+        ],
+        [
+          28.0,
+          46.35294117647059
+        ],
+        [
+          27.0,
+          46.35294117647059
+        ]
+      ],
+      "wall_ambient": 0.6,
+      "wall_texture_key": 294,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": false,
+      "cuts_underlying_floor": true,
+      "edge_openings": [
+        {
+          "bottom": 0.0,
+          "edge": 0,
+          "end": 1.0,
+          "height": 2.405882352941177,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.17647058823529438,
+          "edge": 2,
+          "end": 1.0,
+          "height": 2.2294117647058824,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 1,
+          "end": 1.0,
+          "height": 2.405882352941177,
+          "start": 0.0
+        },
+        {
+          "bottom": 0.0,
+          "edge": 3,
+          "end": 1.0,
+          "height": 2.405882352941177,
+          "start": 0.0
+        }
+      ],
+      "has_support_bottom": true,
+      "id": "stairs_15_internal_polygon_13",
+      "sector": "4",
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          27.0,
           46.35294117647059
         ],
         [
@@ -8199,7 +8248,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -8230,9 +8279,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_14",
-      "sector": "4",
+      "sector": "5",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8258,7 +8307,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -8289,9 +8338,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_15",
-      "sector": "5",
+      "sector": "6",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8317,7 +8366,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -8348,9 +8397,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_16",
-      "sector": "6",
+      "sector": "7",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8376,7 +8425,7 @@
     },
     {
       "boundary_solid": false,
-      "cuts_underlying_floor": false,
+      "cuts_underlying_floor": true,
       "edge_openings": [
         {
           "bottom": 0.0,
@@ -8407,9 +8456,9 @@
           "start": 0.0
         }
       ],
-      "has_support_bottom": false,
+      "has_support_bottom": true,
       "id": "stairs_15_internal_polygon_17",
-      "sector": "7",
+      "sector": "8",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8589,7 +8638,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_A_to_05a_connector",
-      "sector": "F",
+      "sector": "G",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8634,7 +8683,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_A_to_05b_connector",
-      "sector": "F",
+      "sector": "G",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8679,7 +8728,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_05_to_06_connector",
-      "sector": "G",
+      "sector": "H",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8724,7 +8773,7 @@
       ],
       "has_support_bottom": false,
       "id": "arch_A_to_07_connector",
-      "sector": "H",
+      "sector": "I",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8769,7 +8818,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_A_to_08_connector",
-      "sector": "I",
+      "sector": "J",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8814,7 +8863,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_A_to_09_connector",
-      "sector": "J",
+      "sector": "K",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8859,7 +8908,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_A_to_12_connector",
-      "sector": "M",
+      "sector": "N",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8904,7 +8953,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_12_to_11_connector",
-      "sector": "L",
+      "sector": "M",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8949,7 +8998,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_11_to_10_connector",
-      "sector": "K",
+      "sector": "L",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -8994,7 +9043,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_12_to_13_connector",
-      "sector": "N",
+      "sector": "O",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -9039,7 +9088,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_13_to_14_connector",
-      "sector": "O",
+      "sector": "P",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -9084,7 +9133,7 @@
       ],
       "has_support_bottom": false,
       "id": "door_A_to_15_connector",
-      "sector": "P",
+      "sector": "Q",
       "support_bottom_z": 0.0,
       "vertices": [
         [
@@ -9110,67 +9159,85 @@
     }
   ],
   "sector_grid": [
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAJAAAAAAAAAAAAAIIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
-    "AAAAAAAAAAAAAAAAAAAAAAAAAJJJJJJJJAIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAAAAAAAA",
-    "AAAAAAAAAAAKAAAAAAAAAAAAAJJJJJJJJAIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJqAIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJoAIIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJlAIIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJjAIIIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJgAIIIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAA",
-    "AAAKKKKKKKKKKKKKKKAAAAAAAJJJJJJJeAIIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJbAIIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJZAIIIIIIIIIIIIIIIIIIIIIIIAAAAAAAAAAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAJJJJJJJJAIIIIIIIIIIIIIIIIIIIIIIAAAAAAHHHHAAAAAAAAAA",
-    "AAAAKKKKKKKKKKKKKKAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHAAAAAAAAA",
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHHHAAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHAAAAAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGAAAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGAAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGAAAAAAAAAA",
-    "AAALLLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGFFAAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGAAAFFFFFAAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFAAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFFAAAAAAAA",
-    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFAAAAAAAAA",
-    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFAAAAAAAAA",
-    "AAAAAAAAAAMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFAAAAAAAA",
-    "AAAAAAAAAAMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFAAAAAAAA",
-    "AAAAAAAAAAMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFFAAAAAAA",
-    "AAAAAAAAAMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFAAAAAAA",
-    "AAAAAAAAAMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFFFAAAAAAA",
-    "AAAAAAAAAAMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFFFFFFAAAAAAAAA",
-    "AAAAAAAAAAMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFFFFEEAAEEAAAAAAA",
-    "AAAAAAAAAAMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFFAAAAEEEEEAAAAAAA",
+    "EAAAAAAAAAAAAAAAAAAAAAAAAAAAAKAAAAAAAAAAAAAJJAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
+    "AAAAAAAAAAAAAAAAAAAAAAAAAKKKKKKKKAJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAAAAAAAA",
+    "AAAAAAAAAAALAAAAAAAAAAAAAKKKKKKKKAJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKrrrJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKpppJJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKmmmJJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKkkkJJJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKhhhJJJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAA",
+    "AAALLLLLLLLLLLLLLLAAAAAAAKKKKKKfffJJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKcccJJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKaaaJJJJJJJJJJJJJJJJJJJJJJJAAAAAAAAAAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAKKKKKKKKAJJJJJJJJJJJJJJJJJJJJJJAAAAAAIIIIAAAAAAAAAA",
+    "AAAALLLLLLLLLLLLLLAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIAAAAAAAAA",
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIIIIIIAAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAIIIIIIIIIAAAAAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHAAAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHAAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHAAAAAAAAAA",
+    "AAAMMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHHHHAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHHHHHHHGGAAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAHHHAAAGGGGGAAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGAAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGAAAAAAAA",
+    "AAAAMMMMMMMMMMMMMMAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGAAAAAAAAA",
+    "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGAAAAAAAAA",
+    "AAAAAAAAAANNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGAAAAAAAA",
+    "AAAAAAAAAANNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGAAAAAAAA",
+    "AAAAAAAAAANNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGGAAAAAAA",
+    "AAAAAAAAANNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGAAAAAAA",
+    "AAAAAAAAANNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGGGAAAAAAA",
+    "AAAAAAAAAANNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGGGGGGAAAAAAAAA",
+    "AAAAAAAAAANNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGGGGEEAAEEAAAAAAA",
+    "AAAAAAAAAANNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAGGAAAAEEEEEAAAAAAA",
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEAAAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEAAAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEAAAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEAAAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQRTUVXYYEEEEEEAAAAAA",
-    "AAANNNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEEEAAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEEEEAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAAAAAAABAAAABAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEEEEAAAAA",
-    "AAAANNNNNNNNNNNNNNAAAAAPPPPPABBBBBBACCCCCCCCCCCADDDDDDDAAAEEEEEEEEEEEEEAAAAA",
-    "AAAAAAAAAAAAAAAAAAAAAAAPPPPPABBBBBBACCCCCCCCCCCADDDDDDDAAAEEEEEEEEEEEEEEAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPP7ABBBBBBACCCCCCCCCCCADDDDDDDAAAAEEEEEEEEEEEEEAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPP5ABBBBBBACCCCCCCCCCCADDDDDDDAAAAAEEEEEEEEEEEAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPP3ABBBBBBACCCCCCCCCCCADDDDDDDAAAAAEEEEEEEEEEAAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPP1ABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAEEEEEEEAAAAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPPzABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAEEEEEEAAAAAAAAA",
-    "AAAOOOOOOOOOOOOOOOOAAAAPPPPxABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAEEEAAAAAAAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPPvABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEAAAAAAAAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPPtABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPPrABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
-    "AAAAOOOOOOOOOOOOOOOAAAAPPPPPABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
-    "AAAAAAAAAAAOAAAAAAAAAAAPPPPPABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEEEAAAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEAAAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARSUVWYZZEEEEEEAAAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARSUVWYZZEEEEEEAAAAAA",
+    "AAAOOOOOOOOOOOOOOOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAARSUVWYZZEEEEEEEAAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEEAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAAAAAAABAAAABAAAAAAAAAAAAAAAAAAAAAAAAAAAAEEEEEEEEAAAAA",
+    "AAAAOOOOOOOOOOOOOOAAAAAQQQQQABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEEEEEAAAAA",
+    "AAAAAAAAAAAAAAAAAAAAAAAQQQQQABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEEEEEEAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQ888BBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEEEEEEAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQ666BBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEEEEEAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQ444BBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEEEEAAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQ222BBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEEAAAAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQ000BBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEEEAAAAAAAAA",
+    "AAAPPPPPPPPPPPPPPPPAAAAQQQyyyBBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEEAAAAAAAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQwwwBBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAEAAAAAAAAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQuuuBBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQsssBBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
+    "AAAAPPPPPPPPPPPPPPPAAAAQQQQQABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
+    "AAAAAAAAAAAPAAAAAAAAAAAQQQQQABBBBBBACCCCCCCCCCCADDDDDDDAAAAAAAAAAAAAAAAAAAAA",
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAACCCAAAAAAADDDAAAAAAAAAAAAAAAAAAAAAAA",
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA",
     "AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"
   ],
   "sectors": {
     "0": {
+      "ambient": 0.6,
+      "boundary_texture_key": 294,
+      "ceiling_height": 4.7,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 272,
+      "floor_height": 1.5882352941176472,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 275,
+      "id": "stairs_15_internal_step_9",
+      "name": "Schodiště nad průjezdem na horní ochoz – stupeň 9",
+      "sky_ceiling": false,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0,
+      "wall_height": 0.1875
+    },
+    "1": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -9188,7 +9255,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "1": {
+    "2": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -9206,7 +9273,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "2": {
+    "3": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -9224,7 +9291,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "3": {
+    "4": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -9242,7 +9309,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "4": {
+    "5": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.720588235294118,
@@ -9260,7 +9327,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "5": {
+    "6": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.897058823529411,
@@ -9278,7 +9345,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "6": {
+    "7": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 5.073529411764706,
@@ -9296,7 +9363,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "7": {
+    "8": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 5.25,
@@ -9396,7 +9463,7 @@
       "floor_height": 1.15,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "room_04_rock_room",
       "name": "Místnost zasekaná do skály",
       "sky_ceiling": false,
@@ -9405,6 +9472,24 @@
       "wall_height": 2.8
     },
     "F": {
+      "ambient": 0.5,
+      "boundary_texture_key": 294,
+      "ceiling_height": 3.95,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 294,
+      "floor_height": 0.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 292,
+      "id": "room_04_entry_stairwell",
+      "name": "Vstupní schodiště do skalní místnosti",
+      "sky_ceiling": false,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0,
+      "wall_height": 3.95
+    },
+    "G": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.75,
@@ -9422,7 +9507,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "G": {
+    "H": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.65,
@@ -9440,7 +9525,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "H": {
+    "I": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.35,
@@ -9458,7 +9543,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "I": {
+    "J": {
       "ambient": 0.82,
       "boundary_texture_key": 267,
       "ceiling_height": 6.4,
@@ -9476,7 +9561,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 6.4
     },
-    "J": {
+    "K": {
       "ambient": 0.62,
       "boundary_texture_key": 272,
       "ceiling_height": 4.4,
@@ -9494,7 +9579,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "K": {
+    "L": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.7,
@@ -9512,7 +9597,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "L": {
+    "M": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.7,
@@ -9530,7 +9615,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "M": {
+    "N": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.7,
@@ -9548,7 +9633,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "N": {
+    "O": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.7,
@@ -9566,7 +9651,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "O": {
+    "P": {
       "ambient": 0.66,
       "boundary_texture_key": 272,
       "ceiling_height": 2.7,
@@ -9584,7 +9669,7 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "P": {
+    "Q": {
       "ambient": 0.6,
       "boundary_texture_key": 272,
       "ceiling_height": 4.7,
@@ -9602,9 +9687,9 @@
       "slope_origin_y": 0.0,
       "wall_height": -1.0
     },
-    "Q": {
+    "R": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9612,17 +9697,17 @@
       "floor_height": 0.12777777777777777,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_1",
-      "name": "Místnost zasekaná do skály – stupeň 1",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 1",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
-      "wall_height": 1.0222222222222221
+      "wall_height": 0.14375
     },
-    "R": {
+    "S": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9630,17 +9715,17 @@
       "floor_height": 0.25555555555555554,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_2",
-      "name": "Místnost zasekaná do skály – stupeň 2",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 2",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
-      "wall_height": 0.8944444444444444
+      "wall_height": 0.14375
     },
-    "S": {
+    "T": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9648,17 +9733,17 @@
       "floor_height": 0.3833333333333333,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_3",
-      "name": "Místnost zasekaná do skály – stupeň 3",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 3",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
-      "wall_height": 0.7666666666666666
+      "wall_height": 0.14375
     },
-    "T": {
+    "U": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9666,17 +9751,17 @@
       "floor_height": 0.5111111111111111,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_4",
-      "name": "Místnost zasekaná do skály – stupeň 4",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 4",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
-      "wall_height": 0.6388888888888888
+      "wall_height": 0.14375
     },
-    "U": {
+    "V": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9684,17 +9769,17 @@
       "floor_height": 0.6388888888888888,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_5",
-      "name": "Místnost zasekaná do skály – stupeň 5",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 5",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
-      "wall_height": 0.5111111111111111
+      "wall_height": 0.14375
     },
-    "V": {
+    "W": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9702,17 +9787,17 @@
       "floor_height": 0.7666666666666666,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_6",
-      "name": "Místnost zasekaná do skály – stupeň 6",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 6",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
-      "wall_height": 0.3833333333333333
+      "wall_height": 0.14375
     },
-    "W": {
+    "X": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9720,27 +9805,9 @@
       "floor_height": 0.8944444444444444,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_7",
-      "name": "Místnost zasekaná do skály – stupeň 7",
-      "sky_ceiling": false,
-      "slope_origin_x": 0.0,
-      "slope_origin_y": 0.0,
-      "wall_height": 0.25555555555555554
-    },
-    "X": {
-      "ambient": 0.5,
-      "boundary_texture_key": 284,
-      "ceiling_height": 3.95,
-      "ceiling_slope_x": 0.0,
-      "ceiling_slope_y": 0.0,
-      "ceiling_texture_key": 294,
-      "floor_height": 1.0222222222222221,
-      "floor_slope_x": 0.0,
-      "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
-      "id": "stairs_04_entry_step_8",
-      "name": "Místnost zasekaná do skály – stupeň 8",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 7",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
@@ -9748,7 +9815,25 @@
     },
     "Y": {
       "ambient": 0.5,
-      "boundary_texture_key": 284,
+      "boundary_texture_key": 294,
+      "ceiling_height": 3.95,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 294,
+      "floor_height": 1.0222222222222221,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 292,
+      "id": "stairs_04_entry_step_8",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 8",
+      "sky_ceiling": false,
+      "slope_origin_x": 0.0,
+      "slope_origin_y": 0.0,
+      "wall_height": 0.14375
+    },
+    "Z": {
+      "ambient": 0.5,
+      "boundary_texture_key": 294,
       "ceiling_height": 3.95,
       "ceiling_slope_x": 0.0,
       "ceiling_slope_y": 0.0,
@@ -9756,15 +9841,15 @@
       "floor_height": 1.15,
       "floor_slope_x": 0.0,
       "floor_slope_y": 0.0,
-      "floor_texture_key": 297,
+      "floor_texture_key": 292,
       "id": "stairs_04_entry_step_9",
-      "name": "Místnost zasekaná do skály – stupeň 9",
+      "name": "Vstupní schodiště do skalní místnosti – stupeň 9",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
       "wall_height": 0.14375
     },
-    "Z": {
+    "a": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9782,7 +9867,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "a": {
+    "b": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9800,7 +9885,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "b": {
+    "c": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9818,7 +9903,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "c": {
+    "d": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9836,7 +9921,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "d": {
+    "e": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9854,7 +9939,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "e": {
+    "f": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9872,7 +9957,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "f": {
+    "g": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9890,7 +9975,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "g": {
+    "h": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9908,7 +9993,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "h": {
+    "i": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9926,7 +10011,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "i": {
+    "j": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9944,7 +10029,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "j": {
+    "k": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9962,7 +10047,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "k": {
+    "l": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.4,
@@ -9980,7 +10065,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "l": {
+    "m": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.561111111111112,
@@ -9998,7 +10083,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "m": {
+    "n": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.738888888888889,
@@ -10016,7 +10101,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "n": {
+    "o": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 4.916666666666667,
@@ -10034,7 +10119,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "o": {
+    "p": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 5.094444444444445,
@@ -10052,7 +10137,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "p": {
+    "q": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 5.272222222222222,
@@ -10070,7 +10155,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "q": {
+    "r": {
       "ambient": 0.62,
       "boundary_texture_key": 294,
       "ceiling_height": 5.45,
@@ -10088,7 +10173,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.18823529411764706
     },
-    "r": {
+    "s": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10106,7 +10191,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "s": {
+    "t": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10124,7 +10209,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "t": {
+    "u": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10142,7 +10227,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "u": {
+    "v": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10160,7 +10245,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "v": {
+    "w": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10178,7 +10263,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "w": {
+    "x": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10196,7 +10281,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "x": {
+    "y": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10214,7 +10299,7 @@
       "slope_origin_y": 0.0,
       "wall_height": 0.1875
     },
-    "y": {
+    "z": {
       "ambient": 0.6,
       "boundary_texture_key": 294,
       "ceiling_height": 4.7,
@@ -10227,24 +10312,6 @@
       "floor_texture_key": 275,
       "id": "stairs_15_internal_step_8",
       "name": "Schodiště nad průjezdem na horní ochoz – stupeň 8",
-      "sky_ceiling": false,
-      "slope_origin_x": 0.0,
-      "slope_origin_y": 0.0,
-      "wall_height": 0.1875
-    },
-    "z": {
-      "ambient": 0.6,
-      "boundary_texture_key": 294,
-      "ceiling_height": 4.7,
-      "ceiling_slope_x": 0.0,
-      "ceiling_slope_y": 0.0,
-      "ceiling_texture_key": 272,
-      "floor_height": 1.5882352941176472,
-      "floor_slope_x": 0.0,
-      "floor_slope_y": 0.0,
-      "floor_texture_key": 275,
-      "id": "stairs_15_internal_step_9",
-      "name": "Schodiště nad průjezdem na horní ochoz – stupeň 9",
       "sky_ceiling": false,
       "slope_origin_x": 0.0,
       "slope_origin_y": 0.0,
@@ -10634,7 +10701,7 @@
         38.5
       ],
       "start_height": 0.0,
-      "width": 1.0
+      "width": 1.78
     },
     {
       "end": [
@@ -10667,12 +10734,30 @@
   ],
   "wall_segments": [
     {
+      "ambient": 1.06,
+      "bottom_z": 1.7,
+      "bottom_z_end": 1.7,
+      "id": "door_A_to_04_exterior_facade_overdoor",
+      "solid": false,
+      "texture_key": 269,
+      "texture_scale": 1.0,
+      "texture_u_offset": 0.0,
+      "top_z": 3.95,
+      "top_z_end": 3.95,
+      "two_sided": false,
+      "world_aligned_texture": true,
+      "x0": 56.639296503255615,
+      "x1": 56.22020312109106,
+      "y0": 39.485126846458975,
+      "y1": 37.52952201830416
+    },
+    {
       "ambient": 0.5,
       "bottom_z": 0.0,
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_riser_1",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.12777777777777777,
@@ -10681,8 +10766,8 @@
       "world_aligned_texture": true,
       "x0": 56.55,
       "x1": 56.55,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10690,7 +10775,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_1",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.12777777777777777,
@@ -10699,8 +10784,8 @@
       "world_aligned_texture": true,
       "x0": 56.55,
       "x1": 57.28333333333333,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -10708,7 +10793,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_1",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.12777777777777777,
@@ -10717,8 +10802,8 @@
       "world_aligned_texture": true,
       "x0": 57.28333333333333,
       "x1": 56.55,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10726,7 +10811,7 @@
       "bottom_z_end": 0.12777777777777777,
       "id": "stairs_04_entry_riser_2",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.25555555555555554,
@@ -10735,8 +10820,8 @@
       "world_aligned_texture": true,
       "x0": 57.28333333333333,
       "x1": 57.28333333333333,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10744,7 +10829,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_2",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.7333333333333335,
       "top_z": 0.25555555555555554,
@@ -10753,8 +10838,8 @@
       "world_aligned_texture": true,
       "x0": 57.28333333333333,
       "x1": 58.016666666666666,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -10762,7 +10847,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_2",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.7333333333333335,
       "top_z": 0.25555555555555554,
@@ -10771,8 +10856,8 @@
       "world_aligned_texture": true,
       "x0": 58.016666666666666,
       "x1": 57.28333333333333,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10780,7 +10865,7 @@
       "bottom_z_end": 0.25555555555555554,
       "id": "stairs_04_entry_riser_3",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.3833333333333333,
@@ -10789,8 +10874,8 @@
       "world_aligned_texture": true,
       "x0": 58.016666666666666,
       "x1": 58.016666666666666,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10798,7 +10883,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_3",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 1.466666666666667,
       "top_z": 0.3833333333333333,
@@ -10807,8 +10892,8 @@
       "world_aligned_texture": true,
       "x0": 58.016666666666666,
       "x1": 58.75,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -10816,7 +10901,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_3",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 1.466666666666667,
       "top_z": 0.3833333333333333,
@@ -10825,8 +10910,8 @@
       "world_aligned_texture": true,
       "x0": 58.75,
       "x1": 58.016666666666666,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10834,7 +10919,7 @@
       "bottom_z_end": 0.3833333333333333,
       "id": "stairs_04_entry_riser_4",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.5111111111111111,
@@ -10843,8 +10928,8 @@
       "world_aligned_texture": true,
       "x0": 58.75,
       "x1": 58.75,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10852,7 +10937,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_4",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 2.2000000000000006,
       "top_z": 0.5111111111111111,
@@ -10861,8 +10946,8 @@
       "world_aligned_texture": true,
       "x0": 58.75,
       "x1": 59.483333333333334,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -10870,7 +10955,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_4",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 2.2000000000000006,
       "top_z": 0.5111111111111111,
@@ -10879,8 +10964,8 @@
       "world_aligned_texture": true,
       "x0": 59.483333333333334,
       "x1": 58.75,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10888,7 +10973,7 @@
       "bottom_z_end": 0.5111111111111111,
       "id": "stairs_04_entry_riser_5",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.6388888888888888,
@@ -10897,8 +10982,8 @@
       "world_aligned_texture": true,
       "x0": 59.483333333333334,
       "x1": 59.483333333333334,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10906,7 +10991,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_5",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 2.933333333333334,
       "top_z": 0.6388888888888888,
@@ -10915,8 +11000,8 @@
       "world_aligned_texture": true,
       "x0": 59.483333333333334,
       "x1": 60.21666666666666,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -10924,7 +11009,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_5",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 2.933333333333334,
       "top_z": 0.6388888888888888,
@@ -10933,8 +11018,8 @@
       "world_aligned_texture": true,
       "x0": 60.21666666666666,
       "x1": 59.483333333333334,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10942,7 +11027,7 @@
       "bottom_z_end": 0.6388888888888888,
       "id": "stairs_04_entry_riser_6",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.7666666666666666,
@@ -10951,8 +11036,8 @@
       "world_aligned_texture": true,
       "x0": 60.21666666666666,
       "x1": 60.21666666666666,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10960,7 +11045,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_6",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 3.6666666666666674,
       "top_z": 0.7666666666666666,
@@ -10969,8 +11054,8 @@
       "world_aligned_texture": true,
       "x0": 60.21666666666666,
       "x1": 60.949999999999996,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -10978,7 +11063,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_6",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 3.6666666666666674,
       "top_z": 0.7666666666666666,
@@ -10987,8 +11072,8 @@
       "world_aligned_texture": true,
       "x0": 60.949999999999996,
       "x1": 60.21666666666666,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -10996,7 +11081,7 @@
       "bottom_z_end": 0.7666666666666666,
       "id": "stairs_04_entry_riser_7",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 0.8944444444444444,
@@ -11005,8 +11090,8 @@
       "world_aligned_texture": true,
       "x0": 60.949999999999996,
       "x1": 60.949999999999996,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -11014,7 +11099,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_7",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 4.400000000000001,
       "top_z": 0.8944444444444444,
@@ -11023,8 +11108,8 @@
       "world_aligned_texture": true,
       "x0": 60.949999999999996,
       "x1": 61.68333333333333,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -11032,7 +11117,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_7",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 4.400000000000001,
       "top_z": 0.8944444444444444,
@@ -11041,8 +11126,8 @@
       "world_aligned_texture": true,
       "x0": 61.68333333333333,
       "x1": 60.949999999999996,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -11050,7 +11135,7 @@
       "bottom_z_end": 0.8944444444444444,
       "id": "stairs_04_entry_riser_8",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 1.0222222222222221,
@@ -11059,8 +11144,8 @@
       "world_aligned_texture": true,
       "x0": 61.68333333333333,
       "x1": 61.68333333333333,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -11068,7 +11153,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_8",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 5.133333333333335,
       "top_z": 1.0222222222222221,
@@ -11077,8 +11162,8 @@
       "world_aligned_texture": true,
       "x0": 61.68333333333333,
       "x1": 62.416666666666664,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -11086,7 +11171,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_8",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 5.133333333333335,
       "top_z": 1.0222222222222221,
@@ -11095,8 +11180,8 @@
       "world_aligned_texture": true,
       "x0": 62.416666666666664,
       "x1": 61.68333333333333,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -11104,7 +11189,7 @@
       "bottom_z_end": 1.0222222222222221,
       "id": "stairs_04_entry_riser_9",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 1.15,
@@ -11113,8 +11198,8 @@
       "world_aligned_texture": true,
       "x0": 62.416666666666664,
       "x1": 62.416666666666664,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -11122,7 +11207,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_left_support_9",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 5.866666666666668,
       "top_z": 1.15,
@@ -11131,8 +11216,8 @@
       "world_aligned_texture": true,
       "x0": 62.416666666666664,
       "x1": 63.15,
-      "y0": 38.0,
-      "y1": 38.0
+      "y0": 37.61,
+      "y1": 37.61
     },
     {
       "ambient": 0.5,
@@ -11140,7 +11225,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_right_support_9",
       "solid": true,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 5.866666666666668,
       "top_z": 1.15,
@@ -11149,8 +11234,8 @@
       "world_aligned_texture": true,
       "x0": 63.15,
       "x1": 62.416666666666664,
-      "y0": 39.0,
-      "y1": 39.0
+      "y0": 39.39,
+      "y1": 39.39
     },
     {
       "ambient": 0.5,
@@ -11158,7 +11243,7 @@
       "bottom_z_end": 0.0,
       "id": "stairs_04_entry_end_support",
       "solid": false,
-      "texture_key": 284,
+      "texture_key": 294,
       "texture_scale": 1.0,
       "texture_u_offset": 0.0,
       "top_z": 1.15,
@@ -11167,8 +11252,8 @@
       "world_aligned_texture": true,
       "x0": 63.15,
       "x1": 63.15,
-      "y0": 38.0,
-      "y1": 39.0
+      "y0": 37.61,
+      "y1": 39.39
     },
     {
       "ambient": 0.62,

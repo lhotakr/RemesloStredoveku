@@ -450,13 +450,15 @@ namespace interior
                         // height, which made the sides look like disconnected
                         // strips instead of a solid medieval stair.
                         polygon.boundarySolid = false;
-                        // Only a staircase cut into an already raised floor
-                        // needs to punch a hole through its owning room. The
-                        // two internal stairs start at the room floor and must
-                        // leave that floor below their solid masonry body.
+                        // Stairs that transition to a higher level must punch
+                        // through any overlapping floor surface. This covers
+                        // the Houska rock-room entry where the stairs live in
+                        // a low doorway sector but climb into the raised room.
                         polygon.cutsUnderlyingFloor =
                             base.floor.height >
-                            std::min(stair.startHeight, stair.endHeight) + 0.05;
+                                std::min(stair.startHeight, stair.endHeight) + 0.05 ||
+                            std::max(stair.startHeight, stair.endHeight) >
+                                base.floor.height + 0.05;
                         polygon.vertices = {
                             detail::Add(start, detail::Scale(side, -halfWidth)),
                             detail::Add(start, detail::Scale(side, halfWidth)),
@@ -656,9 +658,9 @@ namespace interior
                         compiledPolygons.push_back(std::move(polygon));
                     }
 
-                    // V23: continuous top-profile cheeks removed. The renderer could
-                    // drop or mis-sample them at shallow doorway angles. Exact per-tread
-                    // support segments are emitted in the loop above instead.
+                    // Keep stair side support per-tread only. A continuous
+                    // cheek face overdraws the doorway edge in the ray pass and
+                    // appears as a stray wall texture along the stair side.
                 }
             }
         }
@@ -792,7 +794,9 @@ namespace interior
                 const char sectorChar = sectorChars.at(ids[stepIndex]);
                 const double cx = stair.start.x + dx * t;
                 const double cy = stair.start.y + dy * t;
-                for (int w = -(stair.width - 1) / 2; w <= stair.width / 2; ++w)
+                const int rasterHalfWidth =
+                    std::max(0, static_cast<int>(std::ceil(stair.width * 0.5)));
+                for (int w = -rasterHalfWidth; w <= rasterHalfWidth; ++w)
                 {
                     const int x = static_cast<int>(std::floor(cx + px * w));
                     const int y = static_cast<int>(std::floor(cy + py * w));
@@ -806,6 +810,33 @@ namespace interior
 
         std::vector<DoorDef> runtimeDoors = map.doors;
         json compiledWallSegments = json::array();
+        for (const WallSegmentDef& wall : map.wallSegments)
+        {
+            const auto materialIt = materialKeys.find(wall.materialId);
+            const RuntimeTextureKey texture = materialIt != materialKeys.end()
+                ? materialIt->second : defaultSolid;
+            compiledWallSegments.push_back({
+                {"id", wall.id},
+                {"x0", wall.start.x},
+                {"y0", wall.start.y},
+                {"x1", wall.end.x},
+                {"y1", wall.end.y},
+                {"bottom_z", wall.bottom},
+                {"top_z", wall.top},
+                {"bottom_z_end", wall.hasBottomEnd ? wall.bottomEnd : wall.bottom},
+                {"top_z_end", wall.hasTopEnd ? wall.topEnd : wall.top},
+                {"texture_key", texture},
+                {"ambient", wall.ambient},
+                {"texture_scale", wall.textureScale},
+                {"texture_u_offset", wall.textureUOffset},
+                {"world_aligned_texture", wall.worldAlignedTexture},
+                {"solid", wall.solid},
+                {"two_sided", wall.twoSided}
+            });
+            if (!wall.topProfile.empty())
+                compiledWallSegments.back()["top_profile"] =
+                    wall.topProfile;
+        }
         for (const detail::CompiledWallSegment& wall : compiledStairWalls)
         {
             const auto materialIt = materialKeys.find(wall.materialId);

@@ -8,6 +8,7 @@
 
 #include <SDL_image.h>
 #include <algorithm>
+#include <cfloat>
 #include <cmath>
 #include <cctype>
 #include <cstdio>
@@ -16,6 +17,7 @@
 #include <limits>
 #include <numeric>
 #include <sstream>
+#include <unordered_set>
 #include <utility>
 
 #include <nlohmann/json.hpp>
@@ -38,6 +40,8 @@ constexpr double kJumpVelocity = 4.25;
 constexpr double kGravity = 10.8;
 constexpr double kAirborneStepClearance = 0.12;
 constexpr double kHuge = 1.0e30;
+constexpr double kPortalFloorContinuityEpsilon = 0.025;
+constexpr double kPortalCeilingContinuityEpsilon = 0.025;
 constexpr int kVoxelMaxGrid = 28;
 constexpr std::uint8_t kVoxelLeft = 1u << 0u;
 constexpr std::uint8_t kVoxelRight = 1u << 1u;
@@ -738,6 +742,80 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             return false;
         }
 
+        auto loadLooseCastleTextures = [&]()
+        {
+            if (!m_renderer)
+                return;
+
+            std::vector<fs::path> assetRoots;
+            std::unordered_set<std::string> seenRoots;
+            for (const auto& entry : castleProject.materials)
+            {
+                if (entry.second.texturePath.empty())
+                    continue;
+
+                const fs::path texturePath = fs::path(entry.second.texturePath).lexically_normal();
+                std::vector<fs::path> parts;
+                for (const auto& part : texturePath)
+                    parts.push_back(part);
+
+                fs::path root;
+                if (parts.size() >= 3 &&
+                    lowerAscii(parts[0].generic_string()) == "assets" &&
+                    lowerAscii(parts[1].generic_string()) == "castles")
+                {
+                    root = parts[0] / parts[1] / parts[2];
+                }
+                else
+                {
+                    root = texturePath.parent_path();
+                }
+
+                const std::string normalizedRoot = lowerAscii(root.lexically_normal().generic_string());
+                if (!root.empty() && seenRoots.insert(normalizedRoot).second)
+                    assetRoots.push_back(root);
+            }
+
+            std::unordered_set<std::string> loadedPaths;
+            for (const auto& entry : m_texturePaths)
+                loadedPaths.insert(lowerAscii(fs::path(entry.second).lexically_normal().generic_string()));
+
+            TextureKey nextTextureKey = 512;
+            for (const fs::path& assetRoot : assetRoots)
+            {
+                const fs::path absoluteRoot = ProjectRootPath() / assetRoot;
+                std::error_code ec;
+                if (!fs::exists(absoluteRoot, ec) || ec)
+                    continue;
+
+                for (fs::recursive_directory_iterator it(absoluteRoot, ec), end; !ec && it != end; it.increment(ec))
+                {
+                    if (it->is_directory(ec) || ec)
+                        continue;
+                    if (lowerAscii(it->path().extension().generic_string()) != ".png")
+                        continue;
+
+                    std::error_code relativeError;
+                    fs::path relativePath = fs::relative(it->path(), ProjectRootPath(), relativeError);
+                    if (relativeError)
+                        relativePath = it->path();
+
+                    const std::string texturePath = relativePath.lexically_normal().generic_string();
+                    const std::string normalizedTexture = lowerAscii(fs::path(texturePath).lexically_normal().generic_string());
+                    if (!loadedPaths.insert(normalizedTexture).second)
+                        continue;
+
+                    while (m_textures.find(nextTextureKey) != m_textures.end() && nextTextureKey < 65535)
+                        ++nextTextureKey;
+                    if (nextTextureKey >= 65535)
+                        return;
+
+                    loadTextureForCell(nextTextureKey, texturePath);
+                    ++nextTextureKey;
+                }
+            }
+        };
+
         interior::CompileResult compiled = interior::CompileCastleMapToLegacy(
             ProjectRootPath(), castleProject, sourceMap);
         if (!compiled.success)
@@ -768,6 +846,8 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
                     m_loadedCastleMapId = castleLocation.mapId;
                     loadCastleEntityOverlay(castleLocation.castleId, castleLocation.mapId);
                     loadCastleGeometryOverlay(castleLocation.castleId, castleLocation.mapId);
+                    loadLooseCastleTextures();
+                    m_editorDefaultSpawnDirty = false;
                     m_currentInteriorId = sourceMap.id;
                     m_displayName = sourceMap.displayName;
                     m_lastError.clear();
@@ -789,6 +869,8 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             m_loadedCastleMapId = castleLocation.mapId;
             loadCastleEntityOverlay(castleLocation.castleId, castleLocation.mapId);
             loadCastleGeometryOverlay(castleLocation.castleId, castleLocation.mapId);
+            loadLooseCastleTextures();
+            m_editorDefaultSpawnDirty = false;
             m_currentInteriorId = sourceMap.id;
             m_displayName = sourceMap.displayName;
             m_status = "Loaded castle map: " + sourceMap.displayName;
@@ -1490,13 +1572,22 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
 
 bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
 {
-    // Castle geometry is compiled, but editor objects are authored in a stable
-    // per-map entity overlay. Saving the compiled JSON would be overwritten on
-    // the next compile, so route object edits to *.entities.json instead.
+    // Castle maps are authored in data/castles/*/maps. Keep that source JSON
+    // authoritative, but also refresh the compiled preview so a reload inside
+    // the editor does not bring back stale texture keys.
     if (interiorIdOrPath.empty() &&
         !m_loadedCastleId.empty() && !m_loadedCastleMapId.empty())
     {
-        return saveCastleEntityOverlay();
+        const bool savedSectors = saveCastleMapSectors();
+        if (!savedSectors)
+            return false;
+        if (!saveCastleEntityOverlay())
+            SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION,
+                        "Castle entity overlay was not saved after sector save: %s",
+                        m_lastError.c_str());
+        m_lastError.clear();
+        m_status = U8("Uložena zdrojová mapa hradu.");
+        return true;
     }
 
     const std::string path = interiorIdOrPath.empty() ? m_loadedPath : resolveInteriorPath(interiorIdOrPath);
@@ -1706,6 +1797,416 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
     out << root.dump(2);
     m_loadedPath = path;
     m_status = "Saved interior: " + path;
+    return true;
+}
+
+bool BuildInteriorEngine::saveCastleMapSectors()
+{
+    if (m_loadedCastleId.empty() || m_loadedCastleMapId.empty())
+    {
+        m_lastError = "Sectors can only be saved for a castle: map.";
+        m_status = m_lastError;
+        return false;
+    }
+
+    const fs::path castleRoot = ProjectRootPath() / "data" / "castles" / m_loadedCastleId;
+    const fs::path mapPath = castleRoot / "maps" / (m_loadedCastleMapId + ".map.json");
+    const fs::path materialsPath = castleRoot / "materials.json";
+
+    json mapRoot;
+    json materialsRoot;
+    try
+    {
+        std::ifstream mapIn(mapPath);
+        if (!mapIn)
+        {
+            m_lastError = "Cannot open castle source map: " + mapPath.string();
+            m_status = m_lastError;
+            return false;
+        }
+        mapIn >> mapRoot;
+
+        std::ifstream materialsIn(materialsPath);
+        if (materialsIn)
+            materialsIn >> materialsRoot;
+        if (!materialsRoot.is_object())
+            materialsRoot = json::object();
+        if (!materialsRoot.contains("materials") || !materialsRoot["materials"].is_array())
+            materialsRoot["materials"] = json::array();
+    }
+    catch (const std::exception& ex)
+    {
+        m_lastError = std::string("Castle source save parse failed: ") + ex.what();
+        m_status = m_lastError;
+        return false;
+    }
+
+    auto normalizedPath = [](const std::string& value) {
+        return lowerAscii(fs::path(value).lexically_normal().generic_string());
+    };
+
+    auto materialLookupKey = [](const std::string& normalizedTexturePath,
+                                const std::string& kind)
+    {
+        return normalizedTexturePath + "|" + lowerAscii(kind);
+    };
+
+    std::unordered_map<std::string, std::string> materialByTextureAndKind;
+    std::unordered_set<std::string> usedMaterialIds;
+    for (const json& material : materialsRoot["materials"])
+    {
+        if (!material.is_object()) continue;
+        const std::string id = material.value("id", std::string());
+        const std::string texture = material.value("texture", std::string());
+        const std::string kind = material.value("kind", std::string("surface"));
+        if (!id.empty()) usedMaterialIds.insert(id);
+        if (!id.empty() && !texture.empty())
+            materialByTextureAndKind[
+                materialLookupKey(normalizedPath(texture), kind)] = id;
+    }
+
+    auto sanitizeMaterialIdPart = [](std::string value)
+    {
+        std::string out;
+        out.reserve(value.size());
+        bool lastUnderscore = false;
+        for (unsigned char c : value)
+        {
+            if (std::isalnum(c))
+            {
+                out.push_back(static_cast<char>(std::tolower(c)));
+                lastUnderscore = false;
+            }
+            else if (!lastUnderscore)
+            {
+                out.push_back('_');
+                lastUnderscore = true;
+            }
+        }
+        while (!out.empty() && out.front() == '_') out.erase(out.begin());
+        while (!out.empty() && out.back() == '_') out.pop_back();
+        return out.empty() ? std::string("texture") : out;
+    };
+
+    bool materialsChanged = false;
+    auto materialForTextureKey = [&](TextureKey key, const char* kind) -> std::string
+    {
+        const std::string kindText = kind ? kind : "surface";
+        const auto textureIt = m_texturePaths.find(key);
+        if (textureIt == m_texturePaths.end() || textureIt->second.empty())
+            return {};
+
+        const std::string texturePath = fs::path(textureIt->second).lexically_normal().generic_string();
+        const std::string normalized = normalizedPath(texturePath);
+        const auto materialIt =
+            materialByTextureAndKind.find(materialLookupKey(normalized, kindText));
+        if (materialIt != materialByTextureAndKind.end())
+            return materialIt->second;
+
+        fs::path path(texturePath);
+        std::string baseId = "editor_" +
+            sanitizeMaterialIdPart(path.parent_path().filename().generic_string()) + "_" +
+            sanitizeMaterialIdPart(path.stem().generic_string());
+        if (!kindText.empty())
+            baseId += "_" + sanitizeMaterialIdPart(kindText);
+        std::string materialId = baseId;
+        int suffix = 2;
+        while (usedMaterialIds.find(materialId) != usedMaterialIds.end())
+            materialId = baseId + "_" + std::to_string(suffix++);
+
+        materialsRoot["materials"].push_back({
+            {"id", materialId},
+            {"kind", kindText},
+            {"texture", texturePath}
+        });
+        usedMaterialIds.insert(materialId);
+        materialByTextureAndKind[materialLookupKey(normalized, kindText)] = materialId;
+        materialsChanged = true;
+        return materialId;
+    };
+
+    int savedRooms = 0;
+    std::unordered_map<std::string, const PolygonSectorRegion*> polygonByRoomId;
+    for (const PolygonSectorRegion& region : m_polygonSectors)
+        if (!region.id.empty())
+            polygonByRoomId[region.id] = &region;
+
+    std::unordered_map<std::string, std::vector<std::string>> stairFloorMaterials;
+    std::unordered_map<std::string, std::vector<std::string>> stairBoundaryMaterials;
+    auto parentStairId = [](const std::string& sectorId) -> std::string
+    {
+        const std::string marker = "_step_";
+        const std::size_t markerPos = sectorId.find(marker);
+        if (markerPos == std::string::npos)
+            return {};
+        return sectorId.substr(0, markerPos);
+    };
+    auto writeSectorSettings = [&](json& target,
+                                   const SectorDef& sector,
+                                   const std::string& id,
+                                   bool polygonRoom)
+    {
+        if (polygonRoom)
+            target["name"] = sector.name;
+        else
+            target["display_name"] = sector.name;
+        target["ambient"] = sector.ambient;
+        target["wall_height"] = sector.wallHeight;
+        target["sky_ceiling"] = sector.skyCeiling;
+
+        if (!target.contains("floor") || !target["floor"].is_object())
+            target["floor"] = json::object();
+        target["floor"]["height"] = sector.floorHeight;
+        target["floor"]["slope_x"] = sector.floorSlopeX;
+        target["floor"]["slope_y"] = sector.floorSlopeY;
+        target["floor"]["origin_x"] = sector.slopeOriginX;
+        target["floor"]["origin_y"] = sector.slopeOriginY;
+        const std::string floorMaterial = materialForTextureKey(sector.floorTexture, "floor");
+        if (!floorMaterial.empty())
+            target["floor"]["material"] = floorMaterial;
+
+        if (!target.contains("ceiling") || !target["ceiling"].is_object())
+            target["ceiling"] = json::object();
+        target["ceiling"]["height"] = sector.ceilingHeight;
+        target["ceiling"]["slope_x"] = sector.ceilingSlopeX;
+        target["ceiling"]["slope_y"] = sector.ceilingSlopeY;
+        target["ceiling"]["origin_x"] = sector.slopeOriginX;
+        target["ceiling"]["origin_y"] = sector.slopeOriginY;
+        if (sector.skyCeiling)
+            target["ceiling"]["type"] = "sky";
+        const std::string ceilingMaterial = materialForTextureKey(sector.ceilingTexture, "ceiling");
+        if (!ceilingMaterial.empty())
+            target["ceiling"]["material"] = ceilingMaterial;
+
+        const std::string wallMaterial = materialForTextureKey(sector.boundaryTexture, "wall");
+        if (!wallMaterial.empty())
+            target["boundary_material"] = wallMaterial;
+        const auto polygonIt = polygonByRoomId.find(id);
+        if (polygonRoom &&
+            polygonIt != polygonByRoomId.end() &&
+            polygonIt->second->wallTexture != kNoTexture)
+        {
+            const std::string polygonWallMaterial =
+                materialForTextureKey(polygonIt->second->wallTexture, "wall");
+            if (!polygonWallMaterial.empty())
+                target["boundary_material"] = polygonWallMaterial;
+            target["ambient"] = polygonIt->second->wallAmbient;
+        }
+    };
+    if (mapRoot.contains("rooms") && mapRoot["rooms"].is_array())
+    {
+        for (json& room : mapRoot["rooms"])
+        {
+            if (!room.is_object()) continue;
+            const std::string id = room.value("id", std::string());
+            auto sectorIt = std::find_if(m_sectors.begin(), m_sectors.end(),
+                [&](const auto& pair) { return pair.second.id == id; });
+            if (sectorIt == m_sectors.end())
+                continue;
+
+            const SectorDef& sector = sectorIt->second;
+            writeSectorSettings(room, sector, id, true);
+
+            ++savedRooms;
+        }
+    }
+    if (mapRoot.contains("sectors") && mapRoot["sectors"].is_array())
+    {
+        for (json& sectorJson : mapRoot["sectors"])
+        {
+            if (!sectorJson.is_object()) continue;
+            const std::string id = sectorJson.value("id", std::string());
+            auto sectorIt = std::find_if(m_sectors.begin(), m_sectors.end(),
+                [&](const auto& pair) { return pair.second.id == id; });
+            if (sectorIt == m_sectors.end())
+                continue;
+
+            writeSectorSettings(sectorJson, sectorIt->second, id, false);
+            ++savedRooms;
+        }
+    }
+
+    for (const auto& pair : m_sectors)
+    {
+        const SectorDef& sector = pair.second;
+        const std::string stairId = parentStairId(sector.id);
+        if (stairId.empty())
+            continue;
+        const std::string floorMaterial = materialForTextureKey(sector.floorTexture, "floor");
+        if (!floorMaterial.empty())
+            stairFloorMaterials[stairId].push_back(floorMaterial);
+        const std::string boundaryMaterial = materialForTextureKey(sector.boundaryTexture, "wall");
+        if (!boundaryMaterial.empty())
+            stairBoundaryMaterials[stairId].push_back(boundaryMaterial);
+    }
+
+    if (mapRoot.contains("stairs") && mapRoot["stairs"].is_array())
+    {
+        auto chooseEditedMaterial = [](const std::vector<std::string>& values,
+                                       const std::string& current) -> std::string
+        {
+            for (const std::string& value : values)
+                if (!value.empty() && value != current)
+                    return value;
+            for (const std::string& value : values)
+                if (!value.empty())
+                    return value;
+            return {};
+        };
+
+        for (json& stair : mapRoot["stairs"])
+        {
+            if (!stair.is_object()) continue;
+            const std::string id = stair.value("id", std::string());
+            const auto floorIt = stairFloorMaterials.find(id);
+            if (floorIt != stairFloorMaterials.end())
+            {
+                const std::string selected = chooseEditedMaterial(
+                    floorIt->second,
+                    stair.value("floor_material", std::string()));
+                if (!selected.empty())
+                    stair["floor_material"] = selected;
+            }
+            const auto boundaryIt = stairBoundaryMaterials.find(id);
+            if (boundaryIt != stairBoundaryMaterials.end())
+            {
+                const std::string selected = chooseEditedMaterial(
+                    boundaryIt->second,
+                    stair.value("boundary_material", std::string()));
+                if (!selected.empty())
+                    stair["boundary_material"] = selected;
+            }
+        }
+    }
+
+    auto writeSpawnJson = [&](json& target,
+                              const std::string& id,
+                              const SpawnDef& spawn)
+    {
+        if (!id.empty())
+            target["id"] = id;
+        if (target.contains("position") && target["position"].is_array())
+        {
+            target["position"] = {spawn.x, spawn.y};
+        }
+        else
+        {
+            target["x"] = spawn.x;
+            target["y"] = spawn.y;
+        }
+        target["angle_degrees"] = spawn.angle * 180.0 / kPi;
+        target["pitch"] = spawn.pitch;
+    };
+    auto currentCameraSpawn = [&]()
+    {
+        SpawnDef spawn;
+        spawn.x = m_posX;
+        spawn.y = m_posY;
+        spawn.angle = m_angle;
+        spawn.pitch = m_pitch;
+        return spawn;
+    };
+
+    if (!mapRoot.contains("spawns") || !mapRoot["spawns"].is_array())
+        mapRoot["spawns"] = json::array();
+    json& sourceSpawns = mapRoot["spawns"];
+    std::unordered_set<std::string> writtenSpawnIds;
+    if (sourceSpawns.empty())
+    {
+        json sourceSpawn = json::object();
+        writeSpawnJson(sourceSpawn, "entry", currentCameraSpawn());
+        sourceSpawns.push_back(std::move(sourceSpawn));
+        writtenSpawnIds.insert("entry");
+    }
+    else
+    {
+        json& defaultSpawn = sourceSpawns[0];
+        if (!defaultSpawn.is_object())
+            defaultSpawn = json::object();
+        std::string defaultSpawnId = defaultSpawn.value("id", std::string("entry"));
+        if (defaultSpawnId.empty())
+            defaultSpawnId = "entry";
+        const auto defaultNamedIt = m_namedSpawns.find(defaultSpawnId);
+        if (m_editorDefaultSpawnDirty)
+        {
+            writeSpawnJson(defaultSpawn, defaultSpawnId, currentCameraSpawn());
+        }
+        else if (defaultNamedIt != m_namedSpawns.end())
+        {
+            writeSpawnJson(defaultSpawn, defaultSpawnId, defaultNamedIt->second);
+        }
+        writtenSpawnIds.insert(defaultSpawnId);
+    }
+
+    for (json& sourceSpawn : sourceSpawns)
+    {
+        if (!sourceSpawn.is_object())
+            continue;
+        const std::string id = sourceSpawn.value("id", std::string());
+        if (id.empty() || writtenSpawnIds.find(id) != writtenSpawnIds.end())
+            continue;
+        const auto spawnIt = m_namedSpawns.find(id);
+        if (spawnIt == m_namedSpawns.end())
+            continue;
+        writeSpawnJson(sourceSpawn, id, spawnIt->second);
+        writtenSpawnIds.insert(id);
+    }
+    for (const auto& pair : m_namedSpawns)
+    {
+        if (pair.first.empty() ||
+            writtenSpawnIds.find(pair.first) != writtenSpawnIds.end())
+            continue;
+        json sourceSpawn = json::object();
+        writeSpawnJson(sourceSpawn, pair.first, pair.second);
+        sourceSpawns.push_back(std::move(sourceSpawn));
+        writtenSpawnIds.insert(pair.first);
+    }
+
+    if (savedRooms == 0)
+    {
+        m_lastError = "No matching castle rooms found for current sectors.";
+        m_status = m_lastError;
+        return false;
+    }
+
+    try
+    {
+        if (materialsChanged)
+        {
+            std::ofstream materialsOut(materialsPath);
+            if (!materialsOut)
+            {
+                m_lastError = "Cannot save castle materials: " + materialsPath.string();
+                m_status = m_lastError;
+                return false;
+            }
+            materialsOut << materialsRoot.dump(2) << '\n';
+        }
+
+        std::ofstream mapOut(mapPath);
+        if (!mapOut)
+        {
+            m_lastError = "Cannot save castle source map: " + mapPath.string();
+            m_status = m_lastError;
+            return false;
+        }
+        mapOut << mapRoot.dump(2) << '\n';
+
+        const fs::path compiledPath =
+            castleRoot / ".compiled" / (m_loadedCastleMapId + ".json");
+        if (!saveInterior(compiledPath.string()))
+            return false;
+    }
+    catch (const std::exception& ex)
+    {
+        m_lastError = std::string("Castle source save failed: ") + ex.what();
+        m_status = m_lastError;
+        return false;
+    }
+
+    m_lastError.clear();
+    m_status = U8("Sektorové nastavení bylo uloženo do zdrojové mapy hradu.");
+    m_editorDefaultSpawnDirty = false;
     return true;
 }
 
@@ -3147,6 +3648,7 @@ void BuildInteriorEngine::rebuildPolygonBoundaryWalls()
             floorZ = std::min(floorZ, ownerFloor);
             wallTop = std::max(wallTop, ownerTop);
         }
+
         if (!std::isfinite(floorZ)) floorZ = 0.0;
         if (!std::isfinite(wallTop) || wallTop <= floorZ + 0.05) wallTop = floorZ + 3.0;
 
@@ -3342,7 +3844,7 @@ void BuildInteriorEngine::rebuildPolygonBoundaryWalls()
             if (opening.bottomZ > floorZ + 0.01)
                 appendWall("poly_sill_" + std::to_string(wallCounter++), region,
                            a, b, start, end, floorZ, std::min(opening.bottomZ, wallTop),
-                           opening.bottomZ - floorZ > kMaxStepUp + 0.01);
+                           false);
             if (opening.topZ < wallTop - 0.01)
                 appendWall("poly_lintel_" + std::to_string(wallCounter++), region,
                            a, b, start, end, std::max(opening.topZ, floorZ), wallTop, false);
@@ -4572,6 +5074,8 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
         double top = 0.0;
         char sectorA = '\0';
         char sectorB = '\0';
+        bool floorContinuous = false;
+        bool ceilingContinuous = false;
     };
     struct ColumnOcclusion
     {
@@ -4579,8 +5083,32 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
         std::array<PortalClipEvent, 48> events{};
         int eventCount = 0;
     };
+    bool needsPreciseSurfaceCasting = false;
+    bool haveReferenceFloor = false;
+    double referenceFloor = 0.0;
+    for (const auto& pair : m_sectors)
+    {
+        const SectorDef& sector = pair.second;
+        if (!haveReferenceFloor)
+        {
+            referenceFloor = sector.floorHeight;
+            haveReferenceFloor = true;
+        }
+        if (std::abs(sector.floorHeight - referenceFloor) > 0.001 ||
+            std::abs(sector.floorSlopeX) > 0.0001 ||
+            std::abs(sector.floorSlopeY) > 0.0001 ||
+            std::abs(sector.ceilingSlopeX) > 0.0001 ||
+            std::abs(sector.ceilingSlopeY) > 0.0001)
+        {
+            needsPreciseSurfaceCasting = true;
+            break;
+        }
+    }
+
     std::vector<ColumnOcclusion> occlusion(static_cast<std::size_t>(screenW));
-    const int occlusionStep = m_fastFloorCasting ? 2 : 1;
+    const int occlusionStep =
+        (m_fastFloorCasting && !needsPreciseSurfaceCasting) ? 2 : 1;
+    bool hasSectorPortalInView = false;
     for (int x = 0; x < screenW; x += occlusionStep)
     {
         const int blockWidth = std::min(occlusionStep, screenW - x);
@@ -4621,7 +5149,9 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                     portal.bottomZ,
                     portal.topZ,
                     portal.sectorA,
-                    portal.sectorB
+                    portal.sectorB,
+                    false,
+                    false
                 });
             }
             std::sort(hits.begin(), hits.end(),
@@ -4649,6 +5179,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             }
             for (int dx = 0; dx < blockWidth; ++dx)
                 occlusion[static_cast<std::size_t>(x + dx)] = column;
+            hasSectorPortalInView = hasSectorPortalInView || column.eventCount > 0;
             continue;
         }
 
@@ -4687,31 +5218,47 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             const SectorDef* next = &sectorAtWorld(bx + rayX * 0.001, by + rayY * 0.001);
             if (next->symbol != current->symbol && column.eventCount < static_cast<int>(column.events.size()))
             {
+                const double currentFloorZ = floorHeightAt(*current, bx, by);
+                const double nextFloorZ = floorHeightAt(*next, bx, by);
+                const double currentCeilingZ = ceilingHeightAt(*current, bx, by);
+                const double nextCeilingZ = ceilingHeightAt(*next, bx, by);
+                const bool floorContinuous =
+                    std::abs(currentFloorZ - nextFloorZ) <= kPortalFloorContinuityEpsilon;
+                const bool ceilingContinuous =
+                    std::abs(currentCeilingZ - nextCeilingZ) <= kPortalCeilingContinuityEpsilon ||
+                    (current->skyCeiling && next->skyCeiling);
                 PortalClipEvent& event = column.events[column.eventCount++];
                 event.distance = distance;
-                event.bottom = std::max(floorHeightAt(*current, bx, by), floorHeightAt(*next, bx, by));
-                event.top = std::min(ceilingHeightAt(*current, bx, by), ceilingHeightAt(*next, bx, by));
+                event.bottom = floorContinuous
+                    ? std::min(currentFloorZ, nextFloorZ)
+                    : std::max(currentFloorZ, nextFloorZ);
+                event.top = ceilingContinuous
+                    ? std::max(currentCeilingZ, nextCeilingZ)
+                    : std::min(currentCeilingZ, nextCeilingZ);
+                event.sectorA = current->symbol;
+                event.sectorB = next->symbol;
+                event.floorContinuous = floorContinuous;
+                event.ceilingContinuous = ceilingContinuous;
                 current = next;
             }
         }
         for (int dx = 0; dx < blockWidth; ++dx) occlusion[static_cast<std::size_t>(x + dx)] = column;
+        hasSectorPortalInView = hasSectorPortalInView || column.eventCount > 0;
     }
 
-    auto solveDistance = [&](const SectorDef& sector, bool floorRow,
-                             double rayX, double rayY, double projectionK) -> double
+    auto solveDistance = [&](const SectorDef& sector, bool floorSurface,
+                             double rayX, double rayY, double verticalStep) -> double
     {
-        const double slopeX = floorRow ? sector.floorSlopeX : sector.ceilingSlopeX;
-        const double slopeY = floorRow ? sector.floorSlopeY : sector.ceilingSlopeY;
-        const double base = floorRow ? sector.floorHeight : sector.ceilingHeight;
+        const double slopeX = floorSurface ? sector.floorSlopeX : sector.ceilingSlopeX;
+        const double slopeY = floorSurface ? sector.floorSlopeY : sector.ceilingSlopeY;
+        const double base = floorSurface ? sector.floorHeight : sector.ceilingHeight;
         const double atCamera = base +
             slopeX * (m_posX - sector.slopeOriginX) +
             slopeY * (m_posY - sector.slopeOriginY);
         const double raySlope = slopeX * rayX + slopeY * rayY;
 
-        const double numerator = floorRow ? projectionK * (eyeZ - atCamera)
-                                          : projectionK * (atCamera - eyeZ);
-        const double denominator = floorRow ? (1.0 + projectionK * raySlope)
-                                            : (1.0 - projectionK * raySlope);
+        const double numerator = atCamera - eyeZ;
+        const double denominator = verticalStep - raySlope;
         if (std::abs(denominator) < 1.0e-5)
             return -1.0;
         const double result = numerator / denominator;
@@ -4720,14 +5267,15 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
 
     for (int y = 0; y < screenH; ++y)
     {
-        const bool floorRow = y > horizon;
-        const bool ceilingRow = y < horizon;
-        if (!floorRow && !ceilingRow)
+        if (y == horizon)
             continue;
 
-        const double p = std::max(1.0, std::abs(static_cast<double>(y - horizon)));
-        const double projectionK = screenH / p;
-        const int xStep = m_fastFloorCasting ? 2 : 1;
+        const double verticalStep =
+            static_cast<double>(horizon - y) / std::max(1, screenH);
+        const bool defaultFloorRow = verticalStep < 0.0;
+        const int xStep =
+            (m_fastFloorCasting && !needsPreciseSurfaceCasting &&
+             !hasSectorPortalInView) ? 2 : 1;
 
         // Sky vertical coordinate and haze depend only on the scanline. The old
         // code recalculated pow() for every sky pixel, which was especially
@@ -4745,6 +5293,69 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             const double t = screenW <= 1 ? 0.0 : sampleX / (screenW - 1);
             const double rayX = ray0X + (ray1X - ray0X) * t;
             const double rayY = ray0Y + (ray1Y - ray0Y) * t;
+            const ColumnOcclusion& column = occlusion[static_cast<std::size_t>(x)];
+
+            bool floorRow = defaultFloorRow;
+            bool ceilingRow = !floorRow;
+            if (ceilingRow)
+            {
+                // A sloped floor that rises away from the camera can project
+                // above the flat-world horizon.  Treat that scanline as floor
+                // when the floor plane is the first finite surface on the ray;
+                // otherwise looking uphill leaves the ramp unrendered and the
+                // sky/background cuts through the terrain.
+                auto previewSurfaceDistance = [&](bool floorSurface)
+                {
+                    const SectorDef* current = playerSector;
+                    double traversedDistance = 0.0;
+                    for (int traversal = 0; traversal < 48 && current; ++traversal)
+                    {
+                        const bool unboundedSky =
+                            !floorSurface && current->skyCeiling;
+                        const double surfaceDistance = unboundedSky
+                            ? -1.0
+                            : solveDistance(*current, floorSurface,
+                                            rayX, rayY, verticalStep);
+
+                        const PortalClipEvent* nextPortal = nullptr;
+                        char nextSymbol = '\0';
+                        for (int eventIndex = 0; eventIndex < column.eventCount; ++eventIndex)
+                        {
+                            const PortalClipEvent& event = column.events[eventIndex];
+                            if (event.distance <= traversedDistance + 0.002)
+                                continue;
+                            if (event.sectorA == current->symbol)
+                                nextSymbol = event.sectorB;
+                            else if (event.sectorB == current->symbol)
+                                nextSymbol = event.sectorA;
+                            else
+                                continue;
+                            nextPortal = &event;
+                            break;
+                        }
+
+                        if (surfaceDistance > traversedDistance + 0.001 &&
+                            (!nextPortal ||
+                             surfaceDistance <= nextPortal->distance + 0.001))
+                            return surfaceDistance;
+                        if (!nextPortal)
+                            break;
+
+                        traversedDistance = nextPortal->distance;
+                        current = m_sectorLookup[
+                            static_cast<unsigned char>(nextSymbol)];
+                    }
+                    return -1.0;
+                };
+                const double floorPreview = previewSurfaceDistance(true);
+                const double ceilingPreview = previewSurfaceDistance(false);
+                if (floorPreview > 0.0 &&
+                    (ceilingPreview <= 0.0 || floorPreview < ceilingPreview))
+                {
+                    floorRow = true;
+                    ceilingRow = false;
+                }
+            }
 
             const SectorDef* sector = playerSector;
             double distance = -1.0;
@@ -4753,16 +5364,14 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             bool forceSky = false;
             bool portalTracedSurface = false;
 
-            const ColumnOcclusion& column = occlusion[static_cast<std::size_t>(x)];
-            if (hasVectorGeometry())
+            if (column.eventCount > 0)
             {
                 // Trace the actual 3D floor/ceiling ray sector by sector. A
-                // plane belongs to the current room only until the ray reaches
-                // it or passes through a valid vertical portal, whichever
-                // happens first. Resolving only the eventual XY point made
-                // ceilings stretch across doors and made overlapping stair
-                // treads oscillate between the stair and its owning room,
-                // producing torn, jagged floor strips.
+                // plane belongs to the current sector only until the ray
+                // reaches it or passes through a valid vertical opening,
+                // whichever happens first. Resolving only the eventual XY
+                // point made sloped raster floors switch to the far sector and
+                // redraw the rear part differently while crossing boundaries.
                 const SectorDef* current = playerSector;
                 double traversedDistance = 0.0;
                 for (int traversal = 0; traversal < 48 && current; ++traversal)
@@ -4777,7 +5386,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                         ceilingRow && current->skyCeiling;
                     const double surfaceDistance = unboundedSky
                         ? -1.0
-                        : solveDistance(*current, floorRow, rayX, rayY, projectionK);
+                        : solveDistance(*current, floorRow, rayX, rayY, verticalStep);
                     const PortalClipEvent* nextPortal = nullptr;
                     char nextSymbol = '\0';
                     for (int eventIndex = 0; eventIndex < column.eventCount; ++eventIndex)
@@ -4819,16 +5428,33 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                         break;
                     }
 
-                    const double zAtPortal = floorRow
-                        ? eyeZ - nextPortal->distance / projectionK
-                        : eyeZ + nextPortal->distance / projectionK;
-                    if (zAtPortal <= nextPortal->bottom + 0.01 ||
-                        zAtPortal >= nextPortal->top - 0.01)
+                    const double zAtPortal =
+                        eyeZ + nextPortal->distance * verticalStep;
+                    const bool belowPortalFloor =
+                        zAtPortal < nextPortal->bottom - 0.01;
+                    const bool abovePortalCeiling =
+                        zAtPortal >= nextPortal->top - 0.01;
+                    const bool blockedByPortal =
+                        nextPortal->top <= nextPortal->bottom + 0.02 ||
+                        (floorRow
+                            ? ((!nextPortal->floorContinuous && belowPortalFloor) ||
+                               abovePortalCeiling)
+                            : (zAtPortal <= nextPortal->bottom + 0.01 ||
+                               abovePortalCeiling));
+                    if (blockedByPortal)
                     {
                         // The lintel/sill wall pass covers this ray at the
                         // boundary. Keep the current ceiling (or outdoor sky)
                         // as its background.
                         sector = current;
+                        if (floorRow &&
+                            (surfaceDistance <= 0.0 ||
+                             surfaceDistance > nextPortal->distance + 0.001))
+                        {
+                            distance = -1.0;
+                            portalTracedSurface = true;
+                            break;
+                        }
                         if (unboundedSky)
                         {
                             distance = std::max(0.02, nextPortal->distance);
@@ -4864,7 +5490,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                  !forceSky && !portalTracedSurface && iteration < maxIterations;
                  ++iteration)
             {
-                distance = solveDistance(*sector, floorRow, rayX, rayY, projectionK);
+                distance = solveDistance(*sector, floorRow, rayX, rayY, verticalStep);
                 if (distance <= 0.0)
                     break;
                 worldX = m_posX + distance * rayX;
@@ -4893,7 +5519,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                         break;
                     sector = owner;
                     distance =
-                        solveDistance(*sector, floorRow, rayX, rayY, projectionK);
+                        solveDistance(*sector, floorRow, rayX, rayY, verticalStep);
                     if (distance <= 0.0)
                         break;
                     worldX = m_posX + distance * rayX;
@@ -4967,7 +5593,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                 if (!visible)
                 {
                     sector = playerSector;
-                    distance = solveDistance(*sector, false, rayX, rayY, projectionK);
+                    distance = solveDistance(*sector, false, rayX, rayY, verticalStep);
                     if (distance <= 0.0) continue;
                     worldX = m_posX + distance * rayX;
                     worldY = m_posY + distance * rayY;
@@ -5903,6 +6529,14 @@ void BuildInteriorEngine::renderPortalWalls(int screenW, int screenH, int horizo
                 const int curFloor = projectZ(curFloorZ, distance, screenH, horizon, eyeZ);
                 const int nextCeil = projectZ(nextCeilingZ, distance, screenH, horizon, eyeZ);
                 const int nextFloor = projectZ(nextFloorZ, distance, screenH, horizon, eyeZ);
+                const int portalBottom =
+                    projectZ(std::max(curFloorZ, nextFloorZ), distance,
+                             screenH, horizon, eyeZ);
+                const bool floorIsContinuous =
+                    std::abs(nextFloorZ - curFloorZ) <= kPortalFloorContinuityEpsilon;
+                const bool ceilingIsContinuous =
+                    std::abs(nextCeilingZ - curCeilingZ) <= kPortalCeilingContinuityEpsilon ||
+                    (currentSector->skyCeiling && nextSector->skyCeiling);
                 const double sideShade = side == 1 ? 0.78 : 1.0;
                 const TextureKey boundary = nextSector->boundaryTexture;
 
@@ -5915,22 +6549,26 @@ void BuildInteriorEngine::renderPortalWalls(int screenW, int screenH, int horizo
                 if (currentSector->skyCeiling && currentSector->wallHeight > 0.0)
                     portalTopZ = curFloorZ + currentSector->wallHeight;
 
-                if (!nextSector->skyCeiling && nextCeilingZ < portalTopZ - 0.001)
+                if (!ceilingIsContinuous &&
+                    !nextSector->skyCeiling &&
+                    nextCeilingZ < portalTopZ - 0.001)
                 {
                     const int portalTop = projectZ(portalTopZ, distance, screenH, horizon, eyeZ);
                     drawTexturedColumn(x, portalTop, nextCeil, boundary, wallX, distance,
                                        nextSector->ambient * sideShade, clipTop, clipBottom, 0.0, 1.0, columnStep,
                                        hitWorldX, hitWorldY, (portalTopZ + nextCeilingZ) * 0.5);
                 }
-                if (std::abs(nextFloorZ - curFloorZ) > 0.001)
+                if (!floorIsContinuous)
                 {
                     drawTexturedColumn(x, nextFloor, curFloor, boundary, wallX, distance,
                                        nextSector->ambient * sideShade, clipTop, clipBottom, 0.0, 1.0, columnStep,
                                        hitWorldX, hitWorldY, (nextFloorZ + curFloorZ) * 0.5);
                 }
 
-                clipTop = std::max(clipTop, nextCeil);
-                clipBottom = std::min(clipBottom, nextFloor);
+                if (!ceilingIsContinuous)
+                    clipTop = std::max(clipTop, nextCeil);
+                if (!floorIsContinuous)
+                    clipBottom = std::min(clipBottom, portalBottom);
                 currentSector = nextSector;
             }
         }
@@ -6518,6 +7156,11 @@ void BuildInteriorEngine::renderEditorOverlay()
         const std::string preview = textureDisplayName(selectedKey);
         if (ImGui::BeginCombo(label, preview.c_str()))
         {
+            static char filter[128] = {};
+            ImGui::SetNextItemWidth(-FLT_MIN);
+            ImGui::InputText(U8("Hledat texturu"), filter, sizeof(filter));
+            const std::string filterLower = lowerAscii(filter);
+
             std::vector<TextureKey> keys;
             keys.reserve(m_textures.size());
             for (const auto& pair : m_textures)
@@ -6530,6 +7173,9 @@ void BuildInteriorEngine::renderEditorOverlay()
             for (TextureKey key : keys)
             {
                 const std::string row = textureDisplayName(key);
+                if (!filterLower.empty() &&
+                    lowerAscii(row).find(filterLower) == std::string::npos)
+                    continue;
                 const bool selected = selectedKey == key;
                 if (ImGui::Selectable(row.c_str(), selected))
                 {
@@ -6624,9 +7270,13 @@ void BuildInteriorEngine::renderEditorOverlay()
 
     if (ImGui::Button("Save JSON", ImVec2(120, 0))) saveInterior();
     ImGui::SameLine();
-    if (ImGui::Button("Reload", ImVec2(100, 0))) m_editorReloadRequested = true;
+    if (ImGui::Button(U8("Reload map/textury"), ImVec2(150, 0))) m_editorReloadRequested = true;
     ImGui::SameLine();
-    if (ImGui::Button("Spawn = camera", ImVec2(140, 0))) m_status = U8("Aktuální kamera se uloží jako spawn.");
+    if (ImGui::Button("Spawn = camera", ImVec2(140, 0)))
+    {
+        m_editorDefaultSpawnDirty = true;
+        m_status = U8("Výchozí spawn se při dalším Save JSON uloží z aktuální kamery.");
+    }
     ImGui::SameLine();
     if (ImGui::Button(U8("Obnovit pozici"), ImVec2(140, 0))) recoverToLastSafePosition();
 
@@ -6684,12 +7334,91 @@ void BuildInteriorEngine::renderEditorOverlay()
             texturePicker(U8("Textura stropu"), s.ceilingTexture);
             texturePicker(U8("Textura stěn / portálových segmentů"), s.boundaryTexture);
             ImGui::TextDisabled(U8("Volba se uloží do JSON mapy spolu se sektorem."));
+
+            auto ensureSectorHeadroom = [](SectorDef& sector)
+            {
+                if (sector.ceilingHeight < sector.floorHeight + 0.35)
+                    sector.ceilingHeight = sector.floorHeight + 0.35;
+            };
+            auto shiftFloorToWorldHeight = [&](SectorDef& sector,
+                                               double worldX,
+                                               double worldY,
+                                               double desiredHeight)
+            {
+                const double currentHeight = floorHeightAt(sector, worldX, worldY);
+                sector.floorHeight += desiredHeight - currentHeight;
+                ensureSectorHeadroom(sector);
+            };
+            auto measureRasterNeighborFloorGaps = [&](const SectorDef& sector,
+                                                      double& averageDelta,
+                                                      double& maxAbsGap,
+                                                      int& samples)
+            {
+                averageDelta = 0.0;
+                maxAbsGap = 0.0;
+                samples = 0;
+                if (hasVectorGeometry() || m_grid.empty())
+                    return false;
+
+                static constexpr int dirs[4][2] = {
+                    {1, 0}, {-1, 0}, {0, 1}, {0, -1}
+                };
+                double sumDelta = 0.0;
+                for (int y = 0; y < static_cast<int>(m_grid.size()); ++y)
+                {
+                    for (int x = 0; x < static_cast<int>(m_grid[y].size()); ++x)
+                    {
+                        if (isSolidCell(x, y) || sectorSymbolAt(x, y) != sector.symbol)
+                            continue;
+                        for (const auto& dir : dirs)
+                        {
+                            const int nx = x + dir[0];
+                            const int ny = y + dir[1];
+                            if (!isInside(nx, ny) || isSolidCell(nx, ny))
+                                continue;
+                            const char neighborSymbol = sectorSymbolAt(nx, ny);
+                            if (neighborSymbol == sector.symbol)
+                                continue;
+                            const SectorDef* neighbor =
+                                m_sectorLookup[static_cast<unsigned char>(neighborSymbol)];
+                            if (!neighbor)
+                                continue;
+
+                            const double sampleX =
+                                static_cast<double>(x) +
+                                (dir[0] > 0 ? 1.0 : (dir[0] < 0 ? 0.0 : 0.5));
+                            const double sampleY =
+                                static_cast<double>(y) +
+                                (dir[1] > 0 ? 1.0 : (dir[1] < 0 ? 0.0 : 0.5));
+                            const double delta =
+                                floorHeightAt(*neighbor, sampleX, sampleY) -
+                                floorHeightAt(sector, sampleX, sampleY);
+                            sumDelta += delta;
+                            maxAbsGap = std::max(maxAbsGap, std::abs(delta));
+                            ++samples;
+                        }
+                    }
+                }
+                if (samples <= 0)
+                    return false;
+                averageDelta = sumDelta / static_cast<double>(samples);
+                return true;
+            };
+
             float floorHeight = static_cast<float>(s.floorHeight);
             float ceilingHeight = static_cast<float>(s.ceilingHeight);
             float ambient = static_cast<float>(s.ambient);
-            if (ImGui::DragFloat("Floor height", &floorHeight, 0.05f, -8.0f, 16.0f, "%.2f")) s.floorHeight = floorHeight;
+            if (ImGui::DragFloat(U8("Základ podlahy v počátku"), &floorHeight, 0.05f, -8.0f, 16.0f, "%.2f"))
+            {
+                s.floorHeight = floorHeight;
+                ensureSectorHeadroom(s);
+            }
+            float floorAtCamera = static_cast<float>(floorHeightAt(s, m_posX, m_posY));
+            if (ImGui::DragFloat(U8("Výška podlahy v pozici kamery"), &floorAtCamera, 0.05f, -8.0f, 16.0f, "%.2f"))
+                shiftFloorToWorldHeight(s, m_posX, m_posY, floorAtCamera);
+            ImGui::TextDisabled(U8("U ramp je základ v počátku sklonu; tato hodnota posune sektor podle skutečné výšky na mapě."));
             if (ImGui::DragFloat("Ceiling height", &ceilingHeight, 0.05f, -4.0f, 24.0f, "%.2f")) s.ceilingHeight = ceilingHeight;
-            if (s.ceilingHeight < s.floorHeight + 0.35) s.ceilingHeight = s.floorHeight + 0.35;
+            ensureSectorHeadroom(s);
             if (ImGui::SliderFloat("Ambient light", &ambient, 0.15f, 1.35f, "%.2f")) s.ambient = ambient;
             float wallHeight = static_cast<float>(s.wallHeight);
             if (ImGui::DragFloat(U8("Výška pevných obvodových zdí"), &wallHeight, 0.05f, -1.0f, 12.0f, "%.2f"))
@@ -6718,32 +7447,110 @@ void BuildInteriorEngine::renderEditorOverlay()
             float floorSlopeY = static_cast<float>(s.floorSlopeY);
             float ceilingSlopeX = static_cast<float>(s.ceilingSlopeX);
             float ceilingSlopeY = static_cast<float>(s.ceilingSlopeY);
-            if (ImGui::DragFloat(U8("Sklon podlahy X / pole"), &floorSlopeX, 0.01f, -1.0f, 1.0f, "%.3f")) s.floorSlopeX = floorSlopeX;
-            if (ImGui::DragFloat(U8("Sklon podlahy Y / pole"), &floorSlopeY, 0.01f, -1.0f, 1.0f, "%.3f")) s.floorSlopeY = floorSlopeY;
+            double preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+            if (ImGui::DragFloat(U8("Sklon podlahy X / pole"), &floorSlopeX, 0.01f, -1.0f, 1.0f, "%.3f"))
+            {
+                s.floorSlopeX = floorSlopeX;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
+            preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+            if (ImGui::DragFloat(U8("Sklon podlahy Y / pole"), &floorSlopeY, 0.01f, -1.0f, 1.0f, "%.3f"))
+            {
+                s.floorSlopeY = floorSlopeY;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
             if (ImGui::DragFloat(U8("Sklon stropu X / pole"), &ceilingSlopeX, 0.01f, -1.0f, 1.0f, "%.3f")) s.ceilingSlopeX = ceilingSlopeX;
             if (ImGui::DragFloat(U8("Sklon stropu Y / pole"), &ceilingSlopeY, 0.01f, -1.0f, 1.0f, "%.3f")) s.ceilingSlopeY = ceilingSlopeY;
             float slopeOriginX = static_cast<float>(s.slopeOriginX);
             float slopeOriginY = static_cast<float>(s.slopeOriginY);
-            if (ImGui::DragFloat(U8("Počátek sklonu X"), &slopeOriginX, 0.10f)) s.slopeOriginX = slopeOriginX;
-            if (ImGui::DragFloat(U8("Počátek sklonu Y"), &slopeOriginY, 0.10f)) s.slopeOriginY = slopeOriginY;
+            preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+            if (ImGui::DragFloat(U8("Počátek sklonu X"), &slopeOriginX, 0.10f))
+            {
+                s.slopeOriginX = slopeOriginX;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
+            preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+            if (ImGui::DragFloat(U8("Počátek sklonu Y"), &slopeOriginY, 0.10f))
+            {
+                s.slopeOriginY = slopeOriginY;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
             if (ImGui::Button(U8("Počátek sklonu = kamera")))
             {
+                preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
                 s.slopeOriginX = std::floor(m_posX);
                 s.slopeOriginY = std::floor(m_posY);
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
             }
             ImGui::SameLine();
             if (ImGui::Button(U8("Narovnat plochy")))
             {
+                preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
                 s.floorSlopeX = s.floorSlopeY = 0.0;
                 s.ceilingSlopeX = s.ceilingSlopeY = 0.0;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
             }
-            if (ImGui::Button(U8("Rampa na východ +0.15"))) { s.floorSlopeX = 0.15; s.floorSlopeY = 0.0; }
+            if (ImGui::Button(U8("Rampa na východ +0.15")))
+            {
+                preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+                s.floorSlopeX = 0.15; s.floorSlopeY = 0.0;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
             ImGui::SameLine();
-            if (ImGui::Button(U8("Rampa na západ +0.15"))) { s.floorSlopeX = -0.15; s.floorSlopeY = 0.0; }
-            if (ImGui::Button(U8("Rampa na jih +0.15"))) { s.floorSlopeX = 0.0; s.floorSlopeY = 0.15; }
+            if (ImGui::Button(U8("Rampa na západ +0.15")))
+            {
+                preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+                s.floorSlopeX = -0.15; s.floorSlopeY = 0.0;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
+            if (ImGui::Button(U8("Rampa na jih +0.15")))
+            {
+                preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+                s.floorSlopeX = 0.0; s.floorSlopeY = 0.15;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
             ImGui::SameLine();
-            if (ImGui::Button(U8("Rampa na sever +0.15"))) { s.floorSlopeX = 0.0; s.floorSlopeY = -0.15; }
+            if (ImGui::Button(U8("Rampa na sever +0.15")))
+            {
+                preservedFloorAtCamera = floorHeightAt(s, m_posX, m_posY);
+                s.floorSlopeX = 0.0; s.floorSlopeY = -0.15;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, preservedFloorAtCamera);
+            }
             ImGui::TextDisabled(U8("0.15 znamená změnu výšky o 0.15 za jedno mapové pole."));
+
+            ImGui::Separator();
+            ImGui::TextUnformatted(U8("Navazování podlahy"));
+            const SectorDef& cameraSector = sectorAtWorld(m_posX, m_posY);
+            if (cameraSector.symbol != s.symbol &&
+                ImGui::Button(U8("Převzít sklon ze sektoru pod kamerou")))
+            {
+                const double targetHeight = floorHeightAt(cameraSector, m_posX, m_posY);
+                s.floorSlopeX = cameraSector.floorSlopeX;
+                s.floorSlopeY = cameraSector.floorSlopeY;
+                s.slopeOriginX = cameraSector.slopeOriginX;
+                s.slopeOriginY = cameraSector.slopeOriginY;
+                shiftFloorToWorldHeight(s, m_posX, m_posY, targetHeight);
+            }
+            double averageFloorDelta = 0.0;
+            double maxFloorGap = 0.0;
+            int floorGapSamples = 0;
+            const bool hasNeighborGaps =
+                measureRasterNeighborFloorGaps(s, averageFloorDelta, maxFloorGap, floorGapSamples);
+            if (hasNeighborGaps)
+            {
+                ImGui::TextDisabled(U8("Sousední hrany: %d vzorků, max. mezera %.2f, posun %.2f"),
+                                    floorGapSamples, maxFloorGap, averageFloorDelta);
+                if (ImGui::Button(U8("Dorovnat výšku na sousední sektory")))
+                {
+                    s.floorHeight += averageFloorDelta;
+                    ensureSectorHeadroom(s);
+                    m_status = U8("Výška podlahy sektoru byla dorovnána na sousední hrany.");
+                }
+            }
+            else
+            {
+                ImGui::TextDisabled(U8("Pro vybraný sektor nejsou v rastrové mapě nalezené průchozí sousední hrany."));
+            }
 
             ImGui::SliderInt("Floor R", &s.floorColorR, 0, 255); ImGui::SameLine();
             ImGui::SliderInt("Floor G", &s.floorColorG, 0, 255); ImGui::SameLine();

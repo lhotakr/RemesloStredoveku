@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.20)
-project(RemesloValky)
+project(RemesloStredoveku)
 
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
@@ -13,7 +13,7 @@ pkg_check_modules(SDL2 REQUIRED IMPORTED_TARGET sdl2)
 pkg_check_modules(SDL2_IMAGE REQUIRED IMPORTED_TARGET SDL2_image)
 pkg_check_modules(SDL2_MIXER REQUIRED IMPORTED_TARGET SDL2_mixer)
 
-add_executable(RemesloValky
+add_executable(RemesloStredoveku
         # main
         src/main.cpp
 
@@ -116,44 +116,44 @@ add_executable(RemesloValky
 
 )
 
-target_include_directories(RemesloValky PRIVATE
+target_include_directories(RemesloStredoveku PRIVATE
         src
         third_party/imgui
         third_party/imgui/backends
 )
 
-target_link_libraries(RemesloValky PRIVATE
+target_link_libraries(RemesloStredoveku PRIVATE
         PkgConfig::SDL2
         PkgConfig::SDL2_IMAGE
         PkgConfig::SDL2_MIXER
         nlohmann_json::nlohmann_json
 )
 
-target_compile_definitions(RemesloValky PRIVATE
+target_compile_definitions(RemesloStredoveku PRIVATE
         SDL_MAIN_HANDLED
         REMESLO_PROJECT_ROOT="${CMAKE_SOURCE_DIR}"
 )
 
 if(ATLAS_VIEWER)
-    target_compile_definitions(RemesloValky PRIVATE ATLAS_VIEWER)
+    target_compile_definitions(RemesloStredoveku PRIVATE ATLAS_VIEWER)
 endif()
 
 if(MSVC)
-    target_compile_options(RemesloValky PRIVATE /utf-8)
+    target_compile_options(RemesloStredoveku PRIVATE /utf-8)
 endif()
 
-# kopírování runtime dat do složky vedle RemesloValky.exe
-# Díky tomu hra/editor najde assets/... i data/... i pøi spuštìní z build adresáøe.
-add_custom_command(TARGET RemesloValky POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E rm -rf "$<TARGET_FILE_DIR:RemesloValky>/assets"
+# kopï¿½rovï¿½nï¿½ runtime dat do sloï¿½ky vedle RemesloStredoveku.exe
+# Dï¿½ky tomu hra/editor najde assets/... i data/... i pï¿½i spuï¿½tï¿½nï¿½ z build adresï¿½ï¿½e.
+add_custom_command(TARGET RemesloStredoveku POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E rm -rf "$<TARGET_FILE_DIR:RemesloStredoveku>/assets"
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/assets"
-        "$<TARGET_FILE_DIR:RemesloValky>/assets"
+        "$<TARGET_FILE_DIR:RemesloStredoveku>/assets"
 
-        COMMAND ${CMAKE_COMMAND} -E rm -rf "$<TARGET_FILE_DIR:RemesloValky>/data"
+        COMMAND ${CMAKE_COMMAND} -E rm -rf "$<TARGET_FILE_DIR:RemesloStredoveku>/data"
         COMMAND ${CMAKE_COMMAND} -E copy_directory
         "${CMAKE_SOURCE_DIR}/data"
-        "$<TARGET_FILE_DIR:RemesloValky>/data"
+        "$<TARGET_FILE_DIR:RemesloStredoveku>/data"
 )
 
 # Windows + MSYS2 runtime DLLs
@@ -161,10 +161,10 @@ if(WIN32)
     file(GLOB MSYS2_RUNTIME_DLLS "C:/msys64/mingw64/bin/*.dll")
 
     foreach(DLL ${MSYS2_RUNTIME_DLLS})
-        add_custom_command(TARGET RemesloValky POST_BUILD
+        add_custom_command(TARGET RemesloStredoveku POST_BUILD
                 COMMAND ${CMAKE_COMMAND} -E copy_if_different
                 "${DLL}"
-                $<TARGET_FILE_DIR:RemesloValky>
+                $<TARGET_FILE_DIR:RemesloStredoveku>
         )
     endforeach()
 endif()

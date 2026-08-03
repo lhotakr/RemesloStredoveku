@@ -127,7 +127,7 @@ namespace interior
         double startHeight = 0.0;
         double endHeight = 0.0;
         int steps = 1;
-        int width = 1;
+        double width = 1.0;
         bool compileGeometry = false;
         // Keep visible treads discrete while collision follows the continuous
         // walking line. This avoids a camera jolt on every generated sector.
@@ -136,6 +136,28 @@ namespace interior
         std::string boundaryMaterialId;
         std::string targetLocation;
         std::string targetSpawn;
+        HistoricalMetadata historical;
+    };
+
+    struct WallSegmentDef
+    {
+        std::string id;
+        Vec2d start;
+        Vec2d end;
+        double bottom = 0.0;
+        double top = 3.0;
+        double bottomEnd = 0.0;
+        double topEnd = 3.0;
+        bool hasBottomEnd = false;
+        bool hasTopEnd = false;
+        std::vector<double> topProfile;
+        std::string materialId;
+        double ambient = 1.0;
+        double textureScale = 1.0;
+        double textureUOffset = 0.0;
+        bool worldAlignedTexture = false;
+        bool solid = true;
+        bool twoSided = true;
         HistoricalMetadata historical;
     };
 
@@ -254,6 +276,7 @@ namespace interior
         std::vector<PolygonRoomDef> polygonRooms;
         std::vector<WallFeatureDef> wallFeatures;
         std::vector<StairDef> stairs;
+        std::vector<WallSegmentDef> wallSegments;
         std::unordered_map<std::string, std::vector<std::string>> roomGraph;
 
         std::vector<RasterRegion> walkableRegions;

@@ -195,6 +195,10 @@
       "function": "rock_service_room",
       "polygon": [
         [
+          63.15,
+          37.61
+        ],
+        [
           58,
           35
         ],
@@ -211,13 +215,13 @@
           51
         ],
         [
-          57,
-          41
+          63.15,
+          39.39
         ]
       ],
       "floor": {
         "height": 1.15,
-        "material": "sandstone_plateau_surface"
+        "material": "rock_cut_ditch_floor"
       },
       "ceiling": {
         "type": "rock",
@@ -233,6 +237,48 @@
       "wall_height": 2.8,
       "ambient": 0.5,
       "notes": "JV skalní místnost. Dole dveře, následně šikmá chodba se schody nahoru. Severní krb a úzké rozevřené špaletové okno."
+    },
+    {
+      "id": "room_04_entry_stairwell",
+      "label": "4a",
+      "name": "Vstupní schodiště do skalní místnosti",
+      "function": "stairwell",
+      "polygon": [
+        [
+          56.254470911269124,
+          37.52219758592259
+        ],
+        [
+          63.15,
+          37.61
+        ],
+        [
+          63.15,
+          39.39
+        ],
+        [
+          56.673529088730874,
+          39.47780241407741
+        ]
+      ],
+      "floor": {
+        "height": 0.0,
+        "material": "rock_cut_ditch_floor"
+      },
+      "ceiling": {
+        "type": "rock",
+        "height": 3.95,
+        "material": "sandstone_cliff_local"
+      },
+      "npc_access": true,
+      "historical": {
+        "certainty": "probable",
+        "phase": "late_gothic_1390_1410"
+      },
+      "boundary_material": "sandstone_cliff_local",
+      "wall_height": 3.95,
+      "ambient": 0.5,
+      "notes": "Nízký vstupní sektor od dveří; schody v něm stoupají do vyvýšené skalní místnosti."
     },
     {
       "id": "room_05_east_main",
@@ -810,7 +856,7 @@
       "span": 1,
       "axis": "y",
       "room": "courtyard_A",
-      "to": "room_04_rock_room",
+      "to": "room_04_entry_stairwell",
       "material": "heavy_oak_door",
       "motion": "swing",
       "height": 2.55,
@@ -824,13 +870,32 @@
           39.47780241407741
         ]
       ],
-      "width": 2.0,
+      "width": 1.35,
       "leaves": 2,
       "opens_toward": "room",
       "swing_degrees": 92.0,
       "speed": 1.25,
       "compile_connector": false,
       "note": "V23: dvojkřídlé dveře s tenčí hranou; otvor a schodiště mají sladěnou šířku."
+    },
+    {
+      "id": "portal_04_stairwell_to_rock_room",
+      "type": "open_portal",
+      "room": "room_04_entry_stairwell",
+      "to": "room_04_rock_room",
+      "segment": [
+        [
+          63.15,
+          37.61
+        ],
+        [
+          63.15,
+          39.39
+        ]
+      ],
+      "width": 1.78,
+      "height": 2.8,
+      "compile_connector": true
     },
     {
       "id": "window_04_east",
@@ -1164,10 +1229,27 @@
       "height": 2.0
     }
   ],
+  "wall_segments": [
+    {
+      "id": "door_A_to_04_exterior_facade_overdoor",
+      "x0": 56.639296503255615,
+      "y0": 39.485126846458975,
+      "x1": 56.22020312109106,
+      "y1": 37.52952201830416,
+      "bottom_z": 1.7,
+      "top_z": 3.95,
+      "material": "courtyard_gallery_facade",
+      "ambient": 1.06,
+      "texture_scale": 1.0,
+      "world_aligned_texture": true,
+      "solid": false,
+      "two_sided": false
+    }
+  ],
   "stairs": [
     {
       "id": "stairs_04_entry",
-      "room": "room_04_rock_room",
+      "room": "room_04_entry_stairwell",
       "kind": "segmented",
       "start": [
         56.55,
@@ -1183,8 +1265,8 @@
       "width": 1.78,
       "compile_geometry": true,
       "smooth_traversal": true,
-      "floor_material": "sandstone_plateau_surface",
-      "boundary_material": "gate_passage_masonry",
+      "floor_material": "rock_cut_ditch_floor",
+      "boundary_material": "sandstone_cliff_local",
       "historical": {
         "certainty": "probable",
         "phase": "late_gothic_1390_1410"
@@ -1287,7 +1369,7 @@
       "room_01_gate_passage",
       "room_02_guardroom",
       "room_03_guard_store",
-      "room_04_rock_room",
+      "room_04_entry_stairwell",
       "room_05_east_main",
       "room_07_tower_corridor",
       "room_08_chapel",
@@ -1297,6 +1379,9 @@
     ],
     "room_02_guardroom": [
       "room_03_guard_store"
+    ],
+    "room_04_entry_stairwell": [
+      "room_04_rock_room"
     ],
     "room_05_east_main": [
       "room_06_east_inner"

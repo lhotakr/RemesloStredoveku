@@ -435,6 +435,7 @@ private:
     int m_editorSelectedOpening = -1;
     bool m_editorPolygonPointMode = false;
     bool m_editorPolygonDragDirty = false;
+    bool m_editorDefaultSpawnDirty = false;
     float m_editorMapCellSize = 22.0f;
 
     // Stair wizard. Stairs are authored as a run of real floor-height sectors,
@@ -483,6 +484,7 @@ private:
     void loadTextureAnimationFrames(TextureRef& texture);
     void prepareTextureModels();
     bool loadTextureForCell(TextureKey key, const std::string& relativePath);
+    bool saveCastleMapSectors();
     const TextureFrame* activeAnimationFrame(const TextureRef& texture, const SpriteDef& sprite) const;
     void ensureSceneBuffer(int width, int height);
 

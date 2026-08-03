@@ -436,7 +436,7 @@ namespace interior
                 else
                     stair.endHeight = source.value("end_height", 0.0);
                 stair.steps = std::max(1, source.value("steps", 1));
-                stair.width = std::max(1, source.value("width", 1));
+                stair.width = std::max(0.25, source.value("width", 1.0));
                 stair.compileGeometry = source.value("compile_geometry", stair.kind == "segmented");
                 stair.smoothTraversal =
                     source.value("smooth_traversal", true);
@@ -448,6 +448,48 @@ namespace interior
                     stair.historical = ParseHistorical(source["historical"]);
                 if (!stair.id.empty())
                     out.stairs.push_back(std::move(stair));
+            }
+        }
+
+        if (root.contains("wall_segments") && root["wall_segments"].is_array())
+        {
+            for (const auto& source : root["wall_segments"])
+            {
+                if (!source.is_object())
+                    continue;
+                WallSegmentDef wall;
+                wall.id = source.value("id", std::string());
+                wall.start = {
+                    source.value("x0", 0.0),
+                    source.value("y0", 0.0)
+                };
+                wall.end = {
+                    source.value("x1", 0.0),
+                    source.value("y1", 0.0)
+                };
+                wall.bottom = source.value("bottom_z", 0.0);
+                wall.top = source.value("top_z", 3.0);
+                wall.hasBottomEnd = source.contains("bottom_z_end");
+                wall.hasTopEnd = source.contains("top_z_end");
+                wall.bottomEnd = source.value("bottom_z_end", wall.bottom);
+                wall.topEnd = source.value("top_z_end", wall.top);
+                if (source.contains("top_profile") && source["top_profile"].is_array())
+                {
+                    for (const auto& value : source["top_profile"])
+                        if (value.is_number())
+                            wall.topProfile.push_back(value.get<double>());
+                }
+                wall.materialId = source.value("material", std::string());
+                wall.ambient = source.value("ambient", 1.0);
+                wall.textureScale = source.value("texture_scale", 1.0);
+                wall.textureUOffset = source.value("texture_u_offset", 0.0);
+                wall.worldAlignedTexture = source.value("world_aligned_texture", false);
+                wall.solid = source.value("solid", true);
+                wall.twoSided = source.value("two_sided", true);
+                if (source.contains("historical"))
+                    wall.historical = ParseHistorical(source["historical"]);
+                if (!wall.id.empty())
+                    out.wallSegments.push_back(std::move(wall));
             }
         }
 
