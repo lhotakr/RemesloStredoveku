@@ -53,7 +53,6 @@
     ],
     "solid_regions": [
       {
-        "material": "sandstone_limewashed",
         "rect": [
           17,
           4,
@@ -63,7 +62,6 @@
         "sector": "forecourt_threshold"
       },
       {
-        "material": "sandstone_limewashed",
         "rect": [
           17,
           5,
@@ -73,7 +71,6 @@
         "sector": "forecourt_threshold"
       },
       {
-        "material": "sandstone_limewashed",
         "rect": [
           30,
           5,
@@ -81,6 +78,66 @@
           5
         ],
         "sector": "forecourt_threshold"
+      },
+      {
+        "material": "forest_rock_backdrop",
+        "rect": [
+          4,
+          24,
+          17,
+          1
+        ],
+        "sector": "transition_scrub_terrain"
+      },
+      {
+        "material": "forest_rock_backdrop",
+        "rect": [
+          28,
+          24,
+          16,
+          1
+        ],
+        "sector": "transition_scrub_terrain"
+      },
+      {
+        "material": "forest_rock_backdrop",
+        "rect": [
+          4,
+          25,
+          1,
+          19
+        ],
+        "sector": "transition_scrub_terrain"
+      },
+      {
+        "material": "forest_rock_backdrop",
+        "rect": [
+          43,
+          25,
+          1,
+          19
+        ],
+        "sector": "transition_scrub_terrain"
+      },
+      {
+        "material": "forest_rock_backdrop",
+        "rect": [
+          4,
+          43,
+          17,
+          1
+        ],
+        "sector": "transition_scrub_terrain"
+      },
+      {
+        "material": "forest_rock_backdrop",
+        "rect": [
+          28,
+          43,
+          16,
+          1
+        ],
+        "sector": "transition_scrub_terrain"
       }
     ],
     "walkable_regions": [
@@ -89,7 +146,7 @@
           21,
           27,
           7,
-          9
+          17
         ],
         "sector": "south_approach"
       },
@@ -101,6 +158,24 @@
           5
         ],
         "sector": "south_approach"
+      },
+      {
+        "rect": [
+          5,
+          25,
+          16,
+          18
+        ],
+        "sector": "transition_scrub_terrain"
+      },
+      {
+        "rect": [
+          28,
+          25,
+          15,
+          18
+        ],
+        "sector": "transition_scrub_terrain"
       },
       {
         "rect": [
@@ -153,7 +228,7 @@
   "sectors": [
     {
       "ambient": 0.9700000286102295,
-      "boundary_material": "editor_walls_wall_2",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -188,8 +263,44 @@
       "wall_height": 4.2
     },
     {
+      "ambient": 0.98,
+      "boundary_material": "forest_rock_backdrop",
+      "ceiling": {
+        "height": 14.0,
+        "material": "editor_houska1400_sky_north_bohemia_ceiling",
+        "origin_x": 24.0,
+        "origin_y": 35.0,
+        "slope_x": 0.0,
+        "slope_y": 0.0,
+        "type": "sky"
+      },
+      "display_name": "Nechozí lesní přechod u jižní cesty",
+      "floor": {
+        "height": -0.9287369792106698,
+        "material": "cleared_defence_ground",
+        "origin_x": 24.0,
+        "origin_y": 35.0,
+        "slope_x": 0.0,
+        "slope_y": -0.10000000149011612
+      },
+      "historical": {
+        "certainty": "interpretive",
+        "note": "Vizuální pás nechozího terénu pro měkčí přechod z 2D části do 2.5D scény.",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "id": "transition_scrub_terrain",
+      "npc_access": false,
+      "room_function": "visual_transition",
+      "room_id": "exterior_south_approach",
+      "sky_ceiling": true,
+      "wall_height": 4.0
+    },
+    {
       "ambient": 1.04,
-      "boundary_material": "editor_walls_wall_10_wall",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -224,7 +335,7 @@
     },
     {
       "ambient": 1.06,
-      "boundary_material": "editor_walls_wall_5_wall",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -259,7 +370,7 @@
     },
     {
       "ambient": 1.08,
-      "boundary_material": "sandstone_limewashed",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -294,7 +405,7 @@
     },
     {
       "ambient": 1.05,
-      "boundary_material": "editor_houska1400_wooden_trough_wall",
+      "boundary_material": "editor_walls_wall_10_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -330,7 +441,7 @@
     },
     {
       "ambient": 1.04,
-      "boundary_material": "sandstone_cliff_local",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -366,7 +477,7 @@
     },
     {
       "ambient": 1.04,
-      "boundary_material": "sandstone_cliff_local",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -402,7 +513,7 @@
     },
     {
       "ambient": 1.04,
-      "boundary_material": "sandstone_cliff_local",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -438,7 +549,7 @@
     },
     {
       "ambient": 1.04,
-      "boundary_material": "sandstone_cliff_local",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -474,7 +585,7 @@
     },
     {
       "ambient": 1.04,
-      "boundary_material": "sandstone_cliff_local",
+      "boundary_material": "editor_walls_wall_4_wall",
       "ceiling": {
         "height": 14.0,
         "material": "editor_houska1400_sky_north_bohemia_ceiling",
@@ -509,9 +620,105 @@
       "wall_height": 4.8
     }
   ],
+  "wall_segments": [
+    {
+      "ambient": 1.02,
+      "bottom_z": -1.71,
+      "bottom_z_end": -0.07,
+      "id": "south_transition_low_wall_w",
+      "material": "sandstone_cliff_local",
+      "solid": true,
+      "texture_scale": 0.85,
+      "top_z": -0.48,
+      "top_z_end": 1.05,
+      "two_sided": true,
+      "world_aligned_texture": true,
+      "x0": 20.85,
+      "x1": 20.85,
+      "y0": 42.8,
+      "y1": 26.4
+    },
+    {
+      "ambient": 1.02,
+      "bottom_z": -1.71,
+      "bottom_z_end": -0.07,
+      "id": "south_transition_low_wall_e",
+      "material": "sandstone_cliff_local",
+      "solid": true,
+      "texture_scale": 0.85,
+      "top_z": -0.48,
+      "top_z_end": 1.05,
+      "two_sided": true,
+      "world_aligned_texture": true,
+      "x0": 28.15,
+      "x1": 28.15,
+      "y0": 42.8,
+      "y1": 26.4
+    },
+    {
+      "ambient": 1.02,
+      "bottom_z": -0.07,
+      "id": "south_transition_low_wall_w_cap",
+      "material": "sandstone_cliff_local",
+      "solid": true,
+      "texture_scale": 0.85,
+      "top_z": 1.05,
+      "two_sided": true,
+      "world_aligned_texture": true,
+      "x0": 18.6,
+      "x1": 20.85,
+      "y0": 26.4,
+      "y1": 26.4
+    },
+    {
+      "ambient": 1.02,
+      "bottom_z": -0.07,
+      "id": "south_transition_low_wall_e_cap",
+      "material": "sandstone_cliff_local",
+      "solid": true,
+      "texture_scale": 0.85,
+      "top_z": 1.05,
+      "two_sided": true,
+      "world_aligned_texture": true,
+      "x0": 28.15,
+      "x1": 30.4,
+      "y0": 26.4,
+      "y1": 26.4
+    },
+    {
+      "ambient": 1.02,
+      "bottom_z": -1.71,
+      "id": "south_transition_low_wall_w_portal_frame",
+      "material": "sandstone_cliff_local",
+      "solid": true,
+      "texture_scale": 0.85,
+      "top_z": -0.48,
+      "two_sided": true,
+      "world_aligned_texture": true,
+      "x0": 20.85,
+      "x1": 22.65,
+      "y0": 42.8,
+      "y1": 42.8
+    },
+    {
+      "ambient": 1.02,
+      "bottom_z": -1.71,
+      "id": "south_transition_low_wall_e_portal_frame",
+      "material": "sandstone_cliff_local",
+      "solid": true,
+      "texture_scale": 0.85,
+      "top_z": -0.48,
+      "two_sided": true,
+      "world_aligned_texture": true,
+      "x0": 26.35,
+      "x1": 28.15,
+      "y0": 42.8,
+      "y1": 42.8
+    }
+  ],
   "size": [
     48,
-    36
+    44
   ],
   "sky_material": "sky_north_bohemia_overcast",
   "spawns": [
@@ -519,8 +726,8 @@
       "angle_degrees": -90.22019954446084,
       "id": "south_road",
       "pitch": 0.09000000134110452,
-      "x": 24.460693731799445,
-      "y": 32.826997593639845
+      "x": 24.5,
+      "y": 40.8
     },
     {
       "angle_degrees": 315.0,

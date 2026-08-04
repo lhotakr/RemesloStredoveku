@@ -153,6 +153,96 @@ char firstCharOr(const std::string& value, char fallback)
     return value.empty() ? fallback : value.front();
 }
 
+int sectorCode(char symbol)
+{
+    return static_cast<int>(static_cast<unsigned char>(symbol));
+}
+
+std::vector<char> sectorSymbolOrder()
+{
+    std::vector<char> symbols;
+    symbols.reserve(255);
+    std::vector<bool> used(256, false);
+    auto addCode = [&](int code)
+    {
+        if (code < 1 || code > 255 || used[static_cast<std::size_t>(code)])
+            return;
+        used[static_cast<std::size_t>(code)] = true;
+        symbols.push_back(static_cast<char>(static_cast<unsigned char>(code)));
+    };
+
+    const std::string legacyPool =
+        "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+    for (unsigned char c : legacyPool)
+        addCode(static_cast<int>(c));
+    for (int code = 33; code <= 126; ++code)
+        addCode(code);
+    for (int code = 1; code <= 255; ++code)
+        addCode(code);
+    return symbols;
+}
+
+std::string sectorKeyString(char symbol)
+{
+    const int code = sectorCode(symbol);
+    if (code >= 33 && code <= 126 && symbol != '"' && symbol != '\\')
+        return std::string(1, symbol);
+    return "#" + std::to_string(code);
+}
+
+char sectorSymbolFromKey(const std::string& key, char fallback = 'A')
+{
+    if (key.size() == 1)
+        return key.front();
+    std::string numberText;
+    if (!key.empty() && key.front() == '#')
+        numberText = key.substr(1);
+    else if (key.rfind("code:", 0) == 0)
+        numberText = key.substr(5);
+    if (numberText.empty())
+        return fallback;
+    try
+    {
+        const int value = std::stoi(numberText);
+        if (value >= 1 && value <= 255)
+            return static_cast<char>(static_cast<unsigned char>(value));
+    }
+    catch (...) {}
+    return fallback;
+}
+
+char sectorSymbolFromJson(const json& source,
+                          const char* stringName,
+                          const char* codeName,
+                          char fallback = 'A')
+{
+    if (source.contains(codeName) && source[codeName].is_number_integer())
+    {
+        const int code = source[codeName].get<int>();
+        if (code >= 1 && code <= 255)
+            return static_cast<char>(static_cast<unsigned char>(code));
+    }
+    if (source.contains(stringName) && source[stringName].is_string())
+        return sectorSymbolFromKey(source[stringName].get<std::string>(), fallback);
+    return fallback;
+}
+
+std::string sectorDisplayLabel(char symbol)
+{
+    const int code = sectorCode(symbol);
+    std::string label;
+    if (code >= 33 && code <= 126)
+    {
+        label.push_back(symbol);
+        label += " (#" + std::to_string(code) + ")";
+    }
+    else
+    {
+        label = "#" + std::to_string(code);
+    }
+    return label;
+}
+
 std::string lowerAscii(std::string value)
 {
     std::transform(value.begin(), value.end(), value.begin(), [](unsigned char c) {
@@ -272,6 +362,7 @@ void BuildInteriorEngine::shutdown()
     clearTextures();
     m_grid.clear();
     m_sectorGrid.clear();
+    m_defaultSolidTexture = kNoTexture;
     m_sectors.clear();
     m_sectorLookup.fill(nullptr);
     m_doors.clear();
@@ -583,6 +674,7 @@ void BuildInteriorEngine::swapLoadedMapState(BuildInteriorEngine& other)
 
     swap(m_grid, other.m_grid);
     swap(m_sectorGrid, other.m_sectorGrid);
+    swap(m_defaultSolidTexture, other.m_defaultSolidTexture);
     swap(m_textures, other.m_textures);
     swap(m_texturePaths, other.m_texturePaths);
     swap(m_sectors, other.m_sectors);
@@ -996,6 +1088,41 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             }
         }
     }
+    if (root.contains("sector_codes") && expectedHeight > 0)
+    {
+        if (!root["sector_codes"].is_array() ||
+            root["sector_codes"].size() != expectedHeight)
+        {
+            m_lastError = "Interior sector_codes has an invalid row count.";
+            m_status = m_lastError;
+            return false;
+        }
+        for (const json& row : root["sector_codes"])
+        {
+            if (!row.is_array() || row.size() != expectedWidth)
+            {
+                m_lastError = "Interior sector_codes has inconsistent row widths.";
+                m_status = m_lastError;
+                return false;
+            }
+            for (const json& value : row)
+            {
+                if (!value.is_number_integer())
+                {
+                    m_lastError = "Interior sector_codes contains a non-integer sector code.";
+                    m_status = m_lastError;
+                    return false;
+                }
+                const int code = value.get<int>();
+                if (code < 1 || code > 255)
+                {
+                    m_lastError = "Interior sector_codes contains a sector code outside 1..255.";
+                    m_status = m_lastError;
+                    return false;
+                }
+            }
+        }
+    }
 
     if (root.contains("textures") &&
         !root["textures"].is_object() && !root["textures"].is_array())
@@ -1047,6 +1174,8 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
     m_currentInteriorId = root.value("id", interiorIdOrPath);
     m_displayName = root.value("name", m_currentInteriorId);
     m_eyeHeight = std::clamp(root.value("eye_height", 0.56), 0.25, 2.20);
+    m_defaultSolidTexture = static_cast<TextureKey>(
+        std::clamp(root.value("default_solid_texture_key", 0), 0, 65535));
 
     if (root.contains("spawn") && root["spawn"].is_object())
     {
@@ -1123,10 +1252,34 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
         m_sectorGrid = {"A"};
     }
 
-    if (root.contains("sector_grid") && root["sector_grid"].is_array())
+    if (root.contains("sector_codes") && root["sector_codes"].is_array())
+    {
+        for (const auto& row : root["sector_codes"])
+        {
+            if (!row.is_array())
+                continue;
+            std::string decoded;
+            decoded.reserve(row.size());
+            for (const auto& value : row)
+            {
+                const int code = std::clamp(value.get<int>(), 1, 255);
+                decoded.push_back(static_cast<char>(static_cast<unsigned char>(code)));
+            }
+            m_sectorGrid.push_back(std::move(decoded));
+        }
+    }
+    else if (root.contains("sector_grid") && root["sector_grid"].is_array())
     {
         for (const auto& row : root["sector_grid"])
-            m_sectorGrid.push_back(row.get<std::string>());
+        {
+            std::string decoded = row.get<std::string>();
+            for (char& symbol : decoded)
+            {
+                if (symbol == ' ' || symbol == '\0')
+                    symbol = 'A';
+            }
+            m_sectorGrid.push_back(std::move(decoded));
+        }
     }
     ensureSectorGrid();
     ensureDefaultSectors();
@@ -1136,11 +1289,11 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
         for (auto it = root["sectors"].begin(); it != root["sectors"].end(); ++it)
         {
             if (it.key().empty()) continue;
-            const char symbol = it.key().front();
+            const char symbol = sectorSymbolFromKey(it.key());
             const json& source = it.value();
             SectorDef def = m_sectors.count(symbol) ? m_sectors[symbol] : SectorDef{};
             def.symbol = symbol;
-            def.id = source.value("id", std::string(1, symbol));
+            def.id = source.value("id", "sector_" + sectorKeyString(symbol));
             def.name = source.value("name", def.id);
             def.floorTexture = textureKeyFromJson(source, "floor_texture_key", "floor_texture", def.floorTexture);
             def.ceilingTexture = textureKeyFromJson(source, "ceiling_texture_key", "ceiling_texture", def.ceilingTexture);
@@ -1283,7 +1436,7 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             if (!source.is_object() || !source.contains("vertices") || !source["vertices"].is_array()) continue;
             PolygonSectorRegion region;
             region.id = source.value("id", std::string("polygon_sector_") + std::to_string(m_polygonSectors.size()));
-            region.sector = firstCharOr(source.value("sector", std::string("A")), 'A');
+            region.sector = sectorSymbolFromJson(source, "sector", "sector_code", 'A');
             region.boundarySolid = source.value("boundary_solid", true);
             region.cutsUnderlyingFloor =
                 source.value("cuts_underlying_floor", false);
@@ -1628,15 +1781,31 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
         textures.push_back({{"key", pair.first}, {"path", pair.second}});
     root["textures"] = std::move(textures);
     root["grid_codes"] = m_grid;
-    root["sector_grid"] = m_sectorGrid;
+    json sectorCodes = json::array();
+    bool canWriteLegacySectorGrid = true;
+    for (const std::string& row : m_sectorGrid)
+    {
+        json codeRow = json::array();
+        for (unsigned char symbol : row)
+        {
+            codeRow.push_back(static_cast<int>(symbol));
+            if (symbol < 33 || symbol > 126)
+                canWriteLegacySectorGrid = false;
+        }
+        sectorCodes.push_back(std::move(codeRow));
+    }
+    root["sector_codes"] = std::move(sectorCodes);
+    if (canWriteLegacySectorGrid)
+        root["sector_grid"] = m_sectorGrid;
 
     json sectors = json::object();
     for (const auto& pair : m_sectors)
     {
         const SectorDef& s = pair.second;
-        sectors[std::string(1, s.symbol)] = {
+        sectors[sectorKeyString(s.symbol)] = {
             {"id", s.id},
             {"name", s.name},
+            {"code", sectorCode(s.symbol)},
             {"floor_texture_key", s.floorTexture},
             {"ceiling_texture_key", s.ceilingTexture},
             {"boundary_texture_key", s.boundaryTexture},
@@ -1730,7 +1899,8 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
         }
         polygonSectors.push_back({
             {"id", region.id},
-            {"sector", std::string(1, region.sector)},
+            {"sector", sectorKeyString(region.sector)},
+            {"sector_code", sectorCode(region.sector)},
             {"boundary_solid", region.boundarySolid},
             {"cuts_underlying_floor", region.cutsUnderlyingFloor},
             {"has_support_bottom", region.hasSupportBottom},
@@ -2078,7 +2248,6 @@ bool BuildInteriorEngine::saveCastleMapSectors()
             }
         }
     }
-
     auto writeSpawnJson = [&](json& target,
                               const std::string& id,
                               const SpawnDef& spawn)
@@ -2654,7 +2823,7 @@ bool BuildInteriorEngine::loadCastleGeometryOverlay(const std::string& castleId,
             }
             else
             {
-                region.sector = firstCharOr(source.value("sector", std::string("A")), 'A');
+                region.sector = sectorSymbolFromJson(source, "sector", "sector_code", 'A');
             }
             region.boundarySolid = source.value("boundary_solid", true);
             region.cutsUnderlyingFloor =
@@ -2771,7 +2940,8 @@ bool BuildInteriorEngine::saveCastleGeometryOverlay()
         polygons.push_back({
             {"id", region.id},
             {"sector_id", sectorId},
-            {"sector", std::string(1, region.sector)},
+            {"sector", sectorKeyString(region.sector)},
+            {"sector_code", sectorCode(region.sector)},
             {"boundary_solid", region.boundarySolid},
             {"cuts_underlying_floor", region.cutsUnderlyingFloor},
             {"has_support_bottom", region.hasSupportBottom},
@@ -3182,7 +3352,7 @@ char BuildInteriorEngine::sectorSymbolAt(int x, int y) const
         x < 0 || x >= static_cast<int>(m_sectorGrid[y].size()))
         return 'A';
     const char value = m_sectorGrid[y][x];
-    return value == ' ' || value == '\0' ? 'A' : value;
+    return value == '\0' ? 'A' : value;
 }
 
 const BuildInteriorEngine::SectorDef& BuildInteriorEngine::sectorAt(int x, int y) const
@@ -4098,26 +4268,47 @@ bool BuildInteriorEngine::surfaceVisibleAlongRay(double worldX, double worldY,
     const double rayX = dx / totalDistance;
     const double rayY = dy / totalDistance;
 
-    double segmentDistance = kHuge;
-    double segmentU = 0.0;
-    const WallSegmentDef* segment = nearestWallSegmentHit(m_posX, m_posY, rayX, rayY,
-                                                          segmentDistance, segmentU);
-    if (segment && segmentDistance < totalDistance - 0.01)
+    auto wallListOccludes = [&](const std::vector<WallSegmentDef>& walls)
     {
-        const double z = eyeZ + (worldZ - eyeZ) * (segmentDistance / totalDistance);
-        const double hitX = m_posX + rayX * segmentDistance;
-        const double hitY = m_posY + rayY * segmentDistance;
-        const double wallX = segment->x1 - segment->x0;
-        const double wallY = segment->y1 - segment->y0;
-        const double wallLengthSq = wallX * wallX + wallY * wallY;
-        const double amount = wallLengthSq > 1.0e-10
-            ? ((hitX - segment->x0) * wallX +
-               (hitY - segment->y0) * wallY) / wallLengthSq
-            : 0.0;
-        if (z > wallBottomAt(*segment, amount) + 0.01 &&
-            z < wallTopAt(*segment, amount) - 0.01)
-            return false;
-    }
+        for (const WallSegmentDef& wall : walls)
+        {
+            const double sx = wall.x1 - wall.x0;
+            const double sy = wall.y1 - wall.y0;
+            const double denominator = rayX * sy - rayY * sx;
+            if (std::abs(denominator) < 1.0e-10)
+                continue;
+
+            const double qx = wall.x0 - m_posX;
+            const double qy = wall.y0 - m_posY;
+            const double distance = (qx * sy - qy * sx) / denominator;
+            const double u = (qx * rayY - qy * rayX) / denominator;
+            constexpr double kJointEpsilon = 0.0035;
+            if (distance <= 0.02 ||
+                distance >= totalDistance - 0.01 ||
+                u < -kJointEpsilon ||
+                u > 1.0 + kJointEpsilon)
+                continue;
+            if (!wall.twoSided)
+            {
+                const double normalX = sy;
+                const double normalY = -sx;
+                if (normalX * rayX + normalY * rayY >= 0.0)
+                    continue;
+            }
+
+            const double amount = std::clamp(u, 0.0, 1.0);
+            const double z = eyeZ +
+                (worldZ - eyeZ) * (distance / totalDistance);
+            if (z > wallBottomAt(wall, amount) + 0.01 &&
+                z < wallTopAt(wall, amount) - 0.01)
+                return true;
+        }
+        return false;
+    };
+
+    if (wallListOccludes(m_wallSegments) ||
+        wallListOccludes(m_polygonBoundaryWalls))
+        return false;
 
     if (hasVectorGeometry())
         return true;
@@ -4155,13 +4346,25 @@ bool BuildInteriorEngine::surfaceVisibleAlongRay(double worldX, double worldY,
         {
             const double bx = m_posX + rayX * boundaryDistance;
             const double by = m_posY + rayY * boundaryDistance;
-            const double openingBottom = std::max(floorHeightAt(*currentSector, bx, by),
-                                                  floorHeightAt(*nextSector, bx, by));
-            const double openingTop = std::min(ceilingHeightAt(*currentSector, bx, by),
-                                               ceilingHeightAt(*nextSector, bx, by));
+            const double currentFloorZ = floorHeightAt(*currentSector, bx, by);
+            const double nextFloorZ = floorHeightAt(*nextSector, bx, by);
+            const double currentCeilingZ = ceilingHeightAt(*currentSector, bx, by);
+            const double nextCeilingZ = ceilingHeightAt(*nextSector, bx, by);
+            const bool floorContinuous =
+                std::abs(currentFloorZ - nextFloorZ) <= kPortalFloorContinuityEpsilon;
+            const bool ceilingContinuous =
+                std::abs(currentCeilingZ - nextCeilingZ) <= kPortalCeilingContinuityEpsilon ||
+                (currentSector->skyCeiling && nextSector->skyCeiling);
+            const double openingBottom = floorContinuous
+                ? std::min(currentFloorZ, nextFloorZ)
+                : std::max(currentFloorZ, nextFloorZ);
+            const double openingTop = ceilingContinuous
+                ? std::max(currentCeilingZ, nextCeilingZ)
+                : std::min(currentCeilingZ, nextCeilingZ);
             const double z = eyeZ + (worldZ - eyeZ) * (boundaryDistance / totalDistance);
             if (openingTop <= openingBottom + 0.02 ||
-                z <= openingBottom + 0.01 || z >= openingTop - 0.01)
+                (!floorContinuous && z <= openingBottom + 0.01) ||
+                z >= openingTop - 0.01)
                 return false;
             currentSector = nextSector;
         }
@@ -5083,32 +5286,11 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
         std::array<PortalClipEvent, 48> events{};
         int eventCount = 0;
     };
-    bool needsPreciseSurfaceCasting = false;
-    bool haveReferenceFloor = false;
-    double referenceFloor = 0.0;
-    for (const auto& pair : m_sectors)
-    {
-        const SectorDef& sector = pair.second;
-        if (!haveReferenceFloor)
-        {
-            referenceFloor = sector.floorHeight;
-            haveReferenceFloor = true;
-        }
-        if (std::abs(sector.floorHeight - referenceFloor) > 0.001 ||
-            std::abs(sector.floorSlopeX) > 0.0001 ||
-            std::abs(sector.floorSlopeY) > 0.0001 ||
-            std::abs(sector.ceilingSlopeX) > 0.0001 ||
-            std::abs(sector.ceilingSlopeY) > 0.0001)
-        {
-            needsPreciseSurfaceCasting = true;
-            break;
-        }
-    }
-
+    // Fast mode samples two adjacent columns together. The renderer already
+    // runs at a reduced internal resolution, so this is a better tradeoff for
+    // exterior maps than forcing per-pixel floor/ceiling casts on every slope.
     std::vector<ColumnOcclusion> occlusion(static_cast<std::size_t>(screenW));
-    const int occlusionStep =
-        (m_fastFloorCasting && !needsPreciseSurfaceCasting) ? 2 : 1;
-    bool hasSectorPortalInView = false;
+    const int occlusionStep = m_fastFloorCasting ? 2 : 1;
     for (int x = 0; x < screenW; x += occlusionStep)
     {
         const int blockWidth = std::min(occlusionStep, screenW - x);
@@ -5179,7 +5361,6 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             }
             for (int dx = 0; dx < blockWidth; ++dx)
                 occlusion[static_cast<std::size_t>(x + dx)] = column;
-            hasSectorPortalInView = hasSectorPortalInView || column.eventCount > 0;
             continue;
         }
 
@@ -5243,7 +5424,6 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             }
         }
         for (int dx = 0; dx < blockWidth; ++dx) occlusion[static_cast<std::size_t>(x + dx)] = column;
-        hasSectorPortalInView = hasSectorPortalInView || column.eventCount > 0;
     }
 
     auto solveDistance = [&](const SectorDef& sector, bool floorSurface,
@@ -5273,9 +5453,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
         const double verticalStep =
             static_cast<double>(horizon - y) / std::max(1, screenH);
         const bool defaultFloorRow = verticalStep < 0.0;
-        const int xStep =
-            (m_fastFloorCasting && !needsPreciseSurfaceCasting &&
-             !hasSectorPortalInView) ? 2 : 1;
+        const int xStep = m_fastFloorCasting ? 2 : 1;
 
         // Sky vertical coordinate and haze depend only on the scanline. The old
         // code recalculated pow() for every sky pixel, which was especially
@@ -5316,6 +5494,8 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                             ? -1.0
                             : solveDistance(*current, floorSurface,
                                             rayX, rayY, verticalStep);
+                        const bool surfaceInCurrentSpan =
+                            surfaceDistance > traversedDistance + 0.001;
 
                         const PortalClipEvent* nextPortal = nullptr;
                         char nextSymbol = '\0';
@@ -5324,6 +5504,9 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                             const PortalClipEvent& event = column.events[eventIndex];
                             if (event.distance <= traversedDistance + 0.002)
                                 continue;
+                            if (surfaceInCurrentSpan &&
+                                event.distance >= surfaceDistance - 0.001)
+                                break;
                             if (event.sectorA == current->symbol)
                                 nextSymbol = event.sectorB;
                             else if (event.sectorB == current->symbol)
@@ -5334,7 +5517,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                             break;
                         }
 
-                        if (surfaceDistance > traversedDistance + 0.001 &&
+                        if (surfaceInCurrentSpan &&
                             (!nextPortal ||
                              surfaceDistance <= nextPortal->distance + 0.001))
                             return surfaceDistance;
@@ -5387,6 +5570,8 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                     const double surfaceDistance = unboundedSky
                         ? -1.0
                         : solveDistance(*current, floorRow, rayX, rayY, verticalStep);
+                    const bool surfaceInCurrentSpan =
+                        surfaceDistance > traversedDistance + 0.001;
                     const PortalClipEvent* nextPortal = nullptr;
                     char nextSymbol = '\0';
                     for (int eventIndex = 0; eventIndex < column.eventCount; ++eventIndex)
@@ -5394,7 +5579,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                         const PortalClipEvent& event = column.events[eventIndex];
                         if (event.distance <= traversedDistance + 0.002)
                             continue;
-                        if (surfaceDistance > 0.0 &&
+                        if (surfaceInCurrentSpan &&
                             event.distance >= surfaceDistance - 0.001)
                             break;
                         if (event.sectorA == current->symbol)
@@ -5415,9 +5600,17 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                             distance = std::max(0.02, traversedDistance);
                             forceSky = true;
                         }
+                        else if (floorRow && !surfaceInCurrentSpan &&
+                                 current->skyCeiling)
+                        {
+                            distance = std::max(0.02, traversedDistance);
+                            forceSky = true;
+                        }
                         else
                         {
-                            distance = surfaceDistance;
+                            distance = surfaceInCurrentSpan
+                                ? surfaceDistance
+                                : -1.0;
                         }
                         if (distance > 0.0)
                         {
@@ -5448,7 +5641,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
                         // as its background.
                         sector = current;
                         if (floorRow &&
-                            (surfaceDistance <= 0.0 ||
+                            (!surfaceInCurrentSpan ||
                              surfaceDistance > nextPortal->distance + 0.001))
                         {
                             distance = -1.0;
@@ -5605,7 +5798,7 @@ void BuildInteriorEngine::renderFloorAndCeiling(int screenW, int screenH, int ho
             // sector here made sky leak into roofed rooms; using the player's
             // covered sector made its ceiling stretch through a portal over an
             // open courtyard.
-            if (ceilingRow && sector->skyCeiling)
+            if (forceSky || (ceilingRow && sector->skyCeiling))
             {
                 color = argb(92, 112, 135);
                 if (skyTexture && skyTexture->w > 0 && skyTexture->h > 0 && !skyTexture->pixels.empty())
@@ -5747,6 +5940,89 @@ void BuildInteriorEngine::renderPolygonSurfaces(
         return result;
     };
 
+    m_surfaceOcclusionColumns.assign(
+        static_cast<std::size_t>(screenW), SurfaceOcclusionColumn{});
+    const int occlusionStep = m_fastFloorCasting ? 2 : 1;
+    auto addSurfaceOcclusionHit = [](SurfaceOcclusionColumn& column,
+                                     const SurfaceOcclusionHit& hit) {
+        const int capacity = static_cast<int>(column.hits.size());
+        if (column.count < capacity)
+        {
+            int index = column.count++;
+            column.hits[static_cast<std::size_t>(index)] = hit;
+            while (index > 0 &&
+                   column.hits[static_cast<std::size_t>(index)].distance <
+                   column.hits[static_cast<std::size_t>(index - 1)].distance)
+            {
+                std::swap(column.hits[static_cast<std::size_t>(index)],
+                          column.hits[static_cast<std::size_t>(index - 1)]);
+                --index;
+            }
+            return;
+        }
+        if (hit.distance >= column.hits.back().distance)
+            return;
+        column.hits.back() = hit;
+        for (int index = capacity - 1;
+             index > 0 &&
+             column.hits[static_cast<std::size_t>(index)].distance <
+             column.hits[static_cast<std::size_t>(index - 1)].distance;
+             --index)
+        {
+            std::swap(column.hits[static_cast<std::size_t>(index)],
+                      column.hits[static_cast<std::size_t>(index - 1)]);
+        }
+    };
+    auto collectSurfaceOccluders = [&](const std::vector<WallSegmentDef>& walls,
+                                       SurfaceOcclusionColumn& column,
+                                       double rayX, double rayY) {
+        for (const WallSegmentDef& wall : walls)
+        {
+            const double sx = wall.x1 - wall.x0;
+            const double sy = wall.y1 - wall.y0;
+            const double denominator = rayX * sy - rayY * sx;
+            if (std::abs(denominator) < 1.0e-10)
+                continue;
+            const double qx = wall.x0 - m_posX;
+            const double qy = wall.y0 - m_posY;
+            const double distance = (qx * sy - qy * sx) / denominator;
+            const double u = (qx * rayY - qy * rayX) / denominator;
+            constexpr double kJointEpsilon = 0.0035;
+            if (distance <= 0.02 ||
+                u < -kJointEpsilon ||
+                u > 1.0 + kJointEpsilon)
+                continue;
+            if (!wall.twoSided)
+            {
+                const double normalX = sy;
+                const double normalY = -sx;
+                if (normalX * rayX + normalY * rayY >= 0.0)
+                    continue;
+            }
+            const double amount = std::clamp(u, 0.0, 1.0);
+            addSurfaceOcclusionHit(column, {
+                distance,
+                wallBottomAt(wall, amount),
+                wallTopAt(wall, amount)
+            });
+        }
+    };
+    for (int x = 0; x < screenW; x += occlusionStep)
+    {
+        const int blockWidth = std::min(occlusionStep, screenW - x);
+        const double sampleX = x + (blockWidth - 1) * 0.5;
+        const double cameraX =
+            2.0 * sampleX / static_cast<double>(screenW) - 1.0;
+        const double rayX = dirX + planeX * cameraX;
+        const double rayY = dirY + planeY * cameraX;
+        SurfaceOcclusionColumn column;
+        collectSurfaceOccluders(m_wallSegments, column, rayX, rayY);
+        collectSurfaceOccluders(m_polygonBoundaryWalls, column, rayX, rayY);
+        for (int dx = 0; dx < blockWidth; ++dx)
+            m_surfaceOcclusionColumns[static_cast<std::size_t>(x + dx)] =
+                column;
+    }
+
     for (const PolygonSectorRegion& region : m_polygonSectors)
     {
         const SectorDef* sector =
@@ -5813,7 +6089,7 @@ void BuildInteriorEngine::renderPolygonSurfaces(
                     drawPolygonSurfaceTriangle(
                         first, project(clipped[vertex]),
                         project(clipped[vertex + 1]),
-                        region, *sector, surfaceKind);
+                        region, *sector, surfaceKind, eyeZ);
                 }
             }
         }
@@ -5823,7 +6099,7 @@ void BuildInteriorEngine::renderPolygonSurfaces(
 void BuildInteriorEngine::drawPolygonSurfaceTriangle(
     const ProjectedVertex& a, const ProjectedVertex& b,
     const ProjectedVertex& c, const PolygonSectorRegion& region,
-    const SectorDef& sector, int surfaceKind)
+    const SectorDef& sector, int surfaceKind, double eyeZ)
 {
     const bool floorSurface = surfaceKind == 0;
     const bool supportBottomSurface = surfaceKind == 2;
@@ -5860,6 +6136,7 @@ void BuildInteriorEngine::drawPolygonSurfaceTriangle(
             : argb(
                 sector.ceilingColorR, sector.ceilingColorG,
                 sector.ceilingColorB));
+    const char playerSectorSymbol = sectorAtPlayer().symbol;
 
     for (int y = minY; y <= maxY; ++y)
     {
@@ -5945,6 +6222,40 @@ void BuildInteriorEngine::drawPolygonSurfaceTriangle(
                 : (supportBottomSurface
                     ? region.supportBottomZ
                     : ceilingHeightAt(sector, worldX, worldY));
+            if ((floorSurface || supportBottomSurface) &&
+                region.sector != playerSectorSymbol)
+            {
+                bool visible = true;
+                if (x >= 0 &&
+                    x < static_cast<int>(m_surfaceOcclusionColumns.size()))
+                {
+                    const SurfaceOcclusionColumn& column =
+                        m_surfaceOcclusionColumns[static_cast<std::size_t>(x)];
+                    for (int hitIndex = 0; hitIndex < column.count; ++hitIndex)
+                    {
+                        const SurfaceOcclusionHit& hit =
+                            column.hits[static_cast<std::size_t>(hitIndex)];
+                        if (hit.distance >= depth - 0.01)
+                            break;
+                        const double z = eyeZ +
+                            (worldZ - eyeZ) * (hit.distance / depth);
+                        if (z > hit.bottom + 0.01 &&
+                            z < hit.top - 0.01)
+                        {
+                            visible = false;
+                            break;
+                        }
+                    }
+                }
+                else
+                {
+                    visible =
+                        surfaceVisibleAlongRay(worldX, worldY, worldZ, eyeZ);
+                }
+                if (!visible)
+                    continue;
+            }
+
             const double shade = std::clamp(
                 sector.ambient / (1.0 + depth * 0.055), 0.20, 1.15);
             std::uint32_t color =
@@ -6297,11 +6608,10 @@ void BuildInteriorEngine::renderPortalWalls(int screenW, int screenH, int horizo
     const double planeX = -dirY * planeScale;
     const double planeY = dirX * planeScale;
 
-    // In the editor, when the fast software mode is enabled, cast wall
-    // columns in 2-pixel steps as well. The original code always kept portal
-    // walls at full horizontal resolution, which meant the editor preview was
-    // paying almost full price even in fast mode.
-    const int columnStep = (m_editorMode && m_fastFloorCasting) ? 2 : 1;
+    // Fast mode casts raster wall columns in 2-pixel steps. This keeps the
+    // exterior map responsive while the reduced internal buffer absorbs the
+    // tiny horizontal loss in precision.
+    const int columnStep = m_fastFloorCasting ? 2 : 1;
     for (int x = 0; x < screenW; x += columnStep)
     {
         const double sampleX = x + (std::min(columnStep, screenW - x) - 1) * 0.5;
@@ -6367,6 +6677,17 @@ void BuildInteriorEngine::renderPortalWalls(int screenW, int screenH, int horizo
                                    arbitraryDistance, arbitraryWall->ambient,
                                    clipTop, clipBottom, 0.0, 1.0, columnStep,
                                    hitX, hitY, (bottomZ + topZ) * 0.5);
+                const bool partialHeightWall =
+                    topZ - bottomZ <= 1.35 && topZ < eyeZ + 1.8;
+                if (partialHeightWall)
+                {
+                    clipBottom = std::min(clipBottom, y0 - 1);
+                    arbitraryWall = nullptr;
+                    arbitraryDistance = kHuge;
+                    if (clipTop >= clipBottom)
+                        break;
+                    continue;
+                }
                 const int coveredColumns = std::min(columnStep, screenW - x);
                 for (int ox = 0; ox < coveredColumns; ++ox)
                     m_zBuffer[x + ox] = arbitraryDistance;
@@ -6380,9 +6701,16 @@ void BuildInteriorEngine::renderPortalWalls(int screenW, int screenH, int horizo
 
             const TextureKey cell = cellAt(mapX, mapY);
             bool hitSolid = !isInside(mapX, mapY) || (!isEmptyCell(cell) && cell != static_cast<TextureKey>('D'));
-            TextureKey hitTexture = hitSolid
-                ? (m_textureLookup[static_cast<std::size_t>(cell)] ? cell : currentSector->boundaryTexture)
-                : cell;
+            TextureKey hitTexture = cell;
+            if (hitSolid)
+            {
+                hitTexture =
+                    (cell != kNoTexture && cell == m_defaultSolidTexture)
+                        ? currentSector->boundaryTexture
+                        : (m_textureLookup[static_cast<std::size_t>(cell)]
+                            ? cell
+                            : currentSector->boundaryTexture);
+            }
             double hitU = wallX;
             const DoorDef* hitDoor = nullptr;
 
@@ -7017,7 +7345,8 @@ void BuildInteriorEngine::renderOverlay()
         }
 
         const SectorDef& sector = sectorAtPlayer();
-        ImGui::Text(U8("Sektor %c: %s"), sector.symbol, sector.name.c_str());
+        const std::string sectorLabel = sectorDisplayLabel(sector.symbol);
+        ImGui::Text(U8("Sektor %s: %s"), sectorLabel.c_str(), sector.name.c_str());
         ImGui::Text(U8("Výška %.2f až %.2f"),
                     floorHeightAtWorld(m_posX, m_posY),
                     ceilingHeightAtWorld(m_posX, m_posY));
@@ -7296,6 +7625,7 @@ void BuildInteriorEngine::renderEditorOverlay()
                 if (ImGui::RadioButton(labels[i], m_editorTileBrush == brushes[i])) m_editorTileBrush = brushes[i];
                 ImGui::PopID();
             }
+            m_editorMapTool = EditorMapTool::Tiles;
             renderEditorMap();
             ImGui::EndTabItem();
         }
@@ -7304,6 +7634,7 @@ void BuildInteriorEngine::renderEditorOverlay()
         {
             renderEditorPolygons();
             ImGui::Separator();
+            m_editorMapTool = EditorMapTool::Polygons;
             renderEditorMap();
             ImGui::EndTabItem();
         }
@@ -7311,22 +7642,76 @@ void BuildInteriorEngine::renderEditorOverlay()
         if (ImGui::BeginTabItem("Sectors"))
         {
             ImGui::TextWrapped(U8("Sektor určuje výšku podlahy a stropu. Rozdíl výšek se kreslí jako portálový dolní/horní segment stěny."));
-            for (char symbol = 'A'; symbol <= 'Z'; ++symbol)
+            std::vector<char> sectorSymbols;
+            sectorSymbols.reserve(m_sectors.size());
+            for (const auto& pair : m_sectors)
+                sectorSymbols.push_back(pair.first);
+            std::sort(sectorSymbols.begin(), sectorSymbols.end(),
+                      [](char lhs, char rhs) {
+                          return sectorCode(lhs) < sectorCode(rhs);
+                      });
+
+            const auto selectedSectorIt = m_sectors.find(m_editorSectorBrush);
+            const std::string sectorPreview = selectedSectorIt != m_sectors.end()
+                ? sectorDisplayLabel(m_editorSectorBrush) + "  |  " +
+                  selectedSectorIt->second.name
+                : sectorDisplayLabel(m_editorSectorBrush) + U8("  |  nový sektor");
+            if (ImGui::BeginCombo(U8("Sektor"), sectorPreview.c_str()))
             {
-                ImGui::PushID(static_cast<int>(symbol));
-                if ((symbol - 'A') % 10 != 0) ImGui::SameLine();
-                const bool exists = m_sectors.find(symbol) != m_sectors.end();
-                const std::string label = exists ? std::string(1, symbol) : (std::string(1, symbol) + "*");
-                if (ImGui::RadioButton(label.c_str(), m_editorSectorBrush == symbol)) m_editorSectorBrush = symbol;
-                ImGui::PopID();
+                for (char symbol : sectorSymbols)
+                {
+                    const SectorDef& sector = m_sectors.at(symbol);
+                    const std::string label =
+                        sectorDisplayLabel(symbol) + "  |  " + sector.name;
+                    const bool selected = symbol == m_editorSectorBrush;
+                    if (ImGui::Selectable(label.c_str(), selected))
+                        m_editorSectorBrush = symbol;
+                    if (selected)
+                        ImGui::SetItemDefaultFocus();
+                }
+                ImGui::EndCombo();
             }
-            ImGui::TextDisabled(U8("* zatím nepoužitý sektor; výběrem jej můžeš vytvořit"));
+            ImGui::SameLine();
+            if (ImGui::Button(U8("Přidat sektor")))
+            {
+                char newSymbol = '\0';
+                for (char candidate : sectorSymbolOrder())
+                {
+                    if (m_sectors.find(candidate) == m_sectors.end())
+                    {
+                        newSymbol = candidate;
+                        break;
+                    }
+                }
+                if (newSymbol == '\0')
+                {
+                    m_status = U8("Nelze přidat sektor: všech 255 kódů je obsazeno.");
+                }
+                else
+                {
+                    SectorDef copy = m_sectors.find(m_editorSectorBrush) != m_sectors.end()
+                        ? m_sectors.at(m_editorSectorBrush)
+                        : sectorAtPlayer();
+                    copy.symbol = newSymbol;
+                    copy.id = "sector_" + std::to_string(sectorCode(newSymbol));
+                    copy.name = U8("Sektor ") + sectorDisplayLabel(newSymbol);
+                    m_sectors[newSymbol] = std::move(copy);
+                    m_editorSectorBrush = newSymbol;
+                    rebuildSectorLookup();
+                    m_sceneDirty = true;
+                }
+            }
+            ImGui::TextDisabled(U8("Zobrazené jsou jen načtené sektory; nový sektor se přidá dalším volným kódem do 255."));
 
             const bool newSector = m_sectors.find(m_editorSectorBrush) == m_sectors.end();
             SectorDef& s = m_sectors[m_editorSectorBrush];
             if (newSector)
                 rebuildSectorLookup();
             s.symbol = m_editorSectorBrush;
+            if (s.id.empty())
+                s.id = "sector_" + std::to_string(sectorCode(s.symbol));
+            if (s.name.empty())
+                s.name = U8("Sektor ") + sectorDisplayLabel(s.symbol);
             char sectorName[128]; std::snprintf(sectorName, sizeof(sectorName), "%s", s.name.c_str());
             if (ImGui::InputText("Name", sectorName, sizeof(sectorName))) s.name = sectorName;
             ImGui::TextUnformatted(U8("Materiály sektoru"));
@@ -7570,13 +7955,55 @@ void BuildInteriorEngine::renderEditorOverlay()
             ImGui::SliderInt(U8("Šířka"), &m_editorStairWidth, 1, 3);
             ImGui::DragFloat(U8("Celková změna výšky"), &m_editorStairTotalRise, 0.05f, -4.0f, 4.0f, "%.2f");
             ImGui::Checkbox(U8("Strop kopíruje schody"), &m_editorStairCeilingFollows);
-            char firstSector[2] = {m_editorStairFirstSector, 0};
-            if (ImGui::InputText(U8("První sektor"), firstSector, sizeof(firstSector)))
+            int firstSectorCode = sectorCode(m_editorStairFirstSector);
+            if (ImGui::DragInt(U8("První sektorový kód"), &firstSectorCode, 1.0f, 1, 255))
             {
-                if (firstSector[0] >= 'A' && firstSector[0] <= 'Z')
-                    m_editorStairFirstSector = firstSector[0];
+                m_editorStairFirstSector =
+                    static_cast<char>(static_cast<unsigned char>(
+                        std::clamp(firstSectorCode, 1, 255)));
             }
-            ImGui::TextDisabled(U8("Začátek je jedno pole před kamerou. Použijí se po sobě jdoucí symboly sektorů."));
+            ImGui::SameLine();
+            if (ImGui::Button(U8("Najít volné")))
+            {
+                const int steps = std::clamp(m_editorStairSteps, 2, 12);
+                auto rangeFree = [&](int start)
+                {
+                    for (int offset = 0; offset < steps; ++offset)
+                    {
+                        const int code = start + offset;
+                        if (m_sectors.find(static_cast<char>(
+                                static_cast<unsigned char>(code))) != m_sectors.end())
+                            return false;
+                    }
+                    return true;
+                };
+                int foundStart = 0;
+                for (int start = static_cast<int>('A');
+                     start + steps - 1 <= 255; ++start)
+                {
+                    if (rangeFree(start))
+                    {
+                        foundStart = start;
+                        break;
+                    }
+                }
+                for (int start = 1;
+                     foundStart == 0 && start + steps - 1 <= 255; ++start)
+                {
+                    if (rangeFree(start))
+                        foundStart = start;
+                }
+                if (foundStart > 0)
+                {
+                    m_editorStairFirstSector =
+                        static_cast<char>(static_cast<unsigned char>(foundStart));
+                }
+                else
+                {
+                    m_status = U8("Nenalezen volný souvislý rozsah sektorů pro schody.");
+                }
+            }
+            ImGui::TextDisabled(U8("Začátek je jedno pole před kamerou. Použijí se po sobě jdoucí byte kódy sektorů."));
             if (ImGui::Button(U8("Vytvořit schodiště od kamery"), ImVec2(260.0f, 0.0f)))
                 generateEditorStairs();
             ImGui::EndTabItem();
@@ -7654,9 +8081,13 @@ void BuildInteriorEngine::renderEditorOverlay()
             static TextureKey newObjectTexture = static_cast<TextureKey>('B');
             static int newObjectRenderMode = 0;
             texturePicker(U8("Textura nového objektu"), newObjectTexture);
-            const char* newObjectModes[] = {U8("Sprite / billboard"), U8("Voxel 3D")};
-            ImGui::Combo(U8("Typ nového objektu"), &newObjectRenderMode, newObjectModes, 2);
-            if (ImGui::Button(U8("Přidat vlastní objekt"), ImVec2(190, 0)))
+            const char* newObjectModes[] = {
+                U8("Obecný billboard"),
+                U8("Obecný voxel"),
+                U8("Obecný interaktivní marker")
+            };
+            ImGui::Combo(U8("Typ nového objektu"), &newObjectRenderMode, newObjectModes, 3);
+            if (ImGui::Button(U8("Přidat obecný objekt"), ImVec2(190, 0)))
             {
                 SpriteDef s;
                 s.id = makeSpriteId();
@@ -7664,10 +8095,12 @@ void BuildInteriorEngine::renderEditorOverlay()
                 s.x = m_posX;
                 s.y = m_posY;
                 s.zOffset = 0.0;
-                s.scale = 1.0;
+                s.scale = newObjectRenderMode == 2 ? 0.45 : 1.0;
                 s.renderMode = newObjectRenderMode == 1
                     ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard;
                 s.voxelDepth = newObjectRenderMode == 1 ? 0.30 : 0.0;
+                if (newObjectRenderMode == 2)
+                    s.interactionLabel = U8("E – použít");
                 m_sprites.push_back(s);
                 m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
                 m_sceneDirty = true;
@@ -7675,55 +8108,9 @@ void BuildInteriorEngine::renderEditorOverlay()
             ImGui::SameLine();
             ImGui::TextDisabled(U8("umístění = aktuální kamera"));
             ImGui::Separator();
-
-            if (ImGui::Button(U8("Přidat voxelovou pochodeň")))
-            {
-                SpriteDef s; s.id = "torch_" + makeSpriteId();
-                s.texture = m_textureLookup[static_cast<std::size_t>('h')] ? 'h' : 'T';
-                s.x = m_posX; s.y = m_posY; s.zOffset = 1.05; s.scale = 0.72;
-                s.renderMode = ObjectRenderMode::Voxel; s.voxelDepth = 0.16;
-                s.animated = true; s.emitsLight = true; s.lightRadius = 3.4;
-                s.lightIntensity = 0.95; s.lightHeight = 0.52; s.lightFlicker = 0.20;
-                s.animationSeed = stableSeed(s.id);
-                m_sprites.push_back(s); m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
-                m_sceneDirty = true;
-            }
-            ImGui::SameLine();
-            if (ImGui::Button(U8("Přidat voxelový oheň")))
-            {
-                SpriteDef s; s.id = "campfire_" + makeSpriteId(); s.texture = 'O';
-                s.x = m_posX; s.y = m_posY; s.scale = 1.05; s.solid = true;
-                s.renderMode = ObjectRenderMode::Voxel; s.voxelDepth = 0.62;
-                s.animated = true; s.emitsLight = true; s.lightRadius = 4.6;
-                s.lightIntensity = 1.25; s.lightHeight = 0.48; s.lightFlicker = 0.24;
-                s.animationSeed = stableSeed(s.id);
-                m_sprites.push_back(s); m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
-                m_sceneDirty = true;
-            }
-            if (ImGui::Button(U8("Přidat sud")))
-            {
-                SpriteDef s; s.id = makeSpriteId(); s.texture = 'B'; s.x = m_posX; s.y = m_posY; s.scale = 0.72; s.solid = true; s.renderMode = ObjectRenderMode::Voxel;
-                m_sprites.push_back(s); m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
-            }
-            ImGui::SameLine();
-            if (ImGui::Button(U8("Přidat studnu")))
-            {
-                SpriteDef s; s.id = makeSpriteId(); s.texture = 'W'; s.x = m_posX; s.y = m_posY; s.scale = 0.95; s.solid = true; s.renderMode = ObjectRenderMode::Voxel;
-                s.interactionLabel = U8("Kamenná studna.");
-                m_sprites.push_back(s); m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
-            }
-            ImGui::SameLine();
-            if (ImGui::Button(U8("Přidat strom")))
-            {
-                SpriteDef s; s.id = makeSpriteId(); s.texture = 'L'; s.x = m_posX; s.y = m_posY; s.scale = 1.35; s.solid = true; s.renderMode = ObjectRenderMode::Voxel;
-                m_sprites.push_back(s); m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
-            }
-            if (ImGui::Button(U8("Přidat značku přechodu")))
-            {
-                SpriteDef s; s.id = makeSpriteId(); s.texture = 'R'; s.x = m_posX; s.y = m_posY; s.scale = 0.45;
-                s.interactionLabel = U8("E – použít přechod");
-                m_sprites.push_back(s); m_editorSelectedSprite = static_cast<int>(m_sprites.size()) - 1;
-            }
+            m_editorMapTool = EditorMapTool::Objects;
+            renderEditorMap();
+            ImGui::Separator();
 
             for (int i = 0; i < static_cast<int>(m_sprites.size()); ++i)
             {
@@ -7734,27 +8121,37 @@ void BuildInteriorEngine::renderEditorOverlay()
             if (m_editorSelectedSprite >= 0 && m_editorSelectedSprite < static_cast<int>(m_sprites.size()))
             {
                 SpriteDef& s = m_sprites[m_editorSelectedSprite];
+                bool objectChanged = false;
                 char id[128]; std::snprintf(id, sizeof(id), "%s", s.id.c_str());
-                if (ImGui::InputText("Object ID", id, sizeof(id))) s.id = id;
-                texturePicker(U8("Textura objektu"), s.texture);
+                if (ImGui::InputText("Object ID", id, sizeof(id))) { s.id = id; objectChanged = true; }
+                if (texturePicker(U8("Textura objektu"), s.texture)) objectChanged = true;
                 float px = static_cast<float>(s.x), py = static_cast<float>(s.y), pz = static_cast<float>(s.zOffset), scale = static_cast<float>(s.scale);
-                if (ImGui::DragFloat("X", &px, 0.05f)) s.x = px;
-                if (ImGui::DragFloat("Y", &py, 0.05f)) s.y = py;
-                if (ImGui::DragFloat("Z offset", &pz, 0.02f)) s.zOffset = pz;
-                if (ImGui::SliderFloat("Scale", &scale, 0.10f, 4.0f, "%.2f")) s.scale = scale;
-                ImGui::Checkbox("Solid", &s.solid);
+                if (ImGui::DragFloat("X", &px, 0.05f)) { s.x = px; objectChanged = true; }
+                if (ImGui::DragFloat("Y", &py, 0.05f)) { s.y = py; objectChanged = true; }
+                if (ImGui::DragFloat("Z offset", &pz, 0.02f)) { s.zOffset = pz; objectChanged = true; }
+                if (ImGui::SliderFloat("Scale", &scale, 0.10f, 4.0f, "%.2f")) { s.scale = scale; objectChanged = true; }
+                if (ImGui::Checkbox("Solid", &s.solid)) objectChanged = true;
                 int renderMode = s.renderMode == ObjectRenderMode::Voxel ? 1 : 0;
                 const char* renderModes[] = {"Billboard", "Voxel 3D"};
                 if (ImGui::Combo("Render mode", &renderMode, renderModes, 2))
+                {
                     s.renderMode = renderMode == 1 ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard;
+                    objectChanged = true;
+                }
                 if (s.renderMode == ObjectRenderMode::Voxel)
                 {
                     float yawDegrees = static_cast<float>(s.yaw * 180.0 / kPi);
                     if (ImGui::SliderFloat("Voxel yaw", &yawDegrees, -180.0f, 180.0f, "%.0f deg"))
+                    {
                         s.yaw = yawDegrees * kPi / 180.0;
+                        objectChanged = true;
+                    }
                     float voxelDepth = static_cast<float>(s.voxelDepth);
                     if (ImGui::SliderFloat("Voxel depth (0 = auto)", &voxelDepth, 0.0f, 2.0f, "%.2f"))
+                    {
                         s.voxelDepth = voxelDepth;
+                        objectChanged = true;
+                    }
                     const TextureRef* voxelTexture = m_textureLookup[static_cast<std::size_t>(s.texture)];
                     if (voxelTexture)
                         ImGui::TextDisabled(U8("Voxelová mřížka: %d x %d, %d buněk"),
@@ -7764,17 +8161,23 @@ void BuildInteriorEngine::renderEditorOverlay()
 
                 ImGui::Separator();
                 ImGui::TextUnformatted(U8("Animace a světlo"));
-                ImGui::Checkbox(U8("Animovaný objekt"), &s.animated);
+                if (ImGui::Checkbox(U8("Animovaný objekt"), &s.animated)) objectChanged = true;
                 ImGui::SameLine();
-                ImGui::Checkbox(U8("Náhodné pořadí/časování"), &s.randomAnimation);
+                if (ImGui::Checkbox(U8("Náhodné pořadí/časování"), &s.randomAnimation)) objectChanged = true;
                 if (s.animated)
                 {
                     float minFps = static_cast<float>(s.animationMinFps);
                     float maxFps = static_cast<float>(s.animationMaxFps);
                     if (ImGui::SliderFloat(U8("Min. FPS animace"), &minFps, 1.0f, 24.0f, "%.1f"))
+                    {
                         s.animationMinFps = minFps;
+                        objectChanged = true;
+                    }
                     if (ImGui::SliderFloat(U8("Max. FPS animace"), &maxFps, minFps, 30.0f, "%.1f"))
+                    {
                         s.animationMaxFps = maxFps;
+                        objectChanged = true;
+                    }
                     const TextureRef* animatedTexture = m_textureLookup[static_cast<std::size_t>(s.texture)];
                     const int frameCount = animatedTexture
                         ? static_cast<int>(animatedTexture->animationFrames.size()) : 0;
@@ -7782,7 +8185,7 @@ void BuildInteriorEngine::renderEditorOverlay()
                                         frameCount, s.animationFrame);
                 }
 
-                ImGui::Checkbox(U8("Vyzařuje světlo"), &s.emitsLight);
+                if (ImGui::Checkbox(U8("Vyzařuje světlo"), &s.emitsLight)) objectChanged = true;
                 if (s.emitsLight)
                 {
                     float lightColor[3] = {s.lightR / 255.0f, s.lightG / 255.0f, s.lightB / 255.0f};
@@ -7791,21 +8194,26 @@ void BuildInteriorEngine::renderEditorOverlay()
                         s.lightR = static_cast<int>(std::clamp(lightColor[0], 0.0f, 1.0f) * 255.0f);
                         s.lightG = static_cast<int>(std::clamp(lightColor[1], 0.0f, 1.0f) * 255.0f);
                         s.lightB = static_cast<int>(std::clamp(lightColor[2], 0.0f, 1.0f) * 255.0f);
+                        objectChanged = true;
                     }
                     float radius = static_cast<float>(s.lightRadius);
                     float intensity = static_cast<float>(s.lightIntensity);
                     float height = static_cast<float>(s.lightHeight);
                     float flicker = static_cast<float>(s.lightFlicker);
-                    if (ImGui::SliderFloat(U8("Dosah světla"), &radius, 0.2f, 10.0f, "%.2f")) s.lightRadius = radius;
-                    if (ImGui::SliderFloat(U8("Intenzita světla"), &intensity, 0.0f, 3.0f, "%.2f")) s.lightIntensity = intensity;
-                    if (ImGui::SliderFloat(U8("Výška zdroje"), &height, -0.5f, 4.0f, "%.2f")) s.lightHeight = height;
-                    if (ImGui::SliderFloat(U8("Míra mihotání"), &flicker, 0.0f, 0.65f, "%.2f")) s.lightFlicker = flicker;
+                    if (ImGui::SliderFloat(U8("Dosah světla"), &radius, 0.2f, 10.0f, "%.2f")) { s.lightRadius = radius; objectChanged = true; }
+                    if (ImGui::SliderFloat(U8("Intenzita světla"), &intensity, 0.0f, 3.0f, "%.2f")) { s.lightIntensity = intensity; objectChanged = true; }
+                    if (ImGui::SliderFloat(U8("Výška zdroje"), &height, -0.5f, 4.0f, "%.2f")) { s.lightHeight = height; objectChanged = true; }
+                    if (ImGui::SliderFloat(U8("Míra mihotání"), &flicker, 0.0f, 0.65f, "%.2f")) { s.lightFlicker = flicker; objectChanged = true; }
                 }
 
                 char label[160]; std::snprintf(label, sizeof(label), "%s", s.interactionLabel.c_str());
-                if (ImGui::InputText("Interaction label", label, sizeof(label))) s.interactionLabel = label;
+                if (ImGui::InputText("Interaction label", label, sizeof(label))) { s.interactionLabel = label; objectChanged = true; }
                 char target[128]; std::snprintf(target, sizeof(target), "%s", s.targetInterior.c_str());
-                if (ImGui::InputText("Target interior", target, sizeof(target))) s.targetInterior = target;
+                if (ImGui::InputText("Target interior", target, sizeof(target))) { s.targetInterior = target; objectChanged = true; }
+                char targetSpawn[128]; std::snprintf(targetSpawn, sizeof(targetSpawn), "%s", s.targetSpawn.c_str());
+                if (ImGui::InputText("Target spawn", targetSpawn, sizeof(targetSpawn))) { s.targetSpawn = targetSpawn; objectChanged = true; }
+                if (objectChanged)
+                    m_sceneDirty = true;
                 if (ImGui::Button(U8("Přesunout ke kameře"))) { s.x = m_posX; s.y = m_posY; m_sceneDirty = true; }
                 ImGui::SameLine();
                 if (ImGui::Button(U8("Duplikovat objekt")))
@@ -7985,11 +8393,35 @@ void BuildInteriorEngine::renderEditorPolygons()
         changed = true;
     }
 
-    char sectorBuffer[2] = {region.sector, 0};
-    if (ImGui::InputText(U8("Sektor"), sectorBuffer, sizeof(sectorBuffer)))
+    std::vector<char> polygonSectorSymbols;
+    polygonSectorSymbols.reserve(m_sectors.size());
+    for (const auto& pair : m_sectors)
+        polygonSectorSymbols.push_back(pair.first);
+    std::sort(polygonSectorSymbols.begin(), polygonSectorSymbols.end(),
+              [](char lhs, char rhs) {
+                  return sectorCode(lhs) < sectorCode(rhs);
+              });
+    const auto polygonSectorIt = m_sectors.find(region.sector);
+    const std::string polygonSectorPreview = polygonSectorIt != m_sectors.end()
+        ? sectorDisplayLabel(region.sector) + "  |  " + polygonSectorIt->second.name
+        : sectorDisplayLabel(region.sector);
+    if (ImGui::BeginCombo(U8("Sektor"), polygonSectorPreview.c_str()))
     {
-        region.sector = sectorBuffer[0] ? sectorBuffer[0] : 'A';
-        changed = true;
+        for (char symbol : polygonSectorSymbols)
+        {
+            const SectorDef& sector = m_sectors.at(symbol);
+            const std::string label =
+                sectorDisplayLabel(symbol) + "  |  " + sector.name;
+            const bool selected = symbol == region.sector;
+            if (ImGui::Selectable(label.c_str(), selected))
+            {
+                region.sector = symbol;
+                changed = true;
+            }
+            if (selected)
+                ImGui::SetItemDefaultFocus();
+        }
+        ImGui::EndCombo();
     }
     changed |= ImGui::Checkbox(U8("Vytvořit stěny po obvodu"), &region.boundarySolid);
     int wallTextureKey = static_cast<int>(region.wallTexture);
@@ -8178,8 +8610,80 @@ void BuildInteriorEngine::renderEditorMap()
     const double mouseWorldY = minWorldY + (mouse.y - origin.y) / cellSize;
     const int mouseX = static_cast<int>(std::floor(mouseWorldX));
     const int mouseY = static_cast<int>(std::floor(mouseWorldY));
+    const bool shiftDown = ImGui::GetIO().KeyShift;
 
-    if (hovered && vectorMode)
+    auto nearestSpriteAt = [&](double worldX, double worldY) {
+        int best = -1;
+        double bestDistance = kHuge;
+        for (int i = 0; i < static_cast<int>(m_sprites.size()); ++i)
+        {
+            const SpriteDef& sprite = m_sprites[static_cast<std::size_t>(i)];
+            const double radius = std::max(0.55, sprite.scale * 0.55);
+            const double distance = std::hypot(sprite.x - worldX,
+                                               sprite.y - worldY);
+            if (distance <= radius && distance < bestDistance)
+            {
+                bestDistance = distance;
+                best = i;
+            }
+        }
+        return best;
+    };
+    auto moveSelectedSpriteTo = [&](double worldX, double worldY) {
+        if (m_editorSelectedSprite < 0 ||
+            m_editorSelectedSprite >= static_cast<int>(m_sprites.size()))
+            return false;
+        SpriteDef& sprite =
+            m_sprites[static_cast<std::size_t>(m_editorSelectedSprite)];
+        sprite.x = std::round(worldX * 4.0) / 4.0;
+        sprite.y = std::round(worldY * 4.0) / 4.0;
+        m_sceneDirty = true;
+        return true;
+    };
+
+    if (hovered && shiftDown && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+    {
+        const int pickedSprite = nearestSpriteAt(mouseWorldX, mouseWorldY);
+        if (pickedSprite >= 0)
+        {
+            m_editorSelectedSprite = pickedSprite;
+            m_status = U8("Vybrán objekt: ") +
+                m_sprites[static_cast<std::size_t>(pickedSprite)].id;
+        }
+        else if (m_editorMapTool == EditorMapTool::Objects &&
+                 moveSelectedSpriteTo(mouseWorldX, mouseWorldY))
+        {
+            m_status = U8("Objekt přesunut Shift-klikem.");
+        }
+        else if (!vectorMode && isInside(mouseX, mouseY))
+        {
+            m_editorTileBrush = cellAt(mouseX, mouseY);
+            m_editorSectorBrush = sectorSymbolAt(mouseX, mouseY);
+            m_status = U8("Převzaty vlastnosti buňky: sektor ") +
+                sectorDisplayLabel(m_editorSectorBrush);
+        }
+        else if (vectorMode)
+        {
+            for (int polygonIndex =
+                     static_cast<int>(m_polygonSectors.size()) - 1;
+                 polygonIndex >= 0; --polygonIndex)
+            {
+                const PolygonSectorRegion& region =
+                    m_polygonSectors[static_cast<std::size_t>(polygonIndex)];
+                if (!pointInPolygon(region, mouseWorldX, mouseWorldY))
+                    continue;
+                m_editorSelectedPolygon = polygonIndex;
+                m_editorSelectedPolygonVertex = -1;
+                m_editorSelectedOpening = -1;
+                m_editorSectorBrush = region.sector;
+                m_status = U8("Vybrán polygonový sektor ") +
+                    sectorDisplayLabel(region.sector);
+                break;
+            }
+        }
+    }
+
+    if (hovered && vectorMode && !shiftDown)
     {
         if (m_editorPolygonPointMode &&
             m_editorSelectedPolygon >= 0 &&
@@ -8273,7 +8777,7 @@ void BuildInteriorEngine::renderEditorMap()
             m_sceneDirty = true;
         }
     }
-    else if (hovered && !vectorMode && isInside(mouseX, mouseY))
+    else if (hovered && !vectorMode && !shiftDown && isInside(mouseX, mouseY))
     {
         if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) paintEditorCell(mouseX, mouseY, false);
         if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) paintEditorCell(mouseX, mouseY, true);
@@ -8306,9 +8810,13 @@ void BuildInteriorEngine::renderEditorMap()
                 const ImVec2 p1(p0.x + cellSize - 1.0f, p0.y + cellSize - 1.0f);
                 draw->AddRectFilled(p0, p1, fill);
                 draw->AddRect(p0, p1, imguiColor(25, 22, 18, 220));
-                char sectorText[2] = {sectorSymbolAt(x, y), 0};
+                const char symbol = sectorSymbolAt(x, y);
+                const std::string sectorText =
+                    sectorCode(symbol) >= 33 && sectorCode(symbol) <= 126
+                        ? std::string(1, symbol)
+                        : std::to_string(sectorCode(symbol));
                 draw->AddText(ImVec2(p0.x + 3.0f, p0.y + 2.0f),
-                              imguiColor(255, 232, 150), sectorText);
+                              imguiColor(255, 232, 150), sectorText.c_str());
             }
         }
     }
@@ -8387,6 +8895,46 @@ void BuildInteriorEngine::renderEditorMap()
     {
         const SpriteDef& sprite = m_sprites[static_cast<std::size_t>(i)];
         const ImVec2 point = screenPoint(sprite.x, sprite.y);
+        if (i == m_editorSelectedSprite)
+        {
+            double aspect = 1.0;
+            if (const TextureRef* texture =
+                    m_textureLookup[static_cast<std::size_t>(sprite.texture)])
+            {
+                if (texture->w > 0 && texture->h > 0)
+                    aspect = static_cast<double>(texture->w) / texture->h;
+            }
+            const double width = std::max(0.40, sprite.scale * aspect);
+            const double depth = sprite.renderMode == ObjectRenderMode::Voxel
+                ? std::max(0.30, sprite.voxelDepth > 0.0
+                    ? sprite.voxelDepth
+                    : sprite.scale * 0.32)
+                : std::max(0.30, sprite.scale * 0.28);
+            const double minX = sprite.x - width * 0.5;
+            const double maxX = sprite.x + width * 0.5;
+            const double minY = sprite.y - depth * 0.5;
+            const double maxY = sprite.y + depth * 0.5;
+            const ImVec2 p0 = screenPoint(minX, minY);
+            const ImVec2 p1 = screenPoint(maxX, maxY);
+            draw->AddRectFilled(p0, p1, imguiColor(255, 210, 82, 34));
+            draw->AddRect(p0, p1, imguiColor(255, 210, 82, 245), 0.0f, 0, 2.0f);
+            for (int gx = static_cast<int>(std::ceil(minX));
+                 gx <= static_cast<int>(std::floor(maxX)); ++gx)
+            {
+                const ImVec2 a = screenPoint(gx, minY);
+                const ImVec2 b = screenPoint(gx, maxY);
+                draw->AddLine(a, b, imguiColor(255, 210, 82, 120));
+            }
+            for (int gy = static_cast<int>(std::ceil(minY));
+                 gy <= static_cast<int>(std::floor(maxY)); ++gy)
+            {
+                const ImVec2 a = screenPoint(minX, gy);
+                const ImVec2 b = screenPoint(maxX, gy);
+                draw->AddLine(a, b, imguiColor(255, 210, 82, 120));
+            }
+            draw->AddText(ImVec2(point.x + 7.0f, point.y - 18.0f),
+                          imguiColor(255, 232, 150), sprite.id.c_str());
+        }
         draw->AddCircleFilled(point, std::max(3.0f, cellSize * 0.16f),
                               i == m_editorSelectedSprite
                                   ? imguiColor(255, 95, 65)
@@ -8456,12 +9004,12 @@ void BuildInteriorEngine::generateEditorStairs()
     const int steps = std::clamp(m_editorStairSteps, 2, 12);
     const int width = std::clamp(m_editorStairWidth, 1, 3);
 
-    if (static_cast<int>(m_editorStairFirstSector) + steps - 1 > 'Z')
+    const int firstSectorCode = sectorCode(m_editorStairFirstSector);
+    if (firstSectorCode + steps - 1 > 255)
     {
         m_status = U8("Schody potřebují více volných symbolů sektorů.");
         return;
     }
-
     const int startX = static_cast<int>(std::floor(m_posX)) + dirX[direction];
     const int startY = static_cast<int>(std::floor(m_posY)) + dirY[direction];
     const SectorDef base = sectorAtPlayer();
@@ -8474,7 +9022,8 @@ void BuildInteriorEngine::generateEditorStairs()
 
     for (int step = 0; step < steps; ++step)
     {
-        const char symbol = static_cast<char>(m_editorStairFirstSector + step);
+        const char symbol = static_cast<char>(
+            static_cast<unsigned char>(firstSectorCode + step));
         for (int lane = 0; lane < width; ++lane)
         {
             const int centeredLane = lane - (width - 1) / 2;
@@ -8505,14 +9054,15 @@ void BuildInteriorEngine::generateEditorStairs()
     // the editor was rendering them.
     for (int step = 0; step < steps; ++step)
     {
-        const char symbol = static_cast<char>(m_editorStairFirstSector + step);
+        const char symbol = static_cast<char>(
+            static_cast<unsigned char>(firstSectorCode + step));
         for (int y = 0; y < static_cast<int>(m_sectorGrid.size()); ++y)
         {
             for (int x = 0; x < static_cast<int>(m_sectorGrid[y].size()); ++x)
             {
                 if (m_sectorGrid[y][x] == symbol && !isTargetCell(x, y))
                 {
-                    m_status = U8("Sektor ") + std::string(1, symbol) +
+                    m_status = U8("Sektor ") + sectorDisplayLabel(symbol) +
                                U8(" už mapa používá. Vyber jiný první sektor.");
                     return;
                 }
@@ -8522,7 +9072,8 @@ void BuildInteriorEngine::generateEditorStairs()
 
     for (int step = 0; step < steps; ++step)
     {
-        const char symbol = static_cast<char>(m_editorStairFirstSector + step);
+        const char symbol = static_cast<char>(
+            static_cast<unsigned char>(firstSectorCode + step));
         SectorDef stairSector = base;
         stairSector.symbol = symbol;
         stairSector.id = "stair_" + std::to_string(step + 1);
@@ -8555,7 +9106,7 @@ void BuildInteriorEngine::ensureSectorGrid()
     for (int y = 0; y < static_cast<int>(m_grid.size()); ++y)
     {
         if (m_sectorGrid[y].size() != m_grid[y].size()) m_sectorGrid[y].assign(m_grid[y].size(), 'A');
-        for (char& c : m_sectorGrid[y]) if (c == ' ' || c == '\0') c = 'A';
+        for (char& c : m_sectorGrid[y]) if (c == '\0') c = 'A';
     }
 }
 

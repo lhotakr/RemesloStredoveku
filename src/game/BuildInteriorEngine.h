@@ -341,6 +341,7 @@ private:
 
     std::vector<std::vector<TextureKey>> m_grid;
     std::vector<std::string> m_sectorGrid;
+    TextureKey m_defaultSolidTexture = kNoTexture;
     std::unordered_map<TextureKey, TextureRef> m_textures;
     std::unordered_map<TextureKey, std::string> m_texturePaths;
     std::unordered_map<char, SectorDef> m_sectors;
@@ -403,6 +404,18 @@ private:
     // Per-pixel depth for hinged doors and voxel/billboard objects. Walls keep
     // their fast per-column z-buffer; dynamic geometry then adds finer depth.
     std::vector<double> m_dynamicDepthBuffer;
+    struct SurfaceOcclusionHit
+    {
+        double distance = 0.0;
+        double bottom = 0.0;
+        double top = 0.0;
+    };
+    struct SurfaceOcclusionColumn
+    {
+        std::array<SurfaceOcclusionHit, 32> hits{};
+        int count = 0;
+    };
+    std::vector<SurfaceOcclusionColumn> m_surfaceOcclusionColumns;
 
     // Vector geometry is independent of the legacy tile grid. Polygon sectors
     // are rasterized once into a small sub-cell lookup so floor/ceiling queries
@@ -418,6 +431,12 @@ private:
     {
         std::string label;
         std::string target;
+    };
+    enum class EditorMapTool
+    {
+        Tiles,
+        Polygons,
+        Objects
     };
 
     // Editor state.
@@ -436,6 +455,7 @@ private:
     bool m_editorPolygonPointMode = false;
     bool m_editorPolygonDragDirty = false;
     bool m_editorDefaultSpawnDirty = false;
+    EditorMapTool m_editorMapTool = EditorMapTool::Tiles;
     float m_editorMapCellSize = 22.0f;
 
     // Stair wizard. Stairs are authored as a run of real floor-height sectors,
@@ -559,7 +579,8 @@ private:
                                     const ProjectedVertex& c,
                                     const PolygonSectorRegion& region,
                                     const SectorDef& sector,
-                                    int surfaceKind);
+                                    int surfaceKind,
+                                    double eyeZ);
     std::uint32_t sampleSky(int x, int y, int screenW, int screenH, int horizon) const;
     void renderPortalWalls(int screenW, int screenH, int horizon, double eyeZ);
     void renderVectorWalls(int screenW, int screenH, int horizon, double eyeZ);

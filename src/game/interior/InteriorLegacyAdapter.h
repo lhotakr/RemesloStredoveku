@@ -49,6 +49,69 @@ namespace interior
             return '\0';
         }
 
+        inline std::vector<char> RuntimeSectorSymbols()
+        {
+            std::vector<char> symbols;
+            symbols.reserve(255);
+            std::vector<bool> used(256, false);
+            auto addCode = [&](int code)
+            {
+                if (code < 1 || code > 255 || used[static_cast<std::size_t>(code)])
+                    return;
+                used[static_cast<std::size_t>(code)] = true;
+                symbols.push_back(static_cast<char>(static_cast<unsigned char>(code)));
+            };
+
+            const std::string legacyPool =
+                "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
+            for (unsigned char c : legacyPool)
+                addCode(static_cast<int>(c));
+            for (int code = 33; code <= 126; ++code)
+                addCode(code);
+            for (int code = 1; code <= 255; ++code)
+                addCode(code);
+            return symbols;
+        }
+
+        inline int SectorCode(char symbol)
+        {
+            return static_cast<int>(static_cast<unsigned char>(symbol));
+        }
+
+        inline std::string SectorKeyString(char symbol)
+        {
+            const int code = SectorCode(symbol);
+            if (code >= 33 && code <= 126 && symbol != '"' && symbol != '\\')
+                return std::string(1, symbol);
+            return "#" + std::to_string(code);
+        }
+
+        inline nlohmann::json SectorCodesJson(const std::vector<std::string>& sectorGrid)
+        {
+            nlohmann::json rows = nlohmann::json::array();
+            for (const std::string& row : sectorGrid)
+            {
+                nlohmann::json codes = nlohmann::json::array();
+                for (unsigned char symbol : row)
+                    codes.push_back(static_cast<int>(symbol));
+                rows.push_back(std::move(codes));
+            }
+            return rows;
+        }
+
+        inline bool CanWriteLegacySectorGrid(const std::vector<std::string>& sectorGrid)
+        {
+            for (const std::string& row : sectorGrid)
+            {
+                for (unsigned char symbol : row)
+                {
+                    if (symbol < 33 || symbol > 126)
+                        return false;
+                }
+            }
+            return true;
+        }
+
         inline void FillRect(std::vector<std::string>& grid, const RectI& rect, char value)
         {
             for (int y = rect.y; y < rect.y + rect.h; ++y)
@@ -665,12 +728,11 @@ namespace interior
             }
         }
 
-        const std::string sectorPool =
-            "ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789";
-        if (runtimeSectors.size() > sectorPool.size())
+        const std::vector<char> sectorSymbols = detail::RuntimeSectorSymbols();
+        if (runtimeSectors.size() > sectorSymbols.size())
         {
             result.error = "Runtime renderer supports at most " +
-                std::to_string(sectorPool.size()) +
+                std::to_string(sectorSymbols.size()) +
                 " sectors after stair compilation.";
             return result;
         }
@@ -711,7 +773,7 @@ namespace interior
 
         std::unordered_map<std::string, char> sectorChars;
         for (std::size_t i = 0; i < runtimeSectors.size(); ++i)
-            sectorChars[runtimeSectors[i].id] = sectorPool[i];
+            sectorChars[runtimeSectors[i].id] = sectorSymbols[i];
 
         const RuntimeTextureKey defaultSolid = materialKeys.at(map.defaultSolidMaterialId);
         const char defaultSector = sectorChars.at(map.defaultSectorId);
@@ -753,7 +815,10 @@ namespace interior
 
         for (const SolidRegion& region : map.solidRegions)
         {
-            detail::FillRect(grid, region.rect, materialKeys.at(region.materialId));
+            const RuntimeTextureKey solidTexture = region.materialId.empty()
+                ? defaultSolid
+                : materialKeys.at(region.materialId);
+            detail::FillRect(grid, region.rect, solidTexture);
             if (!region.sectorId.empty())
                 detail::FillRect(sectorGrid, region.rect, sectorChars.at(region.sectorId));
         }
@@ -1211,8 +1276,11 @@ namespace interior
         root["name"] = map.displayName;
         root["fov_degrees"] = map.fovDegrees;
         root["eye_height"] = map.eyeHeight;
+        root["default_solid_texture_key"] = defaultSolid;
         root["grid_codes"] = grid;
-        root["sector_grid"] = sectorGrid;
+        root["sector_codes"] = detail::SectorCodesJson(sectorGrid);
+        if (detail::CanWriteLegacySectorGrid(sectorGrid))
+            root["sector_grid"] = sectorGrid;
 
         json textures = json::array();
         for (const std::string& materialId : materialIds)
@@ -1233,9 +1301,10 @@ namespace interior
         for (const SectorDef& sector : runtimeSectors)
         {
             const char symbol = sectorChars.at(sector.id);
-            sectors[std::string(1, symbol)] = {
+            sectors[detail::SectorKeyString(symbol)] = {
                 {"id", sector.id},
                 {"name", sector.displayName},
+                {"code", detail::SectorCode(symbol)},
                 {"floor_texture_key", materialKeys.at(sector.floor.materialId)},
                 {"ceiling_texture_key", sector.skyCeiling ? static_cast<RuntimeTextureKey>('K') : materialKeys.at(sector.ceiling.materialId)},
                 {"boundary_texture_key", materialKeys.at(sector.boundaryMaterialId)},
@@ -1284,9 +1353,11 @@ namespace interior
                 if (materialIt != materialKeys.end())
                     wallTexture = materialIt->second;
 
+                const char sectorSymbol = sectorIt->second;
                 polygons.push_back({
                     {"id", polygon.id},
-                    {"sector", std::string(1, sectorIt->second)},
+                    {"sector", detail::SectorKeyString(sectorSymbol)},
+                    {"sector_code", detail::SectorCode(sectorSymbol)},
                     {"boundary_solid", polygon.boundarySolid},
                     {"cuts_underlying_floor", polygon.cutsUnderlyingFloor},
                     {"has_support_bottom", polygon.hasSupportBottom},

@@ -652,6 +652,54 @@
       "id": "editor_houska1400_wooden_trough_wall",
       "kind": "wall",
       "texture": "assets/Castles/Houska1400/wooden_trough.png"
+    },
+    {
+      "id": "editor_walls_wall_4_wall",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/Walls/Wall (4).png"
+    },
+    {
+      "id": "editor_walls_wall_3_wall",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/Walls/Wall (3).png"
+    },
+    {
+      "id": "editor_houska1400_courtyard_lime_plaster_ceiling",
+      "kind": "ceiling",
+      "texture": "assets/Castles/Houska1400/courtyard_lime_plaster.png"
+    },
+    {
+      "id": "editor_houska1400_sandstone_cliff_ceiling",
+      "kind": "ceiling",
+      "texture": "assets/Castles/Houska1400/sandstone_cliff.png"
+    },
+    {
+      "historical": {
+        "certainty": "interpretive",
+        "note": "Vizuální uzávěr nechozího terénu na přechodu z 2D části do 2.5D scény.",
+        "phase": "environment",
+        "sources": [
+          "project_historical_brief"
+        ]
+      },
+      "id": "forest_rock_backdrop",
+      "kind": "wall",
+      "texture": "assets/Castles/Houska1400/forest_rock_backdrop.png"
+    },
+    {
+      "id": "forest_tree_leaf_01",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/forest_tree_leaf_01.png"
+    },
+    {
+      "id": "forest_tree_leaf_02",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/forest_tree_leaf_02.png"
+    },
+    {
+      "id": "forest_tree_leaf_03",
+      "kind": "sprite",
+      "texture": "assets/Castles/Houska1400/forest_tree_leaf_03.png"
     }
   ],
   "schema_version": 1

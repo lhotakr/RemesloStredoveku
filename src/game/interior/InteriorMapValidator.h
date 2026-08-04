@@ -211,7 +211,8 @@ namespace interior
 
         for (const SolidRegion& region : map.solidRegions)
         {
-            if (project.materials.find(region.materialId) == project.materials.end())
+            if (!region.materialId.empty() &&
+                project.materials.find(region.materialId) == project.materials.end())
                 report.errors.push_back("Solid region uses unknown material: " + region.materialId);
             if (!region.sectorId.empty() && sectorIds.find(region.sectorId) == sectorIds.end())
                 report.errors.push_back("Solid region references unknown sector: " + region.sectorId);
@@ -269,7 +270,7 @@ namespace interior
                 stair.end.x < 0.0 || stair.end.y < 0.0 || stair.end.x >= map.width || stair.end.y >= map.height)
                 report.errors.push_back("Stair " + stair.id + " lies outside map bounds.");
             if (stair.compileGeometry && stair.steps > 8)
-                report.warnings.push_back("Stair " + stair.id + " requests many generated sectors; it may exceed the 26-sector legacy limit.");
+                report.warnings.push_back("Stair " + stair.id + " requests many generated sectors; keep the compiled map under the 255-sector byte limit.");
         }
 
         std::unordered_set<std::string> wallSegmentIds;
@@ -314,8 +315,8 @@ namespace interior
                 report.errors.push_back("Entity " + entity.id + " uses unknown material: " + entity.materialId);
         }
 
-        if (map.sectors.size() + 8 > 26 && map.geometryMode == "polygon")
-            report.warnings.push_back("Polygon map is close to the legacy 26-sector limit; keep compiled stairs compact.");
+        if (map.sectors.size() + 8 > 255 && map.geometryMode == "polygon")
+            report.warnings.push_back("Polygon map is close to the 255-sector byte limit; keep compiled stairs compact.");
         if (map.historical.certainty == HistoricalCertainty::Legendary)
             report.warnings.push_back("Physical map itself is marked legendary; architecture and narrative layers should remain separate.");
 
