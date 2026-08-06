@@ -16,6 +16,7 @@
 #include <cmath>
 #include <cstdio>
 #include <cstring>
+#include <ctime>
 #include <filesystem>
 #include <fstream>
 #include <string>
@@ -59,6 +60,85 @@ static fs::path SettingsPath()
     return ProjectRootPath() / "data" / "settings" / "game_settings.json";
 }
 
+static constexpr int kSaveSlotCount = 3;
+
+static std::string DefaultSaveSlotName(int slotIndex)
+{
+    return U8("Pozice ") + std::to_string(slotIndex + 1);
+}
+
+static fs::path SaveSlotPath(int slotIndex)
+{
+    return ProjectRootPath() / "data" / "saves" / ("slot_" + std::to_string(slotIndex + 1) + ".json");
+}
+
+static std::string CurrentSaveTimestamp()
+{
+    std::time_t now = std::time(nullptr);
+    std::tm local{};
+    if (std::tm* value = std::localtime(&now))
+        local = *value;
+    char buffer[32] = "";
+    std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M", &local);
+    return buffer;
+}
+
+static bool IsSavePathLike(const std::string& value)
+{
+    return value.find(':') != std::string::npos ||
+        value.find('/') != std::string::npos ||
+        value.find('\\') != std::string::npos ||
+        value.ends_with(".json");
+}
+
+static std::string ResolveSavedInteriorLocationId(const std::string& interiorId)
+{
+    if (interiorId.empty())
+        return kDefaultHouskaLocation;
+
+    if (interiorId.starts_with("castle:") || IsSavePathLike(interiorId))
+        return interiorId;
+
+    std::error_code ec;
+    const fs::path legacyInterior = ProjectRootPath() / "data" / "interiors" / (interiorId + ".json");
+    if (fs::exists(legacyInterior, ec) && !ec)
+        return interiorId;
+
+    ec.clear();
+    const fs::path castlesRoot = ProjectRootPath() / "data" / "castles";
+    if (!fs::exists(castlesRoot, ec) || ec)
+        return interiorId;
+
+    for (fs::recursive_directory_iterator it(castlesRoot, ec), end; it != end && !ec; it.increment(ec))
+    {
+        if (!it->is_regular_file(ec))
+            continue;
+
+        const fs::path path = it->path();
+        if (path.parent_path().filename() != "maps")
+            continue;
+
+        if (path.filename() != fs::path(interiorId + ".map.json"))
+            continue;
+
+        const std::string castleId = path.parent_path().parent_path().filename().string();
+        if (!castleId.empty())
+            return "castle:" + castleId + "/" + interiorId;
+    }
+
+    return interiorId;
+}
+
+static fs::path ResolveCampaignMapPath(const std::string& mapPath)
+{
+    fs::path path(mapPath);
+    if (path.is_absolute())
+        return path;
+    if (path.has_parent_path())
+        return ProjectRootPath() / path;
+    return ProjectRootPath() / "data" / "maps" / path;
+}
+
 static ImU32 ColorU32(float r, float g, float b, float a)
 {
     return ImGui::GetColorU32(ImVec4(r, g, b, a));
@@ -73,6 +153,7 @@ static const char* T(const std::string& lang, const char* key)
     if (std::strcmp(key, "main_menu") == 0) return cs ? U8("HLAVNÍ MENU") : "MAIN MENU";
     if (std::strcmp(key, "choose_path") == 0) return cs ? U8("Vyber cestu dál.") : "Choose your path.";
     if (std::strcmp(key, "start_campaign") == 0) return cs ? U8("Zahájit kampaň") : "Start campaign";
+    if (std::strcmp(key, "load_game") == 0) return cs ? U8("Načíst hru") : "Load game";
     if (std::strcmp(key, "level_editor") == 0) return cs ? U8("Editor úrovní") : "Level editor";
     if (std::strcmp(key, "object_editor") == 0) return cs ? U8("Editor objektů") : "Object editor";
     if (std::strcmp(key, "texture_sprite_editor") == 0) return cs ? U8("Editor textur, spritů a animací") : "Texture, sprite & animation editor";
@@ -81,7 +162,27 @@ static const char* T(const std::string& lang, const char* key)
     if (std::strcmp(key, "profile_editor") == 0) return cs ? U8("Editor postavy") : "Character editor";
     if (std::strcmp(key, "settings") == 0) return cs ? U8("Nastavení") : "Settings";
     if (std::strcmp(key, "quit") == 0) return cs ? U8("Konec") : "Quit";
-    if (std::strcmp(key, "hotkeys") == 0) return cs ? U8("F11 – celá obrazovka     ESC – zpět / konec") : "F11 – fullscreen     ESC – back / quit";
+    if (std::strcmp(key, "hotkeys") == 0) return cs ? U8("F11 – celá obrazovka     ESC – zpět / herní menu") : "F11 – fullscreen     ESC – back / game menu";
+    if (std::strcmp(key, "game_menu") == 0) return cs ? U8("HERNÍ MENU") : "GAME MENU";
+    if (std::strcmp(key, "save_progress") == 0) return cs ? U8("Uložit postup") : "Save progress";
+    if (std::strcmp(key, "load_progress") == 0) return cs ? U8("Nahrát postup") : "Load progress";
+    if (std::strcmp(key, "main_menu_from_game") == 0) return cs ? U8("Do hlavního menu") : "Main menu";
+    if (std::strcmp(key, "quit_game") == 0) return cs ? U8("Ukončit hru") : "Quit game";
+    if (std::strcmp(key, "progress_saved") == 0) return cs ? U8("Postup uložen.") : "Progress saved.";
+    if (std::strcmp(key, "progress_save_failed") == 0) return cs ? U8("Postup se nepodařilo uložit.") : "Progress could not be saved.";
+    if (std::strcmp(key, "progress_missing") == 0) return cs ? U8("Žádný uložený postup nenalezen.") : "No saved progress found.";
+    if (std::strcmp(key, "progress_load_failed") == 0) return cs ? U8("Postup se nepodařilo nahrát.") : "Progress could not be loaded.";
+    if (std::strcmp(key, "save_slots_title") == 0) return cs ? U8("ULOŽIT POSTUP") : "SAVE PROGRESS";
+    if (std::strcmp(key, "load_slots_title") == 0) return cs ? U8("NAHRÁT POSTUP") : "LOAD PROGRESS";
+    if (std::strcmp(key, "slot_empty") == 0) return cs ? U8("Prázdná pozice") : "Empty slot";
+    if (std::strcmp(key, "slot_name") == 0) return cs ? U8("Název") : "Name";
+    if (std::strcmp(key, "slot_save") == 0) return cs ? U8("Uložit") : "Save";
+    if (std::strcmp(key, "slot_load") == 0) return cs ? U8("Nahrát") : "Load";
+    if (std::strcmp(key, "slot_rename") == 0) return cs ? U8("Přejmenovat") : "Rename";
+    if (std::strcmp(key, "slot_renamed") == 0) return cs ? U8("Pozice přejmenována.") : "Slot renamed.";
+    if (std::strcmp(key, "slot_rename_failed") == 0) return cs ? U8("Přejmenování se nepodařilo.") : "Rename failed.";
+    if (std::strcmp(key, "slot_saved_at") == 0) return cs ? U8("Uloženo") : "Saved";
+    if (std::strcmp(key, "slot_location") == 0) return cs ? U8("Lokace") : "Location";
     if (std::strcmp(key, "style_title") == 0) return cs ? U8("Zvol styl průchodu") : "Choose playstyle";
     if (std::strcmp(key, "style_subtitle") == 0) return cs ? U8("Jakým člověkem byl Patrik Němec předtím, než se ocitl zde?") : "Who was Patrik Němec before he arrived here?";
     if (std::strcmp(key, "back") == 0) return cs ? U8("Zpět") : "Back";
@@ -820,6 +921,692 @@ void Game::resetProfileDraft()
     m_profileStatus = T(m_settings.language, "profile_reset_done");
 }
 
+bool Game::isGameplayMode() const
+{
+    return m_mode == Mode::Campaign || m_mode == Mode::Interior2D;
+}
+
+void Game::syncInteriorMouseLookSuppression()
+{
+    if (!m_interior2D)
+        return;
+
+    const bool sharedUiOpen =
+        m_mode == Mode::Interior2D &&
+        m_campaign &&
+        m_campaign->sharedUiBlocksMouseLook();
+
+    m_interior2D->setMouseLookSuppressed(m_gameMenuOpen || sharedUiOpen);
+}
+
+void Game::openGameMenu()
+{
+    if (!isGameplayMode())
+        return;
+
+    m_gameMenuOpen = true;
+    m_saveSlotMode = SaveSlotMode::None;
+    m_gameMenuStatus.clear();
+    m_saveSlotStatus.clear();
+    resetGameMenuButtonRects();
+    releaseMouseForGameMenu();
+    syncInteriorMouseLookSuppression();
+}
+
+void Game::closeGameMenu()
+{
+    m_gameMenuOpen = false;
+    m_saveSlotMode = SaveSlotMode::None;
+    m_gameMenuStatus.clear();
+    m_saveSlotStatus.clear();
+    resetGameMenuButtonRects();
+    syncInteriorMouseLookSuppression();
+}
+
+void Game::releaseMouseForGameMenu()
+{
+    SDL_SetRelativeMouseMode(SDL_FALSE);
+    SDL_CaptureMouse(SDL_FALSE);
+    if (m_window)
+        SDL_SetWindowGrab(m_window, SDL_FALSE);
+    SDL_ShowCursor(SDL_ENABLE);
+}
+
+void Game::resetGameMenuButtonRects()
+{
+    for (UiRect& rect : m_gameMenuButtonRects)
+        rect = UiRect{};
+    m_gameMenuPressedButton = -1;
+    m_gameMenuClickHandled = false;
+}
+
+void Game::storeGameMenuButtonRect(int index)
+{
+    if (index < 0 || index >= 4)
+        return;
+
+    const ImVec2 min = ImGui::GetItemRectMin();
+    const ImVec2 max = ImGui::GetItemRectMax();
+    m_gameMenuButtonRects[index] = {min.x, min.y, max.x, max.y, true};
+}
+
+int Game::hitGameMenuButton(float x, float y) const
+{
+    for (int i = 0; i < 4; ++i)
+    {
+        const UiRect& rect = m_gameMenuButtonRects[i];
+        if (rect.valid && x >= rect.x0 && x <= rect.x1 && y >= rect.y0 && y <= rect.y1)
+            return i;
+    }
+    return -1;
+}
+
+void Game::triggerGameMenuButton(int index)
+{
+    switch (index)
+    {
+    case 0:
+        requestGameMenuAction(GameMenuAction::SaveProgress);
+        break;
+    case 1:
+        requestGameMenuAction(GameMenuAction::LoadProgress);
+        break;
+    case 2:
+        requestGameMenuAction(GameMenuAction::MainMenu);
+        break;
+    case 3:
+        requestGameMenuAction(GameMenuAction::QuitGame);
+        break;
+    default:
+        break;
+    }
+}
+
+void Game::requestGameMenuAction(GameMenuAction action)
+{
+    if (m_pendingGameMenuAction == GameMenuAction::None)
+        m_pendingGameMenuAction = action;
+}
+
+void Game::processPendingGameMenuAction()
+{
+    if (m_pendingSaveSlotIndex >= 0)
+    {
+        const int slotIndex = m_pendingSaveSlotIndex;
+        m_pendingSaveSlotIndex = -1;
+        saveProgressToSlot(slotIndex);
+    }
+
+    if (m_pendingLoadSlotIndex >= 0)
+    {
+        const int slotIndex = m_pendingLoadSlotIndex;
+        m_pendingLoadSlotIndex = -1;
+        loadProgressFromSlot(slotIndex);
+    }
+
+    const GameMenuAction action = m_pendingGameMenuAction;
+    m_pendingGameMenuAction = GameMenuAction::None;
+
+    switch (action)
+    {
+    case GameMenuAction::SaveProgress:
+        openSaveSlotMenu(SaveSlotMode::Save);
+        break;
+    case GameMenuAction::LoadProgress:
+        openSaveSlotMenu(SaveSlotMode::Load);
+        break;
+    case GameMenuAction::MainMenu:
+        returnToMainMenuFromGame();
+        break;
+    case GameMenuAction::QuitGame:
+        m_running = false;
+        break;
+    case GameMenuAction::None:
+        break;
+    }
+}
+
+bool Game::handleGameMenuMouseEvent(const SDL_Event& e)
+{
+    if (e.type == SDL_MOUSEBUTTONDOWN && e.button.button == SDL_BUTTON_LEFT)
+    {
+        m_gameMenuPressedButton = hitGameMenuButton((float)e.button.x, (float)e.button.y);
+        return m_gameMenuPressedButton >= 0;
+    }
+
+    if (e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_LEFT)
+    {
+        const int releasedButton = hitGameMenuButton((float)e.button.x, (float)e.button.y);
+        const int pressedButton = m_gameMenuPressedButton;
+        m_gameMenuPressedButton = -1;
+
+        if (pressedButton >= 0 && pressedButton == releasedButton)
+        {
+            m_gameMenuClickHandled = true;
+            triggerGameMenuButton(pressedButton);
+            return true;
+        }
+    }
+
+    return false;
+}
+
+void Game::openSaveSlotMenu(SaveSlotMode mode)
+{
+    if (mode == SaveSlotMode::Save && !isGameplayMode())
+        return;
+
+    m_saveSlotMode = mode;
+    m_saveSlotStatus.clear();
+    loadSaveSlotNameBuffers();
+
+    if (isGameplayMode())
+    {
+        m_gameMenuOpen = true;
+        releaseMouseForGameMenu();
+        syncInteriorMouseLookSuppression();
+    }
+}
+
+void Game::closeSaveSlotMenu()
+{
+    m_saveSlotMode = SaveSlotMode::None;
+    m_saveSlotStatus.clear();
+    m_pendingSaveSlotIndex = -1;
+    m_pendingLoadSlotIndex = -1;
+}
+
+void Game::loadSaveSlotNameBuffers()
+{
+    for (int i = 0; i < kSaveSlotCount; ++i)
+    {
+        std::string name = DefaultSaveSlotName(i);
+        std::ifstream f(SaveSlotPath(i), std::ios::binary);
+        if (f)
+        {
+            try
+            {
+                json j;
+                f >> j;
+                name = j.value("slot_name", name);
+            }
+            catch (...) {}
+        }
+
+        std::snprintf(m_saveSlotNameBuffers[i], sizeof(m_saveSlotNameBuffers[i]), "%s", name.c_str());
+    }
+}
+
+Game::SaveSlotSummary Game::readSaveSlotSummary(int slotIndex) const
+{
+    SaveSlotSummary summary;
+    summary.name = DefaultSaveSlotName(slotIndex);
+
+    std::ifstream f(SaveSlotPath(slotIndex), std::ios::binary);
+    if (!f)
+        return summary;
+
+    try
+    {
+        json j;
+        f >> j;
+        summary.exists = true;
+        summary.name = j.value("slot_name", summary.name);
+        summary.savedAt = j.value("saved_at", std::string());
+
+        const std::string saveMode = j.value("mode", std::string("campaign"));
+        if (saveMode == "interior_2d")
+        {
+            const std::string interiorId = ResolveSavedInteriorLocationId(
+                j.value("interior_id", std::string(kDefaultHouskaLocation)));
+            summary.location = std::string("2.5D: ") + interiorId;
+        }
+        else
+        {
+            const std::string campaignMap = j.value("campaign_map", std::string());
+            const std::string mapName = campaignMap.empty()
+                ? std::string("campaign")
+                : fs::path(campaignMap).filename().string();
+            summary.location = std::string("Kampaň: ") + mapName;
+        }
+    }
+    catch (...)
+    {
+        summary.exists = false;
+    }
+
+    return summary;
+}
+
+std::string Game::saveSlotName(int slotIndex) const
+{
+    if (slotIndex < 0 || slotIndex >= kSaveSlotCount)
+        return DefaultSaveSlotName(0);
+
+    std::string name = m_saveSlotNameBuffers[slotIndex];
+    if (name.empty())
+        name = DefaultSaveSlotName(slotIndex);
+    return name;
+}
+
+void Game::requestSaveSlotAction(int slotIndex)
+{
+    if (slotIndex >= 0 && slotIndex < kSaveSlotCount)
+        m_pendingSaveSlotIndex = slotIndex;
+}
+
+void Game::requestLoadSlotAction(int slotIndex)
+{
+    if (slotIndex >= 0 && slotIndex < kSaveSlotCount)
+        m_pendingLoadSlotIndex = slotIndex;
+}
+
+bool Game::saveProgressToSlot(int slotIndex)
+{
+    if (!isGameplayMode())
+        return false;
+    if (slotIndex < 0 || slotIndex >= kSaveSlotCount)
+        return false;
+
+    json j;
+    j["version"] = 1;
+    j["slot"] = slotIndex + 1;
+    j["slot_name"] = saveSlotName(slotIndex);
+    j["saved_at"] = CurrentSaveTimestamp();
+    j["mode"] = (m_mode == Mode::Interior2D) ? "interior_2d" : "campaign";
+
+    if (m_campaign)
+    {
+        j["campaign_map"] = m_campaign->currentMapPath();
+        j["campaign_player"] = {
+            {"x", m_campaign->playerX()},
+            {"y", m_campaign->playerY()}
+        };
+    }
+
+    if (m_mode == Mode::Interior2D && m_interior2D)
+    {
+        double x = 0.0;
+        double y = 0.0;
+        double angle = 0.0;
+        double pitch = 0.0;
+        m_interior2D->getPlayerPose(x, y, angle, pitch);
+
+        j["interior_id"] = m_interior2D->currentInteriorLocationId();
+        j["interior_player"] = {
+            {"x", x},
+            {"y", y},
+            {"angle", angle},
+            {"pitch", pitch}
+        };
+    }
+
+    const fs::path p = SaveSlotPath(slotIndex);
+    std::error_code ec;
+    fs::create_directories(p.parent_path(), ec);
+
+    std::ofstream f(p, std::ios::binary | std::ios::trunc);
+    if (!f)
+    {
+        m_saveSlotStatus = T(m_settings.language, "progress_save_failed");
+        return false;
+    }
+
+    f << j.dump(2);
+    const bool saved = f.good();
+    m_saveSlotStatus = saveSlotName(slotIndex) + ": " + T(m_settings.language, saved ? "progress_saved" : "progress_save_failed");
+    return saved;
+}
+
+bool Game::loadProgressFromSlot(int slotIndex)
+{
+    if (slotIndex < 0 || slotIndex >= kSaveSlotCount)
+        return false;
+
+    const fs::path p = SaveSlotPath(slotIndex);
+    std::ifstream f(p, std::ios::binary);
+    if (!f)
+    {
+        m_saveSlotStatus = T(m_settings.language, "progress_missing");
+        return false;
+    }
+
+    json j;
+    try
+    {
+        f >> j;
+    }
+    catch (...)
+    {
+        m_saveSlotStatus = T(m_settings.language, "progress_load_failed");
+        return false;
+    }
+
+    const std::string saveMode = j.value("mode", std::string("campaign"));
+    const std::string campaignMap = j.value("campaign_map", std::string());
+    const std::string interiorId = ResolveSavedInteriorLocationId(
+        j.value("interior_id", std::string(kDefaultHouskaLocation)));
+    const json campaignPlayer = j.value("campaign_player", json::object());
+    const json interiorPlayer = j.value("interior_player", json::object());
+
+    m_gameMenuOpen = false;
+    m_saveSlotMode = SaveSlotMode::None;
+    if (m_interior2D)
+        leaveInterior2D();
+    if (m_campaign)
+        leaveCampaign();
+
+    if (saveMode == "interior_2d")
+    {
+        if (!campaignMap.empty())
+            enterCampaign(campaignMap);
+
+        if (m_campaign && campaignPlayer.is_object())
+        {
+            const float x = campaignPlayer.value("x", m_campaign->playerX());
+            const float y = campaignPlayer.value("y", m_campaign->playerY());
+            m_campaign->setPlayerPosition(x, y);
+        }
+
+        enterInterior2D(interiorId);
+        if (!m_interior2D)
+        {
+            m_gameMenuOpen = isGameplayMode();
+            m_saveSlotStatus = T(m_settings.language, "progress_load_failed");
+            syncInteriorMouseLookSuppression();
+            return false;
+        }
+
+        if (interiorPlayer.is_object())
+        {
+            double x = 0.0;
+            double y = 0.0;
+            double angle = 0.0;
+            double pitch = 0.0;
+            m_interior2D->getPlayerPose(x, y, angle, pitch);
+            x = interiorPlayer.value("x", x);
+            y = interiorPlayer.value("y", y);
+            angle = interiorPlayer.value("angle", angle);
+            pitch = interiorPlayer.value("pitch", pitch);
+            m_interior2D->setPlayerPose(x, y, angle, pitch);
+        }
+    }
+    else
+    {
+        enterCampaign(campaignMap);
+        if (!m_campaign)
+        {
+            m_gameMenuOpen = false;
+            m_saveSlotStatus = T(m_settings.language, "progress_load_failed");
+            syncInteriorMouseLookSuppression();
+            return false;
+        }
+
+        if (campaignPlayer.is_object())
+        {
+            const float x = campaignPlayer.value("x", m_campaign->playerX());
+            const float y = campaignPlayer.value("y", m_campaign->playerY());
+            m_campaign->setPlayerPosition(x, y);
+        }
+    }
+
+    m_gameMenuStatus.clear();
+    m_saveSlotStatus.clear();
+    syncInteriorMouseLookSuppression();
+    return true;
+}
+
+bool Game::renameSaveSlot(int slotIndex)
+{
+    if (slotIndex < 0 || slotIndex >= kSaveSlotCount)
+        return false;
+
+    const fs::path p = SaveSlotPath(slotIndex);
+    std::ifstream in(p, std::ios::binary);
+    if (!in)
+    {
+        m_saveSlotStatus = T(m_settings.language, "progress_missing");
+        return false;
+    }
+
+    json j;
+    try
+    {
+        in >> j;
+    }
+    catch (...)
+    {
+        m_saveSlotStatus = T(m_settings.language, "slot_rename_failed");
+        return false;
+    }
+
+    j["slot_name"] = saveSlotName(slotIndex);
+    std::ofstream out(p, std::ios::binary | std::ios::trunc);
+    if (!out)
+    {
+        m_saveSlotStatus = T(m_settings.language, "slot_rename_failed");
+        return false;
+    }
+
+    out << j.dump(2);
+    const bool renamed = out.good();
+    m_saveSlotStatus = T(m_settings.language, renamed ? "slot_renamed" : "slot_rename_failed");
+    return renamed;
+}
+
+void Game::returnToMainMenuFromGame()
+{
+    m_gameMenuOpen = false;
+    m_saveSlotMode = SaveSlotMode::None;
+    m_saveSlotStatus.clear();
+    if (m_interior2D)
+        leaveInterior2D();
+    if (m_campaign)
+        leaveCampaign();
+
+    m_mode = Mode::Menu;
+    syncInteriorMouseLookSuppression();
+    m_audio.playMusic("assets/audio/menu.ogg", -1, 400);
+}
+
+void Game::renderGameMenuOverlay(int screenW, int screenH)
+{
+    releaseMouseForGameMenu();
+    ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+
+    ImGuiIO& io = ImGui::GetIO();
+    const ImVec2 vp(
+        io.DisplaySize.x > 0.0f ? io.DisplaySize.x : (float)screenW,
+        io.DisplaySize.y > 0.0f ? io.DisplaySize.y : (float)screenH);
+
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(vp, ImGuiCond_Always);
+    ImGui::SetNextWindowFocus();
+
+    ImGuiWindowFlags flags =
+        ImGuiWindowFlags_NoDecoration |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoSavedSettings |
+        ImGuiWindowFlags_NoScrollbar |
+        ImGuiWindowFlags_NoScrollWithMouse |
+        ImGuiWindowFlags_NoBackground;
+
+    ImGui::Begin("##GameMenuOverlay", nullptr, flags);
+
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    dl->AddRectFilled(ImVec2(0.0f, 0.0f), vp, ColorU32(0.0f, 0.0f, 0.0f, 0.66f));
+
+    const float panelW = std::min(500.0f, std::max(330.0f, vp.x - 56.0f));
+    const float panelH = m_gameMenuStatus.empty() ? 380.0f : 425.0f;
+    const ImVec2 panelSize(panelW, std::min(panelH, std::max(340.0f, vp.y - 56.0f)));
+    const ImVec2 panelPos(
+        (vp.x - panelSize.x) * 0.5f,
+        (vp.y - panelSize.y) * 0.5f);
+
+    DrawMenuFrame(panelPos, panelSize);
+
+    const float innerX = panelPos.x + 38.0f;
+    const float innerW = panelSize.x - 76.0f;
+    ImGui::SetCursorScreenPos(ImVec2(innerX, panelPos.y + 34.0f));
+    ImGui::BeginGroup();
+
+    ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", T(m_settings.language, "game_menu"));
+    ImGui::Dummy(ImVec2(1.0f, 18.0f));
+
+    const ImVec2 btnSize(innerW, 48.0f);
+    if (MedievalMenuButton(T(m_settings.language, "save_progress"), btnSize, true) && !m_gameMenuClickHandled)
+        triggerGameMenuButton(0);
+    storeGameMenuButtonRect(0);
+
+    ImGui::Spacing();
+    if (MedievalMenuButton(T(m_settings.language, "load_progress"), btnSize) && !m_gameMenuClickHandled)
+        triggerGameMenuButton(1);
+    storeGameMenuButtonRect(1);
+
+    ImGui::Spacing();
+    if (MedievalMenuButton(T(m_settings.language, "main_menu_from_game"), btnSize) && !m_gameMenuClickHandled)
+        triggerGameMenuButton(2);
+    storeGameMenuButtonRect(2);
+
+    ImGui::Spacing();
+    if (MedievalMenuButton(T(m_settings.language, "quit_game"), btnSize) && !m_gameMenuClickHandled)
+        triggerGameMenuButton(3);
+    storeGameMenuButtonRect(3);
+
+    if (!m_gameMenuStatus.empty())
+    {
+        ImGui::Dummy(ImVec2(1.0f, 14.0f));
+        WrappedTextAtWidth(m_gameMenuStatus.c_str(), innerW, ImVec4(0.78f, 0.88f, 0.62f, 1.0f));
+    }
+
+    ImGui::EndGroup();
+    ImGui::End();
+    m_gameMenuClickHandled = false;
+}
+
+void Game::renderSaveSlotMenu(int screenW, int screenH)
+{
+    if (m_gameMenuOpen)
+        releaseMouseForGameMenu();
+    ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
+
+    ImGuiIO& io = ImGui::GetIO();
+    const ImVec2 vp(
+        io.DisplaySize.x > 0.0f ? io.DisplaySize.x : (float)screenW,
+        io.DisplaySize.y > 0.0f ? io.DisplaySize.y : (float)screenH);
+
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(vp, ImGuiCond_Always);
+    ImGui::SetNextWindowFocus();
+
+    ImGuiWindowFlags flags =
+        ImGuiWindowFlags_NoDecoration |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoSavedSettings |
+        ImGuiWindowFlags_NoScrollbar |
+        ImGuiWindowFlags_NoScrollWithMouse |
+        ImGuiWindowFlags_NoBackground;
+
+    ImGui::Begin("##SaveSlotOverlay", nullptr, flags);
+
+    ImDrawList* dl = ImGui::GetWindowDrawList();
+    dl->AddRectFilled(ImVec2(0.0f, 0.0f), vp, ColorU32(0.0f, 0.0f, 0.0f, 0.68f));
+
+    const float panelW = std::min(900.0f, std::max(620.0f, vp.x - 72.0f));
+    const float panelH = std::min(650.0f, std::max(560.0f, vp.y - 72.0f));
+    const ImVec2 panelSize(panelW, panelH);
+    const ImVec2 panelPos((vp.x - panelSize.x) * 0.5f, (vp.y - panelSize.y) * 0.5f);
+    DrawMenuFrame(panelPos, panelSize);
+
+    const float innerX = panelPos.x + 38.0f;
+    const float innerY = panelPos.y + 32.0f;
+    const float innerW = panelSize.x - 76.0f;
+    const char* title = m_saveSlotMode == SaveSlotMode::Save
+        ? T(m_settings.language, "save_slots_title")
+        : T(m_settings.language, "load_slots_title");
+
+    ImGui::SetCursorScreenPos(ImVec2(innerX, innerY));
+    ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", title);
+
+    const float rowH = 112.0f;
+    const float rowGap = 14.0f;
+    float rowY = innerY + 58.0f;
+
+    for (int i = 0; i < kSaveSlotCount; ++i)
+    {
+        const SaveSlotSummary summary = readSaveSlotSummary(i);
+        const ImVec2 rowPos(innerX, rowY);
+        const ImVec2 rowSize(innerW, rowH);
+        dl->AddRectFilled(rowPos, ImVec2(rowPos.x + rowSize.x, rowPos.y + rowSize.y),
+            ColorU32(0.07f, 0.052f, 0.034f, 0.82f), 8.0f);
+        dl->AddRect(rowPos, ImVec2(rowPos.x + rowSize.x, rowPos.y + rowSize.y),
+            summary.exists ? ColorU32(0.82f, 0.64f, 0.34f, 0.42f) : ColorU32(0.58f, 0.48f, 0.34f, 0.24f),
+            8.0f, 0, 1.0f);
+
+        ImGui::PushID(i);
+
+        ImGui::SetCursorScreenPos(ImVec2(rowPos.x + 18.0f, rowPos.y + 16.0f));
+        ImGui::TextColored(ImVec4(0.82f, 0.74f, 0.56f, 1.0f), "%s %d", U8("Pozice"), i + 1);
+
+        const float inputX = rowPos.x + 118.0f;
+        const float actionW = 150.0f;
+        const float inputW = std::max(220.0f, rowSize.x - 118.0f - actionW - 42.0f);
+        ImGui::SetCursorScreenPos(ImVec2(inputX, rowPos.y + 12.0f));
+        ImGui::PushItemWidth(inputW);
+        ImGui::InputText("##slotName", m_saveSlotNameBuffers[i], sizeof(m_saveSlotNameBuffers[i]));
+        ImGui::PopItemWidth();
+
+        ImGui::SetCursorScreenPos(ImVec2(inputX, rowPos.y + 52.0f));
+        if (summary.exists)
+        {
+            ImGui::TextColored(ImVec4(0.68f, 0.84f, 0.56f, 1.0f), "%s: %s",
+                T(m_settings.language, "slot_saved_at"), summary.savedAt.empty() ? "-" : summary.savedAt.c_str());
+            ImGui::SetCursorScreenPos(ImVec2(inputX, rowPos.y + 76.0f));
+            ImGui::TextColored(ImVec4(0.76f, 0.70f, 0.58f, 1.0f), "%s: %s",
+                T(m_settings.language, "slot_location"), summary.location.c_str());
+        }
+        else
+        {
+            ImGui::TextColored(ImVec4(0.62f, 0.58f, 0.48f, 1.0f), "%s", T(m_settings.language, "slot_empty"));
+        }
+
+        ImGui::SetCursorScreenPos(ImVec2(rowPos.x + rowSize.x - actionW - 18.0f, rowPos.y + 18.0f));
+        if (m_saveSlotMode == SaveSlotMode::Save)
+        {
+            if (MedievalMenuButton(T(m_settings.language, "slot_save"), ImVec2(actionW, 44.0f), true))
+                requestSaveSlotAction(i);
+        }
+        else
+        {
+            const char* loadLabel = summary.exists ? T(m_settings.language, "slot_load") : T(m_settings.language, "slot_empty");
+            if (MedievalMenuButton(loadLabel, ImVec2(actionW, 44.0f), summary.exists) && summary.exists)
+                requestLoadSlotAction(i);
+
+            if (summary.exists)
+            {
+                ImGui::SetCursorScreenPos(ImVec2(rowPos.x + rowSize.x - actionW - 18.0f, rowPos.y + 70.0f));
+                if (ImGui::Button(T(m_settings.language, "slot_rename"), ImVec2(actionW, 28.0f)))
+                    renameSaveSlot(i);
+            }
+        }
+
+        ImGui::PopID();
+        rowY += rowH + rowGap;
+    }
+
+    ImGui::SetCursorScreenPos(ImVec2(innerX, panelPos.y + panelSize.y - 66.0f));
+    if (MedievalMenuButton(T(m_settings.language, "back"), ImVec2(170.0f, 46.0f)))
+        closeSaveSlotMenu();
+
+    if (!m_saveSlotStatus.empty())
+    {
+        ImGui::SetCursorScreenPos(ImVec2(innerX + 190.0f, panelPos.y + panelSize.y - 54.0f));
+        WrappedTextAtWidth(m_saveSlotStatus.c_str(), innerW - 210.0f, ImVec4(0.78f, 0.88f, 0.62f, 1.0f));
+    }
+
+    ImGui::End();
+}
+
 bool Game::init(SDL_Window* window)
 {
     m_window = window;
@@ -986,7 +1773,7 @@ void Game::leaveTextureSpriteEditor()
     m_mode = Mode::Menu;
 }
 
-void Game::enterInterior2D(const std::string& interiorId)
+void Game::enterInterior2D(const std::string& interiorId, const std::string& spawnId)
 {
     if (m_interior2D) return;
 
@@ -1006,7 +1793,7 @@ void Game::enterInterior2D(const std::string& interiorId)
     const std::string requestedInterior = interiorId.empty()
         ? std::string(kDefaultHouskaLocation)
         : interiorId;
-    if (!m_interior2D->loadInterior(requestedInterior))
+    if (!m_interior2D->loadInteriorAtSpawn(requestedInterior, spawnId))
     {
         const std::string error = m_interior2D->lastError().empty()
             ? std::string("Cannot load requested 2.5D map: ") + requestedInterior
@@ -1020,7 +1807,9 @@ void Game::enterInterior2D(const std::string& interiorId)
     }
 
     m_interior2D->setEditorMode(false);
+    m_interior2D->setRuntimeOverlayVisible(m_campaign == nullptr);
     m_mode = Mode::Interior2D;
+    syncInteriorMouseLookSuppression();
 }
 
 void Game::enterInteriorEditor(const std::string& interiorId)
@@ -1057,22 +1846,26 @@ void Game::enterInteriorEditor(const std::string& interiorId)
     }
 
     m_interior2D->setEditorMode(true);
+    m_gameMenuOpen = false;
     m_mode = Mode::InteriorEditor;
+    syncInteriorMouseLookSuppression();
 }
 
 void Game::leaveInterior2D()
 {
     if (!m_interior2D) return;
+    m_gameMenuOpen = false;
     m_interior2D->shutdown();
     delete m_interior2D;
     m_interior2D = nullptr;
-    m_mode = Mode::Menu;
+    m_mode = m_campaign ? Mode::Campaign : Mode::Menu;
 }
 
-void Game::enterCampaign()
+void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId)
 {
     if (m_campaign) return;
 
+    m_gameMenuOpen = false;
     campaignflow::SetSelectedBackground(m_pendingBackground);
 
     m_campaign = new Campaign();
@@ -1085,12 +1878,36 @@ void Game::enterCampaign()
         return;
     }
 
+    if (!mapPath.empty() && !loadCampaignMap(mapPath, spawnId))
+    {
+        m_campaign->shutdown();
+        delete m_campaign;
+        m_campaign = nullptr;
+        return;
+    }
+
     m_mode = Mode::Campaign;
+}
+
+bool Game::loadCampaignMap(const std::string& mapPath, const std::string& spawnId)
+{
+    if (!m_campaign)
+        return false;
+
+    const fs::path target = ResolveCampaignMapPath(mapPath);
+    if (m_campaign->loadMap(target.string(), spawnId))
+        return true;
+
+    const std::string error = "Cannot load campaign map: " + target.string();
+    SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Campaign map load failed",
+        error.c_str(), m_window);
+    return false;
 }
 
 void Game::leaveCampaign()
 {
     if (!m_campaign) return;
+    m_gameMenuOpen = false;
     m_campaign->shutdown();
     delete m_campaign;
     m_campaign = nullptr;
@@ -1110,9 +1927,6 @@ void Game::toggleFullscreen()
 void Game::handleEvent(const SDL_Event& e)
 {
     ImGui_ImplSDL2_ProcessEvent(&e);
-
-    if (m_mode == Mode::Campaign && m_campaign)
-        m_campaign->handleEvent(e);
 
     if (e.type == SDL_QUIT) {
         m_running = false;
@@ -1143,8 +1957,17 @@ void Game::handleEvent(const SDL_Event& e)
         return;
     }
 
-    if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE) {
-        if (m_mode == Mode::Editor) {
+    if (e.type == SDL_KEYDOWN && e.key.repeat == 0 && e.key.keysym.sym == SDLK_ESCAPE) {
+        if (m_saveSlotMode != SaveSlotMode::None) {
+            closeSaveSlotMenu();
+        }
+        else if (m_gameMenuOpen) {
+            closeGameMenu();
+        }
+        else if (m_mode == Mode::Campaign || m_mode == Mode::Interior2D) {
+            openGameMenu();
+        }
+        else if (m_mode == Mode::Editor) {
             leaveEditor();
         }
         else if (m_mode == Mode::ObjectEditor) {
@@ -1153,19 +1976,43 @@ void Game::handleEvent(const SDL_Event& e)
         else if (m_mode == Mode::TextureSpriteEditor) {
             leaveTextureSpriteEditor();
         }
-        else if (m_mode == Mode::Interior2D || m_mode == Mode::InteriorEditor) {
+        else if (m_mode == Mode::InteriorEditor) {
             leaveInterior2D();
-        }
-        else if (m_mode == Mode::Campaign) {
-            leaveCampaign();
         }
         else if (m_mode == Mode::StyleSelect || m_mode == Mode::Settings || m_mode == Mode::ProfileEditor) {
             m_mode = Mode::Menu;
         }
         else {
-            m_running = false;
+            m_mode = Mode::Menu;
         }
         return;
+    }
+
+    if (m_saveSlotMode != SaveSlotMode::None)
+        return;
+
+    if (m_gameMenuOpen)
+    {
+        handleGameMenuMouseEvent(e);
+        return;
+    }
+
+    if (m_mode == Mode::Campaign && m_campaign)
+    {
+        m_campaign->handleEvent(e);
+        return;
+    }
+    else if (m_mode == Mode::Interior2D && m_campaign)
+    {
+        if (m_campaign->handleSharedUiEvent(e))
+        {
+            syncInteriorMouseLookSuppression();
+            return;
+        }
+
+        syncInteriorMouseLookSuppression();
+        if (m_campaign->sharedUiBlocksMouseLook())
+            return;
     }
 
     if (m_mode == Mode::Editor && m_editor) {
@@ -1201,6 +2048,12 @@ void Game::update(float dt)
         }
     }
 
+    processPendingGameMenuAction();
+
+    syncInteriorMouseLookSuppression();
+    if (m_gameMenuOpen && isGameplayMode())
+        return;
+
     if (m_mode == Mode::Editor && m_editor) {
         m_editor->update(dt);
     }
@@ -1212,9 +2065,36 @@ void Game::update(float dt)
     }
     else if ((m_mode == Mode::Interior2D || m_mode == Mode::InteriorEditor) && m_interior2D) {
         m_interior2D->update(dt);
+
+        if (m_mode == Mode::Interior2D)
+        {
+            if (m_campaign)
+                m_campaign->updateSharedRuntime(dt);
+
+            std::string campaignMap;
+            std::string campaignSpawn;
+            if (m_interior2D->consumePendingCampaignTransition(campaignMap, campaignSpawn))
+            {
+                if (m_campaign)
+                {
+                    if (loadCampaignMap(campaignMap, campaignSpawn))
+                        leaveInterior2D();
+                }
+                else
+                {
+                    leaveInterior2D();
+                    enterCampaign(campaignMap, campaignSpawn);
+                }
+            }
+        }
     }
     else if (m_mode == Mode::Campaign && m_campaign) {
         m_campaign->update(dt);
+
+        std::string interiorId;
+        std::string interiorSpawn;
+        if (m_campaign->consumePendingInteriorTransition(interiorId, interiorSpawn))
+            enterInterior2D(interiorId, interiorSpawn);
     }
 }
 
@@ -1227,7 +2107,7 @@ void Game::render()
     // Gameplay/editor UI uses a smaller readable workspace scale.
     // Main menu/settings stay at 100 % so the styled menu keeps its composition.
     ImGui::GetIO().FontGlobalScale =
-        (m_mode == Mode::Menu || m_mode == Mode::StyleSelect || m_mode == Mode::Settings || m_mode == Mode::ProfileEditor || m_mode == Mode::TextureSpriteEditor)
+        (m_saveSlotMode != SaveSlotMode::None || m_gameMenuOpen || m_mode == Mode::Menu || m_mode == Mode::StyleSelect || m_mode == Mode::Settings || m_mode == Mode::ProfileEditor || m_mode == Mode::TextureSpriteEditor)
         ? 1.0f
         : 0.70f;
 
@@ -1265,7 +2145,7 @@ void Game::render()
 
         if (m_mode == Mode::Menu)
         {
-            const ImVec2 panelSize(450.0f, 735.0f);
+            const ImVec2 panelSize(450.0f, 790.0f);
             const ImVec2 panelPos(
                 (vp.x - panelSize.x) * 0.5f,
                 std::max(170.0f, (vp.y - panelSize.y) * 0.52f));
@@ -1282,6 +2162,10 @@ void Game::render()
             const ImVec2 btnSize(374.0f, 48.0f);
             if (MedievalMenuButton(T(m_settings.language, "start_campaign"), btnSize, true))
                 m_mode = Mode::StyleSelect;
+
+            ImGui::Spacing();
+            if (MedievalMenuButton(T(m_settings.language, "load_game"), btnSize, true))
+                openSaveSlotMenu(SaveSlotMode::Load);
 
             ImGui::Spacing();
             if (MedievalMenuButton(T(m_settings.language, "level_editor"), btnSize))
@@ -1584,13 +2468,22 @@ void Game::render()
     else if (m_mode == Mode::Interior2D || m_mode == Mode::InteriorEditor)
     {
         if (m_interior2D)
+        {
             m_interior2D->render();
+            if (m_mode == Mode::Interior2D && m_campaign)
+                m_campaign->renderSharedHudOverlay();
+        }
     }
     else if (m_mode == Mode::Campaign)
     {
         if (m_campaign)
             m_campaign->render();
     }
+
+    if (m_saveSlotMode != SaveSlotMode::None)
+        renderSaveSlotMenu(screenW, screenH);
+    else if (m_gameMenuOpen)
+        renderGameMenuOverlay(screenW, screenH);
 
     if (m_settings.showFps)
     {

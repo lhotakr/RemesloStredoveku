@@ -27,6 +27,7 @@ add_executable(RemesloStredoveku
         src/game/CampaignLighting.cpp
         src/game/CampaignCollision.cpp
         src/game/CampaignRender.cpp
+        src/game/CampaignSharedRuntime.cpp
         src/game/CampaignUpdate.cpp
         src/game/CampaignInit.cpp
         src/game/CampaignFogOfWar.cpp

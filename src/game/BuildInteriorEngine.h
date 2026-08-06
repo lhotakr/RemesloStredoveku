@@ -32,13 +32,20 @@ public:
     void render();
 
     bool loadInterior(const std::string& interiorIdOrPath);
+    bool loadInteriorAtSpawn(const std::string& interiorIdOrPath, const std::string& spawnId);
     bool saveInterior(const std::string& interiorIdOrPath = "");
+    bool consumePendingCampaignTransition(std::string& outMap, std::string& outSpawnId);
 
     void setEditorMode(bool enabled);
     bool editorMode() const { return m_editorMode; }
+    void setRuntimeOverlayVisible(bool visible);
+    void setMouseLookSuppressed(bool suppressed);
+    void getPlayerPose(double& outX, double& outY, double& outAngle, double& outPitch) const;
+    void setPlayerPose(double x, double y, double angle, double pitch);
 
     const std::string& lastError() const { return m_lastError; }
     const std::string& currentInteriorId() const { return m_currentInteriorId; }
+    std::string currentInteriorLocationId() const;
 
 private:
     using TextureKey = std::uint16_t;
@@ -338,6 +345,8 @@ private:
     std::string m_loadedCastleMapId;
     std::string m_lastError;
     std::string m_status;
+    std::string m_pendingCampaignTransitionMap;
+    std::string m_pendingCampaignTransitionSpawnId;
 
     std::vector<std::vector<TextureKey>> m_grid;
     std::vector<std::string> m_sectorGrid;
@@ -381,6 +390,8 @@ private:
 
     bool m_mouseLook = false;
     bool m_editorMode = false;
+    bool m_runtimeOverlayVisible = true;
+    bool m_mouseLookSuppressed = false;
     bool m_wasUseKeyDown = false;
     bool m_wasRecoverKeyDown = false;
     bool m_wasJumpKeyDown = false;
@@ -477,9 +488,9 @@ private:
     bool m_editorPreview3D = false;
     bool m_fastFloorCasting = true;
 
-    bool loadInteriorAtSpawn(const std::string& interiorIdOrPath, const std::string& spawnId);
     bool loadInteriorAtSpawnUnsafe(const std::string& interiorIdOrPath, const std::string& spawnId);
     void swapLoadedMapState(BuildInteriorEngine& other);
+    bool requestCampaignTransitionIfNeeded(const std::string& targetLocation, const std::string& spawnId);
     bool loadCastleEntityOverlay(const std::string& castleId, const std::string& mapId);
     bool loadCastleGeometryOverlay(const std::string& castleId, const std::string& mapId);
     bool saveCastleGeometryOverlay();

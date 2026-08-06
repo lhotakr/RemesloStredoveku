@@ -1,5 +1,7 @@
 #include "Campaign.h"
 
+#include "Utf8.h"
+
 #include <cmath>
 #include <algorithm>
 #include <filesystem>
@@ -595,6 +597,9 @@ void Campaign::tryInteractWithNpc()
 
 void Campaign::tryUseMapLinkUnderPlayer()
 {
+    if (!m_pendingInteriorTransitionId.empty())
+        return;
+
     const SDL_Rect playerRect = m_player.worldAABB();
 
     for (int y = 0; y < m_map.height(); ++y)
@@ -627,6 +632,17 @@ void Campaign::tryUseMapLinkUnderPlayer()
             {
                 if (link.id != linkId)
                     continue;
+
+                if (!link.targetLocation.empty())
+                {
+                    m_pendingInteriorTransitionId = link.targetLocation;
+                    m_pendingInteriorTransitionSpawnId = link.targetSpawnId;
+                    consoleLog(U8("Vstupuješ do 2.5D lokace: ") + link.targetLocation);
+                    return;
+                }
+
+                if (link.targetMap.empty())
+                    return;
 
                 std::filesystem::path target =
                     pathutils::MapsDir() / link.targetMap;

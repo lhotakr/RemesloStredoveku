@@ -61,9 +61,18 @@ public:
 	void update(float dt);
     bool isPlayerNearQuestObject(const std::string& objectId, int radiusPx) const;
     void render();
+    bool handleSharedUiEvent(const SDL_Event& e);
+    void updateSharedRuntime(float dt);
+    void renderSharedHudOverlay();
 
     bool loadMap(const std::string& path, const std::string& spawnId);
     bool saveMap(const std::string& path);
+    bool consumePendingInteriorTransition(std::string& outInteriorId, std::string& outSpawnId);
+    bool sharedUiBlocksMouseLook() const;
+    const std::string& currentMapPath() const { return m_currentMapPath; }
+    float playerX() const;
+    float playerY() const;
+    void setPlayerPosition(float x, float y);
 
 	NpcDefinitionRegistry m_npcDefinitions;
 
@@ -71,6 +80,7 @@ public:
 	{
 		int id = 0;
 		std::string targetMap;
+		std::string targetLocation;
 		std::string targetSpawnId;
 	};
 
@@ -176,6 +186,7 @@ private:
 	float computeSkyDarkness() const; // 0 = fully bright, 1 = fully dark
 	void updateSkyOverlay(float dt);
 	void renderSkyOverlay();
+	void renderSharedTimeOverlay();
 
 	// lighting
 	SDL_Texture* m_lightMask = nullptr; // for dynamic lighting (e.g. torch light around player)
@@ -207,6 +218,8 @@ private:
     void tryInteractWithNpc();
     void tryUseMapLinkUnderPlayer();
     void renderNpcDialog();
+    std::string m_pendingInteriorTransitionId;
+    std::string m_pendingInteriorTransitionSpawnId;
 
 	// dialogs
     DialogManager m_dialogManager;
@@ -525,5 +538,3 @@ private:
 	void clearFoodPoisoning(const std::string& reason = std::string());
 	std::string activeFoodPoisoningStatusText() const;
 };
-
-

@@ -12,6 +12,7 @@
 #include <cmath>
 #include <cctype>
 #include <cstdio>
+#include <cstring>
 #include <filesystem>
 #include <fstream>
 #include <limits>
@@ -71,6 +72,16 @@ bool isPathLike(const std::string& value)
     return value.find('/') != std::string::npos ||
            value.find('\\') != std::string::npos ||
            value.ends_with(".json");
+}
+
+bool parseCampaignLocation(const std::string& value, std::string& outMap)
+{
+    constexpr const char* prefix = "campaign:";
+    if (!value.starts_with(prefix))
+        return false;
+
+    outMap = value.substr(std::strlen(prefix));
+    return !outMap.empty();
 }
 
 bool isEmptyCell(std::uint16_t value)
@@ -328,9 +339,25 @@ void BuildInteriorEngine::setEditorMode(bool enabled)
     m_sceneDirty = true;
 }
 
+void BuildInteriorEngine::setRuntimeOverlayVisible(bool visible)
+{
+    m_runtimeOverlayVisible = visible;
+}
+
+std::string BuildInteriorEngine::currentInteriorLocationId() const
+{
+    if (!m_loadedCastleId.empty() && !m_loadedCastleMapId.empty())
+        return "castle:" + m_loadedCastleId + "/" + m_loadedCastleMapId;
+
+    if (!m_loadedPath.empty())
+        return m_loadedPath;
+
+    return m_currentInteriorId;
+}
+
 void BuildInteriorEngine::setMouseLookEnabled(bool enabled)
 {
-    if (m_editorMode)
+    if (m_editorMode || m_mouseLookSuppressed)
         enabled = false;
 
     if (!enabled)
@@ -341,6 +368,42 @@ void BuildInteriorEngine::setMouseLookEnabled(bool enabled)
     }
 
     m_mouseLook = SDL_SetRelativeMouseMode(SDL_TRUE) == 0;
+}
+
+void BuildInteriorEngine::setMouseLookSuppressed(bool suppressed)
+{
+    if (m_mouseLookSuppressed == suppressed)
+        return;
+
+    m_mouseLookSuppressed = suppressed;
+    setMouseLookEnabled(!m_editorMode && !m_mouseLookSuppressed);
+}
+
+void BuildInteriorEngine::getPlayerPose(double& outX, double& outY, double& outAngle, double& outPitch) const
+{
+    outX = m_posX;
+    outY = m_posY;
+    outAngle = m_angle;
+    outPitch = m_pitch;
+}
+
+void BuildInteriorEngine::setPlayerPose(double x, double y, double angle, double pitch)
+{
+    if (!std::isfinite(x) || !std::isfinite(y) || !std::isfinite(angle) || !std::isfinite(pitch))
+        return;
+
+    m_posX = x;
+    m_posY = y;
+    m_angle = wrapAngle(angle);
+    m_pitch = std::clamp(pitch, -0.52, 0.52);
+    m_lastSafeX = x;
+    m_lastSafeY = y;
+    m_moveBlend = 0.0;
+    m_verticalVelocity = 0.0;
+    m_grounded = true;
+    m_playerZInitialized = false;
+    m_cameraFloorInitialized = false;
+    m_sceneDirty = true;
 }
 
 void BuildInteriorEngine::shutdown()
@@ -388,6 +451,20 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
         return;
     if (m_editorMode)
         return;
+    if (m_mouseLookSuppressed)
+    {
+        setMouseLookEnabled(false);
+        return;
+    }
+
+    const ImGuiIO& io = ImGui::GetIO();
+    const bool mouseEvent =
+        e.type == SDL_MOUSEBUTTONDOWN ||
+        e.type == SDL_MOUSEBUTTONUP ||
+        e.type == SDL_MOUSEMOTION ||
+        e.type == SDL_MOUSEWHEEL;
+    if (mouseEvent && io.WantCaptureMouse)
+        return;
 
     if (e.type == SDL_WINDOWEVENT)
     {
@@ -432,6 +509,14 @@ void BuildInteriorEngine::update(float dt)
     // A debugger pause or a dragged window must not teleport the player or
     // advance door animation by a huge step.
     dt = std::clamp(dt, 0.0f, 0.05f);
+
+    if (m_mouseLookSuppressed)
+    {
+        m_wasUseKeyDown = false;
+        m_wasRecoverKeyDown = false;
+        m_wasJumpKeyDown = false;
+        return;
+    }
 
     const double oldPosX = m_posX;
     const double oldPosY = m_posY;
@@ -660,6 +745,18 @@ bool BuildInteriorEngine::loadInterior(const std::string& interiorIdOrPath)
         loadInterior(m_currentInteriorId);
 }
 
+bool BuildInteriorEngine::consumePendingCampaignTransition(std::string& outMap, std::string& outSpawnId)
+{
+    if (m_pendingCampaignTransitionMap.empty())
+        return false;
+
+    outMap = m_pendingCampaignTransitionMap;
+    outSpawnId = m_pendingCampaignTransitionSpawnId;
+    m_pendingCampaignTransitionMap.clear();
+    m_pendingCampaignTransitionSpawnId.clear();
+    return true;
+}
+
 void BuildInteriorEngine::swapLoadedMapState(BuildInteriorEngine& other)
 {
     using std::swap;
@@ -779,6 +876,18 @@ bool BuildInteriorEngine::loadInteriorAtSpawn(const std::string& interiorIdOrPat
     sanitizeEditorState();
     rebuildRenderLights();
     m_sceneDirty = true;
+    return true;
+}
+
+bool BuildInteriorEngine::requestCampaignTransitionIfNeeded(const std::string& targetLocation, const std::string& spawnId)
+{
+    std::string targetMap;
+    if (!parseCampaignLocation(targetLocation, targetMap))
+        return false;
+
+    m_pendingCampaignTransitionMap = targetMap;
+    m_pendingCampaignTransitionSpawnId = spawnId;
+    m_status = U8("Návrat do 2D mapy: ") + targetMap;
     return true;
 }
 
@@ -5009,6 +5118,8 @@ void BuildInteriorEngine::useNearestInteraction()
         if (!sprite->targetInterior.empty())
         {
             const std::string target = sprite->targetInterior;
+            if (requestCampaignTransitionIfNeeded(target, sprite->targetSpawn))
+                return;
             if (!loadInteriorAtSpawn(target, sprite->targetSpawn))
                 m_status = U8("Přechod se nezdařil: ") + target;
             return;
@@ -5041,6 +5152,8 @@ void BuildInteriorEngine::toggleNearestDoor()
             return;
         }
         const std::string target = d->targetInterior;
+        if (requestCampaignTransitionIfNeeded(target, d->targetSpawn))
+            return;
         if (!loadInteriorAtSpawn(target, d->targetSpawn))
             m_status = U8("Nelze projít branou: ") + target;
         return;
@@ -7307,6 +7420,9 @@ void BuildInteriorEngine::renderSprites(int screenW, int screenH, int horizon, d
 
 void BuildInteriorEngine::renderOverlay()
 {
+    if (!m_runtimeOverlayVisible)
+        return;
+
     const ImGuiWindowFlags flags = ImGuiWindowFlags_NoDecoration | ImGuiWindowFlags_NoMove |
         ImGuiWindowFlags_NoSavedSettings | ImGuiWindowFlags_AlwaysAutoResize |
         ImGuiWindowFlags_NoFocusOnAppearing;
@@ -7323,7 +7439,7 @@ void BuildInteriorEngine::renderOverlay()
         ImGui::Separator();
         ImGui::TextUnformatted(U8("WASD pohyb, Shift běh, mezerník skok, E použít"));
         ImGui::TextUnformatted(U8("Myš: rozhlížení, kliknutí znovu zachytí kurzor"));
-        ImGui::TextUnformatted(U8("ESC: zpět do hlavního menu"));
+        ImGui::TextUnformatted(U8("ESC: herní menu"));
         ImGui::Text(U8("FPS %.0f | interní rozlišení %d x %d"), m_smoothedFps, m_sceneW, m_sceneH);
         ImGui::Separator();
 

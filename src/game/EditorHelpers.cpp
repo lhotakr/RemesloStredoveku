@@ -168,7 +168,7 @@ bool ContainsNoCase(const std::string& haystack, const std::string& needle)
 
 bool IsTechObject(const gameobj::ObjectDef& o)
 {
-    return !o.has_sprite;
+    return !o.has_sprite || o.HasTag("map_link") || o.HasTag("spawn");
 }
 
 int CountVisibleTechObjects(const gameobj::ObjectCatalog& cat, const std::string& filter)

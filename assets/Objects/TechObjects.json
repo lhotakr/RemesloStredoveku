@@ -88,6 +88,34 @@
     },
     {
       "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "spawn_from_HouskaForecourt_in_Houska2D",
+      "name": "Player spawn Houska forecourt --> 2D Houska",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "spawn",
+        "player"
+      ]
+    },
+    {
+      "collider": {
         "enabled": true,
         "h": 1,
         "w": 1,
@@ -106,6 +134,34 @@
       "src": {
         "h": 0,
         "w": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "map_link"
+      ]
+    },
+    {
+      "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": true,
+      "id": "map_link_houska_forecourt_portal",
+      "image": "../Interior/portal_gothic.png",
+      "name": "Portal to Houska forecourt",
+      "pivot": {
+        "x": 32,
+        "y": 96
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 96,
+        "w": 64,
         "x": 0,
         "y": 0
       },

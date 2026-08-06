@@ -1126,9 +1126,12 @@ bool Campaign::loadMapLinksForCurrentMap()
         MapLinkDef link;
         link.id = jl.value("id", 0);
         link.targetMap = jl.value("target_map", "");
+        link.targetLocation = jl.value("target_location", jl.value("target_interior", ""));
         link.targetSpawnId = jl.value("target_spawn_id", "");
+        if (link.targetSpawnId.empty())
+            link.targetSpawnId = jl.value("target_spawn", "");
 
-        if (link.id > 0 && !link.targetMap.empty())
+        if (link.id > 0 && (!link.targetMap.empty() || !link.targetLocation.empty()))
             m_currentMapLinks.push_back(std::move(link));
     }
 
@@ -1166,6 +1169,18 @@ bool Campaign::loadMap(const std::string& path, const std::string& spawnId)
 bool Campaign::saveMap(const std::string& path)
 {
     return m_map.saveToFile(path);
+}
+
+bool Campaign::consumePendingInteriorTransition(std::string& outInteriorId, std::string& outSpawnId)
+{
+    if (m_pendingInteriorTransitionId.empty())
+        return false;
+
+    outInteriorId = m_pendingInteriorTransitionId;
+    outSpawnId = m_pendingInteriorTransitionSpawnId;
+    m_pendingInteriorTransitionId.clear();
+    m_pendingInteriorTransitionSpawnId.clear();
+    return true;
 }
 
 void Campaign::loadInspectCursor()

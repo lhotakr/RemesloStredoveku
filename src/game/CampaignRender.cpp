@@ -2346,6 +2346,58 @@ void Campaign::renderForageWindow()
     ImGui::End();
 }
 
+void Campaign::renderSharedTimeOverlay()
+{
+    if (!m_renderer)
+        return;
+
+    int screenW = 0;
+    int screenH = 0;
+    SDL_GetRendererOutputSize(m_renderer, &screenW, &screenH);
+    if (screenW <= 0 || screenH <= 0)
+        return;
+
+    const float darkness = computeSkyDarkness();
+    if (darkness <= 0.01f)
+        return;
+
+    Uint8 r = 5;
+    Uint8 g = 8;
+    Uint8 b = 18;
+    float alphaScale = 145.0f;
+
+    const DayPhase phase = getDynamicDayPhase();
+    if (phase == DayPhase::Dawn || phase == DayPhase::Evening)
+    {
+        r = 52;
+        g = 31;
+        b = 20;
+        alphaScale = 92.0f;
+    }
+
+    const Uint8 alpha = static_cast<Uint8>(
+        std::clamp(static_cast<int>(darkness * alphaScale), 0, 185));
+
+    SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
+    SDL_SetRenderDrawColor(m_renderer, r, g, b, alpha);
+    SDL_Rect full{ 0, 0, screenW, screenH };
+    SDL_RenderFillRect(m_renderer, &full);
+}
+
+void Campaign::renderSharedHudOverlay()
+{
+    renderSharedTimeOverlay();
+
+    if (m_showDebugHud)
+        renderDebugHud();
+    if (m_questJournalOpen)
+        renderQuestJournal();
+    renderHud();
+    renderConsole();
+    renderInventoryUI();
+    renderQuickAccessBar();
+}
+
 void Campaign::render()
 {
     int screenW = 0, screenH = 0;
