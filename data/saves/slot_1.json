@@ -1,0 +1,19 @@
+{
+  "campaign_map": "D:\\Dev\\RemesloStredoveku\\data\\maps\\houska.rvm",
+  "campaign_player": {
+    "x": 239.61952209472656,
+    "y": 175.22686767578125
+  },
+  "interior_id": "castle:houska_1400/houska_exterior",
+  "interior_player": {
+    "angle": -1.974239533857133,
+    "pitch": 0.01720000134110452,
+    "x": 24.211266793958547,
+    "y": 37.72751705858788
+  },
+  "mode": "interior_2d",
+  "saved_at": "2026-08-06 17:46",
+  "slot": 1,
+  "slot_name": "3DTst",
+  "version": 1
+}

@@ -1,0 +1,531 @@
+{
+  "schema_version": 2,
+  "id": "remeslo_stredoveku_planned_craft_tree",
+  "name": "Planovany strom remesel",
+  "source_document": "Planovany_strom_remesel_Remeslo_stredoveku.docx",
+  "source_version": "1.0",
+  "source_date": "2026-08-11",
+  "tagline": "Pozoruj - pomoz - uc se - tvor - predej dal",
+  "design_rules": [
+    "Strom neni nakup schopnosti za zkusenostni body.",
+    "Uzel se odemkne az po znalosti, praxi, jakosti, naprave vady, pristupu a svedectvi.",
+    "Ciselny postup slouzi enginu a prehledu, ale sam o sobe nezaruci hodnost.",
+    "Kazde hlavni remeslo ma vlastni strom a vlastni dukazy zvladnuti.",
+    "Knihy pomahaji se znalosti, ale nenahradi motorickou dovednost ani mistrovu zkousku.",
+    "Chyba je soucast postupu: rozpoznani vady, oprava a hospodarne zachraneni vyrobku jsou samostatne uzly.",
+    "Vyssi vyrobky propojuji vice oboru.",
+    "Skryta vetev navratu se odemyka az porozumenim hmotnym remeslum.",
+    "Paranormalni vrstva zustava nejednoznacna."
+  ],
+  "ranks": [
+    {
+      "id": "observer",
+      "name": "Pozorovatel",
+      "order": 0,
+      "player_capability": "Vidi praci, uci se nazvy, bezpecnost, material a poradi kroku.",
+      "game_permission": "Bez samostatne vyroby; smi asistovat a popisovat chyby."
+    },
+    {
+      "id": "apprentice",
+      "name": "Ucen",
+      "order": 1,
+      "player_capability": "Provadi zakladni operace pod dohledem a opakuje je v ruznych podminkach.",
+      "game_permission": "Jednoduche vyrobky a opravy; mistr muze zasah zastavit."
+    },
+    {
+      "id": "journeyman",
+      "name": "Tovarys",
+      "order": 2,
+      "player_capability": "Zvladne cely bezny vyrobek, planuje postup a opravuje vlastni chyby.",
+      "game_permission": "Samostatna prace, cesta za dalsimi mistry a bezne zakazky."
+    },
+    {
+      "id": "specialist",
+      "name": "Specialista",
+      "order": 3,
+      "player_capability": "Voli hlubsi vetev a resi neobvykle vady, material a pozadavky.",
+      "game_permission": "Narocne zakazky a prvni mezioborove mistrovske projekty."
+    },
+    {
+      "id": "master",
+      "name": "Mistr",
+      "order": 4,
+      "player_capability": "Navrhuje postup, ruci za jakost, hospodari se zdroji a predava znalost.",
+      "game_permission": "Mistrovske vyrobky, posudky, vedeni prace a pristup ke skrytym stopam."
+    },
+    {
+      "id": "innovator",
+      "name": "Inovator",
+      "order": 5,
+      "player_capability": "Zlepsi nastroj, pripravek, konstrukci nebo postup v mezich doby.",
+      "game_permission": "Technicka zaverecna cesta s prokazanym uzitkem a spolehlivosti."
+    },
+    {
+      "id": "workshop_master",
+      "name": "Mistr dilny",
+      "order": 5,
+      "player_capability": "Ridi lidi, zasoby, terminy, bezpecnost a standard jakosti.",
+      "game_permission": "Socialne-organizacni zaverecna cesta a schopnost vychovat dalsiho pracovnika."
+    }
+  ],
+  "procedure_knowledge_states": [
+    { "id": "unknown", "name": "Neznamy", "meaning": "Hrac o postupu nevi a neumi rozlozit vyrobu predmetu." },
+    { "id": "heard", "name": "Zaslechnuty", "meaning": "Zna ucel nebo nazev; muze se ptat, hledat mistra ci suroviny." },
+    { "id": "observed", "name": "Pozorovany", "meaning": "Videl cely postup nebo dulezitou cast. UI ukaze kroky, ne jistotu uspechu." },
+    { "id": "attempted", "name": "Vyzkouseny", "meaning": "Ma za sebou alespon jeden pokus; stale vysoka nejistota a riziko." },
+    { "id": "stable", "name": "Osvojeny", "meaning": "Postup opakovane funguje v beznych podminkach a lze ho samostatne nabizet." },
+    { "id": "mastered", "name": "Zvladnuty", "meaning": "Stabilni jakost, diagnostika vad a schopnost postup vysvetlit druhemu." }
+  ],
+  "unlock_requirements": [
+    { "id": "knowledge", "name": "Znalost", "description": "Hrac postup pozoroval, slysel vysvetleni nebo jej spravne odvodil." },
+    { "id": "practice", "name": "Praxe", "description": "Provedl dilci operace v pozadovanem poctu a rozmanitosti." },
+    { "id": "quality", "name": "Jakost", "description": "Nekolik vysledku dosahlo stanovene urovne bez skryte pomoci." },
+    { "id": "defect_repair", "name": "Porucha a naprava", "description": "Poznal typickou vadu a alespon jednou ji napravil nebo praci bezpecne zastavil." },
+    { "id": "access", "name": "Pristup", "description": "Ma nastroj, pracoviste, material a svoleni majitele nebo mistra." },
+    { "id": "witness", "name": "Svedectvi", "description": "U hodnostnich uzlu praci prijme mistr, objednavatel nebo komunita." }
+  ],
+  "domain_progress_weights": {
+    "knowledge": 20,
+    "practice": 35,
+    "product_quality": 20,
+    "defects_and_repairs": 15,
+    "witness_and_teaching": 10
+  },
+  "quality_grades": [
+    { "id": "ruined", "name": "Zkazeny", "effect": "Vyrobek neplni funkci nebo je nebezpecny.", "consequence": "Ztrata materialu, mozne zraneni nebo zasah mistra." },
+    { "id": "provisional", "name": "Provizorni", "effect": "Funguje kratce nebo jen v mirnych podminkach.", "consequence": "Nizka odolnost, horsi cena, nouzove pouziti." },
+    { "id": "common", "name": "Bezny", "effect": "Odpovida kazdodenni potrebe a primerenym nakladum.", "consequence": "Standardni vykon, cena a zivotnost." },
+    { "id": "honest", "name": "Poctivy", "effect": "Nadprumerne presny, trvanlivy nebo usporny.", "consequence": "Lepsi duvera, delsi zivotnost, doporuceni mistra." },
+    { "id": "excellent", "name": "Vyborny", "effect": "Narocna prace s minimem vad a dobrym vyuzitim materialu.", "consequence": "Prestizni zakazky a pristup k mistrovskym uzlum." },
+    { "id": "masterwork", "name": "Mistrovsky", "effect": "Opakovatelna spickova jakost a spravne reseni skutecne potreby.", "consequence": "Doklad hodnosti Mistr a pribehove/spolecenske dusledky." }
+  ],
+  "outcome_factors": [
+    "material_suitability",
+    "material_cleanliness",
+    "material_moisture",
+    "hidden_material_defects",
+    "step_order",
+    "timing",
+    "temperature",
+    "force_control",
+    "precision",
+    "tool_condition",
+    "workplace_stability",
+    "light",
+    "weather",
+    "available_help",
+    "player_fatigue",
+    "player_hunger",
+    "player_pain",
+    "player_stress",
+    "player_cold",
+    "player_wetness",
+    "skill_rank",
+    "timely_defect_repair"
+  ],
+  "domains": [
+    {
+      "id": "smithing",
+      "name": "Kovarstvi",
+      "role": "Vyroba a oprava nastroju. Obor pohani zemedelstvi, drevo, stavby i dopravu; neni primarne zbranovy.",
+      "first_teachers": [ "benes_kovar" ],
+      "later_teachers": [ "hradni_mistr", "mestsky_kovar" ],
+      "workplaces": [ "kovarna_blatce", "hradni_dilny", "trh_doksy" ],
+      "modifiers": [ "attributes.strength", "attributes.dexterity", "mental.focus", "mental.observation", "attributes.endurance", "tool_condition", "forge_condition" ],
+      "specializations": [ "nastrojarstvi", "podkovarstvi", "stavebni_kovani" ],
+      "cross_domain_links": [ "woodworking", "masonry" ],
+      "master_projects": [ "sada_zemedelskych_nastroju", "kovani_mlynskeho_kola", "kompletni_kovani_vozu" ],
+      "rank_nodes": [
+        {
+          "id": "smithing.observer",
+          "rank": "observer",
+          "skills": [ "bezpecnost_vyhne", "druhy_paliva", "nastroje", "barvy_zaru", "drzeni_materialu", "prace_s_mechy" ],
+          "evidence_gate": "Udrzi spravny ohen, rozezna prilis studene a prepalene zelezo a bezpecne asistuje mistrovi.",
+          "unlocks": [ "smithing.apprentice" ]
+        },
+        {
+          "id": "smithing.apprentice",
+          "rank": "apprentice",
+          "skills": [ "rovnani", "brouseni", "hrebiky", "skoby", "haky", "jednoduche_opravy", "zakladni_kaleni_pod_dohledem" ],
+          "evidence_gate": "Vyrobi stejnorodou serii hrebiku a opravi srp bez praskliny nebo ztraty ostri.",
+          "unlocks": [ "smithing.journeyman" ]
+        },
+        {
+          "id": "smithing.journeyman",
+          "rank": "journeyman",
+          "skills": [ "sekery", "dlata", "noze", "motyky", "podkovy", "svarovani_ohnem", "tepelne_zpracovani", "odhad_materialu" ],
+          "evidence_gate": "Samostatne zhotovi nebo opravi cely pracovni nastroj a obhaji volbu postupu.",
+          "unlocks": [ "smithing.specialist" ]
+        },
+        {
+          "id": "smithing.specialist",
+          "rank": "specialist",
+          "skills": [ "volba_specializace", "slozite_spoje", "kovani", "vady_zeleza", "rizeni_teploty" ],
+          "evidence_gate": "Zakazka se skrytou vadou: hrac problem objevi, napravi a neplytva materialem.",
+          "unlocks": [ "smithing.master" ]
+        },
+        {
+          "id": "smithing.master",
+          "rank": "master",
+          "skills": [ "navrh_postupu", "hospodareni_se_zelezem", "hospodareni_s_uhlim", "diagnostika_cizich_vyrobku", "vedeni_spolecne_prace" ],
+          "evidence_gate": "Mistrovsky projekt prijme alespon jeden dalsi remeslnik zavisly na jeho spolehlivosti.",
+          "unlocks": [ "smithing.innovator", "smithing.workshop_master", "artifact.first_echo" ]
+        },
+        {
+          "id": "smithing.innovator",
+          "rank": "innovator",
+          "skills": [ "zlepseni_pripravku", "uspora_paliva", "tvar_nastroje" ],
+          "evidence_gate": "Zlepseni prokaze uzitek, spolehlivost a dobovou proveditelnost.",
+          "unlocks": []
+        },
+        {
+          "id": "smithing.workshop_master",
+          "rank": "workshop_master",
+          "skills": [ "vyuka", "zasoby", "planovani", "ruceni_za_jakost" ],
+          "evidence_gate": "Hrac uspesne vede praci a dokaze naucit pomocnika.",
+          "unlocks": []
+        }
+      ]
+    },
+    {
+      "id": "woodworking",
+      "name": "Tesarstvi a truhlarstvi",
+      "role": "Spolecna vetev do tovaryse; specialista se deli na konstrukcni tesarstvi, jemnejsi truhlarstvi nebo kolarstvi.",
+      "first_teachers": [ "matej_sedlak", "tesar" ],
+      "later_teachers": [ "tesar_doksy", "tesar_houska" ],
+      "workplaces": [ "statek", "staveniste", "hradni_udrzba", "lesni_pracoviste" ],
+      "modifiers": [ "attributes.dexterity", "attributes.strength", "mental.observation", "craft.improvisation", "survival.wood_processing", "craft.rope_work" ],
+      "specializations": [ "tesar", "truhlar", "kolar" ],
+      "optional_future_specializations": [ "becvar" ],
+      "cross_domain_links": [ "smithing", "textiles" ],
+      "master_projects": [ "nosna_cast_krovu", "presna_truhla_s_kovanim", "dvere_hradu", "vozove_kolo" ],
+      "rank_nodes": [
+        {
+          "id": "woodworking.observer",
+          "rank": "observer",
+          "skills": [ "druhy_dreva", "smer_vlaken", "vlhkost", "mereni", "bezpecna_sekera", "bezpecna_pila", "poriz", "dlato" ],
+          "evidence_gate": "Vybere vhodne drevo pro topurko, kolik a nosny prvek a vysvetli rozdil.",
+          "unlocks": [ "woodworking.apprentice" ]
+        },
+        {
+          "id": "woodworking.apprentice",
+          "rank": "apprentice",
+          "skills": [ "koliky", "topurka", "ploty", "jednoduche_spoje", "ostreni", "oprava_vrat", "hospodarske_predmety" ],
+          "evidence_gate": "Opravi plot nebo vrata tak, aby spoj drzel a drevo nepraskalo.",
+          "unlocks": [ "woodworking.journeyman" ]
+        },
+        {
+          "id": "woodworking.journeyman",
+          "rank": "journeyman",
+          "skills": [ "cep_a_dlab", "ramy", "dvere", "lavice", "truhly", "jednoduchy_nabytek", "cteni_rozmeru_z_predlohy" ],
+          "evidence_gate": "Samostatne vytvori predmet s nekolika presnymi spoji bez zakryti chyb kovem nebo lanem.",
+          "unlocks": [ "woodworking.specialist" ]
+        },
+        {
+          "id": "woodworking.specialist",
+          "rank": "specialist",
+          "skills": [ "nosnost", "stavba", "presnost", "povrch", "geometrie_kola", "spoluprace_s_kovarem" ],
+          "evidence_gate": "Zakazka, kde se chyba projevi az pri sestaveni; hrac najde pricinu.",
+          "unlocks": [ "woodworking.master" ]
+        },
+        {
+          "id": "woodworking.master",
+          "rank": "master",
+          "skills": [ "rozvrzeni_materialu", "opravy_starych_konstrukci", "krive_drevo", "vedeni_stavby", "vedeni_dilny" ],
+          "evidence_gate": "Mistrovsky projekt obstoji pri zatizeni, pocasi a kontrole objednavatele.",
+          "unlocks": [ "woodworking.innovator", "woodworking.workshop_master", "artifact.first_echo" ]
+        },
+        {
+          "id": "woodworking.innovator",
+          "rank": "innovator",
+          "skills": [ "zlepseni_spoje", "pracovni_pripravek", "vyuziti_odpadu" ],
+          "evidence_gate": "Zlepseni ma prakticky prinos pro komunitu.",
+          "unlocks": []
+        },
+        {
+          "id": "woodworking.workshop_master",
+          "rank": "workshop_master",
+          "skills": [ "rozdeleni_prace", "vyuka", "ruceni_za_stavbu" ],
+          "evidence_gate": "Hrac dokonci skupinovou praci bez ztraty jakosti.",
+          "unlocks": []
+        }
+      ]
+    },
+    {
+      "id": "pottery",
+      "name": "Hrncirstvi",
+      "role": "Nadoby pro vareni, skladovani, leciva i obchod. Vysledek vznika v nekolika dnech a chyba se casto projevi az pri vypalu.",
+      "first_teachers": [ "hrncir_duba", "hrncir_doksy", "zdislava_bylinarka" ],
+      "workplaces": [ "hrncirska_dilna", "naleziste_hliny", "susarna", "pec" ],
+      "modifiers": [ "attributes.dexterity", "mental.focus", "mental.observation", "mental.memory", "clay_moisture", "drying_quality", "kiln_temperature" ],
+      "specializations": [ "kuchynske_nadobi", "zasobni_nadoby", "kachle_a_stavebni_prvky" ],
+      "cross_domain_links": [ "cooking", "herbalism", "masonry" ],
+      "master_projects": [ "sada_kuchynskeho_nadobi", "velka_zasobnice", "kachle_pro_kamna" ],
+      "rank_nodes": [
+        { "id": "pottery.observer", "rank": "observer", "skills": [ "rozpoznani_hliny", "cisteni", "hneneni", "konzistence", "casti_kruhu", "casti_pece", "bezpecne_suseni" ], "evidence_gate": "Pripravi hlinu bez kaminku a vzduchovych kapes a vybere vhodne suseni.", "unlocks": [ "pottery.apprentice" ] },
+        { "id": "pottery.apprentice", "rank": "apprentice", "skills": [ "rucni_misky", "jednoduche_nadoby_na_kruhu", "uchy", "orezani", "zakladni_vypal" ], "evidence_gate": "Vyrobi nekolik nadob stejne velikosti, vetsina prezije suseni i vypal.", "unlocks": [ "pottery.journeyman" ] },
+        { "id": "pottery.journeyman", "rank": "journeyman", "skills": [ "tenkostenne_nadoby", "poklice", "dzbany", "engoba", "jednoducha_vyzdoba", "skladani_pece" ], "evidence_gate": "Samostatna davka pece s rozumnou zmetkovitosti a spravnym teplem.", "unlocks": [ "pottery.specialist" ] },
+        { "id": "pottery.specialist", "rank": "specialist", "skills": [ "volba_vyrobkove_vetve", "rizeni_atmosfery", "rizeni_teploty", "narocne_tvary", "praskliny", "deformace" ], "evidence_gate": "Rozpozna pricinu vady podle strepu a upravi pristi davku.", "unlocks": [ "pottery.master" ] },
+        { "id": "pottery.master", "rank": "master", "skills": [ "navrh_tvaru_podle_pouziti", "planovani_vyroby", "oprava_pece", "hospodareni_s_hlinou", "hospodareni_s_palivem", "hospodareni_s_casem" ], "evidence_gate": "Mistrovska serie obstoji pri tesnosti, tepelnem razu nebo zatizeni.", "unlocks": [ "pottery.innovator", "pottery.workshop_master", "artifact.first_echo" ] },
+        { "id": "pottery.innovator", "rank": "innovator", "skills": [ "smes_hliny", "profil_nadoby", "vedeni_tepla" ], "evidence_gate": "Zlepseni je opakovatelne a uzitecne.", "unlocks": [] },
+        { "id": "pottery.workshop_master", "rank": "workshop_master", "skills": [ "davky", "standardy", "ucednici" ], "evidence_gate": "Hrac udrzi opakovatelnou jakost, ne jeden stastny kus.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "textiles",
+      "name": "Tkani a textil",
+      "role": "Len, vlakno, prizo, tkani, siti a opravy. Prvni uzitek prichazi brzy, mistrovska latka az po dlouhem retezci.",
+      "first_teachers": [ "grete", "zeny_domacnosti" ],
+      "later_teachers": [ "tkalec", "krejci", "provaznik" ],
+      "workplaces": [ "domacnost", "pole_lnu", "macirna", "susarna", "stav", "trziste" ],
+      "modifiers": [ "attributes.dexterity", "mental.focus", "mental.memory", "craft.clothing_repair", "craft.rope_work", "fiber_quality", "cleanliness" ],
+      "specializations": [ "predeni_a_tkani", "krejcovstvi_a_opravy", "provaznictvi_a_site" ],
+      "cross_domain_links": [ "leatherworking", "woodworking", "healing" ],
+      "master_projects": [ "rovnomerne_platno", "padnouci_odev", "sada_lan_a_siti" ],
+      "rank_nodes": [
+        { "id": "textiles.observer", "rank": "observer", "skills": [ "retezec_lnu", "trideni_vlaken", "vreteno", "preslice", "stav", "vady_niti", "vady_latky" ], "evidence_gate": "Seradi kroky od sklizne po platno a pozna spatne zpracovane vlakno.", "unlocks": [ "textiles.apprentice" ] },
+        { "id": "textiles.apprentice", "rank": "apprentice", "skills": [ "lamani_lnu", "cesani_lnu", "hruba_nit", "jednoduche_zaplaty", "uzly", "kratke_provazy" ], "evidence_gate": "Vytvori pouzitelnou nit a opravi odev bez dalsiho trhani latky.", "unlocks": [ "textiles.journeyman" ] },
+        { "id": "textiles.journeyman", "rank": "journeyman", "skills": [ "rovnomerna_prize", "osnova", "utek", "jednoducha_vazba", "strih_zakladniho_odevu", "pevna_lana" ], "evidence_gate": "Dokonci cely vyrobek od vlakna po pouzitelny textilni predmet.", "unlocks": [ "textiles.specialist" ] },
+        { "id": "textiles.specialist", "rank": "specialist", "skills": [ "jemnejsi_vazby", "prizpusobeni_odevu", "dlouha_lana", "site", "nosne_uvazy" ], "evidence_gate": "Zakazka s omezenym materialem proveri planovani strihu a opravu chyby.", "unlocks": [ "textiles.master" ] },
+        { "id": "textiles.master", "rank": "master", "skills": [ "posouzeni_suroviny", "navrh_vyrobku", "barveni", "dokonceni", "organizace_domaci_vyroby", "organizace_dilny" ], "evidence_gate": "Mistrovsky vyrobek je rovnomerny, odolny a spolecensky prijatelny.", "unlocks": [ "textiles.innovator", "textiles.workshop_master", "artifact.first_echo" ] },
+        { "id": "textiles.innovator", "rank": "innovator", "skills": [ "zlepseni_pripravku", "zlepseni_vazby", "uspora_materialu" ], "evidence_gate": "Zlepseni propoji techniku, organizaci a vkus.", "unlocks": [] },
+        { "id": "textiles.workshop_master", "rank": "workshop_master", "skills": [ "navaznost_pracovniku", "hlidani_jakosti", "vyuka" ], "evidence_gate": "Hrac udrzi jakost v dlouhem retezci vice pracovniku.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "leatherworking",
+      "name": "Kozeluzstvi a prace s kuzi",
+      "role": "Dlouhodobe zpracovani surove kuze a vyroba obuvi, opasku, brasen, pochev, remeni a postroju.",
+      "first_teachers": [ "kozeluh", "svec" ],
+      "later_teachers": [ "sedlar", "remenar" ],
+      "workplaces": [ "kozeluzna", "sevcovska_dilna", "staje", "trh" ],
+      "modifiers": [ "attributes.dexterity", "attributes.strength", "attributes.endurance", "mental.focus", "condition.hygiene", "hide_quality", "tannin_quality", "processing_time" ],
+      "specializations": [ "sevcovstvi", "remenarstvi_a_brasnarstvi", "sedlarstvi_a_postroje" ],
+      "cross_domain_links": [ "textiles", "smithing", "woodworking" ],
+      "master_projects": [ "padnouci_obuv", "odolny_postroj", "remeni_pro_vuz_nebo_mlyn" ],
+      "rank_nodes": [
+        { "id": "leatherworking.observer", "rank": "observer", "skills": [ "druhy_kuzi", "stazeni", "konzervace", "cisteni", "cineni", "zapach", "hygiena_pracoviste" ], "evidence_gate": "Rozezna cerstvou, zkazenu a spatne cinenou kuzi a pripravi ji k dalsimu kroku.", "unlocks": [ "leatherworking.apprentice" ] },
+        { "id": "leatherworking.apprentice", "rank": "apprentice", "skills": [ "skrabani", "napinani", "mazani", "rezani_pasku", "sedlarsky_steh", "jednoduche_vacky", "opasky" ], "evidence_gate": "Zhotovi rovny sev a remen, ktery se pri zatizeni neroztrhne.", "unlocks": [ "leatherworking.journeyman" ] },
+        { "id": "leatherworking.journeyman", "rank": "journeyman", "skills": [ "obuv", "brasny", "pochvy", "zavesy", "remeni", "tvarovani_za_mokra", "opravy_starych_vyrobku" ], "evidence_gate": "Samostatny vyrobek projde zkouskou pohybu, zatizeni a vlhkosti.", "unlocks": [ "leatherworking.specialist" ] },
+        { "id": "leatherworking.specialist", "rank": "specialist", "skills": [ "strih_slozitych_dilu", "hospodareni_s_plochou_kuze", "kombinace_s_textilem", "kombinace_s_drevem", "kombinace_s_kovem" ], "evidence_gate": "Hrac vyuzije kuzi s prirozenymi vadami bez oslabeni dulezite casti.", "unlocks": [ "leatherworking.master" ] },
+        { "id": "leatherworking.master", "rank": "master", "skills": [ "posouzeni_cele_usne", "navrh_podle_tela", "rizeni_cineni", "vedeni_zakazky" ], "evidence_gate": "Mistrovsky vyrobek je pohodlny, opravitelny a dlouhodobe odolny.", "unlocks": [ "leatherworking.innovator", "leatherworking.workshop_master", "artifact.first_echo" ] },
+        { "id": "leatherworking.innovator", "rank": "innovator", "skills": [ "zlepseni_strihu", "zlepseni_spoje", "impregnace" ], "evidence_gate": "Zlepseni obstoji v kazdodennim pouzivani.", "unlocks": [] },
+        { "id": "leatherworking.workshop_master", "rank": "workshop_master", "skills": [ "zasoby", "cistota", "zakazky", "ucednici" ], "evidence_gate": "Hrac organizuje praci a ruci za spolehlivost.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "masonry",
+      "name": "Kamenictvi a zednictvi",
+      "role": "Od prostych oprav po osteni, schody, klenby a pece. Vyssi prace jsou skupinove projekty.",
+      "first_teachers": [ "hradni_kamenik", "zednicka_ceta", "hradni_mistr" ],
+      "workplaces": [ "lom", "staveniste", "vapenice", "hradni_zdi", "kaple", "hospodarske_stavby" ],
+      "modifiers": [ "attributes.strength", "attributes.endurance", "attributes.dexterity", "mental.observation", "mental.focus", "stone_quality", "mortar_quality", "foundation_quality" ],
+      "specializations": [ "zednictvi", "kamenicke_opracovani", "pece_krby_a_technicke_stavby" ],
+      "cross_domain_links": [ "woodworking", "smithing", "pottery" ],
+      "master_projects": [ "bezpecne_osteni", "schodiste", "opravena_hradni_zed", "dobre_tahnouci_pec" ],
+      "rank_nodes": [
+        { "id": "masonry.observer", "rank": "observer", "skills": [ "druhy_kamene", "lomove_vady", "pisek", "vapno", "malta", "zalozeni", "prenos_tezkych_kusu", "bezpecnost" ], "evidence_gate": "Vybere vhodny kamen pro vypln, lic a opracovany prvek a namicha zkusebni maltu.", "unlocks": [ "masonry.apprentice" ] },
+        { "id": "masonry.apprentice", "rank": "apprentice", "skills": [ "trideni_kamene", "jednoduche_zdivo", "sparovani", "dlazba", "zakladni_sekani", "opravy" ], "evidence_gate": "Postavi rovny usek zdi, ktery drzi vazbu a nevybouli se.", "unlocks": [ "masonry.journeyman" ] },
+        { "id": "masonry.journeyman", "rank": "journeyman", "skills": [ "rohy", "otvory", "schody", "sokly", "presnejsi_opracovani", "leseni", "cteni_sablon" ], "evidence_gate": "Dokonci stavebni prvek v cete a spravne navaze na cizi praci.", "unlocks": [ "masonry.specialist" ] },
+        { "id": "masonry.specialist", "rank": "specialist", "skills": [ "oblouky", "osteni", "kominy", "pece", "diagnostika_trhlin", "vlhkost", "sedani" ], "evidence_gate": "Opravi zavadu bez pouheho zakryti priciny.", "unlocks": [ "masonry.master" ] },
+        { "id": "masonry.master", "rank": "master", "skills": [ "rozvrzeni_stavby", "sablony", "rizeni_cety", "posouzeni_stareho_zdiva", "planovani_kamene", "planovani_malty", "planovani_casu" ], "evidence_gate": "Mistrovsky projekt obstoji po zatizeni, zatopeni pece nebo necasu.", "unlocks": [ "masonry.innovator", "masonry.workshop_master", "artifact.first_echo" ] },
+        { "id": "masonry.innovator", "rank": "innovator", "skills": [ "sablona", "tah_pece", "pracovni_postup" ], "evidence_gate": "Zlepseni je verejne viditelne a trvanlive.", "unlocks": [] },
+        { "id": "masonry.workshop_master", "rank": "workshop_master", "skills": [ "organizace_cety", "bezpecnost", "ruceni_za_stavbu" ], "evidence_gate": "Hrac vede cete praci bez ztraty bezpecnosti.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "herbalism",
+      "name": "Bylinkarstvi",
+      "role": "Prvni plna realizace. Navazuje na urcovani rostlin, volny popis znaku, sber a zpracovani.",
+      "first_teachers": [ "zdislava_bylinarka" ],
+      "later_teachers": [ "anna_matejova", "deti", "pasaci", "obyvatele" ],
+      "workplaces": [ "louky", "cesty", "potoky", "lesni_okraje", "susarna", "zdislavina_domacnost" ],
+      "modifiers": [ "survival.foraging", "mental.observation", "mental.focus", "mental.memory", "attributes.perception", "comfort.natureComfort", "season", "habitat" ],
+      "specializations": [ "poznavani_a_sber", "lecive_zpracovani", "lidove_a_obradni_pouziti" ],
+      "cross_domain_links": [ "healing", "cooking" ],
+      "master_projects": [ "herbar_regionu", "lecebna_souprava_pro_nemoc_nebo_zraneni" ],
+      "rank_nodes": [
+        { "id": "herbalism.observer", "rank": "observer", "skills": [ "tvar_listu", "tvar_kvetu", "lodyha", "stanoviste", "sezona", "bezpecne_dotykani", "rozdil_sber_vs_urceni" ], "evidence_gate": "Spravne popise znaky bezne rostliny, i kdyz jeste nezna jeji jmeno.", "unlocks": [ "herbalism.apprentice" ] },
+        { "id": "herbalism.apprentice", "rank": "apprentice", "skills": [ "jitrocel", "rebricek", "kopriva", "stovik", "zakladni_druhy", "spravna_cast", "cas_sberu", "cisteni" ], "evidence_gate": "Urci bezpecnou sadu beznych rostlin a nasbira ji bez zniceni stanoviste.", "unlocks": [ "herbalism.journeyman" ] },
+        { "id": "herbalism.journeyman", "rank": "journeyman", "skills": [ "jedovate_zameny", "suseni", "skladovani", "caje", "obklady", "masti", "spoluprace_s_ranhojicstvim" ], "evidence_gate": "Pripravi ucinnou davku a odhali jednu nebezpecnou zamenu.", "unlocks": [ "herbalism.specialist" ] },
+        { "id": "herbalism.specialist", "rank": "specialist", "skills": [ "obtizne_druhy", "kombinace", "sezonni_plan", "sila", "plisen", "znehodnoceni" ], "evidence_gate": "Vyresi pripad, kde spravna rostlina nestaci bez vhodneho sberu a zpracovani.", "unlocks": [ "herbalism.master" ] },
+        { "id": "herbalism.master", "rank": "master", "skills": [ "uceleny_herbar", "prace_s_nejistotou", "kontraindikace", "vyuka_znaku", "zasoby_pro_domacnost", "zasoby_pro_vesnici" ], "evidence_gate": "Mistrovska zkouska zahrnuje urceni, zpracovani, davku i vysvetleni rizik.", "unlocks": [ "herbalism.innovator", "herbalism.workshop_master", "artifact.first_echo" ] },
+        { "id": "herbalism.innovator", "rank": "innovator", "skills": [ "porovnani_zkusenosti", "zpresneni_smesi" ], "evidence_gate": "Znalost je opakovatelna a bezpecne predatelna.", "unlocks": [] },
+        { "id": "herbalism.workshop_master", "rank": "workshop_master", "skills": [ "vedeni_sberu", "suseni", "zaznamy", "ucednici" ], "evidence_gate": "Hrac zorganizuje sber, suseni a zaznam bez ohrozeni lidi.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "healing",
+      "name": "Ranhojicstvi",
+      "role": "Prakticka pece odpovidajici moznostem kolem roku 1400. Bez zazracneho leceni a moderni jistoty diagnozy.",
+      "first_teachers": [ "zdislava_bylinarka", "zkusene_zeny_domacnosti" ],
+      "later_teachers": [ "lazebnik", "mestsky_ranhojic" ],
+      "workplaces": [ "domacnost", "zdislavina_svetnice", "statek", "cesta", "mista_pracovnich_urazu" ],
+      "modifiers": [ "mental.observation", "mental.focus", "mental.memory", "social.empathy", "mental.stressResistance", "cleanliness", "tools", "patient_state" ],
+      "specializations": [ "rany_a_krvaceni", "kosti_a_pohybova_zraneni", "horecky_otravy_a_dlouhodoba_pece" ],
+      "cross_domain_links": [ "herbalism", "textiles", "pottery" ],
+      "master_projects": [ "vazny_pracovni_uraz", "epidemicka_situace" ],
+      "rank_nodes": [
+        { "id": "healing.observer", "rank": "observer", "skills": [ "vedomi", "dychani", "krvaceni", "bolest", "hygiena", "voda", "pradlo", "obvazy", "prostor" ], "evidence_gate": "Spravne urci poradi pomoci a nezhorsi stav zraneneho.", "unlocks": [ "healing.apprentice" ] },
+        { "id": "healing.apprentice", "rank": "apprentice", "skills": [ "cisteni_ran", "tlak", "obvaz", "drobne_popaleniny", "odpocinek", "teplo", "tekutiny", "sledovani_zhorseni" ], "evidence_gate": "Osetri lehkou ranu a pozna, kdy privolat zkusenejsiho cloveka.", "unlocks": [ "healing.journeyman" ] },
+        { "id": "healing.journeyman", "rank": "journeyman", "skills": [ "silnejsi_krvaceni", "dlahy", "horecka", "bezne_otravy", "pece_o_nemocneho", "spoluprace_s_bylinkarstvim" ], "evidence_gate": "Samostatne stabilizuje stredne tezky stav a naplanuje dalsi peci.", "unlocks": [ "healing.specialist" ] },
+        { "id": "healing.specialist", "rank": "specialist", "skills": [ "rozliseni_pricin_podle_priznaku", "prace_pod_casem", "improvizace_s_omezenymi_prostredky", "priznani_nejistoty" ], "evidence_gate": "Pripad s nejasnymi priznaky proveri rozhodnuti a ochotu priznat nejistotu.", "unlocks": [ "healing.master" ] },
+        { "id": "healing.master", "rank": "master", "skills": [ "trideni_vice_zranenych", "dlouhodobe_sledovani", "priprava_pomocniku", "prevence_nakazy", "vedeni_zaznamu" ], "evidence_gate": "Zkouska hodnoti preziti, komplikace i kvalitu nasledne pece.", "unlocks": [ "healing.innovator", "healing.workshop_master", "artifact.first_echo" ] },
+        { "id": "healing.innovator", "rank": "innovator", "skills": [ "zpresneni_postupu_pozorovanim_vysledku" ], "evidence_gate": "Postup je verohodnejsi, zodpovedny a opakovatelny.", "unlocks": [] },
+        { "id": "healing.workshop_master", "rank": "workshop_master", "skills": [ "organizace_pece", "zasoby", "vyuka" ], "evidence_gate": "Hrac ridi peci a zodpovida za druhe.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "cooking",
+      "name": "Vareni a uchovani potravin",
+      "role": "Zaklad preziti i prijeti do domacnosti. Od kase a polevky k chlebu, kvaseni, uzeni a organizaci hostiny.",
+      "first_teachers": [ "anna_matejova", "hospodyne" ],
+      "later_teachers": [ "mlynar", "rybari", "trh" ],
+      "workplaces": [ "domaci_ohniste", "pec", "mlyn", "udirna", "trziste", "komunitni_slavnosti" ],
+      "modifiers": [ "survival.cooking", "mental.focus", "mental.memory", "craft.improvisation", "survival.foodTolerance", "ingredient_quality", "container_quality", "fire_control", "hygiene" ],
+      "specializations": [ "bezna_kuchyne", "peceni_a_obili", "konzervace_kvaseni_a_napoje" ],
+      "cross_domain_links": [ "pottery", "herbalism", "milling" ],
+      "master_projects": [ "jidlo_pro_domacnost", "svatecni_hostina_bez_plytvani" ],
+      "rank_nodes": [
+        { "id": "cooking.observer", "rank": "observer", "skills": [ "druhy_ohniste", "nadoby", "voda", "suroviny", "znamky_zkazeni", "poradi_praci_v_kuchyni" ], "evidence_gate": "Pripravi pracoviste, udrzi ohen a pozna surovinu, ktera se nema pouzit.", "unlocks": [ "cooking.apprentice" ] },
+        { "id": "cooking.apprentice", "rank": "apprentice", "skills": [ "kase", "jednoduche_polevky", "placky", "bylinne_napoje", "krajeni", "davkovani", "rizeni_casu" ], "evidence_gate": "Uvari jednoduche jidlo, ktere je bezpecne, syte a nepripalene.", "unlocks": [ "cooking.journeyman" ] },
+        { "id": "cooking.journeyman", "rank": "journeyman", "skills": [ "chleb", "slozitejsi_polevky", "kombinace_surovin", "suseni", "soleni", "zakladni_kvaseni", "plan_porci" ], "evidence_gate": "Pripravi cele jidlo pro domacnost a nacasuje vice cinnosti.", "unlocks": [ "cooking.specialist" ] },
+        { "id": "cooking.specialist", "rank": "specialist", "skills": [ "testo", "maso", "ryby", "napoje", "nahrady_chybejicich_surovin", "hospodarnost" ], "evidence_gate": "Zakazka s omezenymi zasobami proveri vyzivu, chut, bezpecnost a hospodarnost.", "unlocks": [ "cooking.master" ] },
+        { "id": "cooking.master", "rank": "master", "skills": [ "sezonni_zasoby", "velke_davky", "slavnostni_jidla", "organizace_pomocniku", "diagnostika_chyb_pece", "diagnostika_kvaseni" ], "evidence_gate": "Mistrovsky projekt nasyti skupinu vcas a bez nemoci ci odpadu.", "unlocks": [ "cooking.innovator", "cooking.workshop_master", "artifact.first_echo" ] },
+        { "id": "cooking.innovator", "rank": "innovator", "skills": [ "vylepseni_postupu_z_dostupnych_surovin" ], "evidence_gate": "Zlepseni je dobove a prakticky uzitecne.", "unlocks": [] },
+        { "id": "cooking.workshop_master", "rank": "workshop_master", "skills": [ "zasoby", "ohen", "pomocnici", "vydej" ], "evidence_gate": "Hrac dokaze uzivit komunitu, ne jen uvarit drahy pokrm.", "unlocks": [] }
+      ]
+    },
+    {
+      "id": "artifact",
+      "name": "Tajemstvi artefaktu",
+      "ui_names": [ "Tajemstvi artefaktu", "Pamet mista", "Poznani motyky" ],
+      "role": "Skryta vetev navratu. Neni primo oznacena jako magie a zachovava duchovni, psychologickou i paranormalni nejednoznacnost.",
+      "first_teachers": [],
+      "workplaces": [ "houska", "mista_snu", "dilny_mistru", "komunitni_projekty" ],
+      "final_directions": [
+        { "id": "matter", "name": "Hmota", "focus": "Presnost vyrobku a obnova artefaktu." },
+        { "id": "memory", "name": "Pamet", "focus": "Historie, symboly, sny a mista." },
+        { "id": "community", "name": "Spolecenstvi", "focus": "Predani remesel, duvera a pomoc lidi." }
+      ],
+      "rank_nodes": [
+        {
+          "id": "artifact.first_echo",
+          "rank": "observer",
+          "name": "Prvni ozvena",
+          "requirements": [ { "type": "domains_at_progress", "count": 3, "min_percent": 40 } ],
+          "content": "Artefakt reaguje na poctive dokonceny vyrobek, misto nebo sen.",
+          "unlocks": [ "artifact.trace_connection" ]
+        },
+        {
+          "id": "artifact.trace_connection",
+          "rank": "apprentice",
+          "name": "Spojeni stop",
+          "requirements": [ { "type": "domains_at_progress", "count": 6, "min_percent": 60 } ],
+          "content": "V materialech, znackach mistru, zvycich a vypraveni se objevi spolecny vzorec.",
+          "unlocks": [ "artifact.memory_of_work" ]
+        },
+        {
+          "id": "artifact.memory_of_work",
+          "rank": "journeyman",
+          "name": "Pamet prace",
+          "requirements": [ { "type": "domains_at_rank", "count": 3, "rank": "master" } ],
+          "content": "Mistrovske vyrobky odemykaji casti minulosti nastroje a vazbu na Matejovu rodinu.",
+          "unlocks": [ "artifact.nine_testimonies" ]
+        },
+        {
+          "id": "artifact.nine_testimonies",
+          "rank": "specialist",
+          "name": "Devet svedectvi",
+          "requirements": [ { "type": "all_worldly_domains_at_progress", "min_percent": 80 } ],
+          "content": "Kazdy z deviti svetskych oboru doda prakticky nebo symbolicky dil zaverecneho postupu.",
+          "unlocks": [ "artifact.restoration" ]
+        },
+        {
+          "id": "artifact.restoration",
+          "rank": "master",
+          "name": "Obnova artefaktu",
+          "requirements": [ { "type": "cross_domain_master_project", "id": "motyka_obnova" } ],
+          "content": "Hrac obnovi motyku a pripravi misto, cas, nadobu, odev, lecebne prostredky a svedky.",
+          "unlocks": [ "artifact.return_or_stay" ]
+        },
+        {
+          "id": "artifact.return_or_stay",
+          "rank": "master",
+          "name": "Navrat / setrvani",
+          "requirements": [ { "type": "story_node_completed", "id": "artifact_restoration_finale" } ],
+          "content": "Zaverecny cin na Housce. Vysledek muze byt navrat, odmitnuti navratu nebo nejednoznacny konec.",
+          "unlocks": []
+        }
+      ]
+    }
+  ],
+  "cross_domain_projects": [
+    { "id": "kolarstvi", "name": "Kolarstvi", "requirements": [ { "domain": "woodworking", "rank": "journeyman" }, { "domain": "smithing", "rank": "apprentice" } ], "tests": [ "kolo", "naboj", "loukote", "obruc", "opravy_vozu" ], "judges": [ "tesar", "kovar" ] },
+    { "id": "truhla_s_kovanim", "name": "Truhla s kovanim", "requirements": [ { "domain": "woodworking", "rank": "journeyman" }, { "domain": "smithing", "rank": "apprentice" } ], "tests": [ "presny_korpus", "panty", "petlice", "zamek_volitelne" ], "judges": [ "truhlar", "kovar" ] },
+    { "id": "pec_a_kamna", "name": "Pec a kamna", "requirements": [ { "domain": "masonry", "rank": "journeyman" }, { "domain": "pottery", "rank": "journeyman" } ], "tests": [ "tah", "tepelna_roztaznost", "kachle", "bezpecny_provoz" ], "judges": [ "zednik", "hrncir" ] },
+    { "id": "lecebna_souprava", "name": "Lecebna souprava", "requirements": [ { "domain": "herbalism", "rank": "journeyman" }, { "domain": "healing", "rank": "journeyman" }, { "domain": "textiles", "rank": "journeyman" } ], "tests": [ "obvazy", "nadoby", "susene_smesi", "popisy", "bezpecne_davky" ], "judges": [ "zdislava_bylinarka", "ranhojic" ] },
+    { "id": "postroj_a_vuz", "name": "Postroj a vuz", "requirements": [ { "domain": "leatherworking", "rank": "specialist" }, { "domain": "woodworking", "rank": "journeyman" }, { "domain": "smithing", "rank": "journeyman" } ], "tests": [ "prenos_sily", "pohodli_zvirete", "remeni", "opravy" ], "judges": [ "sedlar", "kolar" ] },
+    { "id": "hradni_dvere", "name": "Hradni dvere", "requirements": [ { "domain": "woodworking", "rank": "specialist" }, { "domain": "smithing", "rank": "specialist" }, { "domain": "masonry", "rank": "specialist" } ], "tests": [ "ram", "kridlo", "zavesy", "petlice", "osteni", "osazeni" ], "judges": [ "hradni_mistr" ] },
+    { "id": "zasoby_na_zimu", "name": "Zasoby na zimu", "requirements": [ { "domain": "cooking", "rank": "specialist" }, { "domain": "pottery", "rank": "apprentice" }, { "domain": "herbalism", "rank": "apprentice" } ], "tests": [ "suseni", "soleni", "kvaseni", "nadoby", "evidence_zasob" ], "judges": [ "anna_matejova", "mlynar" ] },
+    { "id": "motyka_obnova", "name": "Obnova motyky", "requirements": [ { "domain": "smithing", "rank": "master" }, { "domain": "woodworking", "rank": "master" }, { "type": "all_other_worldly_domains_progress", "min_percent": 80 } ], "tests": [ "fyzicke_jadro_obnovy_artefaktu", "kolektivni_projekt" ], "judges": [ "komunita" ] }
+  ],
+  "side_tracks": [
+    { "id": "agriculture", "name": "Zemedelstvi", "activities": [ "orba", "seti", "seno", "zne", "skladovani" ], "links": [ "cooking", "textiles", "smithing" ], "recommended_scope": "Plna vetev az po rozsireni sezon a poli." },
+    { "id": "milling", "name": "Mlynarstvi", "activities": [ "pytle", "tok_vody", "cisteni_kamene", "mouka" ], "links": [ "cooking", "woodworking", "smithing", "masonry" ], "recommended_scope": "Silna profesni draha navazana na mlyn a Ondreje." },
+    { "id": "fishing", "name": "Rybarstvi a rybnikarstvi", "activities": [ "site", "vrse", "cluny", "ulovek", "rybniky" ], "links": [ "textiles", "woodworking", "cooking" ], "recommended_scope": "Vhodne po zapojeni Velkeho rybnika a Doks." },
+    { "id": "animal_husbandry", "name": "Chov zvirat", "activities": [ "paseni", "krmeni", "osetreni", "staj" ], "links": [ "leatherworking", "cooking", "agriculture" ], "recommended_scope": "Postup pres duveru domacnosti, ne pres vyrobu." },
+    { "id": "forestry_charcoal", "name": "Lesni prace a uhlirstvi", "activities": [ "drevo", "klesti", "milir", "zakazy_lesa" ], "links": [ "smithing", "woodworking", "cooking" ], "recommended_scope": "Rizikova surovinova vetev s pravnimi nasledky." },
+    { "id": "community_work", "name": "Stavba cest a komunitni prace", "activities": [ "mosty", "ploty", "cesty", "voda" ], "links": [ "woodworking", "masonry", "smithing" ], "recommended_scope": "Kratke spolecne projekty s vysokym vlivem na povest." }
+  ],
+  "origin_influence": [
+    { "background": "survivalist", "name": "Zalesak", "advantages": [ "drevo", "ohen", "lana", "improvizace", "sber", "pohodli_v_prirode" ], "limit": "Rychleji pochopi prakticky smysl kroku, ale nedostava automaticky stredoveke recepty ani mistrovskou presnost." },
+    { "background": "scholar_athlete", "name": "Student historie", "advantages": [ "pozorovani", "pamet", "soustredeni", "historie", "symboly", "dobove_nazvoslovi" ], "limit": "Snaz odvodi ucel nastroje a zapamatuje postup, motorickou praci musi stale nacvicit." },
+    { "background": "social_adaptable", "name": "Mestan", "advantages": [ "empatie", "etiketa", "vyjednavani", "socialni_protokol", "prace_mezi_lidmi" ], "limit": "Rychleji ziska ucitele, zakazku nebo material, prakticky zacatek ma slabsi." }
+  ],
+  "engine_design": {
+    "state_container": "CraftProgressionState",
+    "reason": "PlayerStats drzi telesne, mentalni, socialni a obecne prakticke modifikatory; trvaly stav stromu patri do samostatneho progression stavu.",
+    "planned_structs": {
+      "CraftDomain": [ "smithing", "woodworking", "pottery", "textiles", "leatherworking", "masonry", "herbalism", "healing", "cooking", "artifact" ],
+      "CraftRank": [ "Observer", "Apprentice", "Journeyman", "Specialist", "Master", "Innovator", "WorkshopMaster" ],
+      "CraftNodeDef": [ "id", "domain", "rank", "prerequisites", "requiredActions", "qualityGate", "mentorGate", "toolGate", "unlocks" ],
+      "CraftNodeState": [ "unknown", "revealed", "observed", "practiced", "completed", "counters", "best_quality" ],
+      "ProcedureKnowledge": [ "heard", "observed", "attempted", "stable", "mastered" ],
+      "CraftEvidence": [ "product", "repair", "detected_defect", "witness", "date", "workplace", "conditions" ],
+      "SpecializationState": [ "primary_specialization", "secondary_branches", "mentor", "rank_exam_completed" ]
+    },
+    "node_evaluation_steps": [
+      "Overit prerequisites a zda je uzel znamy.",
+      "Overit dostupnost mistra, pracoviste, nastroje a materialu.",
+      "Secist pouze platne dukazy; stejne snadne opakovani ma klesajici prinos.",
+      "Overit minimalni jakost, samostatnost a diagnostiku vady.",
+      "U hodnostniho uzlu vyzadat svedectvi NPC nebo komunitni projekt.",
+      "Po odemceni zapsat nove cinnosti, postupy, vyrobky, opravy a dialogove moznosti."
+    ]
+  },
+  "implementation_order": [
+    { "stage": 1, "name": "Svisly rez", "scope": "Bylinkarstvi do Tovaryse", "reason": "Navazuje na hotove urcovani rostlin, sber, inventar, statistiky a Zdislavu." },
+    { "stage": 2, "name": "Domacnost", "scope": "Vareni do Ucne", "reason": "Propoji ohen, nadoby, suroviny, cas, stav hrace a prijeti u Matejovy rodiny." },
+    { "stage": 3, "name": "Opravy", "scope": "Drevo do Ucne", "reason": "Plot, topurko a vrata daji rychle viditelne vysledky a prvni praci s vadami." },
+    { "stage": 4, "name": "Dilna", "scope": "Kovarstvi do Ucne", "reason": "Mechy, hrebiky a oprava srpu overi mentora, pracoviste a teplotni minihru." },
+    { "stage": 5, "name": "Spolecny projekt", "scope": "Lecebna souprava", "reason": "Prvni mezioborovy uzel propoji bylinky, ranhojicstvi, textil a nadoby." },
+    { "stage": 6, "name": "Rozsireni sveta", "scope": "Textil, kuze, hrncirstvi, kamen", "reason": "Prida mestske a hradni ucitele, obchodni vazby a dlouhe vyrobni retezce." },
+    { "stage": 7, "name": "Pozdni hra", "scope": "Mistrovstvi a artefakt", "reason": "Otevirat az po stabilni ekonomice, duvere NPC a viceoborovych projektech." }
+  ],
+  "definition_of_done_first_tree": [
+    "Kazdy uzel ma jasny herni ukon, podminku, vysledek a zpusob overeni.",
+    "Alespon jedna chyba je rozpoznatelna behem prace a jedna az po dokonceni.",
+    "Mentor reaguje jinak na neznalost, nepozornost, poctivy neuspech a uspesnou napravu.",
+    "Postup se ulozi a nacte bez ztraty dukazu, specializace nebo stavu znamych postupu.",
+    "Statistiky hrace modifikuji obtiznost, ale samy neodemknou uzel.",
+    "Mistrovsky vyrobek ma pouziti ve svete a viditelny dopad na lidi.",
+    "Prvni plna vetev je znovupouzitelny vzor pro ostatni obory."
+  ],
+  "ui": {
+    "recommended_layout": "domain_tabs_with_rank_ladder",
+    "node_states": [ "unknown", "heard", "observed", "attempted", "stable", "mastered" ],
+    "show_to_player": [ "rank", "known_nodes", "missing_evidence", "mentor", "workplace", "best_quality", "witness_required" ],
+    "avoid_showing_as": "xp_shop"
+  }
+}

@@ -1,0 +1,16 @@
+{
+  "campaign_map": "D:\\Dev\\RemesloStredoveku\\data\\maps\\houska.rvm",
+  "campaign_player": {
+    "x": 239.85458374023438,
+    "y": 173.9146728515625
+  },
+  "interior_id": "houska_exterior",
+  "interior_player": {
+    "angle": -1.5818395338571323,
+    "pitch": 0.0676000013411045,
+    "x": 23.912804953068797,
+    "y": 35.221856460626356
+  },
+  "mode": "interior_2d",
+  "version": 1
+}
