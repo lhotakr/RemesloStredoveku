@@ -78,7 +78,10 @@ private:
     Campaign* m_campaign = nullptr;
     AudioManager m_audio;
 
-    void enterCampaign(const std::string& mapPath = std::string(), const std::string& spawnId = std::string());
+    void enterCampaign(
+        const std::string& mapPath = std::string(),
+        const std::string& spawnId = std::string(),
+        bool useCustomStartDateTime = false);
     void leaveCampaign();
     bool loadCampaignMap(const std::string& mapPath, const std::string& spawnId);
 
@@ -139,6 +142,11 @@ private:
     bool m_running = true;
     Mode m_mode = Mode::Menu;
     PlayerStats::Background m_pendingBackground = PlayerStats::Background::ScholarAthlete;
+    int m_newCampaignStartDay = 29;
+    int m_newCampaignStartMonth = 3;
+    int m_newCampaignStartYear = 1400;
+    int m_newCampaignStartHour = 8;
+    int m_newCampaignStartMinute = 0;
     PlayerStats::Background m_profileEditBackground = PlayerStats::Background::ScholarAthlete;
     PlayerStats m_profileDraft;
     bool m_profileDraftLoaded = false;

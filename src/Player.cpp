@@ -64,10 +64,7 @@ SDL_Rect Player::worldAABB() const
 
 float Player::currentMoveSpeed() const
 {
-    float speed = stats.getMoveSpeed();
-    if (isSprinting)
-        speed *= 1.18f;
-    return speed;
+    return stats.getLimitedMoveSpeed(isSprinting);
 }
 
 void Player::update(float dt, const CharacterManager& manager)

@@ -83,6 +83,40 @@ static std::string CurrentSaveTimestamp()
     return buffer;
 }
 
+static bool IsLeapYear(int year)
+{
+    return (year % 4 == 0 && year % 100 != 0) || (year % 400 == 0);
+}
+
+static int DaysInMonth(int month, int year)
+{
+    switch (month)
+    {
+    case 1: return 31;
+    case 2: return IsLeapYear(year) ? 29 : 28;
+    case 3: return 31;
+    case 4: return 30;
+    case 5: return 31;
+    case 6: return 30;
+    case 7: return 31;
+    case 8: return 31;
+    case 9: return 30;
+    case 10: return 31;
+    case 11: return 30;
+    case 12: return 31;
+    default: return 30;
+    }
+}
+
+static void ClampCampaignStartDateTime(int& day, int& month, int& year, int& hour, int& minute)
+{
+    year = std::max(1, year);
+    month = std::clamp(month, 1, 12);
+    day = std::clamp(day, 1, DaysInMonth(month, year));
+    hour = std::clamp(hour, 0, 23);
+    minute = std::clamp(minute, 0, 59);
+}
+
 static bool IsSavePathLike(const std::string& value)
 {
     return value.find(':') != std::string::npos ||
@@ -185,6 +219,12 @@ static const char* T(const std::string& lang, const char* key)
     if (std::strcmp(key, "slot_location") == 0) return cs ? U8("Lokace") : "Location";
     if (std::strcmp(key, "style_title") == 0) return cs ? U8("Zvol styl průchodu") : "Choose playstyle";
     if (std::strcmp(key, "style_subtitle") == 0) return cs ? U8("Jakým člověkem byl Patrik Němec předtím, než se ocitl zde?") : "Who was Patrik Němec before he arrived here?";
+    if (std::strcmp(key, "start_datetime") == 0) return cs ? U8("Začátek kampaně") : "Campaign start";
+    if (std::strcmp(key, "start_day") == 0) return cs ? U8("Den") : "Day";
+    if (std::strcmp(key, "start_month") == 0) return cs ? U8("Měsíc") : "Month";
+    if (std::strcmp(key, "start_year") == 0) return cs ? U8("Rok") : "Year";
+    if (std::strcmp(key, "start_hour") == 0) return cs ? U8("Hodina") : "Hour";
+    if (std::strcmp(key, "start_minute") == 0) return cs ? U8("Minuta") : "Minute";
     if (std::strcmp(key, "back") == 0) return cs ? U8("Zpět") : "Back";
     if (std::strcmp(key, "enter_campaign") == 0) return cs ? U8("Vstoupit do kampaně") : "Enter campaign";
     if (std::strcmp(key, "settings_title") == 0) return cs ? U8("Nastavení hry") : "Game settings";
@@ -1208,54 +1248,91 @@ bool Game::saveProgressToSlot(int slotIndex)
     if (slotIndex < 0 || slotIndex >= kSaveSlotCount)
         return false;
 
-    json j;
-    j["version"] = 1;
-    j["slot"] = slotIndex + 1;
-    j["slot_name"] = saveSlotName(slotIndex);
-    j["saved_at"] = CurrentSaveTimestamp();
-    j["mode"] = (m_mode == Mode::Interior2D) ? "interior_2d" : "campaign";
-
-    if (m_campaign)
+    try
     {
-        j["campaign_map"] = m_campaign->currentMapPath();
-        j["campaign_player"] = {
-            {"x", m_campaign->playerX()},
-            {"y", m_campaign->playerY()}
-        };
+        json j;
+        j["version"] = 2;
+        j["slot"] = slotIndex + 1;
+        j["slot_name"] = saveSlotName(slotIndex);
+        j["saved_at"] = CurrentSaveTimestamp();
+        j["mode"] = (m_mode == Mode::Interior2D) ? "interior_2d" : "campaign";
+
+        if (m_campaign)
+        {
+            j["campaign_map"] = m_campaign->currentMapPath();
+            j["campaign_player"] = {
+                {"x", m_campaign->playerX()},
+                {"y", m_campaign->playerY()}
+            };
+            j["campaign_state"] = m_campaign->saveRuntimeState();
+        }
+
+        if (m_mode == Mode::Interior2D && m_interior2D)
+        {
+            double x = 0.0;
+            double y = 0.0;
+            double angle = 0.0;
+            double pitch = 0.0;
+            m_interior2D->getPlayerPose(x, y, angle, pitch);
+
+            j["interior_id"] = m_interior2D->currentInteriorLocationId();
+            j["interior_player"] = {
+                {"x", x},
+                {"y", y},
+                {"angle", angle},
+                {"pitch", pitch}
+            };
+        }
+
+        const std::string serialized = j.dump(2, ' ', false, json::error_handler_t::replace);
+
+        const fs::path p = SaveSlotPath(slotIndex);
+        fs::path tmp = p;
+        tmp += ".tmp";
+
+        std::error_code ec;
+        fs::create_directories(p.parent_path(), ec);
+
+        std::ofstream f(tmp, std::ios::binary | std::ios::trunc);
+        if (!f)
+        {
+            m_saveSlotStatus = T(m_settings.language, "progress_save_failed");
+            return false;
+        }
+
+        f << serialized << '\n';
+        f.close();
+        if (!f)
+        {
+            std::error_code rmEc;
+            fs::remove(tmp, rmEc);
+            m_saveSlotStatus = T(m_settings.language, "progress_save_failed");
+            return false;
+        }
+
+        std::error_code replaceEc;
+        fs::rename(tmp, p, replaceEc);
+        if (replaceEc)
+        {
+            std::error_code copyEc;
+            fs::copy_file(tmp, p, fs::copy_options::overwrite_existing, copyEc);
+            std::error_code rmEc;
+            fs::remove(tmp, rmEc);
+            if (copyEc)
+            {
+                m_saveSlotStatus = T(m_settings.language, "progress_save_failed");
+                return false;
+            }
+        }
+
+        m_saveSlotStatus = saveSlotName(slotIndex) + ": " + T(m_settings.language, "progress_saved");
+        return true;
     }
-
-    if (m_mode == Mode::Interior2D && m_interior2D)
-    {
-        double x = 0.0;
-        double y = 0.0;
-        double angle = 0.0;
-        double pitch = 0.0;
-        m_interior2D->getPlayerPose(x, y, angle, pitch);
-
-        j["interior_id"] = m_interior2D->currentInteriorLocationId();
-        j["interior_player"] = {
-            {"x", x},
-            {"y", y},
-            {"angle", angle},
-            {"pitch", pitch}
-        };
-    }
-
-    const fs::path p = SaveSlotPath(slotIndex);
-    std::error_code ec;
-    fs::create_directories(p.parent_path(), ec);
-
-    std::ofstream f(p, std::ios::binary | std::ios::trunc);
-    if (!f)
+    catch (...)
     {
         m_saveSlotStatus = T(m_settings.language, "progress_save_failed");
         return false;
     }
-
-    f << j.dump(2);
-    const bool saved = f.good();
-    m_saveSlotStatus = saveSlotName(slotIndex) + ": " + T(m_settings.language, saved ? "progress_saved" : "progress_save_failed");
-    return saved;
 }
 
 bool Game::loadProgressFromSlot(int slotIndex)
@@ -1283,7 +1360,10 @@ bool Game::loadProgressFromSlot(int slotIndex)
     }
 
     const std::string saveMode = j.value("mode", std::string("campaign"));
-    const std::string campaignMap = j.value("campaign_map", std::string());
+    const json campaignState = j.value("campaign_state", json::object());
+    std::string campaignMap = j.value("campaign_map", std::string());
+    if (campaignMap.empty() && campaignState.is_object())
+        campaignMap = campaignState.value("map", std::string());
     const std::string interiorId = ResolveSavedInteriorLocationId(
         j.value("interior_id", std::string(kDefaultHouskaLocation)));
     const json campaignPlayer = j.value("campaign_player", json::object());
@@ -1301,7 +1381,11 @@ bool Game::loadProgressFromSlot(int slotIndex)
         if (!campaignMap.empty())
             enterCampaign(campaignMap);
 
-        if (m_campaign && campaignPlayer.is_object())
+        if (m_campaign && campaignState.is_object() && !campaignState.empty())
+        {
+            m_campaign->loadRuntimeState(campaignState);
+        }
+        else if (m_campaign && campaignPlayer.is_object())
         {
             const float x = campaignPlayer.value("x", m_campaign->playerX());
             const float y = campaignPlayer.value("y", m_campaign->playerY());
@@ -1342,7 +1426,11 @@ bool Game::loadProgressFromSlot(int slotIndex)
             return false;
         }
 
-        if (campaignPlayer.is_object())
+        if (campaignState.is_object() && !campaignState.empty())
+        {
+            m_campaign->loadRuntimeState(campaignState);
+        }
+        else if (campaignPlayer.is_object())
         {
             const float x = campaignPlayer.value("x", m_campaign->playerX());
             const float y = campaignPlayer.value("y", m_campaign->playerY());
@@ -1808,6 +1896,8 @@ void Game::enterInterior2D(const std::string& interiorId, const std::string& spa
 
     m_interior2D->setEditorMode(false);
     m_interior2D->setRuntimeOverlayVisible(m_campaign == nullptr);
+    if (m_campaign)
+        m_interior2D->setPlayerStats(&m_campaign->playerStats());
     m_mode = Mode::Interior2D;
     syncInteriorMouseLookSuppression();
 }
@@ -1861,7 +1951,7 @@ void Game::leaveInterior2D()
     m_mode = m_campaign ? Mode::Campaign : Mode::Menu;
 }
 
-void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId)
+void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId, bool useCustomStartDateTime)
 {
     if (m_campaign) return;
 
@@ -1884,6 +1974,22 @@ void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId)
         delete m_campaign;
         m_campaign = nullptr;
         return;
+    }
+
+    if (useCustomStartDateTime)
+    {
+        ClampCampaignStartDateTime(
+            m_newCampaignStartDay,
+            m_newCampaignStartMonth,
+            m_newCampaignStartYear,
+            m_newCampaignStartHour,
+            m_newCampaignStartMinute);
+        m_campaign->setGameDateTime(
+            m_newCampaignStartDay,
+            m_newCampaignStartMonth,
+            m_newCampaignStartYear,
+            m_newCampaignStartHour,
+            m_newCampaignStartMinute);
     }
 
     m_mode = Mode::Campaign;
@@ -2069,7 +2175,10 @@ void Game::update(float dt)
         if (m_mode == Mode::Interior2D)
         {
             if (m_campaign)
-                m_campaign->updateSharedRuntime(dt);
+                m_campaign->updateSharedRuntime(
+                    dt,
+                    m_interior2D->isPlayerMoving(),
+                    m_interior2D->isPlayerRunning());
 
             std::string campaignMap;
             std::string campaignSpawn;
@@ -2226,9 +2335,11 @@ void Game::render()
             };
 
             const float rowW = panelSize.x - 68.0f;
-            const float rowH = 158.0f;
-            const float gap = 14.0f;
-            float y = panelPos.y + 92.0f;
+            const float gap = 10.0f;
+            const float rowTopY = panelPos.y + 92.0f;
+            const float startY = panelPos.y + panelSize.y - 136.0f;
+            const float rowH = std::clamp((startY - rowTopY - 14.0f - gap * 2.0f) / 3.0f, 104.0f, 148.0f);
+            float y = rowTopY;
 
             for (int i = 0; i < 3; ++i)
             {
@@ -2237,13 +2348,48 @@ void Game::render()
                 y += rowH + gap;
             }
 
+            ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 34.0f, startY));
+            ImGui::TextColored(ImVec4(0.86f, 0.76f, 0.54f, 1.0f), "%s", T(m_settings.language, "start_datetime"));
+
+            bool startChanged = false;
+            ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.08f, 0.065f, 0.045f, 0.92f));
+            ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.16f, 0.11f, 0.055f, 0.95f));
+            const float fieldsY = startY + 25.0f;
+            const float fieldGap = std::clamp((rowW - 314.0f) / 4.0f, 8.0f, 18.0f);
+            float fieldX = panelPos.x + 34.0f;
+            auto dateField = [&](const char* label, const char* id, int* value, float width)
+            {
+                ImGui::SetCursorScreenPos(ImVec2(fieldX, fieldsY));
+                ImGui::BeginGroup();
+                ImGui::TextColored(ImVec4(0.70f, 0.65f, 0.52f, 1.0f), "%s", label);
+                ImGui::SetNextItemWidth(width);
+                startChanged |= ImGui::InputInt(id, value, 0, 0);
+                ImGui::EndGroup();
+                fieldX += width + fieldGap;
+            };
+            dateField(T(m_settings.language, "start_day"), "##start_day", &m_newCampaignStartDay, 58.0f);
+            dateField(T(m_settings.language, "start_month"), "##start_month", &m_newCampaignStartMonth, 58.0f);
+            dateField(T(m_settings.language, "start_year"), "##start_year", &m_newCampaignStartYear, 82.0f);
+            dateField(T(m_settings.language, "start_hour"), "##start_hour", &m_newCampaignStartHour, 58.0f);
+            dateField(T(m_settings.language, "start_minute"), "##start_minute", &m_newCampaignStartMinute, 58.0f);
+            ImGui::PopStyleColor(2);
+            if (startChanged)
+            {
+                ClampCampaignStartDateTime(
+                    m_newCampaignStartDay,
+                    m_newCampaignStartMonth,
+                    m_newCampaignStartYear,
+                    m_newCampaignStartHour,
+                    m_newCampaignStartMinute);
+            }
+
             ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 34.0f, panelPos.y + panelSize.y - 70.0f));
             if (MedievalMenuButton(T(m_settings.language, "back"), ImVec2(180.0f, 52.0f)))
                 m_mode = Mode::Menu;
 
             ImGui::SameLine();
             if (MedievalMenuButton(T(m_settings.language, "enter_campaign"), ImVec2(320.0f, 52.0f), true))
-                enterCampaign();
+                enterCampaign(std::string(), std::string(), true);
         }
         else if (m_mode == Mode::ProfileEditor)
         {

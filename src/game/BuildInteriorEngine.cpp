@@ -1,6 +1,7 @@
 #define NOMINMAX
 #include "BuildInteriorEngine.h"
 
+#include "PlayerStats.h"
 #include "Utf8.h"
 #include "interior/InteriorMapLoader.h"
 #include "interior/InteriorLegacyAdapter.h"
@@ -33,6 +34,7 @@ constexpr double kPi = 3.14159265358979323846;
 constexpr double kPlayerRadius = 0.18;
 constexpr double kPlayerBodyHeight = 0.90;
 constexpr double kMinimumHeadroom = 0.06;
+constexpr double kInteriorUnitsPerCampaignPixel = 2.55 / 90.0;
 constexpr double kMaxStepUp = 0.45;
 // Descending a normal tread must not require a jump.  The old 0.22 m limit
 // was just below the 0.23 m rise generated for the rock-room staircase.
@@ -344,6 +346,11 @@ void BuildInteriorEngine::setRuntimeOverlayVisible(bool visible)
     m_runtimeOverlayVisible = visible;
 }
 
+void BuildInteriorEngine::setPlayerStats(const PlayerStats* stats)
+{
+    m_playerStats = stats;
+}
+
 std::string BuildInteriorEngine::currentInteriorLocationId() const
 {
     if (!m_loadedCastleId.empty() && !m_loadedCastleMapId.empty())
@@ -509,6 +516,8 @@ void BuildInteriorEngine::update(float dt)
     // A debugger pause or a dragged window must not teleport the player or
     // advance door animation by a huge step.
     dt = std::clamp(dt, 0.0f, 0.05f);
+    m_playerMoving = false;
+    m_playerRunning = false;
 
     if (m_mouseLookSuppressed)
     {
@@ -574,8 +583,12 @@ void BuildInteriorEngine::update(float dt)
     const double rightY = std::cos(m_angle);
 
     const bool running = keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT];
-    const double baseSpeed = m_editorMode ? 3.4 : 2.55;
-    const double step = baseSpeed * (running ? 1.55 : 1.0) * static_cast<double>(dt);
+    double moveSpeed = m_editorMode ? 3.4 : 2.55;
+    if (!m_editorMode && m_playerStats)
+        moveSpeed = static_cast<double>(m_playerStats->getLimitedMoveSpeed(running)) * kInteriorUnitsPerCampaignPixel;
+    else if (running)
+        moveSpeed *= 1.55;
+    const double step = moveSpeed * static_cast<double>(dt);
     const double turnSpeed = 2.30 * static_cast<double>(dt);
 
     double moveX = 0.0;
@@ -587,6 +600,8 @@ void BuildInteriorEngine::update(float dt)
 
     const double moveLength = std::hypot(moveX, moveY);
     const bool requested = moveLength > 0.0001;
+    m_playerMoving = !m_editorMode && requested;
+    m_playerRunning = m_playerMoving && running;
     if (requested)
     {
         // Normalize diagonal movement and do only one collision/sliding pass.

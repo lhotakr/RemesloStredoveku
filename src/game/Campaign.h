@@ -30,6 +30,8 @@
 #include "ForageDatabase.h"
 #include "ForageSystem.h"
 
+#include <nlohmann/json.hpp>
+
 enum class DayPhase
 {
     Dawn,
@@ -62,7 +64,7 @@ public:
     bool isPlayerNearQuestObject(const std::string& objectId, int radiusPx) const;
     void render();
     bool handleSharedUiEvent(const SDL_Event& e);
-    void updateSharedRuntime(float dt);
+    void updateSharedRuntime(float dt, bool playerMoving = false, bool playerRunning = false);
     void renderSharedHudOverlay();
 
     bool loadMap(const std::string& path, const std::string& spawnId);
@@ -73,6 +75,11 @@ public:
     float playerX() const;
     float playerY() const;
     void setPlayerPosition(float x, float y);
+    const PlayerStats& playerStats() const { return m_player.stats; }
+    PlayerStats& playerStats() { return m_player.stats; }
+    void setGameDateTime(int day, int month, int year, int hour, int minute);
+    nlohmann::json saveRuntimeState() const;
+    void loadRuntimeState(const nlohmann::json& state);
 
 	NpcDefinitionRegistry m_npcDefinitions;
 
@@ -115,6 +122,7 @@ private:
 
     // hud + Player needs
     void updatePlayerNeeds(int elapsedGameMinutes);
+    void updatePlayerNeeds(int elapsedGameMinutes, bool moving, bool running);
     void renderDebugHud();
 	void renderHud();
 	bool m_showDebugHud = false;
@@ -277,6 +285,9 @@ private:
 
     void renderInventoryUI();
     void renderQuickAccessBar();
+    void renderPlayerOverviewUI();
+    bool m_playerOverviewOpen = false;
+    bool m_playerOverviewFocus = false;
 
     bool canPlaceItemIntoSlot(
         const ItemStack& movingStack,

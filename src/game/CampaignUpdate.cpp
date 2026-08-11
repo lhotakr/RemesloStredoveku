@@ -77,6 +77,13 @@ void Campaign::handleEvent(const SDL_Event& e)
         return;
     }
 
+    if (key == SDLK_p && !m_npcDialogOpen)
+    {
+        m_playerOverviewOpen = !m_playerOverviewOpen;
+        m_playerOverviewFocus = m_playerOverviewOpen;
+        return;
+    }
+
     // budouc� hotkeys...
 }
 
@@ -269,6 +276,24 @@ void Campaign::updatePlayerNeeds(int elapsedGameMinutes)
     if (elapsedGameMinutes <= 0)
         return;
 
+    const bool moving =
+        std::abs(m_player.vx) > 1.0f ||
+        std::abs(m_player.vy) > 1.0f;
+
+    const Uint8* ks = SDL_GetKeyboardState(nullptr);
+
+    const bool running =
+        ks[SDL_SCANCODE_LCTRL] ||
+        ks[SDL_SCANCODE_RCTRL];
+
+    updatePlayerNeeds(elapsedGameMinutes, moving, running);
+}
+
+void Campaign::updatePlayerNeeds(int elapsedGameMinutes, bool moving, bool running)
+{
+    if (elapsedGameMinutes <= 0)
+        return;
+
     if (m_godMode) {
         m_player.stats.condition.health = 100.0f;
         m_player.stats.condition.stamina = 100.0f;
@@ -279,16 +304,6 @@ void Campaign::updatePlayerNeeds(int elapsedGameMinutes)
         m_player.stats.condition.bodyTemperature = 50.0f;
         return;
     }
-
-    const bool moving =
-        std::abs(m_player.vx) > 1.0f ||
-        std::abs(m_player.vy) > 1.0f;
-
-    const Uint8* ks = SDL_GetKeyboardState(nullptr);
-
-    const bool running =
-        ks[SDL_SCANCODE_LCTRL] ||
-        ks[SDL_SCANCODE_RCTRL];
 
     const float gm = static_cast<float>(elapsedGameMinutes);
 
@@ -700,16 +715,7 @@ void Campaign::update(float dt)
 
     m_player.isSprinting = running;
 
-    float speed = running
-        ? m_player.stats.getRunSpeed()
-        : m_player.stats.getWalkSpeed();
-
-    if (m_player.stats.condition.nutrition <= 40.0f) speed -= 12.0f;
-    if (m_player.stats.condition.hydration <= 50.0f) speed -= 18.0f;
-    if (m_player.stats.condition.fatigue >= 70.0f)   speed -= 15.0f;
-    if (m_player.stats.carryWeight > m_player.stats.carryCapacity) speed -= 12.0f;
-
-    speed = std::max(20.0f, speed);
+    const float speed = m_player.stats.getLimitedMoveSpeed(running);
 
     m_player.vx = ax * speed;
     m_player.vy = ay * speed;

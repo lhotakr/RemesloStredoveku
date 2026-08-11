@@ -191,6 +191,18 @@ struct PlayerStats
         return getMoveSpeed() * runSpeedFactor;
     }
 
+    float getLimitedMoveSpeed(bool running) const
+    {
+        float speed = running ? getRunSpeed() : getWalkSpeed();
+
+        if (condition.nutrition <= 40.0f) speed -= 12.0f;
+        if (condition.hydration <= 50.0f) speed -= 18.0f;
+        if (condition.fatigue >= 70.0f)   speed -= 15.0f;
+        if (isOverweight())               speed -= 12.0f;
+
+        return std::max(20.0f, speed);
+    }
+
     static constexpr float kMinValue = 0.0f;
     static constexpr float kMaxValue = 100.0f;
 

@@ -1,9 +1,17 @@
 #include "Campaign.h"
+#include "JsonUtils.h"
+#include "PathUtils.h"
 #include <algorithm>
 #include <vector>
 #include <cmath>
 #include <SDL_image.h>
+#include <cctype>
+#include <cstdio>
 #include <cstring>
+#include <initializer_list>
+#include <string>
+
+using json = nlohmann::json;
 
 static bool AABB_Intersect(const SDL_Rect& a, const SDL_Rect& b)
 {
@@ -155,6 +163,540 @@ static void DebugProgress(const char* label, float value01)
 static void DebugBulletValue(const char* label, float value)
 {
     ImGui::BulletText("%s: %.1f", label, value);
+}
+
+static const char* PlayerOverviewTier(float value)
+{
+    if (value >= 80.0f) return "vyborne";
+    if (value >= 60.0f) return "dobre";
+    if (value >= 40.0f) return "prumer";
+    if (value >= 20.0f) return "slabe";
+    return "kriticke";
+}
+
+static void PlayerOverviewHeader(const char* title)
+{
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::TextColored(ImVec4(0.88f, 0.72f, 0.42f, 1.0f), "%s", title);
+}
+
+static void PlayerOverviewBar(const char* label, float value, bool highIsBad = false)
+{
+    const float clamped = PlayerStats::Clamp01To100(value);
+    const float t = clamped / 100.0f;
+    const ImVec4 okColor = ImVec4(0.34f, 0.72f, 0.38f, 1.0f);
+    const ImVec4 warnColor = ImVec4(0.88f, 0.66f, 0.24f, 1.0f);
+    const ImVec4 badColor = ImVec4(0.84f, 0.26f, 0.22f, 1.0f);
+
+    ImVec4 color = okColor;
+    if (highIsBad)
+        color = clamped >= 70.0f ? badColor : (clamped >= 40.0f ? warnColor : okColor);
+    else
+        color = clamped <= 30.0f ? badColor : (clamped <= 55.0f ? warnColor : okColor);
+
+    char overlay[32];
+    std::snprintf(overlay, sizeof(overlay), "%.0f / 100", clamped);
+
+    ImGui::PushID(label);
+    ImGui::TextUnformatted(label);
+    ImGui::SameLine(170.0f);
+    ImGui::PushStyleColor(ImGuiCol_PlotHistogram, color);
+    ImGui::ProgressBar(t, ImVec2(std::max(120.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay);
+    ImGui::PopStyleColor();
+    ImGui::PopID();
+}
+
+static void PlayerOverviewSkill(const char* label, float value)
+{
+    const float clamped = PlayerStats::Clamp01To100(value);
+    char overlay[48];
+    std::snprintf(overlay, sizeof(overlay), "%.0f - %s", clamped, PlayerOverviewTier(clamped));
+
+    ImGui::PushID(label);
+    ImGui::TextUnformatted(label);
+    ImGui::SameLine(185.0f);
+    ImGui::ProgressBar(clamped / 100.0f, ImVec2(std::max(120.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay);
+    ImGui::PopID();
+}
+
+static void PlayerOverviewValue(const char* label, float value, const char* suffix = "")
+{
+    ImGui::Text("%s: %.1f%s", label, value, suffix);
+}
+
+static void PlayerOverviewFlag(const char* label, bool active)
+{
+    ImGui::TextColored(
+        active ? ImVec4(0.95f, 0.38f, 0.28f, 1.0f) : ImVec4(0.48f, 0.68f, 0.42f, 1.0f),
+        "%s: %s",
+        label,
+        active ? "ano" : "ne");
+}
+
+struct CraftTreeUiCache
+{
+    bool attempted = false;
+    bool loaded = false;
+    json root;
+    std::string error;
+};
+
+static CraftTreeUiCache& PlayerOverviewCraftTreeCache()
+{
+    static CraftTreeUiCache cache;
+    if (cache.attempted)
+        return cache;
+
+    cache.attempted = true;
+    const auto path = pathutils::DataDir() / "crafting" / "craft_tree.json";
+    if (!jsonutils::LoadJsonFileSafe(path.string(), cache.root, cache.error))
+        return cache;
+
+    if (!cache.root.is_object() || !cache.root.value("domains", json::array()).is_array())
+    {
+        cache.error = "craft_tree.json nema pole domains.";
+        cache.root = json{};
+        return cache;
+    }
+
+    cache.loaded = true;
+    return cache;
+}
+
+static const json& PlayerOverviewEmptyJsonArray()
+{
+    static const json empty = json::array();
+    return empty;
+}
+
+static const json& PlayerOverviewJsonArray(const json& obj, const char* key)
+{
+    if (!obj.is_object())
+        return PlayerOverviewEmptyJsonArray();
+
+    const auto it = obj.find(key);
+    if (it == obj.end() || !it->is_array())
+        return PlayerOverviewEmptyJsonArray();
+
+    return *it;
+}
+
+static std::string PlayerOverviewJsonString(const json& obj, const char* key, const char* fallback = "")
+{
+    if (!obj.is_object())
+        return fallback;
+
+    const auto it = obj.find(key);
+    if (it == obj.end() || !it->is_string())
+        return fallback;
+
+    return it->get<std::string>();
+}
+
+static std::string PlayerOverviewJoinStringArray(const json& values, const char* fallback = "-")
+{
+    if (!values.is_array() || values.empty())
+        return fallback;
+
+    std::string out;
+    for (const auto& value : values)
+    {
+        if (!value.is_string())
+            continue;
+
+        if (!out.empty())
+            out += ", ";
+        out += value.get<std::string>();
+    }
+
+    return out.empty() ? fallback : out;
+}
+
+static void PlayerOverviewWrappedText(const std::string& text)
+{
+    ImGui::PushTextWrapPos(0.0f);
+    ImGui::TextUnformatted(text.c_str());
+    ImGui::PopTextWrapPos();
+}
+
+static void PlayerOverviewBulletWrapped(const std::string& text)
+{
+    ImGui::Bullet();
+    ImGui::SameLine();
+    PlayerOverviewWrappedText(text);
+}
+
+static float PlayerOverviewAverageStats(std::initializer_list<float> values)
+{
+    if (values.size() == 0)
+        return 0.0f;
+
+    float sum = 0.0f;
+    for (float value : values)
+        sum += PlayerStats::Clamp01To100(value);
+    return PlayerStats::Clamp01To100(sum / static_cast<float>(values.size()));
+}
+
+static float PlayerOverviewCraftReadiness(const std::string& domainId, const PlayerStats& s)
+{
+    if (domainId == "smithing")
+        return PlayerOverviewAverageStats({ s.craft.toolRepair, s.attributes.strength, s.attributes.dexterity, s.mental.focus });
+    if (domainId == "woodworking")
+        return PlayerOverviewAverageStats({ s.craft.woodcraft, s.survival.woodProcessing, s.craft.toolRepair, s.attributes.dexterity });
+    if (domainId == "pottery")
+        return PlayerOverviewAverageStats({ s.attributes.dexterity, s.mental.focus, s.mental.observation, s.mental.memory });
+    if (domainId == "textiles")
+        return PlayerOverviewAverageStats({ s.craft.clothingRepair, s.craft.ropeWork, s.attributes.dexterity, s.mental.focus });
+    if (domainId == "leatherworking")
+        return PlayerOverviewAverageStats({ s.craft.clothingRepair, s.attributes.dexterity, s.attributes.strength, s.mental.focus });
+    if (domainId == "masonry")
+        return PlayerOverviewAverageStats({ s.attributes.strength, s.attributes.endurance, s.attributes.dexterity, s.mental.observation });
+    if (domainId == "herbalism")
+        return PlayerOverviewAverageStats({ s.survival.foraging, s.mental.observation, s.mental.memory, s.attributes.perception });
+    if (domainId == "healing")
+        return PlayerOverviewAverageStats({ s.mental.observation, s.mental.focus, s.social.empathy, s.survival.diseaseResistance });
+    if (domainId == "cooking")
+        return PlayerOverviewAverageStats({ s.survival.cooking, s.survival.fireMaking, s.mental.focus, s.craft.improvisation });
+    if (domainId == "artifact")
+        return PlayerOverviewAverageStats({ s.knowledge.history, s.knowledge.symbolRecognition, s.mental.memory, s.social.empathy });
+
+    return 0.0f;
+}
+
+static std::string PlayerOverviewDomainName(const json& root, const std::string& domainId)
+{
+    for (const auto& domain : PlayerOverviewJsonArray(root, "domains"))
+    {
+        if (PlayerOverviewJsonString(domain, "id") == domainId)
+            return PlayerOverviewJsonString(domain, "name", domainId.c_str());
+    }
+    return domainId;
+}
+
+static std::string PlayerOverviewRankName(const json& root, const std::string& rankId)
+{
+    for (const auto& rank : PlayerOverviewJsonArray(root, "ranks"))
+    {
+        if (PlayerOverviewJsonString(rank, "id") == rankId)
+            return PlayerOverviewJsonString(rank, "name", rankId.c_str());
+    }
+    return rankId;
+}
+
+static std::string PlayerOverviewRequirementText(const json& root, const json& requirement)
+{
+    const std::string type = PlayerOverviewJsonString(requirement, "type");
+    if (type == "domains_at_progress")
+    {
+        return std::to_string(requirement.value("count", 0)) +
+            " domen alespon na " + std::to_string(requirement.value("min_percent", 0)) + " %";
+    }
+    if (type == "domains_at_rank")
+    {
+        return std::to_string(requirement.value("count", 0)) +
+            " domeny na hodnosti " + PlayerOverviewRankName(root, requirement.value("rank", std::string{}));
+    }
+    if (type == "all_worldly_domains_at_progress")
+    {
+        return "Vsech 9 svetskych domen alespon na " +
+            std::to_string(requirement.value("min_percent", 0)) + " %";
+    }
+    if (type == "all_other_worldly_domains_progress")
+    {
+        return "Ostatni svetske domeny alespon na " +
+            std::to_string(requirement.value("min_percent", 0)) + " %";
+    }
+    if (type == "cross_domain_master_project")
+        return "Mezioborovy mistrovsky projekt: " + requirement.value("id", std::string{});
+    if (type == "story_node_completed")
+        return "Pribehovy uzel: " + requirement.value("id", std::string{});
+
+    const std::string domain = PlayerOverviewJsonString(requirement, "domain");
+    if (!domain.empty())
+    {
+        const std::string rank = PlayerOverviewJsonString(requirement, "rank");
+        return PlayerOverviewDomainName(root, domain) + ": " + PlayerOverviewRankName(root, rank);
+    }
+
+    return requirement.dump();
+}
+
+static void PlayerOverviewCraftReadinessBar(const std::string& domainId, const PlayerStats& s)
+{
+    const float value = PlayerOverviewCraftReadiness(domainId, s);
+    char overlay[48];
+    std::snprintf(overlay, sizeof(overlay), "%.0f - %s", value, PlayerOverviewTier(value));
+
+    ImGui::TextUnformatted("Predpoklady ze statistik");
+    ImGui::SameLine(190.0f);
+    ImGui::ProgressBar(value / 100.0f, ImVec2(std::max(120.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay);
+}
+
+static void PlayerOverviewRenderCraftDomainDetail(const json& root, const json& domain, const PlayerStats& s)
+{
+    const std::string domainId = PlayerOverviewJsonString(domain, "id");
+    const std::string name = PlayerOverviewJsonString(domain, "name", domainId.c_str());
+
+    ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", name.c_str());
+    ImGui::SameLine();
+    ImGui::TextDisabled("%s", domainId.c_str());
+    PlayerOverviewCraftReadinessBar(domainId, s);
+
+    const std::string role = PlayerOverviewJsonString(domain, "role");
+    if (!role.empty())
+        PlayerOverviewWrappedText(role);
+
+    PlayerOverviewHeader("Pristup");
+    ImGui::Text("Prvni ucitele: %s", PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "first_teachers")).c_str());
+    ImGui::Text("Dalsi ucitele: %s", PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "later_teachers"), "podle lokace a duvery").c_str());
+    PlayerOverviewWrappedText("Pracoviste: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "workplaces")));
+    PlayerOverviewWrappedText("Specializace: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "specializations")));
+    PlayerOverviewWrappedText("Vazby: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "cross_domain_links")));
+
+    const json& finalDirections = PlayerOverviewJsonArray(domain, "final_directions");
+    if (!finalDirections.empty())
+    {
+        PlayerOverviewHeader("Zaverecne smery");
+        for (const auto& direction : finalDirections)
+        {
+            PlayerOverviewBulletWrapped(
+                PlayerOverviewJsonString(direction, "name") + ": " +
+                PlayerOverviewJsonString(direction, "focus"));
+        }
+    }
+
+    PlayerOverviewHeader("Hodnosti a dukazy");
+    int nodeIndex = 0;
+    for (const auto& node : PlayerOverviewJsonArray(domain, "rank_nodes"))
+    {
+        const std::string nodeId = PlayerOverviewJsonString(node, "id");
+        const std::string rankId = PlayerOverviewJsonString(node, "rank");
+        const std::string nodeName = PlayerOverviewJsonString(node, "name");
+        const std::string rankName = PlayerOverviewRankName(root, rankId);
+        const std::string label = nodeName.empty() ? rankName : (rankName + " - " + nodeName);
+
+        ImGui::SetNextItemOpen(nodeIndex < 2, ImGuiCond_Once);
+        if (ImGui::TreeNodeEx(nodeId.c_str(), ImGuiTreeNodeFlags_SpanAvailWidth, "%s", label.c_str()))
+        {
+            const std::string evidenceGate = PlayerOverviewJsonString(node, "evidence_gate");
+            if (!evidenceGate.empty())
+                PlayerOverviewBulletWrapped("Dukaz: " + evidenceGate);
+
+            const std::string content = PlayerOverviewJsonString(node, "content");
+            if (!content.empty())
+                PlayerOverviewBulletWrapped(content);
+
+            const json& requirements = PlayerOverviewJsonArray(node, "requirements");
+            if (!requirements.empty())
+            {
+                ImGui::TextUnformatted("Podminky:");
+                for (const auto& requirement : requirements)
+                    PlayerOverviewBulletWrapped(PlayerOverviewRequirementText(root, requirement));
+            }
+
+            const std::string skills = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(node, "skills"), "");
+            if (!skills.empty())
+                PlayerOverviewWrappedText("Dovednosti: " + skills);
+
+            const std::string unlocks = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(node, "unlocks"), "");
+            if (!unlocks.empty())
+                PlayerOverviewWrappedText("Otevre: " + unlocks);
+
+            ImGui::TreePop();
+        }
+        ++nodeIndex;
+    }
+}
+
+static void PlayerOverviewRenderCraftDomains(const json& root, const PlayerStats& s)
+{
+    const json& domains = PlayerOverviewJsonArray(root, "domains");
+    if (domains.empty())
+    {
+        ImGui::TextDisabled("Zadne domeny.");
+        return;
+    }
+
+    static int selectedDomain = 0;
+    selectedDomain = std::clamp(selectedDomain, 0, static_cast<int>(domains.size()) - 1);
+
+    const float listWidth = std::min(260.0f, std::max(210.0f, ImGui::GetContentRegionAvail().x * 0.34f));
+    ImGui::BeginChild("##craft_domain_list", ImVec2(listWidth, 0.0f), true);
+    for (int i = 0; i < static_cast<int>(domains.size()); ++i)
+    {
+        const json& domain = domains[static_cast<size_t>(i)];
+        const std::string domainId = PlayerOverviewJsonString(domain, "id");
+        const std::string label = PlayerOverviewJsonString(domain, "name", domainId.c_str());
+        if (ImGui::Selectable(label.c_str(), selectedDomain == i))
+            selectedDomain = i;
+
+        const float readiness = PlayerOverviewCraftReadiness(domainId, s);
+        char overlay[32];
+        std::snprintf(overlay, sizeof(overlay), "%.0f", readiness);
+        ImGui::ProgressBar(readiness / 100.0f, ImVec2(-1.0f, 3.0f), overlay);
+    }
+    ImGui::EndChild();
+
+    ImGui::SameLine();
+
+    ImGui::BeginChild("##craft_domain_detail", ImVec2(0.0f, 0.0f), true);
+    PlayerOverviewRenderCraftDomainDetail(root, domains[static_cast<size_t>(selectedDomain)], s);
+    ImGui::EndChild();
+}
+
+static void PlayerOverviewRenderCraftProjects(const json& root)
+{
+    const json& projects = PlayerOverviewJsonArray(root, "cross_domain_projects");
+    if (projects.empty())
+    {
+        ImGui::TextDisabled("Zadne mezioborove projekty.");
+        return;
+    }
+
+    if (ImGui::BeginTable(
+        "##craft_projects",
+        4,
+        ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingStretchProp))
+    {
+        ImGui::TableSetupColumn("Projekt", ImGuiTableColumnFlags_WidthStretch, 1.1f);
+        ImGui::TableSetupColumn("Podminky", ImGuiTableColumnFlags_WidthStretch, 1.6f);
+        ImGui::TableSetupColumn("Zkousky", ImGuiTableColumnFlags_WidthStretch, 1.5f);
+        ImGui::TableSetupColumn("Svedci", ImGuiTableColumnFlags_WidthStretch, 1.0f);
+        ImGui::TableHeadersRow();
+
+        for (const auto& project : projects)
+        {
+            std::vector<std::string> requirementTexts;
+            for (const auto& requirement : PlayerOverviewJsonArray(project, "requirements"))
+                requirementTexts.push_back(PlayerOverviewRequirementText(root, requirement));
+
+            std::string requirements;
+            for (const auto& text : requirementTexts)
+            {
+                if (!requirements.empty())
+                    requirements += ", ";
+                requirements += text;
+            }
+
+            ImGui::TableNextRow();
+            ImGui::TableNextColumn();
+            PlayerOverviewWrappedText(PlayerOverviewJsonString(project, "name", PlayerOverviewJsonString(project, "id").c_str()));
+            ImGui::TableNextColumn();
+            PlayerOverviewWrappedText(requirements.empty() ? "-" : requirements);
+            ImGui::TableNextColumn();
+            PlayerOverviewWrappedText(PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(project, "tests")));
+            ImGui::TableNextColumn();
+            PlayerOverviewWrappedText(PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(project, "judges")));
+        }
+
+        ImGui::EndTable();
+    }
+}
+
+static void PlayerOverviewRenderCraftModel(const json& root)
+{
+    if (ImGui::CollapsingHeader("Pravidla", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        for (const auto& rule : PlayerOverviewJsonArray(root, "design_rules"))
+        {
+            if (rule.is_string())
+                PlayerOverviewBulletWrapped(rule.get<std::string>());
+        }
+    }
+
+    if (ImGui::CollapsingHeader("Podminky odemykani", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        for (const auto& requirement : PlayerOverviewJsonArray(root, "unlock_requirements"))
+        {
+            PlayerOverviewBulletWrapped(
+                PlayerOverviewJsonString(requirement, "name") + ": " +
+                PlayerOverviewJsonString(requirement, "description"));
+        }
+    }
+
+    if (ImGui::CollapsingHeader("Jakost", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        if (ImGui::BeginTable("##craft_quality", 3, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
+        {
+            ImGui::TableSetupColumn("Stupen");
+            ImGui::TableSetupColumn("Vliv");
+            ImGui::TableSetupColumn("Nasledek");
+            ImGui::TableHeadersRow();
+
+            for (const auto& grade : PlayerOverviewJsonArray(root, "quality_grades"))
+            {
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                ImGui::TextUnformatted(PlayerOverviewJsonString(grade, "name").c_str());
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(grade, "effect"));
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(grade, "consequence"));
+            }
+
+            ImGui::EndTable();
+        }
+    }
+
+    if (ImGui::CollapsingHeader("Implementacni poradi", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        for (const auto& stage : PlayerOverviewJsonArray(root, "implementation_order"))
+        {
+            ImGui::BulletText(
+                "%d. %s: %s",
+                stage.value("stage", 0),
+                PlayerOverviewJsonString(stage, "name").c_str(),
+                PlayerOverviewJsonString(stage, "scope").c_str());
+            const std::string reason = PlayerOverviewJsonString(stage, "reason");
+            if (!reason.empty())
+            {
+                ImGui::Indent();
+                PlayerOverviewWrappedText(reason);
+                ImGui::Unindent();
+            }
+        }
+    }
+}
+
+static void PlayerOverviewRenderCraftTree(const PlayerStats& s)
+{
+    CraftTreeUiCache& cache = PlayerOverviewCraftTreeCache();
+    if (!cache.loaded)
+    {
+        ImGui::TextColored(ImVec4(0.95f, 0.45f, 0.35f, 1.0f), "Strom remesel se nepodarilo nacist.");
+        PlayerOverviewWrappedText(cache.error);
+        return;
+    }
+
+    const json& root = cache.root;
+    ImGui::TextColored(
+        ImVec4(0.92f, 0.78f, 0.48f, 1.0f),
+        "%s",
+        root.value("name", std::string("Planovany strom remesel")).c_str());
+    ImGui::SameLine();
+    ImGui::TextDisabled("schema %d", root.value("schema_version", 0));
+    PlayerOverviewWrappedText(root.value("tagline", std::string{}));
+
+    if (ImGui::BeginTabBar("##craft_tree_tabs"))
+    {
+        if (ImGui::BeginTabItem("Obory"))
+        {
+            PlayerOverviewRenderCraftDomains(root, s);
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Projekty"))
+        {
+            PlayerOverviewRenderCraftProjects(root);
+            ImGui::EndTabItem();
+        }
+        if (ImGui::BeginTabItem("Model"))
+        {
+            PlayerOverviewRenderCraftModel(root);
+            ImGui::EndTabItem();
+        }
+        ImGui::EndTabBar();
+    }
 }
 
 static SDL_Texture* loadTexture(SDL_Renderer* r, const char* path, int& outW, int& outH)
@@ -1382,6 +1924,190 @@ bool Campaign::drawItemSlot(
     return leftClicked || rightClicked || inspectClicked;
 }
 
+void Campaign::renderPlayerOverviewUI()
+{
+    if (!m_playerOverviewOpen)
+        return;
+
+    if (m_playerOverviewFocus)
+    {
+        ImGui::SetNextWindowFocus();
+        m_playerOverviewFocus = false;
+    }
+
+    ImGui::SetNextWindowPos(ImVec2(90, 90), ImGuiCond_Appearing);
+    ImGui::SetNextWindowSize(ImVec2(760, 620), ImGuiCond_Appearing);
+    ImGui::SetNextWindowSizeConstraints(ImVec2(560, 430), ImVec2(1200, 900));
+
+    if (!ImGui::Begin("Hrac", &m_playerOverviewOpen))
+    {
+        ImGui::End();
+        return;
+    }
+
+    const PlayerStats& s = m_player.stats;
+    const PlayerStats::ConditionState& c = s.condition;
+
+    ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", m_player.fullName().c_str());
+    ImGui::SameLine();
+    ImGui::TextColored(ImVec4(0.66f, 0.62f, 0.52f, 1.0f), "%s", DebugBackgroundName(s.background));
+    ImGui::Separator();
+
+    if (ImGui::BeginTabBar("##player_overview_tabs"))
+    {
+        if (ImGui::BeginTabItem("Stav"))
+        {
+            PlayerOverviewHeader("Kondice");
+            PlayerOverviewBar("Zivot", c.health);
+            PlayerOverviewBar("Stamina", c.stamina);
+            PlayerOverviewBar("Vyziva", c.nutrition);
+            PlayerOverviewBar("Hydratace", c.hydration);
+            PlayerOverviewBar("Moralka", c.morale);
+            PlayerOverviewBar("Hygiena", c.hygiene);
+
+            PlayerOverviewHeader("Zatizeni tela");
+            PlayerOverviewBar("Unava", c.fatigue, true);
+            PlayerOverviewBar("Stres", c.stress, true);
+            PlayerOverviewBar("Promoceni", c.wetness, true);
+            PlayerOverviewBar("Nemoc", c.diseaseLoad, true);
+            PlayerOverviewBar("Bolest", c.pain, true);
+            PlayerOverviewBar("Telesna teplota", c.bodyTemperature);
+
+            PlayerOverviewHeader("Stavy");
+            if (ImGui::BeginTable("##player_state_flags", 2, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_SizingStretchSame))
+            {
+                ImGui::TableNextColumn();
+                PlayerOverviewFlag("Otrava", c.poisoned);
+                PlayerOverviewFlag("Zraneni", c.injured);
+                PlayerOverviewFlag("Zlomenina", c.fracture);
+                ImGui::TableNextColumn();
+                PlayerOverviewFlag("Krvaceni", c.bleeding);
+                PlayerOverviewFlag("Osetrena rana", c.treatedWound);
+                if (m_activeFoodPoisoning.active)
+                    ImGui::TextColored(ImVec4(0.95f, 0.58f, 0.22f, 1.0f), "%s", activeFoodPoisoningStatusText().c_str());
+                ImGui::EndTable();
+            }
+
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Dovednosti"))
+        {
+            PlayerOverviewHeader("Preziti");
+            PlayerOverviewSkill("Ohen", s.survival.fireMaking);
+            PlayerOverviewSkill("Drevo", s.survival.woodProcessing);
+            PlayerOverviewSkill("Pristresek", s.survival.shelterBuilding);
+            PlayerOverviewSkill("Cisteni vody", s.survival.waterPurification);
+            PlayerOverviewSkill("Stopovani", s.survival.tracking);
+            PlayerOverviewSkill("Orientace", s.survival.navigation);
+            PlayerOverviewSkill("Sber", s.survival.foraging);
+            PlayerOverviewSkill("Vareni", s.survival.cooking);
+            PlayerOverviewSkill("Odolnost chladu", s.survival.coldResistance);
+            PlayerOverviewSkill("Odolnost horku", s.survival.heatResistance);
+            PlayerOverviewSkill("Snasenlivost jidla", s.survival.foodTolerance);
+            PlayerOverviewSkill("Odolnost nemoci", s.survival.diseaseResistance);
+
+            PlayerOverviewHeader("Remeslo");
+            PlayerOverviewSkill("Opravy nastroju", s.craft.toolRepair);
+            PlayerOverviewSkill("Opravy odevu", s.craft.clothingRepair);
+            PlayerOverviewSkill("Provaznictvi", s.craft.ropeWork);
+            PlayerOverviewSkill("Prace se drevem", s.craft.woodcraft);
+            PlayerOverviewSkill("Improvizace", s.craft.improvisation);
+
+            PlayerOverviewHeader("Socialni");
+            PlayerOverviewSkill("Zahajeni rozhovoru", s.social.conversationInitiation);
+            PlayerOverviewSkill("Presvedcovani", s.social.persuasion);
+            PlayerOverviewSkill("Smlouvani", s.social.negotiation);
+            PlayerOverviewSkill("Empatie", s.social.empathy);
+            PlayerOverviewSkill("Etiketa", s.social.etiquette);
+            PlayerOverviewSkill("Dav", s.social.crowdComfort);
+            PlayerOverviewSkill("Socialni pravidla", s.social.socialProtocol);
+
+            PlayerOverviewHeader("Znalosti");
+            PlayerOverviewSkill("Historie", s.knowledge.history);
+            PlayerOverviewSkill("Nabozenstvi", s.knowledge.religionKnowledge);
+            PlayerOverviewSkill("Symboly", s.knowledge.symbolRecognition);
+            PlayerOverviewSkill("Gramotnost", s.knowledge.literacy);
+            PlayerOverviewSkill("Latina", s.knowledge.latin);
+            PlayerOverviewSkill("Nemcina", s.knowledge.german);
+            PlayerOverviewSkill("Stredoveka cestina", s.knowledge.medievalCzech);
+
+            PlayerOverviewHeader("Telo a mysl");
+            PlayerOverviewSkill("Beh", s.physical.running);
+            PlayerOverviewSkill("Noseni bremen", s.physical.loadHandling);
+            PlayerOverviewSkill("Lezeni", s.physical.climbing);
+            PlayerOverviewSkill("Plavani", s.physical.swimming);
+            PlayerOverviewSkill("Regenerace spankem", s.physical.sleepRecovery);
+            PlayerOverviewSkill("Efektivita staminy", s.physical.staminaEfficiency);
+            PlayerOverviewSkill("Soustredeni", s.mental.focus);
+            PlayerOverviewSkill("Pamet", s.mental.memory);
+            PlayerOverviewSkill("Odolnost stresu", s.mental.stressResistance);
+            PlayerOverviewSkill("Adaptace", s.mental.adaptation);
+            PlayerOverviewSkill("Pozorovani", s.mental.observation);
+            PlayerOverviewSkill("Samota", s.mental.lonelinessTolerance);
+
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Remesla"))
+        {
+            PlayerOverviewRenderCraftTree(s);
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Atributy"))
+        {
+            PlayerOverviewHeader("Atributy");
+            PlayerOverviewSkill("Sila", s.attributes.strength);
+            PlayerOverviewSkill("Vydrz", s.attributes.endurance);
+            PlayerOverviewSkill("Obratnost", s.attributes.dexterity);
+            PlayerOverviewSkill("Vnimani", s.attributes.perception);
+            PlayerOverviewSkill("Inteligence", s.attributes.intelligence);
+            PlayerOverviewSkill("Charisma", s.attributes.charisma);
+            PlayerOverviewSkill("Vule", s.attributes.willpower);
+
+            PlayerOverviewHeader("Komfort");
+            PlayerOverviewSkill("Priroda", s.comfort.natureComfort);
+            PlayerOverviewSkill("Mesto", s.comfort.urbanComfort);
+            PlayerOverviewSkill("Spolecnost", s.comfort.socialComfort);
+            PlayerOverviewSkill("Citlivost hygiena", s.comfort.hygieneSensitivity);
+            PlayerOverviewSkill("Adaptace na stredovek", s.comfort.medievalAdaptation);
+
+            PlayerOverviewHeader("Odvozene hodnoty");
+            PlayerOverviewValue("Aktualni rychlost", m_player.currentMoveSpeed(), " px/s");
+            PlayerOverviewValue("Chuze", s.getLimitedMoveSpeed(false), " px/s");
+            PlayerOverviewValue("Beh", s.getLimitedMoveSpeed(true), " px/s");
+            PlayerOverviewValue("Zaklad rychlosti", s.moveSpeedBase, " px/s");
+            PlayerOverviewValue("Nasobitel rychlosti", s.getMoveSpeedMultiplier());
+            PlayerOverviewValue("Nesena vaha", s.carryWeight, " kg");
+            PlayerOverviewValue("Nosnost", s.carryCapacity, " kg");
+            PlayerOverviewValue("Neseny objem", s.carryVolume);
+            PlayerOverviewValue("Objemova kapacita", s.carryVolumeCapacity);
+            PlayerOverviewValue("Autenticita odevu", s.outfitAuthenticity);
+            PlayerOverviewValue("Prijeti vesnici", s.villageAcceptance);
+            PlayerOverviewValue("Duvera cirkve", s.churchTrust);
+            PlayerOverviewValue("Duvera rychtare", s.reeveTrust);
+            PlayerOverviewValue("Strach", s.fear);
+
+            PlayerOverviewHeader("Vybaveni na startu");
+            PlayerOverviewFlag("Hamaka", s.loadout.hammock);
+            PlayerOverviewFlag("Celta", s.loadout.tarp);
+            PlayerOverviewFlag("Filtr na vodu", s.loadout.waterFilter);
+            PlayerOverviewFlag("Drevak", s.loadout.woodStove);
+            PlayerOverviewFlag("Plynovy varic", s.loadout.gasStove);
+            PlayerOverviewFlag("Mobil offline", s.loadout.smartphoneOffline);
+            PlayerOverviewFlag("Hygiena", s.loadout.hygieneKit);
+            ImGui::Text("Nadoby na vodu: %d", s.loadout.waterContainers);
+
+            ImGui::EndTabItem();
+        }
+
+        ImGui::EndTabBar();
+    }
+
+    ImGui::End();
+}
+
 void Campaign::renderInventoryUI()
 {
     if (!m_inventoryOpen)
@@ -2392,6 +3118,7 @@ void Campaign::renderSharedHudOverlay()
         renderDebugHud();
     if (m_questJournalOpen)
         renderQuestJournal();
+    renderPlayerOverviewUI();
     renderHud();
     renderConsole();
     renderInventoryUI();
@@ -2633,6 +3360,7 @@ void Campaign::render()
         renderDebugHud();
     if (m_questJournalOpen)
         renderQuestJournal();
+    renderPlayerOverviewUI();
     renderHud();
     renderConsole();
     renderForagePrompt();

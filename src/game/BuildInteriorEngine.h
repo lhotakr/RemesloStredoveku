@@ -8,6 +8,8 @@
 #include <vector>
 #include "interior/TextureSpriteEditor.h"
 
+struct PlayerStats;
+
 // Build-inspired 2.5D interior renderer for Remeslo stredoveku.
 // It intentionally uses original code/data and does not copy Build Engine code.
 //
@@ -40,6 +42,9 @@ public:
     bool editorMode() const { return m_editorMode; }
     void setRuntimeOverlayVisible(bool visible);
     void setMouseLookSuppressed(bool suppressed);
+    void setPlayerStats(const PlayerStats* stats);
+    bool isPlayerMoving() const { return m_playerMoving; }
+    bool isPlayerRunning() const { return m_playerRunning; }
     void getPlayerPose(double& outX, double& outY, double& outAngle, double& outPitch) const;
     void setPlayerPose(double x, double y, double angle, double pitch);
 
@@ -392,6 +397,9 @@ private:
     bool m_editorMode = false;
     bool m_runtimeOverlayVisible = true;
     bool m_mouseLookSuppressed = false;
+    const PlayerStats* m_playerStats = nullptr;
+    bool m_playerMoving = false;
+    bool m_playerRunning = false;
     bool m_wasUseKeyDown = false;
     bool m_wasRecoverKeyDown = false;
     bool m_wasJumpKeyDown = false;
