@@ -48,9 +48,12 @@ struct EditorDialogChoice
     std::string style;
     int npcMoodDelta = 0;
     std::string setFlag;
+    std::vector<std::string> setFlags;
 
     std::string requireFlag;
+    std::vector<std::string> requireFlags;
     std::string forbidFlag;
+    std::vector<std::string> forbidFlags;
     int requireMoodMin = 0;
     bool closeDialog = false;
     std::string setNpcScript;
@@ -63,7 +66,9 @@ struct EditorDialogNode
     std::string speaker;
     std::string text;
     std::string requireFlag;
+    std::vector<std::string> requireFlags;
     std::string forbidFlag;
+    std::vector<std::string> forbidFlags;
     std::vector<EditorDialogChoice> choices;
 };
 
@@ -216,6 +221,12 @@ public:
     void render();
 
 private:
+    struct EditorGraphNodePosition
+    {
+        float x = 0.0f;
+        float y = 0.0f;
+    };
+
     void renderMainToolbar();
     void renderBrushPanel();
     void renderBrushPanelContents();
@@ -228,10 +239,12 @@ private:
     void renderNpcInspectorContents();
     void renderDialogEditor();
     void renderDialogEditorContents();
+    void renderDialogNodeEditor(EditorDialogDef& dlg);
     void renderDialogPreviewWindow();
     void renderEditorWorkspace();
     void renderMapIoPopup();
     void renderQuestEditorContents();
+    void renderQuestNodeEditor();
     void renderNpcScheduleEditorContents();
     void renderNpcZoneEditorContents();
     void renderForageDefinitionEditorContents();
@@ -340,6 +353,19 @@ private:
     char m_choiceSetNpcScript[64] = "";
     char m_choiceSetNpcGreeting[256] = "";
 
+    std::unordered_map<std::string, EditorGraphNodePosition> m_dialogGraphNodePositions;
+    float m_dialogGraphPanX = 32.0f;
+    float m_dialogGraphPanY = 48.0f;
+    float m_dialogGraphZoom = 1.0f;
+    int m_dialogGraphLinkSourceNodeIndex = -1;
+    int m_dialogGraphLinkSourceChoiceIndex = -1;
+    std::vector<int> m_dialogGraphSelectedNodeIndices;
+    int m_dialogGraphContextNodeIndex = -1;
+    int m_dialogGraphContextChoiceIndex = -1;
+    int m_dialogGraphAltPressedNodeIndex = -1;
+    bool m_dialogGraphAltPressedWasSelected = false;
+    bool m_dialogGraphAltDraggingSelection = false;
+
     bool dialogNodeExists(const EditorDialogDef& dlg, const std::string& nodeId) const;
     int findDialogNodeIndexById(const EditorDialogDef& dlg, const std::string& nodeId) const;
 
@@ -432,6 +458,7 @@ private:
     bool m_foragePlacementMode = false;
     bool m_showBrushGhost = true;
     bool m_renderMapOutsideMapTab = true;
+    bool m_editorWorkspaceMaximized = false;
     float m_uiFontScale = 0.70f;
 
 private:
@@ -513,6 +540,10 @@ private:
     char m_questStartedFlag[64] = "";
     char m_questReadyFlag[64] = "";
     char m_questDoneFlag[64] = "";
+
+    float m_questGraphPanX = 32.0f;
+    float m_questGraphPanY = 42.0f;
+    float m_questGraphZoom = 1.0f;
 
 
     // foraging - herbs & fungi

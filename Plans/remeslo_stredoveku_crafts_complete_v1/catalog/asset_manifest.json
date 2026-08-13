@@ -1,0 +1,2111 @@
+{
+  "schema": "remeslo-stredoveku.asset-package-manifest.v1",
+  "file_count": 418,
+  "total_bytes": 68635422,
+  "counts_by_extension": {
+    ".cpp": 2,
+    ".docx": 1,
+    ".h": 4,
+    ".html": 1,
+    ".jpg": 13,
+    ".js": 1,
+    ".json": 17,
+    ".md": 9,
+    ".png": 353,
+    ".py": 9,
+    ".svg": 6,
+    ".txt": 2
+  },
+  "files": [
+    {
+      "path": "README.md",
+      "bytes": 1988,
+      "sha256": "0ed6890750fdac415e9adc0988503e9e4f9a89841bb67d7c31a22a22edb745bf"
+    },
+    {
+      "path": "assets/crafts/icons/artifact.png",
+      "bytes": 2931324,
+      "sha256": "74029d7ca8aa970945f67cffc4f8956467d2c39f53b532309f26fff871df509d"
+    },
+    {
+      "path": "assets/crafts/icons/main-00.png",
+      "bytes": 169287,
+      "sha256": "606bd9ed906ee7180460a5401dfab673d12c0cf855a4c3b6b3a479b7e091303c"
+    },
+    {
+      "path": "assets/crafts/icons/main-01.png",
+      "bytes": 178742,
+      "sha256": "fa821844d3c2ec686dd89f918cbdf0df98c66bc55b67093975ebb3cd8f24436e"
+    },
+    {
+      "path": "assets/crafts/icons/main-02.png",
+      "bytes": 171577,
+      "sha256": "41679e45fb8f4a9cf802b80c188c2964fcc920f80aa2bd74d7f42cf70ab6ab39"
+    },
+    {
+      "path": "assets/crafts/icons/main-03.png",
+      "bytes": 185667,
+      "sha256": "61dd3858a732b7cbc96ad83e1ecae21041abb256b567becbdaea7da0a8c551fb"
+    },
+    {
+      "path": "assets/crafts/icons/main-04.png",
+      "bytes": 172322,
+      "sha256": "0197012184626bbdf59b47262ffcae4b170863f04da08f8e2d955f97b259ea5d"
+    },
+    {
+      "path": "assets/crafts/icons/main-05.png",
+      "bytes": 180794,
+      "sha256": "1002d9de598570ad6b3c578c9b6fc8f6a0b481404eb7f5a3b475055800fcd467"
+    },
+    {
+      "path": "assets/crafts/icons/main-06.png",
+      "bytes": 177569,
+      "sha256": "1fb6bb70305d7784409e0bb85cc5ceef80454aa74264238de7ce0d9ace0f7db2"
+    },
+    {
+      "path": "assets/crafts/icons/main-07.png",
+      "bytes": 170155,
+      "sha256": "f7fd0f806bcbe0050af3f455cd6402b562b187972f24afd6358f39a458d1ebe4"
+    },
+    {
+      "path": "assets/crafts/icons/main-08.png",
+      "bytes": 185485,
+      "sha256": "6a38e99c57c015d5313c4633d82732307312169a01276816aaf864b95efd3d40"
+    },
+    {
+      "path": "assets/crafts/icons/main-09.png",
+      "bytes": 179544,
+      "sha256": "b0f2d6012455c42892ba159e158e6f5d193326f24433b50625faaa1499237527"
+    },
+    {
+      "path": "assets/crafts/icons/main-10.png",
+      "bytes": 195554,
+      "sha256": "db3170a896a05fbbad2faaab0810acd83cb9e5546d1c2ab62ac267c78ce23cca"
+    },
+    {
+      "path": "assets/crafts/icons/main-11.png",
+      "bytes": 178040,
+      "sha256": "8ca16eb3d3ede265e30076c1000a2f5a153f4d8d50be8f4482efb9595779d978"
+    },
+    {
+      "path": "assets/crafts/icons/main-12.png",
+      "bytes": 180177,
+      "sha256": "0f458efc876ea105ef45d0968bfb95ae1211477a75b3a095e97a3280b7af7886"
+    },
+    {
+      "path": "assets/crafts/icons/main-13.png",
+      "bytes": 182016,
+      "sha256": "dabd587720cdb2cd0790af39250bd33738935e4ea9ec3001d9d7a7c3401f0753"
+    },
+    {
+      "path": "assets/crafts/icons/main-14.png",
+      "bytes": 184329,
+      "sha256": "344f938973427eeea2439ad43b09d58c5c40f84a057155c166732a498a2bd554"
+    },
+    {
+      "path": "assets/crafts/icons/main-15.png",
+      "bytes": 196935,
+      "sha256": "da149d6a2b48218e491926e73e75f49111f64bb55e54b0c2ff76b1f92473dd64"
+    },
+    {
+      "path": "assets/crafts/icons/main-sheet.png",
+      "bytes": 2925487,
+      "sha256": "321a70317fe9ce7dce17dd1704fa40ba047ae865775ff985da9d15472684a904"
+    },
+    {
+      "path": "assets/crafts/icons/side-00.png",
+      "bytes": 731610,
+      "sha256": "0a2c3ffe735986d1aa3eb591036edb3f62f1045c191ea30f6e7d8bd8c9ef6389"
+    },
+    {
+      "path": "assets/crafts/icons/side-01.png",
+      "bytes": 748417,
+      "sha256": "8afe8fdda65d4db439f695839b2308280acffca1b6fc495d3a54e3639699b24b"
+    },
+    {
+      "path": "assets/crafts/icons/side-02.png",
+      "bytes": 769118,
+      "sha256": "5a0f28999304caa958ba3f3c88e290247603e4db81e143fc18620c410c5e4eff"
+    },
+    {
+      "path": "assets/crafts/icons/side-03.png",
+      "bytes": 751834,
+      "sha256": "d3ab7e6d5b1c8d775f56eb1cbfe611c691663651b7b66410291f354c7809b3cb"
+    },
+    {
+      "path": "assets/shared/fog_of_war/README.md",
+      "bytes": 1529,
+      "sha256": "39399b4ce169522e9181d150c749f7a2592f0143ef86b7f5bcc3899589bfe6af"
+    },
+    {
+      "path": "assets/shared/fog_of_war/assets/overlays/FogOfWar.png",
+      "bytes": 1152668,
+      "sha256": "c6c2ac0862688c672b3cfc28c3c60c2aaa021f703d41361054339e967383ec6a"
+    },
+    {
+      "path": "assets/shared/fog_of_war/assets/overlays/FogOfWar_512.png",
+      "bytes": 323788,
+      "sha256": "2c187414870b0b963b86ff0b6b46cb014fd448a6613ea98cbf5d6d5123e1430b"
+    },
+    {
+      "path": "assets/shared/fog_of_war/assets/overlays/FogOfWar_Translucent.png",
+      "bytes": 1268406,
+      "sha256": "19caeb132975883e10ed6f1c40b006378545b85df460d654a0ed0d37b557703f"
+    },
+    {
+      "path": "assets/shared/fog_of_war/assets/overlays/FogOfWar_Translucent_512.png",
+      "bytes": 353796,
+      "sha256": "8883eecf8e520620c5528944c301d7b108c230745604bc595548691cda80ef2b"
+    },
+    {
+      "path": "assets/shared/fog_of_war/build_seamless_fog.py",
+      "bytes": 6475,
+      "sha256": "e769372e83f1ec682a18ea001177dd91d595c25efb94d31fd981c090238e327c"
+    },
+    {
+      "path": "assets/shared/fog_of_war/preview/FogOfWar_generated_source_preview.jpg",
+      "bytes": 37793,
+      "sha256": "ec42976c967001cfc3f3d4553aeb164bdbf78d4f01b8f968c28796f7cb5b2346"
+    },
+    {
+      "path": "assets/shared/fog_of_war/preview/FogOfWar_tiling_test_3x3.png",
+      "bytes": 256388,
+      "sha256": "b27bef330b965c0c2bfde5a1d1a69cddb3bf2d90f7f1a772f1fdefd07c06d4be"
+    },
+    {
+      "path": "assets/shared/fog_of_war/validation.json",
+      "bytes": 1072,
+      "sha256": "8d712ff04c8623f9e212c4e68c222e14436002534981861fefde9c31edfb0c0c"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire.json",
+      "bytes": 255,
+      "sha256": "2c669e5bc5973d708e21190b0d20a2906bcaee67dd7b062dc18cd89a3d8add16"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire_00.png",
+      "bytes": 42977,
+      "sha256": "7af5eb2f6fd49080966696d7046b72733ced1a89eea82f4ed455fab808c4c289"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire_01.png",
+      "bytes": 47108,
+      "sha256": "8c0deb9b1e05c66117032ac57fb1632c26624892177b32f461a0f467170ab68d"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire_02.png",
+      "bytes": 70704,
+      "sha256": "0f4668b4632c12044ba9111cd57705aa75df53f4f812ab5d2510fa5e47452078"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire_03.png",
+      "bytes": 45945,
+      "sha256": "9e08ee3b251eed377f8f9f103f588b3d29d2fc55cc31f6c40fd41991b8403801"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire_4frames.png",
+      "bytes": 205782,
+      "sha256": "16233d9ae16c1c3fc512568e48240d3c0f0aafbf4376cf3ab20ebf5ef4722aa0"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/SmithyEnvironmentAtlas.png",
+      "bytes": 1601311,
+      "sha256": "348b46b225f18ca2fc0dc65816a65bd5b5d19c75bd226dd1e5a270ec016e7431"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/SmithyObjects.json",
+      "bytes": 8715,
+      "sha256": "f4078f57709df23a47e040da72ab30cecb5400e4aca76a3458227c2f84aa727e"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_anvil.png",
+      "bytes": 142803,
+      "sha256": "8d2bde9fbe44c013a77cd3a3ebba83b5ad9f054d64a329ad6ad62d5a44ea2104"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_bellows.png",
+      "bytes": 110721,
+      "sha256": "88812b955d398893a39a000660816a47c2ebebeaac7bac681abb58974b90ea93"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_charcoal.png",
+      "bytes": 136193,
+      "sha256": "ae85e5427ddd5673327e3f1c534d179b9a617647e22aa42eab7090f9c665a34f"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_exit_door.png",
+      "bytes": 178313,
+      "sha256": "27026d2c09e365e06ded3b43976ec7a7a8003e025fb067cfce3f4e236864a178"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_firewood.png",
+      "bytes": 112206,
+      "sha256": "0bd651ac2734d2b0594b4f4643d3ac6fdbfc2ed7989ec6974091e1af8245d593"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_grindstone.png",
+      "bytes": 97251,
+      "sha256": "a79c7b3262242fb0790120ad67ffd8a87c83059c3f2f445c7119aadcd06f88d2"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_hearth.png",
+      "bytes": 186810,
+      "sha256": "3c46aaf1f0305ba1cfa4a8673e076becc2c9f751de6c7ed47f18a66efbe4e048"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_iron_rack.png",
+      "bytes": 125263,
+      "sha256": "80b069dc73864e62e6afaa5808b6c68e0041187028907a50c3ca0b2c7e799406"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_quench_tub.png",
+      "bytes": 121862,
+      "sha256": "b450276936552f950fa1624e267afb7c1336ed3b50299c0efde025603774fa1b"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_storage.png",
+      "bytes": 113250,
+      "sha256": "726be95206b4216d345b1b76786c6c86ea9153c36a9b7f1500706f54cfa4a900"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_tool_rack.png",
+      "bytes": 99208,
+      "sha256": "5ea4cf755bc83ede62097ba57abb6374c36ecd1f3847b5013af8148e811fdf9d"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_workbench.png",
+      "bytes": 144177,
+      "sha256": "4eb20f3c32ee2b0e0ecd7f580ba1ac44758556895c498ac3c6a3addffdb59865"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_ceiling_oak_beams.png",
+      "bytes": 408532,
+      "sha256": "343912985965eeda8fd4c73f523fff0e4bbc981a2d092753e758ecb579516fa6"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_floor_earth_stone.png",
+      "bytes": 722826,
+      "sha256": "47ddd7eac7f4feeae24af6c17c9bf98646d752b9568f7c8856c8eda7d94892fd"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_wall_plaster_stone.png",
+      "bytes": 564421,
+      "sha256": "78ea10daacf99d8975c1d39f6fd80008608e33f53f0f6740c2aa6d1985603b1e"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_wall_sooty_stone.png",
+      "bytes": 488901,
+      "sha256": "783dbf5498147b9c0540c14170e45fd66739535d3e166a73da233c7c53d423d6"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/integration/SmithyCatalogAppend.cpp.txt",
+      "bytes": 446,
+      "sha256": "d76413f54cc26da17c9cdace723b78d9e062f49e30c4360d2bf7cee1e47ee0d5"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/preview/smithy_environment_contact_sheet.jpg",
+      "bytes": 674073,
+      "sha256": "4cb97a26a2e65ebe7f9997a478a7803deda74dde56440fc62357afb14a85786c"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/preview/smithy_room_mockup.jpg",
+      "bytes": 629360,
+      "sha256": "80b882be0c7059b4aef3a89232ea147fd69bae52822dc60ef2e750ba2ec9a2f0"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/smithy_room_layout.json",
+      "bytes": 1398,
+      "sha256": "37fb87a4f8fd3276c99018250f03b920d58bc59691a3a1ac82eed1d516d73344"
+    },
+    {
+      "path": "assets/smithing/environment_2_5d/validation.json",
+      "bytes": 1960,
+      "sha256": "8e55ece42fcb1d500d25be5139689938aa0a2dbbf879c7fd46195ac2b15d9bce"
+    },
+    {
+      "path": "assets/smithing/imgui/README.md",
+      "bytes": 2965,
+      "sha256": "272c54d148bf788042b4c23b2d6dc34ce92b23755d1b8b97b2b053a52e0fa5a7"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/atlases/smithing_ui_atlas_2048.png",
+      "bytes": 413420,
+      "sha256": "7d129e2fd5240b1dd6dc339d99814c81030841d879fc06c8d167cf85eaa5faf6"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron.png",
+      "bytes": 43231,
+      "sha256": "a9419426e8f94bab959d0656549de2eb09f162cb825df4ab9ae78842f495ec5a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/bottom_center.png",
+      "bytes": 4959,
+      "sha256": "783b0aafa4adb1b85e74c7c7c4cc24f5b8cf0eb34e591709bfcc7fbf4a9931a1"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/bottom_left.png",
+      "bytes": 1464,
+      "sha256": "500b9a528ad1779040bd48f4f119a913335471852ffcbed71716b89e9ac76978"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/bottom_right.png",
+      "bytes": 1416,
+      "sha256": "a49917b3ef46da420eab301adbde3f577f0229afd1b3af9d32f52d7b615b8ecb"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/middle_center.png",
+      "bytes": 21741,
+      "sha256": "4ec8b31b975d6a378ce17e16eda51e4ef2ae6eb4f49ae63e72cc33733b353587"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/middle_left.png",
+      "bytes": 5641,
+      "sha256": "6a39abba3fdafae14f8b249496ff827ec0606d7cbb89dd79868042a630094d43"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/middle_right.png",
+      "bytes": 5608,
+      "sha256": "10fc746bfbfca77148fe1e5e7c66bc9270e7622ff6543f74e38d7adbe5533617"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/top_center.png",
+      "bytes": 4615,
+      "sha256": "08017d0831206d06003dfbdb4ecf50fdfcf37ec8d2b30550dec02167eb8c8c22"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/top_left.png",
+      "bytes": 1392,
+      "sha256": "e785bba95d26868bb7ac11440a53eaab8efe2b2ac709810379e5d171eeb733e5"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_iron_9slice/top_right.png",
+      "bytes": 1429,
+      "sha256": "6aa5220e74118a07355abb5904b12a04398255907985944dc94f820de4d356e7"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay.png",
+      "bytes": 31233,
+      "sha256": "bbae549f7e0d065b1a65db604596545d1765f4fb5f23b3b392291740a6e371f9"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/bottom_center.png",
+      "bytes": 3424,
+      "sha256": "32f53b759f90786c3126a0ac8f6d384dbbc9d7fad48b218ef9780da401c2c73a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/bottom_left.png",
+      "bytes": 1196,
+      "sha256": "e7eaa93a5f993dff97ec49a6622d8bbca2578699f97a09e764c8255ed1676ab6"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/bottom_right.png",
+      "bytes": 1204,
+      "sha256": "587c0219b152c8f289b4f7945c90b9adff6d79fea763773e6c35cf723113c398"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/middle_center.png",
+      "bytes": 15428,
+      "sha256": "5db158d498387c15ee2a7da891721dd00e0244911caca549470ba934b3336138"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/middle_left.png",
+      "bytes": 4025,
+      "sha256": "51f04619c4705c4b913613771036f0fa52bdbff4417d946fe63bdddbf856e3f0"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/middle_right.png",
+      "bytes": 4047,
+      "sha256": "3892b1179467c65688ae1cd46c671384955de75ff075161e8a5755bec91c7840"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/top_center.png",
+      "bytes": 3342,
+      "sha256": "f1804fc0ee3becd88e05bc79f33a574f32124f1610e67c5210c0f6ab6cffd875"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/top_left.png",
+      "bytes": 1227,
+      "sha256": "15c82f975d6d2bf031d7086b6529e694247471349237cc7db0b615ba11ab33c7"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_overlay_9slice/top_right.png",
+      "bytes": 1241,
+      "sha256": "d751876a936d0d6d44939cc39607cd6dde180c3277ddf8cff3f755475c65779f"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment.png",
+      "bytes": 35780,
+      "sha256": "ae96f69772f9c1b8a33b9a84a5e80c809f16a0b039352999a83b1bf39948f965"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/bottom_center.png",
+      "bytes": 4268,
+      "sha256": "628d9df82b918e83320f04b7f99f59e11bcfb0c122e34e83c6ec147e67c259c0"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/bottom_left.png",
+      "bytes": 1313,
+      "sha256": "fe1c28780f92fda923d131591584347eb70da0b3d0feecfcc5f512ff7fbb4bdc"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/bottom_right.png",
+      "bytes": 1344,
+      "sha256": "5597465b7d454bc2e2b657c87976441f0810936db6e99dc15b474811f654c3dd"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/middle_center.png",
+      "bytes": 18513,
+      "sha256": "d5d725702c69fc9fcbec8f1c0e674902a0a191ef2dfd2035308ad0b8bf8493bf"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/middle_left.png",
+      "bytes": 4683,
+      "sha256": "deeb27a69ab9ffc6e14e849df690dfb69f8bafde355a71dd091ee6a2e846cdd4"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/middle_right.png",
+      "bytes": 4796,
+      "sha256": "157876caf359b88aa7bcab45bbdafd456d1e86c703a17fa3362048cc7c3d63f4"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/top_center.png",
+      "bytes": 3661,
+      "sha256": "5105882cfea5fd6fd0b9f6d915d895cf92868c5140e28da98b701ec61c33e4bd"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/top_left.png",
+      "bytes": 1282,
+      "sha256": "caab7ab6f74b75e192c28d7f7e6f1d047e78839afcc71db719065ffd3bf3c192"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_parchment_9slice/top_right.png",
+      "bytes": 1308,
+      "sha256": "71abe2f6a6eb5e17c6675aca7c159df794c7837e3652d31b51f32ac1a7e6c7f2"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood.png",
+      "bytes": 44845,
+      "sha256": "c8a72fd46a70e2c17a10866a0d6c464de73447cdd3bc2a2fec3a4d4b88e9f676"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/bottom_center.png",
+      "bytes": 4546,
+      "sha256": "f1880801c176a0b29dbe228bfa75fce7d866b139e86e751f33cd1fba4c16e6b6"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/bottom_left.png",
+      "bytes": 1445,
+      "sha256": "7e34887495011d364e33fe370bfc7efc5ac5e6fe4bcf0d572a0f3715c41229b2"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/bottom_right.png",
+      "bytes": 1476,
+      "sha256": "54d8ddde8e27d85e180372d0905731586b17293fb02b522308ed6cb8b9d5841a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/middle_center.png",
+      "bytes": 21445,
+      "sha256": "34f8ac9be86cfa7a901b108b806635081b10b6d29ec8be80ee13682bc34dc224"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/middle_left.png",
+      "bytes": 6097,
+      "sha256": "bc296914fd199f2aa3e60781c1944a491c4df19e36c7e747ef78c47e922505d9"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/middle_right.png",
+      "bytes": 6143,
+      "sha256": "a8ec451873f970758b297afaac44caecbe7098a166a01ec6290b817d904a37fb"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/top_center.png",
+      "bytes": 4269,
+      "sha256": "3d9600d737f79413da09acc8c32a30d06b5fdaa06efcd7fe57dc405d2d7a855e"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/top_left.png",
+      "bytes": 1407,
+      "sha256": "d0dc6f0f9480ec33e41877d98ee1c40b1f62e1aa29f6d8419596f602670b060a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/panel_wood_9slice/top_right.png",
+      "bytes": 1467,
+      "sha256": "bd6057fa210c0cadd9fdad0f4f48bc78dc59f5cfd30f9a8a71b20d0ca41802df"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/portrait_medallion.png",
+      "bytes": 11828,
+      "sha256": "ea63d124522474342f04b2139aef0bde96e5d0c619a86d8ad3f80ff107d20fc8"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/separator_horizontal.png",
+      "bytes": 353,
+      "sha256": "cfba4136ec5276ef21e29cf1bb18a6756c05144babb28040432d2f486bb3a2f7"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/chrome/title_plaque.png",
+      "bytes": 43389,
+      "sha256": "95f0faf839b83ba47db9bc969adff9a5870158a3bab1847c90725b89fc8191bc"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/button_disabled.png",
+      "bytes": 23245,
+      "sha256": "e54c431e0084654193229cb4b87c8d3be1231a58d827fa0b52670f30606d9088"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/button_hover.png",
+      "bytes": 19921,
+      "sha256": "4c2892f3f118ccf5901670dafa19ace317c2daf2c57ae4ba9db8cd5089231d63"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/button_normal.png",
+      "bytes": 22145,
+      "sha256": "d2e55e15a69f468b7af64734f82dcd088bb226794ede9d2443bc58907e03c924"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/button_pressed.png",
+      "bytes": 22544,
+      "sha256": "5fa072ff5c66d99d08b424fb7d91651fe0c39e4728bbbea0e46315968519f17c"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/chip_active.png",
+      "bytes": 303,
+      "sha256": "44e9d7bf76b8433bd6c96011a38b8a2a1ba1ab2e5f6b1e8588c91ca22a32dee6"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/chip_damage.png",
+      "bytes": 298,
+      "sha256": "ad3d4aa477d72c2fb39fd784d462ff6b3bd2fd2d2f70860c49ed1cadaebd8837"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/chip_normal.png",
+      "bytes": 299,
+      "sha256": "7055b56828884e3a37ce0027180d56098808fe1a0394c00fa5d4f59da8e1ec37"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/chip_warning.png",
+      "bytes": 300,
+      "sha256": "e0b5be4eb2664407e6ee5c61743519f2ab47e23189841d263ecf4535e389571b"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/keycap_normal.png",
+      "bytes": 364,
+      "sha256": "1f93c8ef02a303b407a46888227a0b5c1a393614300119dc4ea7e6b11864190f"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/keycap_pressed.png",
+      "bytes": 333,
+      "sha256": "610d13878306bbd668eb78b2f1ad2b41285f9ad5b8be47c47e96baab25e390d5"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/observation_damage.png",
+      "bytes": 517,
+      "sha256": "da6f3097d927c9d288acaf6353110d5088c450597f1a003610af6edc99d5ada2"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/observation_neutral.png",
+      "bytes": 491,
+      "sha256": "2a62cc1616d4d9f0fc90d7a6eafff34a7fae23f06a28e2788de48eb4bcdbcdd1"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/observation_positive.png",
+      "bytes": 521,
+      "sha256": "8e422ebe7d60097c8ce444b497a963d5a5df3b38141f7c2344a9731bda73b3fb"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/observation_warning.png",
+      "bytes": 522,
+      "sha256": "2164d0364b8970584ecb10497fdecbd7e81fa3565290917538ea3691fa5f7734"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/tab_active.png",
+      "bytes": 18493,
+      "sha256": "2148f4114acb82f29980540aa47814533cf3137bb0a3820b701d771e9beab7f9"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/tab_completed.png",
+      "bytes": 18410,
+      "sha256": "b9b4ee5648a90e998291253f6260596cda0a931150b12fdd89e68c6aafeff12c"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/tab_hover.png",
+      "bytes": 18554,
+      "sha256": "6891ab889681afdac7cea1043ef3ad1d3be5c41b0b23709536a0d53e40e8a00a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/tab_locked.png",
+      "bytes": 18494,
+      "sha256": "0a62e3e416951f9ea5429fcaf3514dac0af011c5b91c89a3277a001adff5546f"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/controls/tab_normal.png",
+      "bytes": 18461,
+      "sha256": "74fca7193622eb8993782ac801b4be7200a5fa2bfd2977a66e2b37ddccaadec4"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/accept.png",
+      "bytes": 345,
+      "sha256": "4a3a94b7d2fbbdd15ef526a4cf4e9ab7e3f22fa55ecb7d54f0197077e3b2debb"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/axis.png",
+      "bytes": 286,
+      "sha256": "b91fc22b3d65147bb14119f503c0c0c65c61e70bdf87bb85b58cbe014ddb32f7"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/color.png",
+      "bytes": 388,
+      "sha256": "d40545a316bece2003c8706641ee152aa7e52bf524686ea4b54ffdaa63ada76a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/crack.png",
+      "bytes": 310,
+      "sha256": "3621e56e819f515b90bd604fdc50848e28dbf8ac67cffa35c69b86036b8f76ad"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/edge.png",
+      "bytes": 375,
+      "sha256": "56658b0f5b84f8ff43e70ce26ec7996d5fc39d0a51a8fecbe0bd157426d5fb6d"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/exit.png",
+      "bytes": 291,
+      "sha256": "791e527e2d4a3252faaa0e49ea373d9e561fc05dd61acac8130ae5a74997fb86"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/fit.png",
+      "bytes": 342,
+      "sha256": "a266afc9222ff20463171f280f42a8471489dae03086793a266300964f5f5e92"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/heat.png",
+      "bytes": 388,
+      "sha256": "d40545a316bece2003c8706641ee152aa7e52bf524686ea4b54ffdaa63ada76a"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/impact.png",
+      "bytes": 406,
+      "sha256": "65cfc4690d1bcdca6797fa5b80f79d66d6a16e6d2c5b6e91bfcc538ebb9954f7"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/info.png",
+      "bytes": 372,
+      "sha256": "3aa2724bbd3e8a84fb1a7357becab025c4763450d78c21c15afab6cb0ef449c4"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/reflection.png",
+      "bytes": 348,
+      "sha256": "f7a739fda0adc2f2914e73bdf24055727c8527bf81475779a5535ac9ed293307"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/repair.png",
+      "bytes": 334,
+      "sha256": "57a2d8b19238c81d98de13a21d1b240f9879f71a83f27c6b32d6f18a46f2a59d"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/shape.png",
+      "bytes": 323,
+      "sha256": "aeabcfb282a3a9a8669f69351ca34ac5b7efeba9edb8c7631ac5426658698e35"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/sound.png",
+      "bytes": 355,
+      "sha256": "ab0b976faa2ab74d7231bd2a4cd6031ad3a55c076394f2c255e8e4b4d02b39bc"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/sparks.png",
+      "bytes": 286,
+      "sha256": "18574d1ed9bc4b11111d3c85bb7016c3dbe8d4e14635a3a3b77b144a0f041a7f"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/steam.png",
+      "bytes": 192,
+      "sha256": "0383c48e3c5d98ac9b5850f1d0aa7b576b086f888b64a020e4eb5617e154819c"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/surface.png",
+      "bytes": 292,
+      "sha256": "8c4fa42b059d281fdb8d9dc77688a9c933b0b25faab60d08be3aa04b062dfbc1"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/thickness.png",
+      "bytes": 227,
+      "sha256": "03a51528a00f8c58188b36a6b195cdf32c0862205c033ddd844e1e42764fa6a5"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/vibration.png",
+      "bytes": 310,
+      "sha256": "4106abb911f8d54ffb0847885aa375e2a8ff7896a1fd121400f74d4a0e56a672"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/observations/wood.png",
+      "bytes": 353,
+      "sha256": "5ebfdbdd48929b127a7f7eac1f8bd0e9f308a233c79dcd5bddcb89db0f617af8"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/stations/anvil.png",
+      "bytes": 252,
+      "sha256": "5f702427960ede5867f869180775cef1142100aebfc9ecaf6690c78cd0225433"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/stations/forge.png",
+      "bytes": 298,
+      "sha256": "88704da3ee8363907b6159b86c7703dfc70e602de4e5cd7a06f6e634c7e7f8b6"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/stations/grindstone.png",
+      "bytes": 492,
+      "sha256": "1e433268fed9598ca35c46c63a51e226600422348f117a00bc65657c574605ab"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/stations/quench.png",
+      "bytes": 275,
+      "sha256": "3ecd6a90999ac547e94d22a356bead0d5f5e3c3c6add95cc764203ac2de42c38"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/stations/testing.png",
+      "bytes": 279,
+      "sha256": "47e01f7ffd7fe4b4a058dbee42f3b3146a2c824b0d042968af11e76e73d9179f"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/icons/stations/workbench.png",
+      "bytes": 330,
+      "sha256": "2948f18da4416aaca72bd13068c87d6f4afb608fc124fcea9bf1887e54ab9558"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/focus_glow.png",
+      "bytes": 8430,
+      "sha256": "958097161f838cb063ef83c06710b83108d6dc0381ba7538865c94f65005c32c"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/phase_active.png",
+      "bytes": 488,
+      "sha256": "2185aeb7762be50b08cf635ba077024189fed91db1f6beb0c995003352b3df35"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/phase_completed.png",
+      "bytes": 485,
+      "sha256": "630dceba65a4a28beabec1c267684ebd151b1cc3a381d57cef1bd5e69053b6f0"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/phase_locked.png",
+      "bytes": 575,
+      "sha256": "ec348c98c374a1561b16657ac49c4e3760b4f855864376f75b6e0d252cbe61a4"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/phase_pending.png",
+      "bytes": 487,
+      "sha256": "71b73784f8cf425dac855d858dba49b4af4bd3322c6782a4a869ac357cb5b25d"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/phase_warning.png",
+      "bytes": 483,
+      "sha256": "ee7f97707bcbf065d5d1c13f80a873c350befe1dcba3e29f9e21c1c623e62a39"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/status_damage.png",
+      "bytes": 317,
+      "sha256": "e84f7b3a63d558da4f215cd40eebb432a4f3e6fe99184f17f2498a98ef7830fa"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/status_neutral.png",
+      "bytes": 314,
+      "sha256": "35d1bead89226d51fc0db08452859dd5817595975465b21ce338c8c7b4164a6f"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/status_positive.png",
+      "bytes": 316,
+      "sha256": "486b9dedcd75206fc76307a73876c2d3be9cb32ef9990b485e53c3892ca92965"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/status_warning.png",
+      "bytes": 313,
+      "sha256": "83fafb71d5ad72d131062e826e7c19e30088c6b5cb93b8076b6eda4276af1f33"
+    },
+    {
+      "path": "assets/smithing/imgui/assets/indicators/target_reticle.png",
+      "bytes": 892,
+      "sha256": "3f08f7daed71f9565b851810b6f73377b8235af53c88ab96d072724c97948de1"
+    },
+    {
+      "path": "assets/smithing/imgui/build_imgui_assets.py",
+      "bytes": 28246,
+      "sha256": "cf95c049e21182e655bb8ee42e00930a0219cb9fba429233a8f44d81bb73a014"
+    },
+    {
+      "path": "assets/smithing/imgui/integration/SmithingImGuiExample.cpp",
+      "bytes": 1406,
+      "sha256": "dbdca03b25c28f656889482963e95760a77b98bca8405707e3a2d8f587a5fc65"
+    },
+    {
+      "path": "assets/smithing/imgui/integration/SmithingImGuiSkin.h",
+      "bytes": 3606,
+      "sha256": "3ded57d45f3a084fc3609e5b10c0b04b29f7e53b8ec787b7df3c2d7354911c89"
+    },
+    {
+      "path": "assets/smithing/imgui/integration/SmithingUiAtlas.generated.h",
+      "bytes": 4390,
+      "sha256": "9c34b4191938aba926768a38fd59011a07fd94edca17ea08ae829c007d6afe8f"
+    },
+    {
+      "path": "assets/smithing/imgui/integration/smithing_imgui_assets.json",
+      "bytes": 24041,
+      "sha256": "e86be1ebf235c4c3aa4fdceee52677c18bba2c48ab541a236e774401d6824be0"
+    },
+    {
+      "path": "assets/smithing/imgui/integration/smithing_ui_layout_v1.json",
+      "bytes": 2409,
+      "sha256": "a636a0aeba66b876af6dce43616b961e71d44fa9b427adc0cd4469f87a2eafcb"
+    },
+    {
+      "path": "assets/smithing/imgui/integration/validation.json",
+      "bytes": 301,
+      "sha256": "bd8375a3083c3494547ac52eabc549f4a2c1f9b2f6c50870d87fe2f7d9f5844d"
+    },
+    {
+      "path": "assets/smithing/imgui/preview/smithing_imgui_assets_overview.png",
+      "bytes": 483949,
+      "sha256": "00305d123285c8a8e0926a84c4ae6ba848bd183e0498643862ea5904148232bc"
+    },
+    {
+      "path": "assets/smithing/imgui/preview/smithing_imgui_runtime_preview.jpg",
+      "bytes": 203659,
+      "sha256": "d969cd3c3a126cf8b3262a68417a93354249d073c02734ff1962247b561e980d"
+    },
+    {
+      "path": "assets/smithing/imgui/validate_assets.py",
+      "bytes": 4318,
+      "sha256": "8f33352b2c24e134c4f517f27f5a4ddcc7de30f04086bfaa2f55b9dff4e55f54"
+    },
+    {
+      "path": "assets/smithing/items/README.md",
+      "bytes": 5568,
+      "sha256": "a5735593821ad3cdf72971d1800ef4b5bc029064029486bd5dc59b7ffd686ee0"
+    },
+    {
+      "path": "assets/smithing/items/build_ui_mockup.py",
+      "bytes": 8484,
+      "sha256": "b0c45f525f5710e2772a0a4e0efc4774526d649732eb65be4f50ed56202b2838"
+    },
+    {
+      "path": "assets/smithing/items/craft_milestone_catalog.json",
+      "bytes": 12576,
+      "sha256": "07af23773494ca2aaf1a0d9fa8c1bcc0bc7f7119ddd8baab275643ac1e8baa6b"
+    },
+    {
+      "path": "assets/smithing/items/prepare_smithing_sprites.py",
+      "bytes": 11638,
+      "sha256": "d7133a868d100c664b040e06fe624469f8cde6ae844f5bf847b87aba9a139d83"
+    },
+    {
+      "path": "assets/smithing/items/smithing_items_contact_sheet.png",
+      "bytes": 951920,
+      "sha256": "ea72a60f0ef22827d94f9a92445fe1a78a085b9edaee55918a1ff55ad1251793"
+    },
+    {
+      "path": "assets/smithing/items/smithing_items_manifest.json",
+      "bytes": 3207,
+      "sha256": "aa37caf24ebe80c52bfc0c0b0f390c06d9657848bbf9cc2e978f1d4bdec0cd88"
+    },
+    {
+      "path": "assets/smithing/items/smithing_items_preview.png",
+      "bytes": 538379,
+      "sha256": "e39b4e1cc3c1739b2af86caa43900dea3275473effe899698028d96b9dd7f99c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_common_128.png",
+      "bytes": 10654,
+      "sha256": "114ddd74bc5ebbdbd1380d6f77da56c5d98db29bbb069150d45f39cf615c22da"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_excellent_128.png",
+      "bytes": 9914,
+      "sha256": "50b9b4836e5c86efa20c632a8844a740ce55629b75625efd602eddcef3a12c74"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_forged_blank_128.png",
+      "bytes": 16012,
+      "sha256": "2d16c64a5e8c7c8be66c88b71009bbd57344221f79d4fb52ec19d5fc7035154f"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_heard_blurred_128.png",
+      "bytes": 10901,
+      "sha256": "d8f65fa9e4363d8d241f7a646540a40f57634904218aaefd07f65e80448cba27"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_honest_128.png",
+      "bytes": 9743,
+      "sha256": "bc1deb20b374367f226d14c8ee8f2252d065d7787e274804dd3132d5ca79970a"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_masterwork_128.png",
+      "bytes": 10023,
+      "sha256": "f5489e13d805709f67190b46e7148104ce37447e12cc537cb3f907c1e07d1717"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_provisional_128.png",
+      "bytes": 11016,
+      "sha256": "9e81f3fb035728f77a58b700ebe32fd438cd62848d98c4e3bbaf5e1f3eb9e57b"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_raw_material_128.png",
+      "bytes": 18794,
+      "sha256": "0d1c487eabe802b6fd2820959e102aa8348f95d0f6557ae0b24381821bbe6eef"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_ruined_128.png",
+      "bytes": 13884,
+      "sha256": "9742145dd8f77fd01ab613d5ac57ae4a49b0a29443a9f7966c8d0579937a2105"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_unfinished_128.png",
+      "bytes": 11958,
+      "sha256": "803a980d3d90e2a8b6fe7d63c614ba1eb03b6c6ec79b58348b7738615bfaae96"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/axe/axe_unknown_fogged_128.png",
+      "bytes": 9397,
+      "sha256": "c1483becabbaa373e61e0776413c653716940220ee51f5541fd5e45f50073f43"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_common_128.png",
+      "bytes": 13990,
+      "sha256": "f82717292985ffb1e87b40ae9b7b3bae8a6220a7bffb17a758c2e5127d94802c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_excellent_128.png",
+      "bytes": 13851,
+      "sha256": "ed3d4e6b758c8b1fa06eee9024a141b5b8293e2e3bce4be6179876230556647e"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_forged_blank_128.png",
+      "bytes": 14497,
+      "sha256": "d013292be6e7871f69e9424207ff3b4bb1d4e9d00011326781a5185bc29ad332"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_heard_blurred_128.png",
+      "bytes": 12610,
+      "sha256": "f65e8569d2871674d5ac1f6a1ed918a86a02db51096f8891111187b74c88e284"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_honest_128.png",
+      "bytes": 14296,
+      "sha256": "067b6bb6276a5563c9f6dd8db2c89eb8fb54f8a322e8eb7068b7e8c5cd43a264"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_masterwork_128.png",
+      "bytes": 13996,
+      "sha256": "93d040dfbcdc0b38e845dcd4642bc2518d63225597820b61bc190ca0decd35ef"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_provisional_128.png",
+      "bytes": 14824,
+      "sha256": "e0c29540d2a29675ab3814951b394ce73f2e870c3b34369b6eb8104a0c320d6f"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_raw_material_128.png",
+      "bytes": 23214,
+      "sha256": "79e977c5893caa5406be89c90b02c2fd579cfad27ec1940dcb243b2712b3c1c7"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_ruined_128.png",
+      "bytes": 15304,
+      "sha256": "f7a858a475a0c1010fd22be7a1797c741a60de60f6d490c81c01edfe4b66096f"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_unfinished_128.png",
+      "bytes": 14409,
+      "sha256": "775a1b5c614bbbd02a7fcb59c2d7545d51ce45289644364e7c24ec708f57e164"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/chisel/chisel_unknown_fogged_128.png",
+      "bytes": 10544,
+      "sha256": "dcd8a0e6e32b89dc29e6f1466853a9563ce616f721c85f400ec1e2006237303c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_common_128.png",
+      "bytes": 8194,
+      "sha256": "4aab5d34f8eaa143cc36e0a32a57ad43e6a80dae8b5f0f54827e940b7da956c9"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_excellent_128.png",
+      "bytes": 8408,
+      "sha256": "44bf06c847fe66d2038ccee8419965e33e7ade685c210d95bf8cb924153488d8"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_forged_blank_128.png",
+      "bytes": 15598,
+      "sha256": "3647d3f3318d9f03aaf883f2d98137170dae21072e4df0258d669dcdadaf2c80"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_heard_blurred_128.png",
+      "bytes": 9242,
+      "sha256": "4f4de38a5cbf03e6bed173bb7641c73a005072713d1af16dbc47a02a3879a7dd"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_honest_128.png",
+      "bytes": 8508,
+      "sha256": "1f4b956551c6a9a23d630c8f3f613550b947343f19bf5dd5b7da6c4c9f61d8bd"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_masterwork_128.png",
+      "bytes": 8216,
+      "sha256": "1ae31998c0d469cf599026e47526b8af8d189433276da62a0107b40773e0c7de"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_provisional_128.png",
+      "bytes": 8672,
+      "sha256": "e2f2c2483963dac5171b4188604d379f8a21063e3203ce005d2397dc7d5c1aa3"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_raw_material_128.png",
+      "bytes": 13260,
+      "sha256": "63a3cf9021e520d5e212e7a119ab7f19b74f0616d4d1d4391a001eced5d1895d"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_ruined_128.png",
+      "bytes": 9269,
+      "sha256": "87bdaa5cc10ebc8bb6df7f14cad2674df05effa7a0abc58176107bfc812eaa8a"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_unfinished_128.png",
+      "bytes": 8462,
+      "sha256": "da5cfaf0c6ee15d033a6dec42147a8face8d8b037bf0a2ae9735c8e2990dc8ea"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hoe/hoe_unknown_fogged_128.png",
+      "bytes": 7739,
+      "sha256": "bc654fda4b150b8d05796ea585f1f9c57b0bf21b0a30c792e2a4dcbf103dc28c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_common_128.png",
+      "bytes": 14698,
+      "sha256": "a5771675bb4f2772b002a12c19c78f57cb55eb8d0bee8b6e449669c1bd6d91ba"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_excellent_128.png",
+      "bytes": 14004,
+      "sha256": "f3f096f13abc0235b3085c2b7651ee91e2c9e5d60aec250fd9f08886762e706b"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_forged_blank_128.png",
+      "bytes": 14200,
+      "sha256": "5d97211e72e8501ca87d10fbfefa1f61b5d64282b8c7bb47d0e8eea3a0caa680"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_heard_blurred_128.png",
+      "bytes": 13442,
+      "sha256": "f0ff4413d42d24f757a0fdc3250f59c0613accdd8f55273821c6488dda441d5f"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_honest_128.png",
+      "bytes": 14404,
+      "sha256": "0bc2d1f2bf58e458f3677d94193b69ce4677156bc9df646ad613ba9df4e3e3a8"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_masterwork_128.png",
+      "bytes": 13947,
+      "sha256": "d693ec9938486a0b9c653292a7c7dec67e5f5d3517741173da01a1cc3e0804bf"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_provisional_128.png",
+      "bytes": 15229,
+      "sha256": "49be2df4c7447ae61d2c9f5cb6c4227949ed8eb5806bdb5f485a5ebbae721a7b"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_raw_material_128.png",
+      "bytes": 17472,
+      "sha256": "5be5db32d11a44707ae2e320db69430b5825a70e9b374d663051327fc6dbdda3"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_ruined_128.png",
+      "bytes": 16324,
+      "sha256": "35350355f4e0bf7510166fbb81b5233eb197aae75f76b713a1e438d24fd85077"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_unfinished_128.png",
+      "bytes": 14780,
+      "sha256": "8a927df272d8f9c972a796f4f94259dd81e69ca67212c6b63094639d763ea95c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/hook/hook_unknown_fogged_128.png",
+      "bytes": 11310,
+      "sha256": "27f5dfab61ac2e45093c48ae29f819854658eb9497e44e4d14667c033f2e8808"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_common_128.png",
+      "bytes": 20813,
+      "sha256": "56573a7561f7c8fa3304e81677688eac6edc7b971534c0f6db1234085e3d718e"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_excellent_128.png",
+      "bytes": 19435,
+      "sha256": "c75f2a480ab19d104174e850e279d1de8a4b735a48a430fc5d8a71f32d8d5283"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_forged_blank_128.png",
+      "bytes": 19384,
+      "sha256": "1615f964bb7b30a793b8134b8feb374124030108400e0ca65efab1a493b20af4"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_heard_blurred_128.png",
+      "bytes": 17070,
+      "sha256": "5fc1f6712d07f4cc7f67d1353b5e492bb44e967b856dd695585928d87c5b4d20"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_honest_128.png",
+      "bytes": 20396,
+      "sha256": "f0eb1b158539e6ff72e2ebdcbdd2157d4e98fdb6a5b8e7419fbe7be6525abd7f"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_masterwork_128.png",
+      "bytes": 19629,
+      "sha256": "7dde1ec805b0b0745d5d136fc4fd7a4ff60a9888a7a78d425e64b868be407b19"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_provisional_128.png",
+      "bytes": 20820,
+      "sha256": "74d7628fbb35043c160fb50c5a9a305c501ec6d910b2a8f0c647a0c18412c293"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_raw_material_128.png",
+      "bytes": 19472,
+      "sha256": "bfbf8b34755822677dd2f6adfe8879eb6cd290919a648aea7374f185712b166e"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_ruined_128.png",
+      "bytes": 20927,
+      "sha256": "355130bf711940c05273d1de168b8d55112588ffbdda6d2f3b1c3c9b2f063271"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_unfinished_128.png",
+      "bytes": 20878,
+      "sha256": "c34d611c900f6236919c4e216dff39ddcd5dca3811cbb45da030eb36dc6a3050"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/horseshoe/horseshoe_unknown_fogged_128.png",
+      "bytes": 14304,
+      "sha256": "82c8b114258977a31aeb998df999941d64825f45bdc093ed34e35cc3c8cfec83"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_common_128.png",
+      "bytes": 11687,
+      "sha256": "3938bcf0525a22540cda8f409ce7d7a7ac37ba3f8ce10c11c15920804b8943f1"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_excellent_128.png",
+      "bytes": 12583,
+      "sha256": "448eb6b39c97b80303a2fdf473405396c8d083c6ebaa43e3e44e5c24cac6dacb"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_forged_blank_128.png",
+      "bytes": 13450,
+      "sha256": "1d988e48957a32d15efcadcccfc8c514cab03fdeb68c21bc89726d95f22ea01e"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_heard_blurred_128.png",
+      "bytes": 11471,
+      "sha256": "0590602340f8f8eb4fc701e76c4fb2504ef7b47d8e74c38d9e01e157f5f7e491"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_honest_128.png",
+      "bytes": 12503,
+      "sha256": "f9837290ad624346bc2f589512ac8a62910532f201da1caf52d66d9aca07b15c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_masterwork_128.png",
+      "bytes": 12964,
+      "sha256": "8714de6fcd3b0717a59ef99151479e251337db5282ca5acf41081c3cf1aa02a8"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_provisional_128.png",
+      "bytes": 13042,
+      "sha256": "319b84bf68860eaf08001c93d121c78a80d1bbb47c0f231cf848b7b21eb7ee4a"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_raw_material_128.png",
+      "bytes": 21329,
+      "sha256": "d2d0406aae1358f1461c54e8a0627c736abba93646bd19ad453b2e825104e8e7"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_ruined_128.png",
+      "bytes": 12998,
+      "sha256": "4ecff7b0f2aac66af2a5388d99246bb81e15967c133e552ca91d97d78938f7e8"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_unfinished_128.png",
+      "bytes": 11358,
+      "sha256": "de65e1083ae33581763f030acaeb9aeaa467230e75b4b9bbfcb581361ce2278a"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/knife/knife_unknown_fogged_128.png",
+      "bytes": 9558,
+      "sha256": "699154b97de48bda55d97f430940736d78e56e63b1f82e0e28fec607097312e7"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_common_128.png",
+      "bytes": 10455,
+      "sha256": "cb4f964ae56a46b6783441e676d3df06482f6655005ebcdd9bb2f848f8d98e8b"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_excellent_128.png",
+      "bytes": 9795,
+      "sha256": "26e7ffddeb3d30818c1708009d79c27ebe35f7d2f72a32fe4f2207449ed767b5"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_forged_blank_128.png",
+      "bytes": 12006,
+      "sha256": "90d39b168490295a13dc21b2a62ebf490f0f733cb519ee444f4dd9cb8dc28895"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_heard_blurred_128.png",
+      "bytes": 10535,
+      "sha256": "bacb8828220e0025bf610b223feb25cc863acb9dd980cf9966b85b16fe964570"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_honest_128.png",
+      "bytes": 10135,
+      "sha256": "ecf86933af2b6c516554ec867174b27a38f2f1dd5d7fd41a03ace2097bd0746c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_masterwork_128.png",
+      "bytes": 9607,
+      "sha256": "a2135bccbe06efb93805b98c10ccbb3d79e233dc02552dba1707b646ec1307ab"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_provisional_128.png",
+      "bytes": 10625,
+      "sha256": "d2ef33030c71da6f733433a650931bdb169fc1a9caf77d28798aa1a215bfcd12"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_raw_material_128.png",
+      "bytes": 14614,
+      "sha256": "59c670773db38240eb88b9a876a4884bc1d322665e52eac28f4db276b7524280"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_ruined_128.png",
+      "bytes": 11482,
+      "sha256": "a4b03e5e1a856ca4d87688879a08bb92015d9aafeb17aa0c7b5d2d51afc3c20c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_unfinished_128.png",
+      "bytes": 10878,
+      "sha256": "2a2722dce54b99008feb8eb14c623f2f0c06af4f0f1afe281dca92d82aa517c2"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/nail/nail_unknown_fogged_128.png",
+      "bytes": 8859,
+      "sha256": "c429d324a4269313624b3601954988e40de8416dfcbb3ff113de8fb577324c28"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_common_128.png",
+      "bytes": 9355,
+      "sha256": "5191690b8d52b5ff6e0809cdf5edd7628725d68ae9f95916ea641ad41fbd6cfc"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_excellent_128.png",
+      "bytes": 8802,
+      "sha256": "f18a79b02fe45a2c5504dade69c6e4b5f1c445b74d90f040bf5f3ec6cd46883f"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_forged_blank_128.png",
+      "bytes": 10863,
+      "sha256": "18a500abb363659daca18adaa7b40465670c05bf652dee5364bfcde753cdf408"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_heard_blurred_128.png",
+      "bytes": 9769,
+      "sha256": "e4c14a0db01853695f43b68cac48062cb946cfcd1493394096d0174c5dac1de5"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_honest_128.png",
+      "bytes": 9345,
+      "sha256": "d820d25ec3e7cd0a0af0b654b4f9abc58b18cfe3c9ba1d4f087786a62b573f89"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_masterwork_128.png",
+      "bytes": 8925,
+      "sha256": "3e78679f4f2cc2b901cbda7aa46363207ac47d171c9006950f63d18990ab1571"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_provisional_128.png",
+      "bytes": 9528,
+      "sha256": "78540c941acd0fa97b146194944287e0c00871f783a4c27ed03079efb5f237c4"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_raw_material_128.png",
+      "bytes": 22843,
+      "sha256": "b16aab5c3c2a1c18e689b6705e4dedbfb75f6bd80970ef48501a52d311cbfe28"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_ruined_128.png",
+      "bytes": 9184,
+      "sha256": "31c90fbfb74d17dc66041579693bbd8d330ec69a8b0c23ff06bd1b82d5721f66"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_unfinished_128.png",
+      "bytes": 9626,
+      "sha256": "bc7ada2a9a65f57dd653e6732750e7e8e83ffc44bfc9c2d4ca99595769d2926c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/sickle/sickle_unknown_fogged_128.png",
+      "bytes": 8312,
+      "sha256": "0f2b90401b6ffefb157ee033b00eae0b037d4e677a5592fdfbf931ade8ded735"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/smithing_items_9states_atlas_1152x1152.png",
+      "bytes": 1100921,
+      "sha256": "830800186bcfd6151d92efa83f1246da73e75e1f78347438d49884a21e023fd1"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/smithing_items_9states_atlas_1152x384.png",
+      "bytes": 291539,
+      "sha256": "0026714090c1b9af2b1d91182fcacb885cfb95ec2cb624289e90a56b4bd416f1"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_common_128.png",
+      "bytes": 16833,
+      "sha256": "b951c00bab053335e0546aa618bb128afd51ccca6992b6644b97261f1ff6bcd2"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_excellent_128.png",
+      "bytes": 15708,
+      "sha256": "5f3d271912f5f8fc991b0c6eb8d6e84df747ddeb22bcdeb188ef2f921583ac38"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_forged_blank_128.png",
+      "bytes": 18579,
+      "sha256": "5a506f24b2d02d76de6cd0a327d0da4fe37a34d5a7fd90f129719966a2cc4869"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_heard_blurred_128.png",
+      "bytes": 15412,
+      "sha256": "a8dc9a79d34a8fbc74d58eb6267a8942b3a7e32338bda20d2e2dcbc6c6ca5fa8"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_honest_128.png",
+      "bytes": 16560,
+      "sha256": "279afb11c546b044b60853d6014ce61f59d1faa36dfc5da86e954301965bba8d"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_masterwork_128.png",
+      "bytes": 15545,
+      "sha256": "c41a11497e117f8cdb8afc87526298e5e05d60f45f2f12f8de99bbb542c00b5c"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_provisional_128.png",
+      "bytes": 16815,
+      "sha256": "c8c0f8bb68780a16b3475d833149cfd59a7d8340d43d3d0698a5303e8d4bbbcf"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_raw_material_128.png",
+      "bytes": 19370,
+      "sha256": "394bbf981ec3f18e8c54e9e3afaa98df82613c9e936dd6b7c0697683cf6d6bfe"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_ruined_128.png",
+      "bytes": 18691,
+      "sha256": "b54222e0b802ed100ef287b290a6812fa6a07cfe6b86671ce6f6d0df815c147b"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_unfinished_128.png",
+      "bytes": 15752,
+      "sha256": "ff0b53ef7d0bc3266a643156b37df3c09681369f0c5ca702f38418826e4ddbb9"
+    },
+    {
+      "path": "assets/smithing/items/sprites/smithing/staple/staple_unknown_fogged_128.png",
+      "bytes": 12768,
+      "sha256": "653a25e9342e263e751ae5e7c890dd952004dde72f14250bd69a6fcb06a80c50"
+    },
+    {
+      "path": "assets/smithing/items/ui_mockup_smithing_craft_page.png",
+      "bytes": 190153,
+      "sha256": "f047901a334203850b39a28a0227ac6ac35b53259e35c1eb546c8d3b481b6218"
+    },
+    {
+      "path": "assets/smithing/minigames/README.md",
+      "bytes": 2334,
+      "sha256": "bc55e5dccd44b01d37cd14b27791ee4a31a4d4e5db68b6ebcfdb94b9be3c4420"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/backgrounds/anvil_playfield_1536x768.jpg",
+      "bytes": 344014,
+      "sha256": "007d80d377f7cfc91dd5c6cc8c0cec978645eadd1abee5316cbfb0511a762e26"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/backgrounds/forge_playfield_1536x768.jpg",
+      "bytes": 380182,
+      "sha256": "6ed248c0bb77833ebe23d536bf285ddfdd129839680bff57b3182c4aac92d8cb"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/backgrounds/grindstone_playfield_1536x768.jpg",
+      "bytes": 385281,
+      "sha256": "4f16d501882c18e76f462f2da8456b71ac61482f0de891db3507d9e475ca3de3"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/backgrounds/quench_playfield_1536x768.jpg",
+      "bytes": 347477,
+      "sha256": "d5406334121b6bd9420de6c56024e5cf4757bc36c3bf03a3f0e92273d5d3f9e2"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/backgrounds/testing_playfield_1536x768.jpg",
+      "bytes": 418928,
+      "sha256": "e97f8b6f737ca7111045555fa4a5ead4f6a86bb2eadaf526fcc1617997385304"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/backgrounds/workbench_playfield_1536x768.jpg",
+      "bytes": 365397,
+      "sha256": "7687237beaccd99a445dd2857c4379273e680ceccc1b04fa28c506c47fff7b13"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/anvil_sparks_512.png",
+      "bytes": 183474,
+      "sha256": "7caf7c50fc053774c1d6481fe09e36ee12e1cb1823036d2b285bb87e8aeeeede"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/drifting_embers_512.png",
+      "bytes": 95314,
+      "sha256": "8ad9fc8d0e410bcba87b28511c67e06f38bbcdaf7049d852d605d58b332faf01"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/grind_sparks_512.png",
+      "bytes": 116610,
+      "sha256": "8c878eee7ad6dc83cc2fffee5d60b3919c887c393ccb7dd08f5ced27a1136cf6"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/heat_halo_512.png",
+      "bytes": 145639,
+      "sha256": "d68c9077e02827bdcdc4aa4352f080b800859ff1dbc3981a126f51e0ee935663"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/impact_dust_512.png",
+      "bytes": 156744,
+      "sha256": "2f12f52d1400085cd0d218fbd1cd52795dd7b1a474a441a4fd6b895498c8164d"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/quench_steam_512.png",
+      "bytes": 202788,
+      "sha256": "96c788a07f500e393a31aa553d6b3de7ca223ce8dd5a7ab3c642a2532570c99f"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/smithing_vfx_atlas_2048x1024.png",
+      "bytes": 1242085,
+      "sha256": "4e2de8b65b464cb126d2dde0020715f74ae7941296b9d4da79a8b6b4e6dc06dc"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/smithing_vfx_atlas_clean.png",
+      "bytes": 2080902,
+      "sha256": "362f7eeb317435ba89abc37af9e7c9e9e8e6d687dd2a6699e8ee9ceb4cb6da99"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/water_splash_512.png",
+      "bytes": 114845,
+      "sha256": "a752e7164692a6eae0d235cfd08548f4d2ef6cf4f1e299841445e1dde9da15fe"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/effects/wood_chips_512.png",
+      "bytes": 185070,
+      "sha256": "36b0102c62d8d440ed434bd48d7a4e9b2acd473e88c53c609ff6168e620af9a7"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/axe_workpiece_stages_atlas_2048x1024.png",
+      "bytes": 926807,
+      "sha256": "b26908f616148e4160f77d22c10631d011e9b0f27f995682672c2404cd3336d8"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/axe_workpiece_stages_atlas_clean.png",
+      "bytes": 1571304,
+      "sha256": "464b24761b62a963e0527b83eda1f63acf8fd27a468a17ad1a49a34114a1200e"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/assembly_mallet_512.png",
+      "bytes": 113985,
+      "sha256": "c22f692cfd0d3dac1c06c47c74d236abc85d5bd4b04d7bbb2dcb54277d06348e"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/axe_head_grip_512.png",
+      "bytes": 171831,
+      "sha256": "da8863aadf4a8c841d3ab0179463642eb2ae173faf4d5fbd5072c5a3169fb54b"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/finished_axe_grip_512.png",
+      "bytes": 178053,
+      "sha256": "bb48b5755b1b5f7a84e67a33b7e5e7a977f916327a2f6e5e37776dd3cb2b015e"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/grind_crank_512.png",
+      "bytes": 225011,
+      "sha256": "fea925e8841c6bd48e3399f0609c90b548a0a4d62e0b14de755ac1cc61b80e84"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/hammer_raised_512.png",
+      "bytes": 153564,
+      "sha256": "6ab78b9f786bfc81fd8082751b8258231c2f6a89c5655787423580ea188e1709"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/hammer_ready_512.png",
+      "bytes": 108303,
+      "sha256": "9f09cc870b6e0ecb035ecba4e96ba2a0609530fe142f105066c20f0f4e76c9e1"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/tongs_closed_512.png",
+      "bytes": 108851,
+      "sha256": "facb4ef16c50e3683c228de87f13055b9d444f0e11be1ae8c2bcc283c74f37a0"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/hands/tongs_open_512.png",
+      "bytes": 110635,
+      "sha256": "60e5696cd996ae4f17800e16f7c53814fd3fb1e9dbdb4d2e6e7a47772f9f42ce"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/smithing_hands_tools_atlas_2048x1024.png",
+      "bytes": 1180634,
+      "sha256": "19280c12131e643e004cbe8e64da3c5a3dc4455ef5edc5b32939e7efc7d314a2"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/smithing_hands_tools_atlas_clean.png",
+      "bytes": 1920374,
+      "sha256": "d4405ab6bfd01265865efd32c647ccedfb7f41955054d4e6714c65bd552fb97e"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/finished_512.png",
+      "bytes": 125142,
+      "sha256": "564e2189f0a8265874dbdd75045b8416b8cf06824471c59714b59f124f80bf97"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/iron_billet_512.png",
+      "bytes": 83885,
+      "sha256": "c3a384b0823cfbed629898f0fe7921cdf276db8c159c971387740a12166a645b"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/punched_eye_512.png",
+      "bytes": 127205,
+      "sha256": "f6605bf523386d4366597b6e0e5b1825812a6a707083df0a1f87a72ef82e85ca"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/quenched_wet_512.png",
+      "bytes": 132480,
+      "sha256": "9b4380e6c44f93d325dc3cd0fc4068629491ce045a190b1148b8be9ed3580263"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/refined_cold_512.png",
+      "bytes": 117235,
+      "sha256": "9ae28d9d9f87dbf83086b5236d3ba74569b05962205305f1d97510b174fe476b"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/refined_hot_512.png",
+      "bytes": 117992,
+      "sha256": "97ccc4d4f1e8da1b58964d8cc267cb2ffb28d5b3a1d9da3bd5f59a7b9adf6811"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/spread_blank_512.png",
+      "bytes": 124589,
+      "sha256": "b9a21343d1032dacad67326dd1b304c9405ad6272725c4ad3f1ec8596d84e7ed"
+    },
+    {
+      "path": "assets/smithing/minigames/assets/overlays/workpiece_axe/upset_billet_512.png",
+      "bytes": 101842,
+      "sha256": "032877577cfe1c011bd3175b750a29dce4a62c88285e431cb9912ea48ebe6bf5"
+    },
+    {
+      "path": "assets/smithing/minigames/generation_prompts.md",
+      "bytes": 1881,
+      "sha256": "6d261810b1ce4e960868e29a80b9cdbcefbeb5d409cf5d840be01cd965965ef7"
+    },
+    {
+      "path": "assets/smithing/minigames/integration/smithing_minigame_assets.json",
+      "bytes": 5192,
+      "sha256": "0bee26843385174be30ac8b72802677e73823e0d4dfc8231994e4fe64a5e4d21"
+    },
+    {
+      "path": "assets/smithing/minigames/integration/smithing_ui_spec_v1.json",
+      "bytes": 2409,
+      "sha256": "a636a0aeba66b876af6dce43616b961e71d44fa9b427adc0cd4469f87a2eafcb"
+    },
+    {
+      "path": "assets/smithing/minigames/preview/anvil_layered_example.jpg",
+      "bytes": 376599,
+      "sha256": "3f21bd148bc0a202bba550ed175891ebeed8a89f29f66759756a48c2265aba5f"
+    },
+    {
+      "path": "assets/smithing/minigames/preview/smithing_playfields_overview.jpg",
+      "bytes": 674299,
+      "sha256": "e750c7bab4bffb418f18784bb0fff06175e1775765c7e4628bc9c5aa846d9aa6"
+    },
+    {
+      "path": "assets/smithing/minigames/preview/smithing_ui_overview.png",
+      "bytes": 1329389,
+      "sha256": "841814382b28bc9a447939715648f111d028792a0fc19bebfceae8e6a985db60"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/README.md",
+      "bytes": 3141,
+      "sha256": "aef135f2fe95e74061087b90328525a1b0458030aad7cc4014a980ed60c5277a"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/atlases/smithing_skill_tree_atlas_2048.png",
+      "bytes": 419416,
+      "sha256": "5c3fb6fd9231010997e7cdb491eb7cc474363158e5c6a92aa6ee247b4f28b5be"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/badges/choice.png",
+      "bytes": 488,
+      "sha256": "071906a29f693c70edb43fd50a8412cd15cd6ebd8d81ab690c1d1e4d9cd9c672"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/badges/complete.png",
+      "bytes": 453,
+      "sha256": "dea6e7f1b2d39d2ae0fc265ab4934c249e9a9a3bc92882727d55c6363983a72c"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/badges/lock.png",
+      "bytes": 419,
+      "sha256": "d7c32dfa0bb82038e9f7d62761c3c1561a027fd5b5440d719bc9e2b05f0c6f50"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/badges/question.png",
+      "bytes": 478,
+      "sha256": "d7e665a6d37e5a5e1a9a2bd77d07eff8a155a2422275af7ea2f22407e2d370a9"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/apprentice.png",
+      "bytes": 925,
+      "sha256": "7d43234366241938d51b284748f129d21b765afa7bfa07656cf29958091b8320"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/axe.png",
+      "bytes": 889,
+      "sha256": "91617724ea77fcee30f2fac554175e23291d1a19f8b3a81b16f63767c4c0b773"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/bellows.png",
+      "bytes": 833,
+      "sha256": "0bfbcef8d79b4f119488d867ad7a0fea1c3372d13cbf6690b5bfbce20062b329"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/building_ironwork.png",
+      "bytes": 824,
+      "sha256": "e108344ea482992bf1e597167bd641319a76e6a1dc3fcad7dd9b6b200fb5f472"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/chisel.png",
+      "bytes": 718,
+      "sha256": "73e77bc1eaa60dd61aee39b35d26007f696cee2cf9c40385397d45adaeae36b5"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/defect_detection.png",
+      "bytes": 837,
+      "sha256": "20c9dfcdf5c36eb4116ef4c77d8dec64a8778dc3abdae1d3625480bf764da6ec"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/diagnostics.png",
+      "bytes": 991,
+      "sha256": "bd95e4a5a6dbe416e5d69cc03e20d17c9c33fc2acc4a18a0ba9cbc325d394b25"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/farriery.png",
+      "bytes": 894,
+      "sha256": "e35ad1813a8b2e2a80363510ea5a7cea6e64e7b7f8b70858993d41c8ce0e20e8"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/forge_safety.png",
+      "bytes": 919,
+      "sha256": "d2881caff63d9fc36f257764c9ec00bc0225b998b883ab4b276e86c9beacd4e2"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/forge_weld.png",
+      "bytes": 1013,
+      "sha256": "1ab02abf90e336d7fb00cdb02a6aedc5db89d58f0c871bd8d7624b75a3d56d1f"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/fuel.png",
+      "bytes": 935,
+      "sha256": "11147838c9ff5006e139c9a05472b360a224a94acff63b91bdcdbd4cc6f5a16e"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/grind.png",
+      "bytes": 863,
+      "sha256": "9d098b648d24820b44e797a361b6e6ae05c3275d9abe45083b652c9602eb3d73"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/heat_color.png",
+      "bytes": 833,
+      "sha256": "08858cdba0b87c9f0734ee96b11683b7c9e93f95829417b51a3ab62d85ef3ee7"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/heat_treatment.png",
+      "bytes": 829,
+      "sha256": "6c9fb7033e391ae00a37935bd4a7f02f14e60b2e2dfaf15c75b9c3fb3b917164"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/hoe.png",
+      "bytes": 911,
+      "sha256": "2861e4e86f57ddfa7aaea634ff7eeda9444b2f431498c5c9fd659ee9708a4134"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/hook.png",
+      "bytes": 737,
+      "sha256": "3221d053c884c9011b033f271b4ac247b938bfb26fc23e8213dff1da90f41656"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/horseshoe.png",
+      "bytes": 894,
+      "sha256": "e35ad1813a8b2e2a80363510ea5a7cea6e64e7b7f8b70858993d41c8ce0e20e8"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/innovator.png",
+      "bytes": 1029,
+      "sha256": "053337fd0f78235687d7ad3599b7c01da02bced93b4280682483994d764012e0"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/journeyman.png",
+      "bytes": 1001,
+      "sha256": "c0c18e0fbfda6484bee69cfd91cefda93fe6b92a5e536abc4cc0859c1213ebf6"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/knife.png",
+      "bytes": 907,
+      "sha256": "a0b45c177007c2e0e0022326b0e63c691a2c686109f891b3cf4b2b26af5e9d31"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/master.png",
+      "bytes": 885,
+      "sha256": "cd5c56f9344bc73148fe1a4aa3dcca149af6355f1dd2f4ee04cff7a392a79e25"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/material_estimate.png",
+      "bytes": 754,
+      "sha256": "f67221a87ecb4a861bb9292c7d1fad0cf4023f9d8638a10a737f8b4455338161"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/nail.png",
+      "bytes": 673,
+      "sha256": "39b5ce58114e288b8e7f8e3d154b90c14455be9020016ce6b7edb7c153900df1"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/observer.png",
+      "bytes": 874,
+      "sha256": "fd807fb75babfb42701699cee1b12a761e44388fb425e59075f8b8207fd2672c"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/planning.png",
+      "bytes": 713,
+      "sha256": "9f41c2a118b2e182fa22659341316e52af8c6b099d09374d07a684e7f27cb052"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/quench.png",
+      "bytes": 771,
+      "sha256": "14843015f3675c528c28af4624e609dcde4a7bab94318831446393ee27011ec2"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/repair.png",
+      "bytes": 1083,
+      "sha256": "85b22689090ab9753ff4a63881f0b0fad8948dd42286e4f266fa9635220b9102"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/resources.png",
+      "bytes": 932,
+      "sha256": "35ec04cee52917b6c55c9ecd51f28057ec695430b5ddd435434b1135b75cc9e9"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/staple.png",
+      "bytes": 730,
+      "sha256": "0477fa5974aa2ccb2cd6f3ebe7cee00ab980409dfd8d413765e14e9d196726c9"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/straighten.png",
+      "bytes": 977,
+      "sha256": "f52e94cdf13a7789ad2901ef8f21c009b8a1ae55a458f62d727599bf21a485f4"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/teamwork.png",
+      "bytes": 838,
+      "sha256": "4b736503d7e167893e6c7d55d41d5a5b2e1ede3120e8a7b6d6253cac1e8ae53c"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/temperature_control.png",
+      "bytes": 815,
+      "sha256": "df7ba6f4006c3c06abfd87b9cead61decb1e92918cd26aa8757ec320bb9438e7"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/tongs.png",
+      "bytes": 880,
+      "sha256": "65c712d48fb9fd0808091d185fdf818e8cda8459a6190ca5af4e7e5ec60749b6"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/toolmaking.png",
+      "bytes": 1147,
+      "sha256": "82c086c377046eb2aaf982b112dbb7443363e7836593540d81889e918e26108a"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/tools.png",
+      "bytes": 925,
+      "sha256": "83fb85f8e0d97ba3aa2188d84d6ee73b8c6d75f8df1b353e0aa3cea7e5b5e91e"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/icons/workshop_master.png",
+      "bytes": 1064,
+      "sha256": "5c7d30a30779fa6094043473a6f9bdb851ea12e50f79ce70036b5a672a19f263"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/active.png",
+      "bytes": 52084,
+      "sha256": "752410b5e649a9e34ce881c2949badf83f6eed476eb30297379be6c955383b62"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/available.png",
+      "bytes": 52166,
+      "sha256": "935f826e19d4a0b22d9bfc27b18bbcef615ae6a378a986a0929ac1ae48d593a8"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/completed.png",
+      "bytes": 51897,
+      "sha256": "e962864b43373e4d68d5f8c980888c1555b88f7761a7c39a4f3f144335e768a8"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/locked_far.png",
+      "bytes": 69643,
+      "sha256": "4c092d9b9e0504443d280e47c05dd51bb8dbd9d8c29621af212f948e784f8832"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/locked_near.png",
+      "bytes": 68153,
+      "sha256": "5bfbfa7126b3a5c04f920f56331959a8e213057b699a33a816071cbb43df27ef"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/secret.png",
+      "bytes": 10696,
+      "sha256": "5f9bb2ae65781f4fb46b4f515e46e78d0fc9405d5a3693e42572e57f2f4c0289"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/nodes/selected.png",
+      "bytes": 51970,
+      "sha256": "6c9d26f89004f5e1f6a3fd8f4ee5c266b68fe626b204e2089e94dd167122c450"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/overlays/fog_far.png",
+      "bytes": 5053,
+      "sha256": "a9dbe18691a6fff92b6d14c17edd23915088ee9d7d2f9f5c2c9e89ed7ce04888"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/overlays/fog_near.png",
+      "bytes": 4702,
+      "sha256": "a5169b402403eaf96bce3c8706075b4e26f5517a04bf5cd931a6c8b30b6f7e18"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/pins/active.png",
+      "bytes": 1603,
+      "sha256": "20d3361dfb46da9f32fa8a018a8531ace95d5810a931e08443d903302b28df31"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/pins/available.png",
+      "bytes": 355,
+      "sha256": "126066c46b5cd26fb74fd5531af5a9b8ce10f44d9528f06326b033926b43977a"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/pins/completed.png",
+      "bytes": 355,
+      "sha256": "2d6cf4bce1e6e3725d48f216f6efc64eb9f9ab008f75c76601dff71f28998d9c"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/pins/locked.png",
+      "bytes": 354,
+      "sha256": "22caf8f1c381a7566a2d2a43e28081262a86555431af15466a10152a5c244907"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/pins/secret.png",
+      "bytes": 355,
+      "sha256": "9f5e82233950e0ff19ff137170af805877dbd40631c5ba56418686be063c3ded"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/progress/complete_fill.png",
+      "bytes": 248,
+      "sha256": "adca45391389866a4fee0371350012992b5b79d8f417204ee3366b7e0066ab70"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/progress/fill.png",
+      "bytes": 275,
+      "sha256": "61f15bb8032199ca6b21d8aaea42a8af00501d27f71af257e696ad239de7c029"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/assets/progress/track.png",
+      "bytes": 250,
+      "sha256": "7489aa87cce29fb4115652861ebf190a9ab5bea71b8b834523ab1279e6e81d6b"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/build_skill_tree_assets.py",
+      "bytes": 36364,
+      "sha256": "fd6f04cb6146badc669951b9ce65a1d558614fb3b5fef36f76f5eb5faede5c79"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/integration/SmithingSkillTreeAtlas.generated.h",
+      "bytes": 3526,
+      "sha256": "213a189c7bef7407ba2022f7551d47c894a6d4e2f9dbfbd223ae2a7b6dac4908"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/integration/SmithingSkillTreeNodeEditor.cpp",
+      "bytes": 11564,
+      "sha256": "5da28ffc0e8a3998fdbf803302ce67c4360477bbb10baa7166c4bd4ac5b28392"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/integration/SmithingSkillTreeNodeEditor.h",
+      "bytes": 1065,
+      "sha256": "467f447b9332500bcf487e598aec1e22a9aa8c768d95f34fea406b3ab6d37829"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/integration/smithing_skill_tree.json",
+      "bytes": 7925,
+      "sha256": "56fa5acdc50ece2401a7c4b27857dc3e6f0b25be3c654511a8d145d0bbe2e95e"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/integration/smithing_skill_tree_assets.json",
+      "bytes": 19691,
+      "sha256": "f82efe4026ad710785f52c3a29cc5515ed9abb3d9263e0cdaae1a1ccd30652d0"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/integration/validation.json",
+      "bytes": 136,
+      "sha256": "6fec50af7abf4fc08415acfeeb00e0be4fffc52fec27d1ea4ce604bc200277a6"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/preview/smithing_skill_tree_assets_overview.png",
+      "bytes": 422658,
+      "sha256": "696747b6e6c1d2ff80e78ad80a2111fd2e83da720fbda72cbada935ee2faf257"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/preview/smithing_skill_tree_node_editor_mockup.png",
+      "bytes": 276950,
+      "sha256": "2110816a1ec06dfc797d51ef0346a9859cf528f9ddf8c5621968302efa42d198"
+    },
+    {
+      "path": "assets/smithing/skill_tree_node_editor/validate_assets.py",
+      "bytes": 2424,
+      "sha256": "a0bfa18fe8842057578127b8cb846fbdc6889f1a1e01049582431f7df0f8f3d6"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/README.txt",
+      "bytes": 1191,
+      "sha256": "402ab9bc0927ed1966d04cc843ed4296c1fcf6e5cebe9dfec682e85395680060"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/assets/smithy-style-reference.png",
+      "bytes": 2404233,
+      "sha256": "e75040ef68bf455abdbbcca9337609cd222f908c5e108a86066ea69d82ba1a98"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/index.html",
+      "bytes": 23769,
+      "sha256": "8803cd2112860b7404b8973c3e4f9603e902b57f6d685a2736292f0d00c3b217"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_1_forge.png",
+      "bytes": 1027457,
+      "sha256": "46e374dcbff9c6030ca8a1989da69e9280fad93c061b6efe62c25bf3a4965807"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_1_forge.svg",
+      "bytes": 17545,
+      "sha256": "0e187c84a93f59578ad4eee1ef829d0b04baaed1797591547793ccc3be4827bb"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_2_anvil.png",
+      "bytes": 1042027,
+      "sha256": "18e801acd8387c08831d923eb38193bcf7077d68aa335de4522d6d0a987cf106"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_2_anvil.svg",
+      "bytes": 17518,
+      "sha256": "5be7a5ad7f80cf0e1ce9b059cb07bb1d14fb46046f8d97093bfc1959f775312c"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_3_quench.png",
+      "bytes": 1196078,
+      "sha256": "5ecc0478f5bf94896c8c6efcc842e673d6062cae9a097f6b61dfdeffca1d3af9"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_3_quench.svg",
+      "bytes": 17375,
+      "sha256": "1257bd5674fc680625e5414a17e8752bbf2e8598c11abb32eada10a30c3b9982"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_4_grind.png",
+      "bytes": 1046019,
+      "sha256": "eaf9072e8bb142cdc94b5fdc9e6637cde54ea67e75338ae6efca34eb713e1a33"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_4_grind.svg",
+      "bytes": 17342,
+      "sha256": "990ae9ba08baaf99baf9aec402a99e708fb34177d87111282d14cf0710a12c73"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_5_bench.png",
+      "bytes": 943399,
+      "sha256": "9b9b6383c4dbd8f8fb517396a0051aba2e23c1cc4eca9ec4899632151b78fe7f"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_5_bench.svg",
+      "bytes": 17293,
+      "sha256": "7872d497fddbf530a114d46cb393d31efb84f55f92c0678098d55d4a88170493"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_6_test.png",
+      "bytes": 992780,
+      "sha256": "507ad834d68287fcda974e19c98b40084c71448cb27f9bfed2916e24de47eaf3"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_6_test.svg",
+      "bytes": 17388,
+      "sha256": "fb21cb6e9973f5d837a8274e9482c5ae2f3d3f8509860129df2405be7863468b"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/mockups/smithing_ui_overview.png",
+      "bytes": 1329389,
+      "sha256": "841814382b28bc9a447939715648f111d028792a0fc19bebfceae8e6a985db60"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/render_mockups.js",
+      "bytes": 17094,
+      "sha256": "ae94a32679210ca1c9ff959123ac90b4fd02181d42354859b17587d73cb056b2"
+    },
+    {
+      "path": "assets/smithing/ui_prototype/ui_spec.json",
+      "bytes": 2409,
+      "sha256": "a636a0aeba66b876af6dce43616b961e71d44fa9b427adc0cd4469f87a2eafcb"
+    },
+    {
+      "path": "catalog/crafts_master.json",
+      "bytes": 43920,
+      "sha256": "6bda81d97152ed9580a39b12bc3d14b9c428f24dbaa22027c14e50c620bed2e2"
+    },
+    {
+      "path": "documentation/Planovany_strom_remesel_Remeslo_stredoveku.docx",
+      "bytes": 11033870,
+      "sha256": "6370531b230bb08a0bf1f3d3e1baf57efc1f58b6127e2efd95b4354a7693626a"
+    },
+    {
+      "path": "integration/DEPENDENCIES.md",
+      "bytes": 417,
+      "sha256": "f856abf24199778da8f3607282a8b9c5588b443540e14a06eb5c96c548e12986"
+    },
+    {
+      "path": "integration/START_HERE.md",
+      "bytes": 1653,
+      "sha256": "ec461dbc2283a0f7c27a6e0bece3dbfab225a9591f05a4b71bb2944bf3029a12"
+    },
+    {
+      "path": "preview/complete_package_overview.jpg",
+      "bytes": 420914,
+      "sha256": "9eaab2dd978d8cd803a2b7d5c4329e9818a5b256d8fe0d68cbc0b24bf97aa9e0"
+    },
+    {
+      "path": "tools/build_skill_tree_doc.py",
+      "bytes": 76802,
+      "sha256": "edb4f962588f345b6e30f5c6ef0145fbedef3f0ea153cbfa2b323baa08aa7716"
+    },
+    {
+      "path": "tools/prepare_smithy_assets.py",
+      "bytes": 20372,
+      "sha256": "ac8e598a48f299e289997140f31670d8a87cb81eb33a1d4643ef17dc742362cc"
+    }
+  ]
+}

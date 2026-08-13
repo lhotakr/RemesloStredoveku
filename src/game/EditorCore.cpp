@@ -25,6 +25,9 @@ namespace fs = std::filesystem;
 
 namespace
 {
+    constexpr float kEditorTopMenuHeight = 76.0f;
+    constexpr float kEditorWindowMargin = 8.0f;
+
     struct EditorCoreForageSpriteDef
     {
         std::string id;
@@ -1451,14 +1454,40 @@ void Editor::render()
 }
 void Editor::renderEditorWorkspace()
 {
-    ImGui::SetNextWindowPos(ImVec2(10, 50), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(430, 760), ImGuiCond_FirstUseEver);
+    ImGuiWindowFlags windowFlags = 0;
+    const ImGuiIO& io = ImGui::GetIO();
 
-    if (!ImGui::Begin("Editor Workspace"))
+    if (m_editorWorkspaceMaximized)
+    {
+        const ImVec2 pos(kEditorWindowMargin, kEditorTopMenuHeight + kEditorWindowMargin);
+        const ImVec2 size(
+            std::max(320.0f, io.DisplaySize.x - kEditorWindowMargin * 2.0f),
+            std::max(240.0f, io.DisplaySize.y - kEditorTopMenuHeight - kEditorWindowMargin * 2.0f));
+
+        ImGui::SetNextWindowPos(pos, ImGuiCond_Always);
+        ImGui::SetNextWindowSize(size, ImGuiCond_Always);
+        windowFlags |= ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize;
+    }
+    else
+    {
+        ImGui::SetNextWindowPos(ImVec2(10, kEditorTopMenuHeight + 12.0f), ImGuiCond_FirstUseEver);
+        ImGui::SetNextWindowSize(ImVec2(560, 760), ImGuiCond_FirstUseEver);
+    }
+
+    if (!ImGui::Begin("Editor Workspace", nullptr, windowFlags))
     {
         ImGui::End();
         return;
     }
+
+    const char* maximizeLabel = m_editorWorkspaceMaximized
+        ? "Restore##editor_workspace_size"
+        : "Maximize##editor_workspace_size";
+    if (ImGui::Button(maximizeLabel))
+        m_editorWorkspaceMaximized = !m_editorWorkspaceMaximized;
+    ImGui::SameLine();
+    ImGui::TextDisabled(m_editorWorkspaceMaximized ? "maximized" : "floating");
+    ImGui::Separator();
 
     if (ImGui::BeginTabBar("EditorTabs"))
     {
@@ -1823,14 +1852,25 @@ void Editor::renderMapIoPopup()
 
 void Editor::renderMainToolbar()
 {
-    ImGui::SetNextWindowPos(ImVec2(10, 10), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(380, 245), ImGuiCond_FirstUseEver);
+    const ImGuiIO& io = ImGui::GetIO();
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(ImVec2(std::max(320.0f, io.DisplaySize.x), kEditorTopMenuHeight), ImGuiCond_Always);
 
-    ImGui::Begin("Map Tools");
+    ImGuiWindowFlags flags =
+        ImGuiWindowFlags_NoDecoration |
+        ImGuiWindowFlags_NoMove |
+        ImGuiWindowFlags_NoResize |
+        ImGuiWindowFlags_NoSavedSettings |
+        ImGuiWindowFlags_NoScrollbar |
+        ImGuiWindowFlags_NoScrollWithMouse;
 
-    ImGui::Text("Map IO");
-    ImGui::TextWrapped("Maps dir: %s", m_mapsDir.c_str());
-    ImGui::TextWrapped("Current: %s", m_mapPath.empty() ? "(none)" : MapFileNameOnly(m_mapPath).c_str());
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+    ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+    ImGui::Begin("Map Tools", nullptr, flags);
+
+    ImGui::AlignTextToFramePadding();
+    ImGui::TextUnformatted("Map");
+    ImGui::SameLine();
 
     if (ImGui::Button("New", ImVec2(80, 0)))
     {
@@ -1873,8 +1913,7 @@ void Editor::renderMainToolbar()
         m_mapIoPopupMode = MapIoPopupMode::SaveAs;
     }
 
-    ImGui::Separator();
-
+    ImGui::SameLine();
     const bool undoDisabled = !canUndo();
     bool doUndo = false;
     ImGui::BeginDisabled(undoDisabled);
@@ -1896,30 +1935,42 @@ void Editor::renderMainToolbar()
         redoLastStep();
 
     ImGui::SameLine();
-    ImGui::TextDisabled("Ctrl+Z / Ctrl+Y");
-
-    ImGui::Separator();
-
-    ImGui::Text("Size: %d x %d tiles", m_map.width(), m_map.height());
-    ImGui::Text("Zoom: %.0f %%", m_zoom * 100.0f);
-    ImGui::SameLine();
-    if (ImGui::Button("Reset zoom"))
+    if (ImGui::Button("Reset zoom", ImVec2(100, 0)))
         m_zoom = 1.0f;
 
+    ImGui::SameLine();
     ImGui::Checkbox("Brush ghost preview", &m_showBrushGhost);
-    ImGui::TextDisabled("Map rendering outside Map tab: always ON");
 
     int fontPercent = (int)std::round(m_uiFontScale * 100.0f);
     fontPercent = std::clamp(fontPercent, 1, 100);
 
+    ImGui::SameLine();
+    ImGui::SetNextItemWidth(140.0f);
     if (ImGui::SliderInt("UI font scale (%)", &fontPercent, 1, 100))
         m_uiFontScale = fontPercent / 100.0f;
 
     ImGui::Separator();
-    ImGui::TextDisabled(m_mapDirty ? "DIRTY" : "OK");
+    ImGui::AlignTextToFramePadding();
+    ImGui::Text("Current: %s", m_mapPath.empty() ? "(none)" : MapFileNameOnly(m_mapPath).c_str());
+    if (ImGui::IsItemHovered())
+        ImGui::SetTooltip("%s", m_mapPath.empty() ? m_mapsDir.c_str() : m_mapPath.c_str());
 
+    ImGui::SameLine();
+    ImGui::Text("Size: %d x %d", m_map.width(), m_map.height());
+
+    ImGui::SameLine();
+    ImGui::Text("Zoom: %.0f %%", m_zoom * 100.0f);
+
+    ImGui::SameLine();
+    ImGui::TextColored(
+        m_mapDirty ? ImVec4(1.0f, 0.72f, 0.28f, 1.0f) : ImVec4(0.55f, 1.0f, 0.55f, 1.0f),
+        "%s",
+        m_mapDirty ? "DIRTY" : "OK");
+
+    ImGui::SameLine();
     if (!m_lastIoStatus.empty())
-        ImGui::TextWrapped("%s", m_lastIoStatus.c_str());
+        ImGui::TextDisabled("%s", m_lastIoStatus.c_str());
 
     ImGui::End();
+    ImGui::PopStyleVar(2);
 }

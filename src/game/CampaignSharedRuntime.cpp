@@ -725,6 +725,13 @@ bool Campaign::handleSharedUiEvent(const SDL_Event& e)
         return true;
     }
 
+    if (key == SDLK_r)
+    {
+        m_craftsOpen = !m_craftsOpen;
+        m_craftsFocus = m_craftsOpen;
+        return true;
+    }
+
     return false;
 }
 
@@ -733,6 +740,7 @@ bool Campaign::sharedUiBlocksMouseLook() const
     return m_consoleOpen ||
         m_inventoryOpen ||
         m_playerOverviewOpen ||
+        m_craftsOpen ||
         m_questJournalOpen ||
         m_npcDialogOpen ||
         m_forageWindowOpen;
@@ -880,6 +888,7 @@ json Campaign::saveRuntimeState() const
         {"ui", json{
             {"inventory_open", m_inventoryOpen},
             {"player_overview_open", m_playerOverviewOpen},
+            {"crafts_open", m_craftsOpen},
             {"quest_journal_open", m_questJournalOpen},
             {"console_open", m_consoleOpen},
             {"show_debug_hud", m_showDebugHud},
@@ -1107,6 +1116,8 @@ void Campaign::loadRuntimeState(const json& state)
             m_inventoryFocus = m_inventoryOpen;
             m_playerOverviewOpen = JsonValue(ui, "player_overview_open", m_playerOverviewOpen);
             m_playerOverviewFocus = m_playerOverviewOpen;
+            m_craftsOpen = JsonValue(ui, "crafts_open", m_craftsOpen);
+            m_craftsFocus = m_craftsOpen;
             m_questJournalOpen = JsonValue(ui, "quest_journal_open", m_questJournalOpen);
             m_questJournalFocus = m_questJournalOpen;
             m_consoleOpen = JsonValue(ui, "console_open", m_consoleOpen);

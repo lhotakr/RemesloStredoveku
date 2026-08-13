@@ -72,9 +72,12 @@ struct EditorDialogChoice
     std::string style;
     int npcMoodDelta = 0;
     std::string setFlag;
+    std::vector<std::string> setFlags;
 
     std::string requireFlag;
+    std::vector<std::string> requireFlags;
     std::string forbidFlag;
+    std::vector<std::string> forbidFlags;
     int requireMoodMin = 0;
     bool closeDialog = false;
     std::string setNpcScript;
@@ -87,7 +90,9 @@ struct EditorDialogNode
     std::string speaker;
     std::string text;
     std::string requireFlag;
+    std::vector<std::string> requireFlags;
     std::string forbidFlag;
+    std::vector<std::string> forbidFlags;
     std::vector<EditorDialogChoice> choices;
 };
 

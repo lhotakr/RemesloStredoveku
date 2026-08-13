@@ -1,11 +1,48 @@
 #include "Campaign.h"
 
+namespace
+{
+    static bool HasAllFlags(
+        const std::unordered_set<std::string>& storyFlags,
+        const std::vector<std::string>& requiredFlags,
+        const std::string& legacyFlag)
+    {
+        if (!legacyFlag.empty() && storyFlags.find(legacyFlag) == storyFlags.end())
+            return false;
+
+        for (const auto& flag : requiredFlags)
+        {
+            if (!flag.empty() && storyFlags.find(flag) == storyFlags.end())
+                return false;
+        }
+
+        return true;
+    }
+
+    static bool HasAnyFlag(
+        const std::unordered_set<std::string>& storyFlags,
+        const std::vector<std::string>& forbiddenFlags,
+        const std::string& legacyFlag)
+    {
+        if (!legacyFlag.empty() && storyFlags.find(legacyFlag) != storyFlags.end())
+            return true;
+
+        for (const auto& flag : forbiddenFlags)
+        {
+            if (!flag.empty() && storyFlags.find(flag) != storyFlags.end())
+                return true;
+        }
+
+        return false;
+    }
+}
+
 bool Campaign::isDialogNodeAvailable(const DialogNode& node) const
 {
-    if (!node.requireFlag.empty() && !m_storyFlags.contains(node.requireFlag))
+    if (!HasAllFlags(m_storyFlags, node.requireFlags, node.requireFlag))
         return false;
 
-    if (!node.forbidFlag.empty() && m_storyFlags.contains(node.forbidFlag))
+    if (HasAnyFlag(m_storyFlags, node.forbidFlags, node.forbidFlag))
         return false;
 
     return true;
@@ -13,10 +50,10 @@ bool Campaign::isDialogNodeAvailable(const DialogNode& node) const
 
 bool Campaign::isDialogChoiceAvailable(const DialogChoice& choice) const
 {
-    if (!choice.requireFlag.empty() && !m_storyFlags.contains(choice.requireFlag))
+    if (!HasAllFlags(m_storyFlags, choice.requireFlags, choice.requireFlag))
         return false;
 
-    if (!choice.forbidFlag.empty() && m_storyFlags.contains(choice.forbidFlag))
+    if (HasAnyFlag(m_storyFlags, choice.forbidFlags, choice.forbidFlag))
         return false;
 
     if (m_dialogNpcIndex >= 0 && m_dialogNpcIndex < (int)m_npcManager.npcs().size())
@@ -45,6 +82,9 @@ void Campaign::applyDialogChoiceEffects(const DialogChoice& choice)
 
     if (!choice.setFlag.empty())
         setStoryFlag(choice.setFlag);
+
+    for (const auto& flag : choice.setFlags)
+        setStoryFlag(flag);
 }
 
 bool Campaign::hasStoryFlag(const std::string& flag) const

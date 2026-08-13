@@ -1,0 +1,11 @@
+{
+  "ok": true,
+  "sprite_count": 57,
+  "node_count": 9,
+  "link_count": 10,
+  "atlas_size": [
+    2048,
+    2048
+  ],
+  "errors": []
+}

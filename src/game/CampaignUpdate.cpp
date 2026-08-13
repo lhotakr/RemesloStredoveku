@@ -84,6 +84,13 @@ void Campaign::handleEvent(const SDL_Event& e)
         return;
     }
 
+    if (key == SDLK_r && !m_npcDialogOpen)
+    {
+        m_craftsOpen = !m_craftsOpen;
+        m_craftsFocus = m_craftsOpen;
+        return;
+    }
+
     // budouc� hotkeys...
 }
 

@@ -141,6 +141,8 @@ endif()
 
 if(MSVC)
     target_compile_options(RemesloStredoveku PRIVATE /utf-8)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(RemesloStredoveku PRIVATE -finput-charset=UTF-8 -fexec-charset=UTF-8)
 endif()
 
 # kop�rov�n� runtime dat do slo�ky vedle RemesloStredoveku.exe

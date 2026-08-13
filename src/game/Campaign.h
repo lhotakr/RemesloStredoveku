@@ -286,8 +286,11 @@ private:
     void renderInventoryUI();
     void renderQuickAccessBar();
     void renderPlayerOverviewUI();
+    void renderCraftsUI();
     bool m_playerOverviewOpen = false;
     bool m_playerOverviewFocus = false;
+    bool m_craftsOpen = false;
+    bool m_craftsFocus = false;
 
     bool canPlaceItemIntoSlot(
         const ItemStack& movingStack,
@@ -305,9 +308,12 @@ private:
         float size);
 
     std::unordered_map<std::string, SDL_Texture*> m_itemIconCache;
+    std::unordered_map<std::string, SDL_Texture*> m_craftIconCache;
 
     SDL_Texture* getItemIconTexture(const ItemDef& def);
+    SDL_Texture* getCraftIconTexture(const std::string& iconPath);
     void unloadItemIcons();
+    void unloadCraftIcons();
 
     void renderDraggedItemIcon();
 

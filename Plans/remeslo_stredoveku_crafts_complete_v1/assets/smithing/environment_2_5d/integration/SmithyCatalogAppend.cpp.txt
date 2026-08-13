@@ -1,0 +1,15 @@
+// CampaignInit.cpp, za načtení ostatních katalogů objektů:
+{
+    std::string err;
+    if (!m_objCatalog.AppendFromFile(
+            (pathutils::ProjectRoot() / "assets" / "Objects" / "Smithy" / "SmithyObjects.json").string(),
+            &err))
+    {
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_ERROR,
+            "Objects JSON error (Smithy)",
+            err.c_str(),
+            m_window);
+        return false;
+    }
+}

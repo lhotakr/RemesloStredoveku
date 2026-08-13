@@ -1,9 +1,44 @@
 #include "DialogManager.h"
 #include "../JsonUtils.h"
 
+#include <algorithm>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
+
+namespace
+{
+    static void AddUniqueFlag(std::vector<std::string>& flags, const std::string& flag)
+    {
+        if (flag.empty())
+            return;
+
+        if (std::find(flags.begin(), flags.end(), flag) == flags.end())
+            flags.push_back(flag);
+    }
+
+    static std::vector<std::string> LoadFlagList(const json& object, const char* singularKey, const char* pluralKey)
+    {
+        std::vector<std::string> flags;
+        AddUniqueFlag(flags, object.value(singularKey, ""));
+
+        if (object.contains(pluralKey) && object[pluralKey].is_array())
+        {
+            for (const auto& flag : object[pluralKey])
+            {
+                if (flag.is_string())
+                    AddUniqueFlag(flags, flag.get<std::string>());
+            }
+        }
+
+        return flags;
+    }
+
+    static std::string FirstFlagOrEmpty(const std::vector<std::string>& flags)
+    {
+        return flags.empty() ? std::string() : flags.front();
+    }
+}
 
 void DialogManager::clear()
 {
@@ -47,8 +82,10 @@ bool DialogManager::loadFromFile(const std::string& path, std::string* outError)
             node.id = jn.value("id", "");
             node.speaker = jn.value("speaker", "");
             node.text = jn.value("text", "");
-            node.requireFlag = jn.value("require_flag", "");
-            node.forbidFlag = jn.value("forbid_flag", "");
+            node.requireFlags = LoadFlagList(jn, "require_flag", "require_flags");
+            node.forbidFlags = LoadFlagList(jn, "forbid_flag", "forbid_flags");
+            node.requireFlag = FirstFlagOrEmpty(node.requireFlags);
+            node.forbidFlag = FirstFlagOrEmpty(node.forbidFlags);
 
             if (node.id.empty())
                 continue;
@@ -62,9 +99,12 @@ bool DialogManager::loadFromFile(const std::string& path, std::string* outError)
                     ch.nextNodeId = jc.value("next", "");
                     ch.style = jc.value("style", "");
                     ch.npcMoodDelta = jc.value("npc_mood_delta", 0);
-                    ch.setFlag = jc.value("set_flag", "");
-                    ch.requireFlag = jc.value("require_flag", "");
-                    ch.forbidFlag = jc.value("forbid_flag", "");
+                    ch.setFlags = LoadFlagList(jc, "set_flag", "set_flags");
+                    ch.requireFlags = LoadFlagList(jc, "require_flag", "require_flags");
+                    ch.forbidFlags = LoadFlagList(jc, "forbid_flag", "forbid_flags");
+                    ch.setFlag = FirstFlagOrEmpty(ch.setFlags);
+                    ch.requireFlag = FirstFlagOrEmpty(ch.requireFlags);
+                    ch.forbidFlag = FirstFlagOrEmpty(ch.forbidFlags);
                     ch.requireMoodMin = jc.value("require_mood_min", 0);
                     ch.closeDialog = jc.value("close_dialog", false);
                     ch.setNpcScript = jc.value("set_npc_script", "");

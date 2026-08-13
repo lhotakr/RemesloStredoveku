@@ -465,6 +465,19 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
             return false;
         }
 
+        if (!m_objCatalog.AppendFromFile(
+            (pathutils::ProjectRoot() / "assets" / "Objects" / "Smithy" / "SmithyObjects.json").string(),
+            &err))
+        {
+            SDL_ShowSimpleMessageBox(
+                SDL_MESSAGEBOX_ERROR,
+                "Objects JSON error (Smithy)",
+                err.c_str(),
+                m_window
+            );
+            return false;
+        }
+
         if (!loadObjectAtlases(&err))
         {
             SDL_ShowSimpleMessageBox(
@@ -1086,6 +1099,7 @@ void Campaign::shutdown()
     }
 
     unloadItemIcons();
+    unloadCraftIcons();
 
     m_tileset.destroyAtlas();
 

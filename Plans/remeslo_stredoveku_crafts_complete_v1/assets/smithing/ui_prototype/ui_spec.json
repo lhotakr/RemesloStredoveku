@@ -1,0 +1,72 @@
+{
+  "schema": "remeslo-stredoveku.smithing-ui.v1",
+  "reference_resolution": [1920, 1080],
+  "scale_mode": "fit_with_aspect_ratio",
+  "design_rules": {
+    "central_workspace_minimum_screen_share": 0.65,
+    "show_exact_temperature": false,
+    "show_quality_percentage": false,
+    "feedback_channels": ["visual", "audio", "mentor_text", "tool_resistance"],
+    "shared_layout_across_stations": true,
+    "escape_preserves_workpiece": true
+  },
+  "regions": {
+    "title": [28, 24, 390, 116],
+    "phase_strip": [440, 26, 1042, 104],
+    "playfield": [28, 156, 1464, 675],
+    "observation_panel": [1520, 24, 372, 805],
+    "mentor_panel": [28, 847, 880, 133],
+    "station_tabs": [1521, 849, 370, 135],
+    "control_strip": [28, 990, 1864, 72]
+  },
+  "palette": {
+    "charred_wood": "#3A2315",
+    "blackened_iron": "#25221F",
+    "parchment": "#D7C198",
+    "ember": "#F07A31",
+    "hot_metal": "#FFC05B",
+    "steel": "#9AABB3",
+    "positive": "#8FA679",
+    "warning": "#C49A4C",
+    "damage": "#A25745"
+  },
+  "phases": ["material", "forge", "anvil", "quench", "grind", "assemble", "test"],
+  "stations": [
+    {
+      "id": "forge",
+      "title": "Výheň",
+      "primary_observations": ["barva", "rovnoměrnost ohřevu", "okuje", "jiskření"],
+      "controls": ["posun", "otočení", "měchy", "vytažení"]
+    },
+    {
+      "id": "anvil",
+      "title": "Kovadlina",
+      "primary_observations": ["žár", "osa", "tloušťka", "povrch"],
+      "controls": ["místo", "síla", "směr", "otočení", "nástroj"]
+    },
+    {
+      "id": "quench",
+      "title": "Kalicí káď",
+      "primary_observations": ["poloha", "hloubka", "pára", "chvění"],
+      "controls": ["ponoření", "náklon", "držení", "vyjmutí"]
+    },
+    {
+      "id": "grind",
+      "title": "Brusný kámen",
+      "primary_observations": ["úhel", "jiskry", "odlesk", "žár ostří"],
+      "controls": ["vedení", "tlak", "úhel", "chlazení"]
+    },
+    {
+      "id": "bench",
+      "title": "Pracovní stůl",
+      "primary_observations": ["uložení", "osa", "praskliny dřeva", "klín"],
+      "controls": ["označení", "odebrání dřeva", "zkouška uložení", "zajištění"]
+    },
+    {
+      "id": "test",
+      "title": "Zkouška",
+      "primary_observations": ["záběr", "vůle topůrka", "osa úderu", "ostří"],
+      "controls": ["prohlídka", "zkouška", "oprava", "přijetí"]
+    }
+  ]
+}

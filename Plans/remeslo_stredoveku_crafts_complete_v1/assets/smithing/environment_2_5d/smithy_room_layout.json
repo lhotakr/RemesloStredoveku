@@ -1,0 +1,28 @@
+{
+  "map_id": "smithy_benes",
+  "recommended_floor_size_world_units": { "w": 1280, "h": 896 },
+  "spawn_points": [
+    { "id": "smithy_entry", "x": 640, "y": 790, "facing": "north" }
+  ],
+  "objects": [
+    { "id": "smithy_exit_door", "x": 640, "y": 860, "scale": 1.0, "note": "odkaz zpet na blatce" },
+    { "id": "smithy_hearth", "x": 1020, "y": 310, "scale": 1.0 },
+    { "id": "smithy_bellows", "x": 820, "y": 310, "scale": 0.9 },
+    { "id": "smithy_anvil", "x": 710, "y": 500, "scale": 0.85 },
+    { "id": "smithy_quench_tub", "x": 900, "y": 535, "scale": 0.75 },
+    { "id": "smithy_grindstone", "x": 1040, "y": 680, "scale": 0.8 },
+    { "id": "smithy_workbench", "x": 275, "y": 350, "scale": 0.9 },
+    { "id": "smithy_tool_rack", "x": 280, "y": 245, "scale": 0.85, "note": "umisteni na stenu" },
+    { "id": "smithy_iron_rack", "x": 330, "y": 690, "scale": 0.8 },
+    { "id": "smithy_charcoal", "x": 1120, "y": 470, "scale": 0.7 },
+    { "id": "smithy_firewood", "x": 1080, "y": 790, "scale": 0.72 },
+    { "id": "smithy_storage", "x": 180, "y": 770, "scale": 0.72 }
+  ],
+  "work_triangle": ["smithy_hearth", "smithy_anvil", "smithy_quench_tub"],
+  "minimum_walkway_world_units": 96,
+  "lighting": {
+    "ambient": "dim_warm",
+    "forge_light": { "x": 1000, "y": 360, "radius": 280, "flicker": true },
+    "door_light": { "x": 640, "y": 820, "radius": 190, "daylight_only": true }
+  }
+}

@@ -1,0 +1,37 @@
+{
+  "ok": true,
+  "source": "/workspace/scratch/accd049263c2/generated_images/exec-89d24be1-0f1b-4127-b70b-7a9b05937c37.png",
+  "runtime_default": "assets/overlays/FogOfWar.png",
+  "dimensions": [
+    1024,
+    1024
+  ],
+  "mode": "RGBA",
+  "seamless_axes": [
+    "horizontal",
+    "vertical"
+  ],
+  "metrics_1024": {
+    "left_right_max_difference": 0,
+    "left_right_mean_difference": 0.0,
+    "top_bottom_max_difference": 0,
+    "top_bottom_mean_difference": 0.0,
+    "ordinary_horizontal_mean_step": 1.0094,
+    "ordinary_vertical_mean_step": 1.0268
+  },
+  "metrics_translucent_1024": {
+    "left_right_max_difference": 0,
+    "left_right_mean_difference": 0.0,
+    "top_bottom_max_difference": 0,
+    "top_bottom_mean_difference": 0.0,
+    "ordinary_horizontal_mean_step": 1.1905,
+    "ordinary_vertical_mean_step": 1.2117
+  },
+  "files": [
+    "assets/overlays/FogOfWar.png",
+    "assets/overlays/FogOfWar_512.png",
+    "assets/overlays/FogOfWar_Translucent.png",
+    "assets/overlays/FogOfWar_Translucent_512.png",
+    "preview/FogOfWar_tiling_test_3x3.png"
+  ]
+}

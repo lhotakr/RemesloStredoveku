@@ -1,0 +1,104 @@
+{
+  "objects": 12,
+  "atlas_size": [
+    1024,
+    2048
+  ],
+  "object_sprite_modes": {
+    "smithy_hearth": "RGBA",
+    "smithy_anvil": "RGBA",
+    "smithy_bellows": "RGBA",
+    "smithy_quench_tub": "RGBA",
+    "smithy_grindstone": "RGBA",
+    "smithy_workbench": "RGBA",
+    "smithy_tool_rack": "RGBA",
+    "smithy_charcoal": "RGBA",
+    "smithy_iron_rack": "RGBA",
+    "smithy_firewood": "RGBA",
+    "smithy_storage": "RGBA",
+    "smithy_exit_door": "RGBA"
+  },
+  "object_sprite_sizes": {
+    "smithy_hearth": [
+      384,
+      384
+    ],
+    "smithy_anvil": [
+      256,
+      320
+    ],
+    "smithy_bellows": [
+      384,
+      288
+    ],
+    "smithy_quench_tub": [
+      288,
+      256
+    ],
+    "smithy_grindstone": [
+      320,
+      256
+    ],
+    "smithy_workbench": [
+      384,
+      288
+    ],
+    "smithy_tool_rack": [
+      384,
+      256
+    ],
+    "smithy_charcoal": [
+      288,
+      256
+    ],
+    "smithy_iron_rack": [
+      384,
+      256
+    ],
+    "smithy_firewood": [
+      320,
+      256
+    ],
+    "smithy_storage": [
+      320,
+      256
+    ],
+    "smithy_exit_door": [
+      256,
+      384
+    ]
+  },
+  "transparent_corners": {
+    "smithy_hearth": true,
+    "smithy_anvil": true,
+    "smithy_bellows": true,
+    "smithy_quench_tub": true,
+    "smithy_grindstone": true,
+    "smithy_workbench": true,
+    "smithy_tool_rack": true,
+    "smithy_charcoal": true,
+    "smithy_iron_rack": true,
+    "smithy_firewood": true,
+    "smithy_storage": true,
+    "smithy_exit_door": true
+  },
+  "texture_edge_mean_absolute_error": {
+    "smithy_wall_plaster_stone.png": {
+      "horizontal": 0.773,
+      "vertical": 0.868
+    },
+    "smithy_wall_sooty_stone.png": {
+      "horizontal": 0.48,
+      "vertical": 0.679
+    },
+    "smithy_floor_earth_stone.png": {
+      "horizontal": 2.513,
+      "vertical": 2.672
+    },
+    "smithy_ceiling_oak_beams.png": {
+      "horizontal": 0.212,
+      "vertical": 0.296
+    }
+  },
+  "fire_frames": 4
+}

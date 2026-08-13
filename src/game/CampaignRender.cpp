@@ -1,6 +1,7 @@
 #include "Campaign.h"
 #include "JsonUtils.h"
 #include "PathUtils.h"
+#include "Utf8.h"
 #include <algorithm>
 #include <vector>
 #include <cmath>
@@ -8,8 +9,10 @@
 #include <cctype>
 #include <cstdio>
 #include <cstring>
+#include <filesystem>
 #include <initializer_list>
 #include <string>
+#include <unordered_map>
 
 using json = nlohmann::json;
 
@@ -240,6 +243,7 @@ struct CraftTreeUiCache
     bool loaded = false;
     json root;
     std::string error;
+    std::string sourceName;
 };
 
 static CraftTreeUiCache& PlayerOverviewCraftTreeCache()
@@ -249,24 +253,49 @@ static CraftTreeUiCache& PlayerOverviewCraftTreeCache()
         return cache;
 
     cache.attempted = true;
-    const auto path = pathutils::DataDir() / "crafting" / "craft_tree.json";
-    if (!jsonutils::LoadJsonFileSafe(path.string(), cache.root, cache.error))
-        return cache;
-
-    if (!cache.root.is_object() || !cache.root.value("domains", json::array()).is_array())
+    const auto masterPath = pathutils::DataDir() / "crafting" / "crafts_master.json";
+    std::string masterError;
+    if (jsonutils::LoadJsonFileSafe(masterPath.string(), cache.root, masterError))
     {
-        cache.error = "craft_tree.json nema pole domains.";
+        if (cache.root.is_object() && cache.root.value("crafts", json::array()).is_array())
+        {
+            cache.loaded = true;
+            cache.sourceName = "crafts_master.json";
+            return cache;
+        }
+
+        masterError = "crafts_master.json nema pole crafts.";
         cache.root = json{};
-        return cache;
     }
 
-    cache.loaded = true;
+    const auto legacyPath = pathutils::DataDir() / "crafting" / "craft_tree.json";
+    std::string legacyError;
+    if (jsonutils::LoadJsonFileSafe(legacyPath.string(), cache.root, legacyError))
+    {
+        if (cache.root.is_object() && cache.root.value("domains", json::array()).is_array())
+        {
+            cache.loaded = true;
+            cache.sourceName = "craft_tree.json";
+            return cache;
+        }
+
+        legacyError = "craft_tree.json nema pole domains.";
+        cache.root = json{};
+    }
+
+    cache.error = "crafts_master.json: " + masterError + "\ncraft_tree.json: " + legacyError;
     return cache;
 }
 
 static const json& PlayerOverviewEmptyJsonArray()
 {
     static const json empty = json::array();
+    return empty;
+}
+
+static const json& PlayerOverviewEmptyJsonObject()
+{
+    static const json empty = json::object();
     return empty;
 }
 
@@ -280,6 +309,32 @@ static const json& PlayerOverviewJsonArray(const json& obj, const char* key)
         return PlayerOverviewEmptyJsonArray();
 
     return *it;
+}
+
+static const json& PlayerOverviewJsonObject(const json& obj, const char* key)
+{
+    if (!obj.is_object())
+        return PlayerOverviewEmptyJsonObject();
+
+    const auto it = obj.find(key);
+    if (it == obj.end() || !it->is_object())
+        return PlayerOverviewEmptyJsonObject();
+
+    return *it;
+}
+
+static const json& PlayerOverviewCraftDomains(const json& root)
+{
+    const auto crafts = root.find("crafts");
+    if (crafts != root.end() && crafts->is_array())
+        return *crafts;
+
+    return PlayerOverviewJsonArray(root, "domains");
+}
+
+static const json& PlayerOverviewWorkTracks(const json& root)
+{
+    return PlayerOverviewJsonArray(root, "work_tracks");
 }
 
 static std::string PlayerOverviewJsonString(const json& obj, const char* key, const char* fallback = "")
@@ -313,6 +368,20 @@ static std::string PlayerOverviewJoinStringArray(const json& values, const char*
     return out.empty() ? fallback : out;
 }
 
+static std::string PlayerOverviewArrayOrText(
+    const json& obj,
+    const char* arrayKey,
+    const char* textKey,
+    const char* fallback = "-")
+{
+    const std::string joined = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(obj, arrayKey), "");
+    if (!joined.empty())
+        return joined;
+
+    const std::string text = PlayerOverviewJsonString(obj, textKey);
+    return text.empty() ? fallback : text;
+}
+
 static void PlayerOverviewWrappedText(const std::string& text)
 {
     ImGui::PushTextWrapPos(0.0f);
@@ -344,6 +413,8 @@ static float PlayerOverviewCraftReadiness(const std::string& domainId, const Pla
         return PlayerOverviewAverageStats({ s.craft.toolRepair, s.attributes.strength, s.attributes.dexterity, s.mental.focus });
     if (domainId == "woodworking")
         return PlayerOverviewAverageStats({ s.craft.woodcraft, s.survival.woodProcessing, s.craft.toolRepair, s.attributes.dexterity });
+    if (domainId == "wheelwrighting")
+        return PlayerOverviewAverageStats({ s.craft.woodcraft, s.craft.toolRepair, s.attributes.dexterity, s.mental.focus });
     if (domainId == "pottery")
         return PlayerOverviewAverageStats({ s.attributes.dexterity, s.mental.focus, s.mental.observation, s.mental.memory });
     if (domainId == "textiles")
@@ -352,6 +423,12 @@ static float PlayerOverviewCraftReadiness(const std::string& domainId, const Pla
         return PlayerOverviewAverageStats({ s.craft.clothingRepair, s.attributes.dexterity, s.attributes.strength, s.mental.focus });
     if (domainId == "masonry")
         return PlayerOverviewAverageStats({ s.attributes.strength, s.attributes.endurance, s.attributes.dexterity, s.mental.observation });
+    if (domainId == "bowyery")
+        return PlayerOverviewAverageStats({ s.craft.woodcraft, s.attributes.dexterity, s.attributes.perception, s.mental.focus });
+    if (domainId == "brewing")
+        return PlayerOverviewAverageStats({ s.survival.cooking, s.mental.memory, s.mental.focus, s.mental.observation });
+    if (domainId == "scribal")
+        return PlayerOverviewAverageStats({ s.knowledge.literacy, s.knowledge.history, s.mental.memory, s.mental.focus });
     if (domainId == "herbalism")
         return PlayerOverviewAverageStats({ s.survival.foraging, s.mental.observation, s.mental.memory, s.attributes.perception });
     if (domainId == "healing")
@@ -364,13 +441,35 @@ static float PlayerOverviewCraftReadiness(const std::string& domainId, const Pla
     return 0.0f;
 }
 
+static float PlayerOverviewCraftProgress(const std::string& domainId, const PlayerStats& s)
+{
+    (void)domainId;
+    (void)s;
+    // Craft progression is separate from attributes and starts at zero until gameplay records it.
+    return 0.0f;
+}
+
+static std::string PlayerOverviewPercentLabel(float value)
+{
+    char overlay[32];
+    std::snprintf(overlay, sizeof(overlay), "%.0f %%", PlayerStats::Clamp01To100(value));
+    return overlay;
+}
+
 static std::string PlayerOverviewDomainName(const json& root, const std::string& domainId)
 {
-    for (const auto& domain : PlayerOverviewJsonArray(root, "domains"))
+    for (const auto& domain : PlayerOverviewCraftDomains(root))
     {
         if (PlayerOverviewJsonString(domain, "id") == domainId)
             return PlayerOverviewJsonString(domain, "name", domainId.c_str());
     }
+
+    for (const auto& track : PlayerOverviewWorkTracks(root))
+    {
+        if (PlayerOverviewJsonString(track, "id") == domainId)
+            return PlayerOverviewJsonString(track, "name", domainId.c_str());
+    }
+
     return domainId;
 }
 
@@ -378,9 +477,29 @@ static std::string PlayerOverviewRankName(const json& root, const std::string& r
 {
     for (const auto& rank : PlayerOverviewJsonArray(root, "ranks"))
     {
+        if (rank.is_string())
+        {
+            const std::string rankName = rank.get<std::string>();
+            if (rankName == rankId)
+                return rankName;
+            continue;
+        }
+
         if (PlayerOverviewJsonString(rank, "id") == rankId)
             return PlayerOverviewJsonString(rank, "name", rankId.c_str());
     }
+
+    const json& progression = PlayerOverviewJsonObject(root, "progression");
+    for (const auto& rank : PlayerOverviewJsonArray(progression, "ranks"))
+    {
+        if (rank.is_string())
+        {
+            const std::string rankName = rank.get<std::string>();
+            if (rankName == rankId)
+                return rankName;
+        }
+    }
+
     return rankId;
 }
 
@@ -399,7 +518,8 @@ static std::string PlayerOverviewRequirementText(const json& root, const json& r
     }
     if (type == "all_worldly_domains_at_progress")
     {
-        return "Vsech 9 svetskych domen alespon na " +
+        const int worldlyCount = PlayerOverviewJsonObject(root, "scope").value("full_worldly_crafts", 9);
+        return "Vsech " + std::to_string(worldlyCount) + " svetskych domen alespon na " +
             std::to_string(requirement.value("min_percent", 0)) + " %";
     }
     if (type == "all_other_worldly_domains_progress")
@@ -408,7 +528,7 @@ static std::string PlayerOverviewRequirementText(const json& root, const json& r
             std::to_string(requirement.value("min_percent", 0)) + " %";
     }
     if (type == "cross_domain_master_project")
-        return "Mezioborovy mistrovsky projekt: " + requirement.value("id", std::string{});
+        return std::string(U8("Mezioborový mistrovský projekt: ")) + requirement.value("id", std::string{});
     if (type == "story_node_completed")
         return "Pribehovy uzel: " + requirement.value("id", std::string{});
 
@@ -422,15 +542,14 @@ static std::string PlayerOverviewRequirementText(const json& root, const json& r
     return requirement.dump();
 }
 
-static void PlayerOverviewCraftReadinessBar(const std::string& domainId, const PlayerStats& s)
+static void PlayerOverviewCraftProgressBar(const std::string& domainId, const PlayerStats& s)
 {
-    const float value = PlayerOverviewCraftReadiness(domainId, s);
-    char overlay[48];
-    std::snprintf(overlay, sizeof(overlay), "%.0f - %s", value, PlayerOverviewTier(value));
+    const float value = PlayerOverviewCraftProgress(domainId, s);
+    const std::string overlay = PlayerOverviewPercentLabel(value);
 
-    ImGui::TextUnformatted("Predpoklady ze statistik");
+    ImGui::TextUnformatted(U8("Současný postup"));
     ImGui::SameLine(190.0f);
-    ImGui::ProgressBar(value / 100.0f, ImVec2(std::max(120.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay);
+    ImGui::ProgressBar(value / 100.0f, ImVec2(std::max(120.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay.c_str());
 }
 
 static void PlayerOverviewRenderCraftDomainDetail(const json& root, const json& domain, const PlayerStats& s)
@@ -441,23 +560,47 @@ static void PlayerOverviewRenderCraftDomainDetail(const json& root, const json& 
     ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", name.c_str());
     ImGui::SameLine();
     ImGui::TextDisabled("%s", domainId.c_str());
-    PlayerOverviewCraftReadinessBar(domainId, s);
+    PlayerOverviewCraftProgressBar(domainId, s);
 
     const std::string role = PlayerOverviewJsonString(domain, "role");
     if (!role.empty())
         PlayerOverviewWrappedText(role);
 
-    PlayerOverviewHeader("Pristup");
-    ImGui::Text("Prvni ucitele: %s", PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "first_teachers")).c_str());
-    ImGui::Text("Dalsi ucitele: %s", PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "later_teachers"), "podle lokace a duvery").c_str());
-    PlayerOverviewWrappedText("Pracoviste: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "workplaces")));
-    PlayerOverviewWrappedText("Specializace: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "specializations")));
-    PlayerOverviewWrappedText("Vazby: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "cross_domain_links")));
+    PlayerOverviewHeader(U8("Přístup"));
+    PlayerOverviewWrappedText(std::string(U8("Mentor: ")) + PlayerOverviewArrayOrText(domain, "first_teachers", "mentor"));
+
+    const std::string laterTeachers = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "later_teachers"), "");
+    if (!laterTeachers.empty())
+        PlayerOverviewWrappedText(std::string(U8("Další učitelé: ")) + laterTeachers);
+
+    PlayerOverviewWrappedText(std::string(U8("Pracoviště: ")) + PlayerOverviewArrayOrText(domain, "workplaces", "place"));
+    PlayerOverviewWrappedText(std::string(U8("Specializace: ")) + PlayerOverviewArrayOrText(domain, "specializations", "spec"));
+
+    const std::string links = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(domain, "cross_domain_links"), "");
+    if (!links.empty())
+        PlayerOverviewWrappedText(std::string(U8("Vazby: ")) + links);
+
+    const std::string mods = PlayerOverviewJsonString(domain, "mods");
+    if (!mods.empty())
+        PlayerOverviewWrappedText(std::string(U8("Modifikátory: ")) + mods);
+
+    const std::string masterpiece = PlayerOverviewJsonString(domain, "masterpiece");
+    if (!masterpiece.empty())
+        PlayerOverviewWrappedText(std::string(U8("Mistrovský projekt: ")) + masterpiece);
+
+    const std::string assetStatus = PlayerOverviewJsonString(domain, "runtime_asset_status");
+    const std::string assetRoot = PlayerOverviewJsonString(domain, "runtime_asset_root");
+    if (!assetStatus.empty())
+    {
+        PlayerOverviewWrappedText(
+            "Assety: " + assetStatus +
+            (assetRoot.empty() ? std::string{} : (" (" + assetRoot + ")")));
+    }
 
     const json& finalDirections = PlayerOverviewJsonArray(domain, "final_directions");
     if (!finalDirections.empty())
     {
-        PlayerOverviewHeader("Zaverecne smery");
+        PlayerOverviewHeader(U8("Závěrečné směry"));
         for (const auto& direction : finalDirections)
         {
             PlayerOverviewBulletWrapped(
@@ -466,55 +609,82 @@ static void PlayerOverviewRenderCraftDomainDetail(const json& root, const json& 
         }
     }
 
-    PlayerOverviewHeader("Hodnosti a dukazy");
+    PlayerOverviewHeader(U8("Hodnosti a důkazy"));
     int nodeIndex = 0;
-    for (const auto& node : PlayerOverviewJsonArray(domain, "rank_nodes"))
+    const json& rankNodes = PlayerOverviewJsonArray(domain, "rank_nodes");
+    if (!rankNodes.empty())
     {
-        const std::string nodeId = PlayerOverviewJsonString(node, "id");
-        const std::string rankId = PlayerOverviewJsonString(node, "rank");
-        const std::string nodeName = PlayerOverviewJsonString(node, "name");
-        const std::string rankName = PlayerOverviewRankName(root, rankId);
-        const std::string label = nodeName.empty() ? rankName : (rankName + " - " + nodeName);
-
-        ImGui::SetNextItemOpen(nodeIndex < 2, ImGuiCond_Once);
-        if (ImGui::TreeNodeEx(nodeId.c_str(), ImGuiTreeNodeFlags_SpanAvailWidth, "%s", label.c_str()))
+        for (const auto& node : rankNodes)
         {
-            const std::string evidenceGate = PlayerOverviewJsonString(node, "evidence_gate");
-            if (!evidenceGate.empty())
-                PlayerOverviewBulletWrapped("Dukaz: " + evidenceGate);
+            const std::string nodeId = PlayerOverviewJsonString(node, "id");
+            const std::string rankId = PlayerOverviewJsonString(node, "rank");
+            const std::string nodeName = PlayerOverviewJsonString(node, "name");
+            const std::string rankName = PlayerOverviewRankName(root, rankId);
+            const std::string label = nodeName.empty() ? rankName : (rankName + " - " + nodeName);
 
-            const std::string content = PlayerOverviewJsonString(node, "content");
-            if (!content.empty())
-                PlayerOverviewBulletWrapped(content);
-
-            const json& requirements = PlayerOverviewJsonArray(node, "requirements");
-            if (!requirements.empty())
+            ImGui::SetNextItemOpen(nodeIndex < 2, ImGuiCond_Once);
+            if (ImGui::TreeNodeEx(nodeId.c_str(), ImGuiTreeNodeFlags_SpanAvailWidth, "%s", label.c_str()))
             {
-                ImGui::TextUnformatted("Podminky:");
-                for (const auto& requirement : requirements)
-                    PlayerOverviewBulletWrapped(PlayerOverviewRequirementText(root, requirement));
+                const std::string evidenceGate = PlayerOverviewJsonString(node, "evidence_gate");
+                if (!evidenceGate.empty())
+                    PlayerOverviewBulletWrapped(std::string(U8("Důkaz: ")) + evidenceGate);
+
+                const std::string content = PlayerOverviewJsonString(node, "content");
+                if (!content.empty())
+                    PlayerOverviewBulletWrapped(content);
+
+                const json& requirements = PlayerOverviewJsonArray(node, "requirements");
+                if (!requirements.empty())
+                {
+                    ImGui::TextUnformatted(U8("Podmínky:"));
+                    for (const auto& requirement : requirements)
+                        PlayerOverviewBulletWrapped(PlayerOverviewRequirementText(root, requirement));
+                }
+
+                const std::string skills = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(node, "skills"), "");
+                if (!skills.empty())
+                    PlayerOverviewWrappedText(std::string(U8("Dovednosti: ")) + skills);
+
+                const std::string unlocks = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(node, "unlocks"), "");
+                if (!unlocks.empty())
+                    PlayerOverviewWrappedText(std::string(U8("Otevře: ")) + unlocks);
+
+                ImGui::TreePop();
             }
-
-            const std::string skills = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(node, "skills"), "");
-            if (!skills.empty())
-                PlayerOverviewWrappedText("Dovednosti: " + skills);
-
-            const std::string unlocks = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(node, "unlocks"), "");
-            if (!unlocks.empty())
-                PlayerOverviewWrappedText("Otevre: " + unlocks);
-
-            ImGui::TreePop();
+            ++nodeIndex;
         }
-        ++nodeIndex;
+    }
+    else
+    {
+        for (const auto& row : PlayerOverviewJsonArray(domain, "rows"))
+        {
+            const std::string rankName = PlayerOverviewJsonString(row, "rank", U8("Hodnost"));
+            const std::string nodeId = domainId + ".row." + std::to_string(nodeIndex);
+
+            ImGui::SetNextItemOpen(nodeIndex < 2, ImGuiCond_Once);
+            if (ImGui::TreeNodeEx(nodeId.c_str(), ImGuiTreeNodeFlags_SpanAvailWidth, "%s", rankName.c_str()))
+            {
+                const std::string skills = PlayerOverviewJsonString(row, "nodes_and_skills");
+                if (!skills.empty())
+                    PlayerOverviewWrappedText(std::string(U8("Dovednosti: ")) + skills);
+
+                const std::string evidence = PlayerOverviewJsonString(row, "mastery_evidence");
+                if (!evidence.empty())
+                    PlayerOverviewBulletWrapped(std::string(U8("Důkaz: ")) + evidence);
+
+                ImGui::TreePop();
+            }
+            ++nodeIndex;
+        }
     }
 }
 
 static void PlayerOverviewRenderCraftDomains(const json& root, const PlayerStats& s)
 {
-    const json& domains = PlayerOverviewJsonArray(root, "domains");
+    const json& domains = PlayerOverviewCraftDomains(root);
     if (domains.empty())
     {
-        ImGui::TextDisabled("Zadne domeny.");
+        ImGui::TextDisabled(U8("Žádné obory."));
         return;
     }
 
@@ -531,10 +701,9 @@ static void PlayerOverviewRenderCraftDomains(const json& root, const PlayerStats
         if (ImGui::Selectable(label.c_str(), selectedDomain == i))
             selectedDomain = i;
 
-        const float readiness = PlayerOverviewCraftReadiness(domainId, s);
-        char overlay[32];
-        std::snprintf(overlay, sizeof(overlay), "%.0f", readiness);
-        ImGui::ProgressBar(readiness / 100.0f, ImVec2(-1.0f, 3.0f), overlay);
+        const float progress = PlayerOverviewCraftProgress(domainId, s);
+        const std::string overlay = PlayerOverviewPercentLabel(progress);
+        ImGui::ProgressBar(progress / 100.0f, ImVec2(-1.0f, 3.0f), overlay.c_str());
     }
     ImGui::EndChild();
 
@@ -548,66 +717,137 @@ static void PlayerOverviewRenderCraftDomains(const json& root, const PlayerStats
 static void PlayerOverviewRenderCraftProjects(const json& root)
 {
     const json& projects = PlayerOverviewJsonArray(root, "cross_domain_projects");
-    if (projects.empty())
+    if (!projects.empty())
     {
-        ImGui::TextDisabled("Zadne mezioborove projekty.");
+        if (ImGui::BeginTable(
+            "##craft_projects",
+            4,
+            ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingStretchProp))
+        {
+            ImGui::TableSetupColumn("Projekt", ImGuiTableColumnFlags_WidthStretch, 1.1f);
+            ImGui::TableSetupColumn(U8("Podmínky"), ImGuiTableColumnFlags_WidthStretch, 1.6f);
+            ImGui::TableSetupColumn(U8("Zkoušky"), ImGuiTableColumnFlags_WidthStretch, 1.5f);
+            ImGui::TableSetupColumn(U8("Svědci"), ImGuiTableColumnFlags_WidthStretch, 1.0f);
+            ImGui::TableHeadersRow();
+
+            for (const auto& project : projects)
+            {
+                std::vector<std::string> requirementTexts;
+                for (const auto& requirement : PlayerOverviewJsonArray(project, "requirements"))
+                    requirementTexts.push_back(PlayerOverviewRequirementText(root, requirement));
+
+                std::string requirements;
+                for (const auto& text : requirementTexts)
+                {
+                    if (!requirements.empty())
+                        requirements += ", ";
+                    requirements += text;
+                }
+
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(project, "name", PlayerOverviewJsonString(project, "id").c_str()));
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(requirements.empty() ? "-" : requirements);
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(project, "tests")));
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(project, "judges")));
+            }
+
+            ImGui::EndTable();
+        }
         return;
     }
 
-    if (ImGui::BeginTable(
-        "##craft_projects",
-        4,
-        ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingStretchProp))
+    const json& tracks = PlayerOverviewWorkTracks(root);
+    if (!tracks.empty() && ImGui::CollapsingHeader("Pracovni drahy", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        ImGui::TableSetupColumn("Projekt", ImGuiTableColumnFlags_WidthStretch, 1.1f);
-        ImGui::TableSetupColumn("Podminky", ImGuiTableColumnFlags_WidthStretch, 1.6f);
-        ImGui::TableSetupColumn("Zkousky", ImGuiTableColumnFlags_WidthStretch, 1.5f);
-        ImGui::TableSetupColumn("Svedci", ImGuiTableColumnFlags_WidthStretch, 1.0f);
-        ImGui::TableHeadersRow();
-
-        for (const auto& project : projects)
+        if (ImGui::BeginTable(
+            "##craft_work_tracks",
+            4,
+            ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg | ImGuiTableFlags_Resizable | ImGuiTableFlags_SizingStretchProp))
         {
-            std::vector<std::string> requirementTexts;
-            for (const auto& requirement : PlayerOverviewJsonArray(project, "requirements"))
-                requirementTexts.push_back(PlayerOverviewRequirementText(root, requirement));
+            ImGui::TableSetupColumn("Draha", ImGuiTableColumnFlags_WidthStretch, 1.0f);
+            ImGui::TableSetupColumn("Cinnosti", ImGuiTableColumnFlags_WidthStretch, 1.5f);
+            ImGui::TableSetupColumn("Vazby", ImGuiTableColumnFlags_WidthStretch, 1.2f);
+            ImGui::TableSetupColumn("Rozsah", ImGuiTableColumnFlags_WidthStretch, 1.2f);
+            ImGui::TableHeadersRow();
 
-            std::string requirements;
-            for (const auto& text : requirementTexts)
+            for (const auto& track : tracks)
             {
-                if (!requirements.empty())
-                    requirements += ", ";
-                requirements += text;
+                ImGui::TableNextRow();
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(track, "name", PlayerOverviewJsonString(track, "id").c_str()));
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(track, "activities"));
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(track, "links"));
+                ImGui::TableNextColumn();
+                PlayerOverviewWrappedText(PlayerOverviewJsonString(track, "scope"));
             }
 
-            ImGui::TableNextRow();
-            ImGui::TableNextColumn();
-            PlayerOverviewWrappedText(PlayerOverviewJsonString(project, "name", PlayerOverviewJsonString(project, "id").c_str()));
-            ImGui::TableNextColumn();
-            PlayerOverviewWrappedText(requirements.empty() ? "-" : requirements);
-            ImGui::TableNextColumn();
-            PlayerOverviewWrappedText(PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(project, "tests")));
-            ImGui::TableNextColumn();
-            PlayerOverviewWrappedText(PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(project, "judges")));
+            ImGui::EndTable();
         }
-
-        ImGui::EndTable();
     }
+
+    const json& artifact = PlayerOverviewJsonObject(root, "artifact_branch");
+    const json& milestones = PlayerOverviewJsonArray(artifact, "milestones");
+    if (!milestones.empty() && ImGui::CollapsingHeader("Skryta vetev", ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        PlayerOverviewWrappedText("Nazvy v UI: " + PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(artifact, "ui_names")));
+        const std::string rule = PlayerOverviewJsonString(artifact, "rule");
+        if (!rule.empty())
+            PlayerOverviewWrappedText(rule);
+
+        for (const auto& milestone : milestones)
+        {
+            PlayerOverviewBulletWrapped(
+                PlayerOverviewJsonString(milestone, "name") + ": " +
+                PlayerOverviewJsonString(milestone, "condition"));
+        }
+    }
+
+    if (tracks.empty() && milestones.empty())
+        ImGui::TextDisabled(U8("Žádné mezioborové projekty."));
 }
 
 static void PlayerOverviewRenderCraftModel(const json& root)
 {
-    if (ImGui::CollapsingHeader("Pravidla", ImGuiTreeNodeFlags_DefaultOpen))
+    const json& progression = PlayerOverviewJsonObject(root, "progression");
+    if (!progression.empty() && ImGui::CollapsingHeader(U8("Pravidla postupu"), ImGuiTreeNodeFlags_DefaultOpen))
     {
-        for (const auto& rule : PlayerOverviewJsonArray(root, "design_rules"))
+        const char* ruleKeys[] = { "unlock_rule", "books_rule", "failure_rule" };
+        for (const char* key : ruleKeys)
+        {
+            const std::string rule = PlayerOverviewJsonString(progression, key);
+            if (!rule.empty())
+                PlayerOverviewBulletWrapped(rule);
+        }
+
+        const std::string ranks = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(progression, "ranks"), "");
+        if (!ranks.empty())
+            PlayerOverviewWrappedText(std::string(U8("Hodnosti: ")) + ranks);
+
+        const std::string knowledgeStates = PlayerOverviewJoinStringArray(PlayerOverviewJsonArray(progression, "knowledge_states"), "");
+        if (!knowledgeStates.empty())
+            PlayerOverviewWrappedText(std::string(U8("Stavy znalosti: ")) + knowledgeStates);
+    }
+
+    const json& designRules = PlayerOverviewJsonArray(root, "design_rules");
+    if (!designRules.empty() && ImGui::CollapsingHeader("Pravidla", progression.empty() ? ImGuiTreeNodeFlags_DefaultOpen : 0))
+    {
+        for (const auto& rule : designRules)
         {
             if (rule.is_string())
                 PlayerOverviewBulletWrapped(rule.get<std::string>());
         }
     }
 
-    if (ImGui::CollapsingHeader("Podminky odemykani", ImGuiTreeNodeFlags_DefaultOpen))
+    const json& unlockRequirements = PlayerOverviewJsonArray(root, "unlock_requirements");
+    if (!unlockRequirements.empty() && ImGui::CollapsingHeader(U8("Podmínky odemykání"), ImGuiTreeNodeFlags_DefaultOpen))
     {
-        for (const auto& requirement : PlayerOverviewJsonArray(root, "unlock_requirements"))
+        for (const auto& requirement : unlockRequirements)
         {
             PlayerOverviewBulletWrapped(
                 PlayerOverviewJsonString(requirement, "name") + ": " +
@@ -617,14 +857,15 @@ static void PlayerOverviewRenderCraftModel(const json& root)
 
     if (ImGui::CollapsingHeader("Jakost", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        if (ImGui::BeginTable("##craft_quality", 3, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
+        const json& qualityGrades = PlayerOverviewJsonArray(root, "quality_grades");
+        if (!qualityGrades.empty() && ImGui::BeginTable("##craft_quality", 3, ImGuiTableFlags_BordersInnerV | ImGuiTableFlags_RowBg))
         {
-            ImGui::TableSetupColumn("Stupen");
+            ImGui::TableSetupColumn(U8("Stupeň"));
             ImGui::TableSetupColumn("Vliv");
-            ImGui::TableSetupColumn("Nasledek");
+            ImGui::TableSetupColumn(U8("Následek"));
             ImGui::TableHeadersRow();
 
-            for (const auto& grade : PlayerOverviewJsonArray(root, "quality_grades"))
+            for (const auto& grade : qualityGrades)
             {
                 ImGui::TableNextRow();
                 ImGui::TableNextColumn();
@@ -637,11 +878,32 @@ static void PlayerOverviewRenderCraftModel(const json& root)
 
             ImGui::EndTable();
         }
+
+        const json& qualityTiers = PlayerOverviewJsonArray(root, "quality_tiers");
+        if (!qualityTiers.empty())
+        {
+            for (const auto& tier : qualityTiers)
+            {
+                if (tier.is_string())
+                    PlayerOverviewBulletWrapped(tier.get<std::string>());
+            }
+        }
     }
 
-    if (ImGui::CollapsingHeader("Implementacni poradi", ImGuiTreeNodeFlags_DefaultOpen))
+    const json& visibility = PlayerOverviewJsonObject(root, "ui_visibility");
+    if (!visibility.empty() && ImGui::CollapsingHeader("Viditelnost v UI", ImGuiTreeNodeFlags_DefaultOpen))
     {
-        for (const auto& stage : PlayerOverviewJsonArray(root, "implementation_order"))
+        for (auto it = visibility.begin(); it != visibility.end(); ++it)
+        {
+            if (it.value().is_string())
+                PlayerOverviewBulletWrapped(it.key() + ": " + it.value().get<std::string>());
+        }
+    }
+
+    if (ImGui::CollapsingHeader(U8("Implementační pořadí"), ImGuiTreeNodeFlags_DefaultOpen))
+    {
+        const json& implementationOrder = PlayerOverviewJsonArray(root, "implementation_order");
+        for (const auto& stage : implementationOrder)
         {
             ImGui::BulletText(
                 "%d. %s: %s",
@@ -656,6 +918,16 @@ static void PlayerOverviewRenderCraftModel(const json& root)
                 ImGui::Unindent();
             }
         }
+
+        const json& implementationStatus = PlayerOverviewJsonObject(root, "implementation_status");
+        if (!implementationStatus.empty())
+        {
+            for (auto it = implementationStatus.begin(); it != implementationStatus.end(); ++it)
+            {
+                if (it.value().is_string())
+                    PlayerOverviewBulletWrapped(it.key() + ": " + it.value().get<std::string>());
+            }
+        }
     }
 }
 
@@ -664,19 +936,36 @@ static void PlayerOverviewRenderCraftTree(const PlayerStats& s)
     CraftTreeUiCache& cache = PlayerOverviewCraftTreeCache();
     if (!cache.loaded)
     {
-        ImGui::TextColored(ImVec4(0.95f, 0.45f, 0.35f, 1.0f), "Strom remesel se nepodarilo nacist.");
+        ImGui::TextColored(ImVec4(0.95f, 0.45f, 0.35f, 1.0f), U8("Strom řemesel se nepodařilo načíst."));
         PlayerOverviewWrappedText(cache.error);
         return;
     }
 
     const json& root = cache.root;
+    const std::string title = root.value(
+        "title",
+        root.value("name", std::string(U8("Plánovaný strom řemesel"))));
+    std::string schemaLabel = root.value("schema", std::string{});
+    if (schemaLabel.empty() && root.contains("schema_version"))
+        schemaLabel = "schema " + std::to_string(root.value("schema_version", 0));
+    if (!cache.sourceName.empty())
+        schemaLabel += (schemaLabel.empty() ? "" : " | ") + cache.sourceName;
+
     ImGui::TextColored(
         ImVec4(0.92f, 0.78f, 0.48f, 1.0f),
         "%s",
-        root.value("name", std::string("Planovany strom remesel")).c_str());
-    ImGui::SameLine();
-    ImGui::TextDisabled("schema %d", root.value("schema_version", 0));
-    PlayerOverviewWrappedText(root.value("tagline", std::string{}));
+        title.c_str());
+    if (!schemaLabel.empty())
+    {
+        ImGui::SameLine();
+        ImGui::TextDisabled("%s", schemaLabel.c_str());
+    }
+
+    const std::string tagline = root.value(
+        "tagline",
+        PlayerOverviewJsonString(PlayerOverviewJsonObject(root, "progression"), "unlock_rule"));
+    if (!tagline.empty())
+        PlayerOverviewWrappedText(tagline);
 
     if (ImGui::BeginTabBar("##craft_tree_tabs"))
     {
@@ -697,6 +986,1108 @@ static void PlayerOverviewRenderCraftTree(const PlayerStats& s)
         }
         ImGui::EndTabBar();
     }
+}
+
+static CraftTreeUiCache& PlayerOverviewLegacyCraftTreeCache()
+{
+    static CraftTreeUiCache cache;
+    if (cache.attempted)
+        return cache;
+
+    cache.attempted = true;
+    const auto legacyPath = pathutils::DataDir() / "crafting" / "craft_tree.json";
+    std::string error;
+    if (jsonutils::LoadJsonFileSafe(legacyPath.string(), cache.root, error))
+    {
+        if (cache.root.is_object() && cache.root.value("domains", json::array()).is_array())
+        {
+            cache.loaded = true;
+            cache.sourceName = "craft_tree.json";
+            return cache;
+        }
+
+        error = "craft_tree.json nema pole domains.";
+        cache.root = json{};
+    }
+
+    cache.error = error;
+    return cache;
+}
+
+struct CraftDomainTreeSource
+{
+    const json* root = nullptr;
+    const json* domain = nullptr;
+};
+
+static CraftDomainTreeSource PlayerOverviewFindCraftDomainTreeSource(const json& fallbackRoot, const json& fallbackDomain)
+{
+    const bool fallbackHasTree =
+        !PlayerOverviewJsonArray(fallbackDomain, "rows").empty() ||
+        !PlayerOverviewJsonArray(fallbackDomain, "rank_nodes").empty();
+    if (fallbackHasTree)
+        return CraftDomainTreeSource{ &fallbackRoot, &fallbackDomain };
+
+    const std::string domainId = PlayerOverviewJsonString(fallbackDomain, "id");
+    if (!domainId.empty())
+    {
+        CraftTreeUiCache& legacy = PlayerOverviewLegacyCraftTreeCache();
+        if (legacy.loaded)
+        {
+            for (const auto& domain : PlayerOverviewJsonArray(legacy.root, "domains"))
+            {
+                if (PlayerOverviewJsonString(domain, "id") == domainId &&
+                    !PlayerOverviewJsonArray(domain, "rank_nodes").empty())
+                {
+                    return CraftDomainTreeSource{ &legacy.root, &domain };
+                }
+            }
+        }
+    }
+
+    return CraftDomainTreeSource{ &fallbackRoot, &fallbackDomain };
+}
+
+struct CraftNodeView
+{
+    std::string id;
+    std::string key;
+    std::string label;
+    std::string subtitle;
+    std::string rank;
+    std::string state;
+    std::string iconPath;
+    std::string proofText;
+    std::vector<std::pair<std::string, std::string>> lessons;
+    ImVec2 pos{ 0.0f, 0.0f };
+    float progress = -1.0f;
+    int inputPin = 0;
+    int outputPin = 0;
+    bool secret = false;
+};
+
+struct CraftLinkView
+{
+    int fromIndex = -1;
+    int toIndex = -1;
+    std::string state;
+    ImU32 color = 0;
+    float thickness = 2.0f;
+};
+
+struct CraftSkillTreeView
+{
+    std::string domainId;
+    std::string title;
+    std::string progressLabel;
+    float currentProgress = 0.0f;
+    ImVec2 referenceSize{ 1280.0f, 720.0f };
+    ImVec2 nodeSize{ 250.0f, 112.0f };
+    std::vector<CraftNodeView> nodes;
+    std::vector<CraftLinkView> links;
+    int activeNodeIndex = 0;
+    bool rich = false;
+};
+
+static bool CraftPointInRect(const ImVec2& point, const ImVec2& min, const ImVec2& max)
+{
+    return point.x >= min.x && point.x <= max.x && point.y >= min.y && point.y <= max.y;
+}
+
+static std::string CraftTrim(std::string text)
+{
+    while (!text.empty() && std::isspace(static_cast<unsigned char>(text.front())))
+        text.erase(text.begin());
+    while (!text.empty() && std::isspace(static_cast<unsigned char>(text.back())))
+        text.pop_back();
+    return text;
+}
+
+static std::vector<std::string> CraftSplitSemicolonList(const std::string& text)
+{
+    std::vector<std::string> out;
+    size_t start = 0;
+    while (start <= text.size())
+    {
+        const size_t end = text.find(';', start);
+        std::string part = CraftTrim(text.substr(start, end == std::string::npos ? std::string::npos : end - start));
+        if (!part.empty())
+            out.push_back(part);
+        if (end == std::string::npos)
+            break;
+        start = end + 1;
+    }
+    return out;
+}
+
+static std::string CraftHumanizeToken(std::string token)
+{
+    for (char& c : token)
+    {
+        if (c == '_' || c == '.')
+            c = ' ';
+    }
+    if (!token.empty())
+        token[0] = static_cast<char>(std::toupper(static_cast<unsigned char>(token[0])));
+    return token;
+}
+
+static std::string CraftJsonStringKey(const json& obj, const std::string& key, const char* fallback = "")
+{
+    if (!obj.is_object())
+        return fallback;
+
+    const auto it = obj.find(key);
+    if (it == obj.end() || !it->is_string())
+        return fallback;
+
+    return it->get<std::string>();
+}
+
+static float CraftJsonArrayFloatAt(const json& obj, const char* key, size_t index, float fallback)
+{
+    const json& values = PlayerOverviewJsonArray(obj, key);
+    if (index >= values.size() || !values[index].is_number())
+        return fallback;
+    return values[index].get<float>();
+}
+
+static ImU32 CraftColorFromHex(const std::string& hex, const ImVec4& fallback)
+{
+    unsigned int r = 0;
+    unsigned int g = 0;
+    unsigned int b = 0;
+    if (hex.size() == 7 && hex[0] == '#' &&
+        std::sscanf(hex.c_str() + 1, "%02x%02x%02x", &r, &g, &b) == 3)
+    {
+        return ImGui::GetColorU32(ImVec4(r / 255.0f, g / 255.0f, b / 255.0f, 1.0f));
+    }
+    return ImGui::GetColorU32(fallback);
+}
+
+static std::string CraftSkillTreeAssetPath(std::string ref)
+{
+    if (ref.empty())
+        return {};
+
+    std::replace(ref.begin(), ref.end(), '\\', '/');
+
+    std::filesystem::path path(ref);
+    if (path.has_extension())
+        return ref;
+
+    return (std::filesystem::path("assets") /
+        "smithing" /
+        "skill_tree_node_editor" /
+        "assets" /
+        (ref + ".png")).generic_string();
+}
+
+static SDL_Texture* CraftLoadCachedTexture(
+    SDL_Renderer* renderer,
+    std::unordered_map<std::string, SDL_Texture*>& cache,
+    const std::string& sourcePath)
+{
+    if (!renderer || sourcePath.empty())
+        return nullptr;
+
+    std::filesystem::path path(sourcePath);
+    if (path.is_relative())
+        path = pathutils::ProjectRoot() / path;
+
+    const std::string key = path.string();
+    auto it = cache.find(key);
+    if (it != cache.end())
+        return it->second;
+
+    SDL_Texture* tex = IMG_LoadTexture(renderer, key.c_str());
+    cache[key] = tex;
+    return tex;
+}
+
+static CraftTreeUiCache& PlayerOverviewSmithingSkillTreeCache()
+{
+    static CraftTreeUiCache cache;
+    if (cache.attempted)
+        return cache;
+
+    cache.attempted = true;
+    const auto path = pathutils::ProjectRoot() /
+        "assets" /
+        "smithing" /
+        "skill_tree_node_editor" /
+        "integration" /
+        "smithing_skill_tree.json";
+
+    std::string error;
+    if (jsonutils::LoadJsonFileSafe(path.string(), cache.root, error))
+    {
+        if (cache.root.is_object() &&
+            cache.root.value("nodes", json::array()).is_array() &&
+            cache.root.value("links", json::array()).is_array())
+        {
+            cache.loaded = true;
+            cache.sourceName = "smithing_skill_tree.json";
+            return cache;
+        }
+
+        error = "smithing_skill_tree.json nema pole nodes/links.";
+        cache.root = json{};
+    }
+
+    cache.error = error;
+    return cache;
+}
+
+static ImU32 CraftNodeFillColor(const std::string& state)
+{
+    if (state == "completed")
+        return ImGui::GetColorU32(ImVec4(0.18f, 0.30f, 0.20f, 1.0f));
+    if (state == "active")
+        return ImGui::GetColorU32(ImVec4(0.36f, 0.19f, 0.10f, 1.0f));
+    if (state == "available")
+        return ImGui::GetColorU32(ImVec4(0.34f, 0.30f, 0.24f, 1.0f));
+    if (state == "locked_far" || state == "secret")
+        return ImGui::GetColorU32(ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
+    if (state == "locked_near" || state == "locked")
+        return ImGui::GetColorU32(ImVec4(0.20f, 0.19f, 0.17f, 1.0f));
+    return ImGui::GetColorU32(ImVec4(0.22f, 0.19f, 0.15f, 1.0f));
+}
+
+static ImU32 CraftNodeBorderColor(const std::string& state)
+{
+    if (state == "completed")
+        return ImGui::GetColorU32(ImVec4(0.56f, 0.65f, 0.47f, 1.0f));
+    if (state == "active")
+        return ImGui::GetColorU32(ImVec4(0.96f, 0.45f, 0.13f, 1.0f));
+    if (state == "locked_near")
+        return ImGui::GetColorU32(ImVec4(0.52f, 0.47f, 0.37f, 1.0f));
+    if (state == "secret")
+        return ImGui::GetColorU32(ImVec4(0.75f, 0.55f, 0.22f, 1.0f));
+    return ImGui::GetColorU32(ImVec4(0.45f, 0.39f, 0.30f, 1.0f));
+}
+
+static std::string CraftRankNameCs(const std::string& rank)
+{
+    if (rank == "observer") return U8("Pozorovatel");
+    if (rank == "apprentice") return U8("Učeň");
+    if (rank == "journeyman") return U8("Tovaryš");
+    if (rank == "specialist") return U8("Specialista");
+    if (rank == "master") return U8("Mistr");
+    if (rank == "innovator") return U8("Inovátor");
+    if (rank == "workshop_master") return U8("Mistr dílny");
+    if (rank == "final") return U8("Závěrečná větev");
+    return rank;
+}
+
+static std::string CraftRankSubtitle(const std::string& rank)
+{
+    if (rank == "observer") return U8("Základy výhně");
+    if (rank == "apprentice") return U8("První výrobky");
+    if (rank == "journeyman") return U8("Samostatná práce");
+    if (rank == "specialist") return U8("Volba specializace");
+    if (rank == "master") return U8("Vedení dílny");
+    if (rank == "final") return U8("Skrytý směr");
+    return U8("Postup učení");
+}
+
+static std::string CraftEvidenceForRank(const json& domain, const std::string& rank)
+{
+    for (const auto& node : PlayerOverviewJsonArray(domain, "rank_nodes"))
+    {
+        if (PlayerOverviewJsonString(node, "rank") == rank)
+        {
+            const std::string evidence = PlayerOverviewJsonString(node, "evidence_gate");
+            if (!evidence.empty())
+                return evidence;
+        }
+    }
+
+    const std::string rankName = CraftRankNameCs(rank);
+    for (const auto& row : PlayerOverviewJsonArray(domain, "rows"))
+    {
+        const std::string rowRank = PlayerOverviewJsonString(row, "rank");
+        if (rowRank == rankName || (rank == "final" && rowRank.find("Inovátor") != std::string::npos))
+        {
+            const std::string evidence = PlayerOverviewJsonString(row, "mastery_evidence");
+            if (!evidence.empty())
+                return evidence;
+        }
+    }
+
+    return {};
+}
+
+static float CraftNodeProgressFromDomainProgress(int index, int count, float progress)
+{
+    if (count <= 0)
+        return 0.0f;
+
+    const float step = 100.0f / static_cast<float>(count);
+    const float start = step * static_cast<float>(index);
+    return std::clamp((PlayerStats::Clamp01To100(progress) - start) / step, 0.0f, 1.0f);
+}
+
+static std::string CraftNodeStateFromReadiness(int index, int count, float readiness)
+{
+    if (count <= 0)
+        return "available";
+
+    const float step = 100.0f / static_cast<float>(count);
+    const float completedAt = step * static_cast<float>(index + 1);
+    const float activeAt = step * static_cast<float>(index);
+    if (readiness >= completedAt)
+        return "completed";
+    if (readiness >= activeAt)
+        return "active";
+    return index <= 1 ? "locked_near" : "locked_far";
+}
+
+static int CraftRankColumn(const std::string& rank, int fallback)
+{
+    if (rank == "observer") return 0;
+    if (rank == "apprentice") return 1;
+    if (rank == "journeyman") return 2;
+    if (rank == "specialist") return 3;
+    if (rank == "master") return 4;
+    if (rank == "innovator" || rank == "workshop_master" || rank == "final") return 5;
+    return fallback;
+}
+
+static int CraftNodeIndexById(const CraftSkillTreeView& tree, const std::string& id)
+{
+    for (int i = 0; i < static_cast<int>(tree.nodes.size()); ++i)
+    {
+        if (tree.nodes[static_cast<size_t>(i)].id == id)
+            return i;
+    }
+    return -1;
+}
+
+static const CraftNodeView* CraftSelectedNode(const CraftSkillTreeView& tree, const std::string& selectedNodeId)
+{
+    const int index = CraftNodeIndexById(tree, selectedNodeId);
+    if (index >= 0)
+        return &tree.nodes[static_cast<size_t>(index)];
+
+    if (tree.nodes.empty())
+        return nullptr;
+    return &tree.nodes[static_cast<size_t>(std::clamp(tree.activeNodeIndex, 0, static_cast<int>(tree.nodes.size()) - 1))];
+}
+
+static CraftSkillTreeView CraftBuildSkillTreeView(
+    const json& catalogRoot,
+    const json& catalogDomain,
+    const json& treeDomain,
+    const PlayerStats& s)
+{
+    CraftSkillTreeView view;
+    view.domainId = PlayerOverviewJsonString(catalogDomain, "id");
+    const std::string domainName = PlayerOverviewJsonString(catalogDomain, "name", view.domainId.c_str());
+    view.title = domainName + std::string(U8(" - strom učení"));
+
+    const float progress = PlayerOverviewCraftProgress(view.domainId, s);
+    view.currentProgress = progress;
+    view.progressLabel = PlayerOverviewPercentLabel(progress);
+
+    CraftTreeUiCache& smithingTree = PlayerOverviewSmithingSkillTreeCache();
+    if (view.domainId == "smithing" && smithingTree.loaded)
+    {
+        view.rich = true;
+        const json& tree = smithingTree.root;
+        const json& layout = PlayerOverviewJsonObject(tree, "layout");
+        view.referenceSize = ImVec2(
+            CraftJsonArrayFloatAt(layout, "reference_canvas", 0, 2100.0f),
+            CraftJsonArrayFloatAt(layout, "reference_canvas", 1, 950.0f));
+        view.nodeSize = ImVec2(
+            CraftJsonArrayFloatAt(layout, "node_size", 0, 270.0f),
+            CraftJsonArrayFloatAt(layout, "node_size", 1, 132.0f));
+
+        const json& lessonLabels = PlayerOverviewJsonObject(tree, "lesson_labels_cs");
+        std::unordered_map<int, int> pinToNode;
+
+        const json& treeNodes = PlayerOverviewJsonArray(tree, "nodes");
+        const int nodeCount = static_cast<int>(treeNodes.size());
+
+        int index = 0;
+        for (const auto& node : treeNodes)
+        {
+            CraftNodeView out;
+            out.id = std::to_string(node.value("id", index));
+            out.key = PlayerOverviewJsonString(node, "key", out.id.c_str());
+            out.label = PlayerOverviewJsonString(node, "title_cs", out.key.c_str());
+            out.rank = PlayerOverviewJsonString(node, "rank");
+            out.subtitle = CraftRankSubtitle(out.rank);
+            out.state = CraftNodeStateFromReadiness(index, nodeCount, progress);
+            out.progress = CraftNodeProgressFromDomainProgress(index, nodeCount, progress);
+            out.inputPin = node.value("input_pin", 0);
+            out.outputPin = node.value("output_pin", 0);
+            out.secret = node.value("hidden_until_revealed", false) || out.state == "secret";
+            out.iconPath = CraftSkillTreeAssetPath(PlayerOverviewJsonString(node, "icon"));
+            out.proofText = CraftEvidenceForRank(treeDomain, out.rank);
+
+            out.pos = ImVec2(
+                CraftJsonArrayFloatAt(node, "position", 0, 0.0f),
+                CraftJsonArrayFloatAt(node, "position", 1, 0.0f));
+
+            for (const auto& lesson : PlayerOverviewJsonArray(node, "lessons"))
+            {
+                if (!lesson.is_string())
+                    continue;
+
+                const std::string key = lesson.get<std::string>();
+                const std::string label = CraftJsonStringKey(lessonLabels, key, CraftHumanizeToken(key).c_str());
+                out.lessons.push_back({ label, CraftSkillTreeAssetPath("icons/" + key) });
+            }
+
+            if (out.state == "active")
+                view.activeNodeIndex = index;
+
+            if (out.inputPin != 0)
+                pinToNode[out.inputPin] = index;
+            if (out.outputPin != 0)
+                pinToNode[out.outputPin] = index;
+
+            view.nodes.push_back(std::move(out));
+            ++index;
+        }
+
+        for (const auto& link : PlayerOverviewJsonArray(tree, "links"))
+        {
+            const int startPin = link.value("start_pin", 0);
+            const int endPin = link.value("end_pin", 0);
+            auto fromIt = pinToNode.find(startPin);
+            auto toIt = pinToNode.find(endPin);
+            if (fromIt == pinToNode.end() || toIt == pinToNode.end())
+                continue;
+
+            CraftLinkView out;
+            out.fromIndex = fromIt->second;
+            out.toIndex = toIt->second;
+            out.state = view.nodes[static_cast<size_t>(out.fromIndex)].state;
+            out.color = CraftNodeBorderColor(out.state);
+            out.thickness = out.state == "active" ? 4.0f : 3.0f;
+            view.links.push_back(out);
+        }
+
+        return view;
+    }
+
+    const json& rankNodes = PlayerOverviewJsonArray(treeDomain, "rank_nodes");
+    if (!rankNodes.empty())
+    {
+        const int nodeCount = static_cast<int>(rankNodes.size());
+        int index = 0;
+        for (const auto& node : rankNodes)
+        {
+            const std::string rank = PlayerOverviewJsonString(node, "rank");
+
+            CraftNodeView out;
+            out.id = PlayerOverviewJsonString(node, "id", ("node." + std::to_string(index)).c_str());
+            out.key = out.id;
+            out.rank = rank;
+            out.label = PlayerOverviewRankName(catalogRoot, rank);
+            out.subtitle = CraftRankSubtitle(rank);
+            out.state = CraftNodeStateFromReadiness(index, nodeCount, progress);
+            out.progress = CraftNodeProgressFromDomainProgress(index, nodeCount, progress);
+            out.proofText = PlayerOverviewJsonString(node, "evidence_gate");
+            out.iconPath = CraftSkillTreeAssetPath("icons/" + (rank.empty() ? std::string("tools") : rank));
+            out.pos.x = 40.0f + static_cast<float>(CraftRankColumn(rank, index)) * 310.0f;
+            out.pos.y = 290.0f;
+            if (rank == "innovator")
+                out.pos.y = 210.0f;
+            else if (rank == "workshop_master")
+                out.pos.y = 390.0f;
+
+            for (const auto& skill : PlayerOverviewJsonArray(node, "skills"))
+            {
+                if (!skill.is_string())
+                    continue;
+                const std::string key = skill.get<std::string>();
+                out.lessons.push_back({ CraftHumanizeToken(key), {} });
+            }
+
+            if (out.state == "active")
+                view.activeNodeIndex = index;
+            view.nodes.push_back(std::move(out));
+            ++index;
+        }
+
+        std::unordered_map<std::string, int> byId;
+        for (int i = 0; i < static_cast<int>(view.nodes.size()); ++i)
+            byId[view.nodes[static_cast<size_t>(i)].id] = i;
+
+        for (int from = 0; from < static_cast<int>(rankNodes.size()); ++from)
+        {
+            for (const auto& unlock : PlayerOverviewJsonArray(rankNodes[static_cast<size_t>(from)], "unlocks"))
+            {
+                if (!unlock.is_string())
+                    continue;
+
+                auto it = byId.find(unlock.get<std::string>());
+                if (it == byId.end())
+                    continue;
+
+                CraftLinkView link;
+                link.fromIndex = from;
+                link.toIndex = it->second;
+                link.state = view.nodes[static_cast<size_t>(from)].state;
+                link.color = CraftNodeBorderColor(link.state);
+                link.thickness = link.state == "active" ? 4.0f : 3.0f;
+                view.links.push_back(link);
+            }
+        }
+
+        return view;
+    }
+
+    const json& rows = PlayerOverviewJsonArray(catalogDomain, "rows");
+    const int rowCount = static_cast<int>(rows.size());
+    int index = 0;
+    for (const auto& row : rows)
+    {
+        const std::string rankName = PlayerOverviewJsonString(row, "rank", U8("Hodnost"));
+
+        CraftNodeView out;
+        out.id = view.domainId + ".row." + std::to_string(index);
+        out.key = out.id;
+        out.rank = rankName;
+        out.label = rankName;
+        out.subtitle = U8("Hodnostní uzel");
+        out.state = CraftNodeStateFromReadiness(index, rowCount, progress);
+        out.progress = CraftNodeProgressFromDomainProgress(index, rowCount, progress);
+        out.proofText = PlayerOverviewJsonString(row, "mastery_evidence");
+        out.pos.x = 40.0f + static_cast<float>(index) * 300.0f;
+        out.pos.y = 290.0f;
+
+        for (const std::string& lesson : CraftSplitSemicolonList(PlayerOverviewJsonString(row, "nodes_and_skills")))
+            out.lessons.push_back({ lesson, {} });
+
+        if (out.state == "active")
+            view.activeNodeIndex = index;
+        view.nodes.push_back(std::move(out));
+        ++index;
+    }
+
+    for (int i = 1; i < static_cast<int>(view.nodes.size()); ++i)
+    {
+        CraftLinkView link;
+        link.fromIndex = i - 1;
+        link.toIndex = i;
+        link.state = view.nodes[static_cast<size_t>(i - 1)].state;
+        link.color = CraftNodeBorderColor(link.state);
+        link.thickness = link.state == "active" ? 4.0f : 3.0f;
+        view.links.push_back(link);
+    }
+
+    return view;
+}
+
+static void CraftDrawNode(
+    ImDrawList* drawList,
+    SDL_Renderer* renderer,
+    std::unordered_map<std::string, SDL_Texture*>& textureCache,
+    const ImVec2& origin,
+    float zoom,
+    const ImVec2& nodeSize,
+    const CraftNodeView& node,
+    bool selected)
+{
+    const ImVec2 size(nodeSize.x * zoom, nodeSize.y * zoom);
+    const ImVec2 p0(origin.x + node.pos.x * zoom, origin.y + node.pos.y * zoom);
+    const ImVec2 p1(p0.x + size.x, p0.y + size.y);
+    const float rounding = 7.0f * zoom;
+
+    if (node.secret)
+    {
+        const ImVec2 center((p0.x + p1.x) * 0.5f, (p0.y + p1.y) * 0.5f);
+        const float radius = std::max(12.0f, 24.0f * zoom);
+        drawList->AddCircleFilled(center, radius, ImGui::GetColorU32(ImVec4(0.08f, 0.07f, 0.06f, 1.0f)), 32);
+        drawList->AddCircle(center, radius, CraftNodeBorderColor(node.state), 32, selected ? 3.0f : 2.0f);
+        SDL_Texture* question = CraftLoadCachedTexture(renderer, textureCache, CraftSkillTreeAssetPath("badges/question"));
+        if (question)
+            drawList->AddImage(question, ImVec2(center.x - radius * 0.55f, center.y - radius * 0.55f), ImVec2(center.x + radius * 0.55f, center.y + radius * 0.55f));
+        else
+            drawList->AddText(ImVec2(center.x - 4.0f, center.y - 8.0f), CraftNodeBorderColor(node.state), "?");
+        return;
+    }
+
+    drawList->AddRectFilled(p0, p1, CraftNodeFillColor(node.state), rounding);
+    drawList->AddRect(p0, p1, selected ? ImGui::GetColorU32(ImVec4(1.0f, 0.69f, 0.26f, 1.0f)) : CraftNodeBorderColor(node.state), rounding, 0, selected ? 3.0f : 2.0f);
+
+    const float iconSize = std::max(18.0f, 46.0f * zoom);
+    const ImVec2 iconMin(p0.x + 12.0f * zoom, p0.y + 42.0f * zoom);
+    const ImVec2 iconMax(iconMin.x + iconSize, iconMin.y + iconSize);
+    SDL_Texture* icon = CraftLoadCachedTexture(renderer, textureCache, node.iconPath);
+    if (icon)
+        drawList->AddImage(icon, iconMin, iconMax);
+    else
+        drawList->AddCircleFilled(ImVec2((iconMin.x + iconMax.x) * 0.5f, (iconMin.y + iconMax.y) * 0.5f), iconSize * 0.5f, ImGui::GetColorU32(ImVec4(0.10f, 0.09f, 0.08f, 1.0f)));
+
+    const float titleX = p0.x + 12.0f * zoom;
+    const ImVec4 titleClip(titleX, p0.y + 8.0f * zoom, p1.x - 14.0f * zoom, p0.y + 31.0f * zoom);
+    drawList->AddText(
+        nullptr,
+        0.0f,
+        ImVec2(titleX, p0.y + 8.0f * zoom),
+        ImGui::GetColorU32(ImVec4(0.93f, 0.86f, 0.72f, 1.0f)),
+        node.label.c_str(),
+        nullptr,
+        0.0f,
+        &titleClip);
+
+    const ImVec4 subtitleClip(p0.x + 70.0f * zoom, p0.y + 50.0f * zoom, p1.x - 12.0f * zoom, p0.y + 73.0f * zoom);
+    drawList->AddText(
+        nullptr,
+        0.0f,
+        ImVec2(p0.x + 70.0f * zoom, p0.y + 50.0f * zoom),
+        ImGui::GetColorU32(ImVec4(0.66f, 0.60f, 0.50f, 1.0f)),
+        node.subtitle.c_str(),
+        nullptr,
+        0.0f,
+        &subtitleClip);
+
+    if (node.progress >= 0.0f)
+    {
+        const float clamped = std::clamp(node.progress, 0.0f, 1.0f);
+        const ImVec2 bar0(p0.x + 72.0f * zoom, p1.y - 23.0f * zoom);
+        const ImVec2 bar1(p1.x - 16.0f * zoom, p1.y - 15.0f * zoom);
+        drawList->AddRectFilled(bar0, bar1, ImGui::GetColorU32(ImVec4(0.12f, 0.11f, 0.10f, 1.0f)), 3.0f);
+        drawList->AddRectFilled(
+            bar0,
+            ImVec2(bar0.x + (bar1.x - bar0.x) * clamped, bar1.y),
+            node.state == "completed"
+                ? ImGui::GetColorU32(ImVec4(0.62f, 0.74f, 0.45f, 1.0f))
+                : ImGui::GetColorU32(ImVec4(0.94f, 0.45f, 0.13f, 1.0f)),
+            3.0f);
+    }
+
+    const char* badgeRef = nullptr;
+    if (node.state == "completed")
+        badgeRef = "badges/complete";
+    else if (node.state == "locked_near" || node.state == "locked_far" || node.state == "locked")
+        badgeRef = "badges/lock";
+
+    if (badgeRef)
+    {
+        SDL_Texture* badge = CraftLoadCachedTexture(renderer, textureCache, CraftSkillTreeAssetPath(badgeRef));
+        const float badgeSize = std::max(14.0f, 24.0f * zoom);
+        const ImVec2 badgeMin(p1.x - badgeSize - 8.0f * zoom, p0.y + 7.0f * zoom);
+        const ImVec2 badgeMax(badgeMin.x + badgeSize, badgeMin.y + badgeSize);
+        if (badge)
+            drawList->AddImage(badge, badgeMin, badgeMax);
+    }
+}
+
+static ImVec2 CraftNodeInputPoint(const ImVec2& origin, float zoom, const ImVec2& nodeSize, const CraftNodeView& node)
+{
+    return ImVec2(origin.x + node.pos.x * zoom, origin.y + (node.pos.y + nodeSize.y * 0.5f) * zoom);
+}
+
+static ImVec2 CraftNodeOutputPoint(const ImVec2& origin, float zoom, const ImVec2& nodeSize, const CraftNodeView& node)
+{
+    return ImVec2(origin.x + (node.pos.x + nodeSize.x) * zoom, origin.y + (node.pos.y + nodeSize.y * 0.5f) * zoom);
+}
+
+static void CraftDrawLink(
+    ImDrawList* drawList,
+    const ImVec2& origin,
+    float zoom,
+    const ImVec2& nodeSize,
+    const CraftNodeView& from,
+    const CraftNodeView& to,
+    const CraftLinkView& link)
+{
+    const ImVec2 a = CraftNodeOutputPoint(origin, zoom, nodeSize, from);
+    const ImVec2 b = CraftNodeInputPoint(origin, zoom, nodeSize, to);
+    const float mid = std::max(28.0f, (b.x - a.x) * 0.45f);
+    drawList->AddBezierCubic(
+        a,
+        ImVec2(a.x + mid, a.y),
+        ImVec2(b.x - mid, b.y),
+        b,
+        link.color ? link.color : CraftNodeBorderColor(link.state),
+        std::max(1.5f, link.thickness * zoom));
+    drawList->AddCircleFilled(a, std::max(2.5f, 5.0f * zoom), link.color ? link.color : CraftNodeBorderColor(link.state));
+    drawList->AddCircleFilled(b, std::max(2.5f, 5.0f * zoom), link.color ? link.color : CraftNodeBorderColor(link.state));
+}
+
+static void CraftDrawGrid(ImDrawList* drawList, const ImVec2& min, const ImVec2& max, const ImVec2& pan, float zoom)
+{
+    drawList->AddRectFilled(min, max, ImGui::GetColorU32(ImVec4(0.03f, 0.025f, 0.02f, 1.0f)));
+
+    const float grid = std::max(12.0f, 72.0f * zoom);
+    const ImU32 minor = ImGui::GetColorU32(ImVec4(0.35f, 0.25f, 0.15f, 0.42f));
+    const ImU32 major = ImGui::GetColorU32(ImVec4(0.56f, 0.39f, 0.20f, 0.62f));
+
+    float xStart = min.x + std::fmod(pan.x, grid);
+    if (xStart > min.x)
+        xStart -= grid;
+    int xIndex = static_cast<int>(std::floor((xStart - min.x - pan.x) / grid));
+    for (float x = xStart; x < max.x; x += grid, ++xIndex)
+        drawList->AddLine(ImVec2(x, min.y), ImVec2(x, max.y), (xIndex % 5 == 0) ? major : minor, (xIndex % 5 == 0) ? 1.2f : 1.0f);
+
+    float yStart = min.y + std::fmod(pan.y, grid);
+    if (yStart > min.y)
+        yStart -= grid;
+    int yIndex = static_cast<int>(std::floor((yStart - min.y - pan.y) / grid));
+    for (float y = yStart; y < max.y; y += grid, ++yIndex)
+        drawList->AddLine(ImVec2(min.x, y), ImVec2(max.x, y), (yIndex % 5 == 0) ? major : minor, (yIndex % 5 == 0) ? 1.2f : 1.0f);
+
+    drawList->AddRect(min, max, ImGui::GetColorU32(ImVec4(0.55f, 0.35f, 0.16f, 0.85f)), 6.0f, 0, 2.0f);
+}
+
+static void CraftRenderSkillTreeCanvas(
+    SDL_Renderer* renderer,
+    std::unordered_map<std::string, SDL_Texture*>& textureCache,
+    const CraftSkillTreeView& tree,
+    std::string& selectedNodeId,
+    ImVec2& pan,
+    float& zoom)
+{
+    const ImVec2 canvasSize = ImGui::GetContentRegionAvail();
+    const std::string canvasId = "##skill_tree_canvas_" + tree.domainId;
+    ImGui::InvisibleButton(canvasId.c_str(), canvasSize);
+
+    const bool hovered = ImGui::IsItemHovered();
+    const bool active = ImGui::IsItemActive();
+    const ImVec2 canvasMin = ImGui::GetItemRectMin();
+    const ImVec2 canvasMax = ImGui::GetItemRectMax();
+    ImDrawList* drawList = ImGui::GetWindowDrawList();
+    ImGuiIO& io = ImGui::GetIO();
+
+    if (hovered && io.MouseWheel != 0.0f)
+    {
+        const float oldZoom = zoom;
+        zoom = std::clamp(zoom * (io.MouseWheel > 0.0f ? 1.10f : 0.90f), 0.34f, 1.25f);
+        if (oldZoom != zoom)
+        {
+            const ImVec2 mouseLocal(io.MousePos.x - canvasMin.x, io.MousePos.y - canvasMin.y);
+            pan.x = mouseLocal.x - (mouseLocal.x - pan.x) * (zoom / oldZoom);
+            pan.y = mouseLocal.y - (mouseLocal.y - pan.y) * (zoom / oldZoom);
+        }
+    }
+
+    if (active && ImGui::IsMouseDragging(ImGuiMouseButton_Left, 2.0f))
+    {
+        pan.x += io.MouseDelta.x;
+        pan.y += io.MouseDelta.y;
+    }
+
+    const ImVec2 worldOrigin(canvasMin.x + pan.x, canvasMin.y + pan.y);
+
+    bool resetRequested = false;
+    const ImVec2 resetSize(122.0f, 28.0f);
+    const ImVec2 resetMin(canvasMax.x - resetSize.x - 16.0f, canvasMax.y - resetSize.y - 14.0f);
+    const ImVec2 resetMax(resetMin.x + resetSize.x, resetMin.y + resetSize.y);
+    if (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && CraftPointInRect(io.MousePos, resetMin, resetMax))
+        resetRequested = true;
+
+    if (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !resetRequested)
+    {
+        for (int i = static_cast<int>(tree.nodes.size()) - 1; i >= 0; --i)
+        {
+            const CraftNodeView& node = tree.nodes[static_cast<size_t>(i)];
+            const ImVec2 nodeMin(worldOrigin.x + node.pos.x * zoom, worldOrigin.y + node.pos.y * zoom);
+            const ImVec2 nodeMax(nodeMin.x + tree.nodeSize.x * zoom, nodeMin.y + tree.nodeSize.y * zoom);
+            if (CraftPointInRect(io.MousePos, nodeMin, nodeMax))
+            {
+                selectedNodeId = node.id;
+                break;
+            }
+        }
+    }
+
+    if (resetRequested)
+    {
+        zoom = tree.rich ? 0.50f : 0.62f;
+        pan = ImVec2(32.0f, tree.rich ? -115.0f : -85.0f);
+    }
+
+    CraftDrawGrid(drawList, canvasMin, canvasMax, pan, zoom);
+    drawList->PushClipRect(canvasMin, canvasMax, true);
+
+    for (const CraftLinkView& link : tree.links)
+    {
+        if (link.fromIndex < 0 || link.toIndex < 0 ||
+            link.fromIndex >= static_cast<int>(tree.nodes.size()) ||
+            link.toIndex >= static_cast<int>(tree.nodes.size()))
+        {
+            continue;
+        }
+
+        CraftDrawLink(
+            drawList,
+            worldOrigin,
+            zoom,
+            tree.nodeSize,
+            tree.nodes[static_cast<size_t>(link.fromIndex)],
+            tree.nodes[static_cast<size_t>(link.toIndex)],
+            link);
+    }
+
+    for (const CraftNodeView& node : tree.nodes)
+    {
+        CraftDrawNode(
+            drawList,
+            renderer,
+            textureCache,
+            worldOrigin,
+            zoom,
+            tree.nodeSize,
+            node,
+            node.id == selectedNodeId);
+    }
+
+    drawList->PopClipRect();
+
+    const ImVec2 hintMin(canvasMin.x + 14.0f, canvasMin.y + 14.0f);
+    const ImVec2 hintMax(hintMin.x + 222.0f, hintMin.y + 28.0f);
+    drawList->AddRectFilled(hintMin, hintMax, ImGui::GetColorU32(ImVec4(0.16f, 0.11f, 0.08f, 0.92f)), 4.0f);
+    drawList->AddRect(hintMin, hintMax, ImGui::GetColorU32(ImVec4(0.42f, 0.28f, 0.16f, 1.0f)), 4.0f);
+    drawList->AddText(ImVec2(hintMin.x + 10.0f, hintMin.y + 7.0f), ImGui::GetColorU32(ImVec4(0.70f, 0.63f, 0.53f, 1.0f)), U8("Kolečko: přiblížení  ·  LMB: posun"));
+
+    drawList->AddRectFilled(resetMin, resetMax, ImGui::GetColorU32(ImVec4(0.20f, 0.13f, 0.08f, 0.96f)), 4.0f);
+    drawList->AddRect(resetMin, resetMax, ImGui::GetColorU32(ImVec4(0.57f, 0.38f, 0.19f, 1.0f)), 4.0f);
+    drawList->AddText(ImVec2(resetMin.x + 14.0f, resetMin.y + 8.0f), ImGui::GetColorU32(ImVec4(0.78f, 0.67f, 0.50f, 1.0f)), U8("PŘEHLED STROMU"));
+}
+
+static void CraftRenderLessonLine(
+    SDL_Renderer* renderer,
+    std::unordered_map<std::string, SDL_Texture*>& textureCache,
+    const std::pair<std::string, std::string>& lesson)
+{
+    const float iconSize = 26.0f;
+    const ImVec2 start = ImGui::GetCursorScreenPos();
+    SDL_Texture* icon = CraftLoadCachedTexture(renderer, textureCache, lesson.second);
+    if (icon)
+        ImGui::GetWindowDrawList()->AddImage((ImTextureID)icon, start, ImVec2(start.x + iconSize, start.y + iconSize));
+    else
+    {
+        ImGui::GetWindowDrawList()->AddCircleFilled(ImVec2(start.x + iconSize * 0.5f, start.y + iconSize * 0.5f), iconSize * 0.42f, ImGui::GetColorU32(ImVec4(0.18f, 0.13f, 0.09f, 1.0f)));
+        ImGui::GetWindowDrawList()->AddCircle(ImVec2(start.x + iconSize * 0.5f, start.y + iconSize * 0.5f), iconSize * 0.42f, ImGui::GetColorU32(ImVec4(0.75f, 0.52f, 0.22f, 1.0f)), 24, 1.5f);
+    }
+    ImGui::Dummy(ImVec2(iconSize, iconSize));
+    ImGui::SameLine();
+    ImGui::SetCursorPosY(ImGui::GetCursorPosY() + 4.0f);
+    PlayerOverviewWrappedText(lesson.first);
+}
+
+static void CraftRenderSkillDetail(
+    SDL_Renderer* renderer,
+    std::unordered_map<std::string, SDL_Texture*>& textureCache,
+    const CraftSkillTreeView& tree,
+    const CraftNodeView* selectedNode)
+{
+    ImGui::TextColored(ImVec4(0.86f, 0.78f, 0.61f, 1.0f), U8("DETAIL DOVEDNOSTI"));
+    ImGui::Separator();
+
+    if (!selectedNode)
+    {
+        ImGui::TextDisabled(U8("Vyber uzel ve stromu."));
+        return;
+    }
+
+    const CraftNodeView& node = *selectedNode;
+    ImGui::TextColored(ImVec4(0.95f, 0.42f, 0.12f, 1.0f), "%s", node.secret ? U8("Neznámý uzel") : node.label.c_str());
+    ImGui::TextColored(ImVec4(0.62f, 0.55f, 0.45f, 1.0f), "%s", node.subtitle.c_str());
+    ImGui::Spacing();
+
+    const ImVec2 iconStart = ImGui::GetCursorScreenPos();
+    const float iconSize = 60.0f;
+    SDL_Texture* icon = CraftLoadCachedTexture(renderer, textureCache, node.iconPath);
+    if (icon && !node.secret)
+        ImGui::GetWindowDrawList()->AddImage((ImTextureID)icon, iconStart, ImVec2(iconStart.x + iconSize, iconStart.y + iconSize));
+    else
+        ImGui::GetWindowDrawList()->AddCircle(
+            ImVec2(iconStart.x + iconSize * 0.5f, iconStart.y + iconSize * 0.5f),
+            iconSize * 0.42f,
+            CraftNodeBorderColor(node.state),
+            32,
+            2.0f);
+
+    ImGui::Dummy(ImVec2(iconSize, iconSize));
+    ImGui::SameLine();
+    ImGui::BeginGroup();
+    ImGui::TextUnformatted(U8("Současný postup"));
+    const float progress = std::clamp(tree.currentProgress / 100.0f, 0.0f, 1.0f);
+    char overlay[32];
+    std::snprintf(overlay, sizeof(overlay), "%.0f %%", tree.currentProgress);
+    ImGui::ProgressBar(progress, ImVec2(std::max(100.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay);
+    ImGui::TextColored(ImVec4(0.62f, 0.55f, 0.45f, 1.0f), U8("Účinnost učení řemesla"));
+    ImGui::EndGroup();
+
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+    ImGui::TextColored(ImVec4(0.86f, 0.78f, 0.61f, 1.0f), U8("CO SE UČÍŠ"));
+
+    if (node.lessons.empty())
+    {
+        ImGui::TextDisabled(U8("Tato větev je zatím skrytá."));
+    }
+    else
+    {
+        const int maxLessons = std::min(8, static_cast<int>(node.lessons.size()));
+        for (int i = 0; i < maxLessons; ++i)
+            CraftRenderLessonLine(renderer, textureCache, node.lessons[static_cast<size_t>(i)]);
+    }
+
+    ImGui::Spacing();
+    ImGui::Separator();
+    ImGui::Spacing();
+    ImGui::TextColored(ImVec4(0.86f, 0.78f, 0.61f, 1.0f), U8("PODMÍNKA POSTUPU"));
+    if (!node.proofText.empty())
+        PlayerOverviewWrappedText(node.proofText);
+    else if (node.secret)
+        PlayerOverviewWrappedText(U8("Podmínka se odhalí až po mistrovském důkazu v oboru."));
+    else
+        PlayerOverviewWrappedText(U8("Prokaž znalost, praxi, jakost a přijetí práce mistrem nebo komunitou."));
+
+    ImGui::Spacing();
+    ImGui::Spacing();
+    if (node.state == "active")
+        ImGui::Button(U8("DALŠÍ: VYBER SPECIALIZACI"), ImVec2(-1.0f, 38.0f));
+}
+
+void Campaign::renderCraftsUI()
+{
+    if (!m_craftsOpen)
+        return;
+
+    if (m_craftsFocus)
+    {
+        ImGui::SetNextWindowFocus();
+        m_craftsFocus = false;
+    }
+
+    const ImGuiIO& io = ImGui::GetIO();
+    const ImVec2 windowSize(
+        std::max(880.0f, io.DisplaySize.x),
+        std::max(560.0f, io.DisplaySize.y));
+    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
+    ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
+
+    const ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize;
+    if (!ImGui::Begin(U8("Řemesla"), &m_craftsOpen, windowFlags))
+    {
+        ImGui::End();
+        return;
+    }
+
+    CraftTreeUiCache& cache = PlayerOverviewCraftTreeCache();
+    if (!cache.loaded)
+    {
+        ImGui::TextColored(ImVec4(0.95f, 0.45f, 0.35f, 1.0f), U8("Strom řemesel se nepodařilo načíst."));
+        PlayerOverviewWrappedText(cache.error);
+        ImGui::End();
+        return;
+    }
+
+    const json& root = cache.root;
+    const json& domains = PlayerOverviewCraftDomains(root);
+    if (domains.empty())
+    {
+        ImGui::TextDisabled(U8("Žádné obory."));
+        ImGui::End();
+        return;
+    }
+
+    static int selectedDomain = 0;
+    static std::unordered_map<std::string, std::string> selectedNodeByDomain;
+    static std::unordered_map<std::string, ImVec2> panByDomain;
+    static std::unordered_map<std::string, float> zoomByDomain;
+    selectedDomain = std::clamp(selectedDomain, 0, static_cast<int>(domains.size()) - 1);
+
+    const float railWidth = 68.0f;
+    ImGui::BeginChild("##craft_icon_rail", ImVec2(railWidth, 0.0f), true);
+    for (int i = 0; i < static_cast<int>(domains.size()); ++i)
+    {
+        const json& domain = domains[static_cast<size_t>(i)];
+        const std::string domainId = PlayerOverviewJsonString(domain, "id");
+        const std::string label = PlayerOverviewJsonString(domain, "name", domainId.c_str());
+        const std::string iconPath = PlayerOverviewJsonString(domain, "icon");
+
+        ImGui::PushID(i);
+        const ImVec2 buttonSize(48.0f, 48.0f);
+        if (ImGui::InvisibleButton("craft_icon", buttonSize))
+            selectedDomain = i;
+
+        const bool selected = selectedDomain == i;
+        const bool hovered = ImGui::IsItemHovered();
+        const ImVec2 min = ImGui::GetItemRectMin();
+        const ImVec2 max = ImGui::GetItemRectMax();
+        ImDrawList* drawList = ImGui::GetWindowDrawList();
+
+        drawList->AddRectFilled(
+            min,
+            max,
+            ImGui::GetColorU32(selected ? ImVec4(0.35f, 0.21f, 0.11f, 1.0f) : (hovered ? ImVec4(0.24f, 0.18f, 0.13f, 1.0f) : ImVec4(0.10f, 0.08f, 0.06f, 1.0f))),
+            6.0f);
+        if (selected)
+            drawList->AddRect(min, max, ImGui::GetColorU32(ImVec4(0.92f, 0.57f, 0.20f, 1.0f)), 6.0f, 0, 2.0f);
+
+        const ImVec2 iconMin(min.x + 5.0f, min.y + 5.0f);
+        const ImVec2 iconMax(max.x - 5.0f, max.y - 5.0f);
+        SDL_Texture* iconTex = CraftLoadCachedTexture(m_renderer, m_craftIconCache, iconPath);
+        if (iconTex)
+            drawList->AddImage((ImTextureID)iconTex, iconMin, iconMax);
+        else
+            drawList->AddCircleFilled(ImVec2((iconMin.x + iconMax.x) * 0.5f, (iconMin.y + iconMax.y) * 0.5f), 16.0f, ImGui::GetColorU32(ImVec4(0.20f, 0.15f, 0.11f, 1.0f)));
+
+        if (hovered)
+            ImGui::SetTooltip("%s", label.c_str());
+        ImGui::PopID();
+        ImGui::Dummy(ImVec2(0.0f, 5.0f));
+    }
+    ImGui::EndChild();
+
+    ImGui::SameLine();
+
+    const json& selected = domains[static_cast<size_t>(selectedDomain)];
+    const CraftDomainTreeSource treeSource = PlayerOverviewFindCraftDomainTreeSource(root, selected);
+    const json& treeRoot = treeSource.root ? *treeSource.root : root;
+    const json& treeDomain = treeSource.domain ? *treeSource.domain : selected;
+    CraftSkillTreeView tree = CraftBuildSkillTreeView(treeRoot, selected, treeDomain, m_player.stats);
+
+    std::string& selectedNodeId = selectedNodeByDomain[tree.domainId];
+    if (CraftNodeIndexById(tree, selectedNodeId) < 0 && !tree.nodes.empty())
+        selectedNodeId = tree.nodes[static_cast<size_t>(std::clamp(tree.activeNodeIndex, 0, static_cast<int>(tree.nodes.size()) - 1))].id;
+
+    ImVec2& pan = panByDomain[tree.domainId];
+    float& zoom = zoomByDomain[tree.domainId];
+    if (zoom <= 0.0f)
+    {
+        zoom = tree.rich ? 0.50f : 0.62f;
+        pan = ImVec2(32.0f, tree.rich ? -115.0f : -85.0f);
+    }
+
+    const float detailWidth = 292.0f;
+    const float spacing = ImGui::GetStyle().ItemSpacing.x;
+    const float mainWidth = std::max(420.0f, ImGui::GetContentRegionAvail().x - detailWidth - spacing);
+
+    ImGui::BeginChild("##craft_tree_main", ImVec2(mainWidth, 0.0f), false);
+    ImGui::TextColored(ImVec4(0.88f, 0.82f, 0.68f, 1.0f), "%s", tree.title.c_str());
+    ImGui::SameLine(std::max(260.0f, ImGui::GetContentRegionAvail().x - 170.0f));
+    const CraftNodeView* activeNode = CraftSelectedNode(tree, selectedNodeId);
+    std::string selectedProgressLabel = tree.progressLabel;
+    const std::string selectedNodeLabel = activeNode ? (std::string(U8("  ·  ")) + activeNode->label) : std::string{};
+    ImGui::TextColored(
+        ImVec4(0.95f, 0.45f, 0.13f, 1.0f),
+        "%s%s",
+        selectedProgressLabel.c_str(),
+        selectedNodeLabel.c_str());
+
+    CraftRenderSkillTreeCanvas(m_renderer, m_craftIconCache, tree, selectedNodeId, pan, zoom);
+    ImGui::EndChild();
+
+    ImGui::SameLine();
+
+    ImGui::BeginChild("##craft_skill_detail", ImVec2(detailWidth, 0.0f), true);
+    CraftRenderSkillDetail(m_renderer, m_craftIconCache, tree, CraftSelectedNode(tree, selectedNodeId));
+    ImGui::EndChild();
+
+    ImGui::End();
 }
 
 static SDL_Texture* loadTexture(SDL_Renderer* r, const char* path, int& outW, int& outH)
@@ -2007,7 +3398,7 @@ void Campaign::renderPlayerOverviewUI()
             PlayerOverviewSkill("Snasenlivost jidla", s.survival.foodTolerance);
             PlayerOverviewSkill("Odolnost nemoci", s.survival.diseaseResistance);
 
-            PlayerOverviewHeader("Remeslo");
+            PlayerOverviewHeader(U8("Řemeslo"));
             PlayerOverviewSkill("Opravy nastroju", s.craft.toolRepair);
             PlayerOverviewSkill("Opravy odevu", s.craft.clothingRepair);
             PlayerOverviewSkill("Provaznictvi", s.craft.ropeWork);
@@ -2046,12 +3437,6 @@ void Campaign::renderPlayerOverviewUI()
             PlayerOverviewSkill("Pozorovani", s.mental.observation);
             PlayerOverviewSkill("Samota", s.mental.lonelinessTolerance);
 
-            ImGui::EndTabItem();
-        }
-
-        if (ImGui::BeginTabItem("Remesla"))
-        {
-            PlayerOverviewRenderCraftTree(s);
             ImGui::EndTabItem();
         }
 
@@ -2276,6 +3661,26 @@ SDL_Texture* Campaign::getItemIconTexture(const ItemDef& def)
     return tex ? tex : m_defaultItemIcon;
 }
 
+SDL_Texture* Campaign::getCraftIconTexture(const std::string& iconPath)
+{
+    if (iconPath.empty())
+        return nullptr;
+
+    auto it = m_craftIconCache.find(iconPath);
+    if (it != m_craftIconCache.end())
+        return it->second;
+
+    std::filesystem::path path(iconPath);
+    if (path.is_relative())
+        path = pathutils::ProjectRoot() / path;
+
+    int w = 0;
+    int h = 0;
+    SDL_Texture* tex = loadTexture(m_renderer, path.string().c_str(), w, h);
+    m_craftIconCache[iconPath] = tex;
+    return tex;
+}
+
 void Campaign::unloadItemIcons()
 {
     for (auto& [id, tex] : m_itemIconCache)
@@ -2284,6 +3689,16 @@ void Campaign::unloadItemIcons()
             SDL_DestroyTexture(tex);
     }
     m_itemIconCache.clear();
+}
+
+void Campaign::unloadCraftIcons()
+{
+    for (auto& [id, tex] : m_craftIconCache)
+    {
+        if (tex)
+            SDL_DestroyTexture(tex);
+    }
+    m_craftIconCache.clear();
 }
 
 static SDL_Rect GetObjectWorldRectScaled(const gameobj::ObjectDef& def, int wx, int wy, float scale)
@@ -3119,6 +4534,7 @@ void Campaign::renderSharedHudOverlay()
     if (m_questJournalOpen)
         renderQuestJournal();
     renderPlayerOverviewUI();
+    renderCraftsUI();
     renderHud();
     renderConsole();
     renderInventoryUI();
@@ -3361,6 +4777,7 @@ void Campaign::render()
     if (m_questJournalOpen)
         renderQuestJournal();
     renderPlayerOverviewUI();
+    renderCraftsUI();
     renderHud();
     renderConsole();
     renderForagePrompt();

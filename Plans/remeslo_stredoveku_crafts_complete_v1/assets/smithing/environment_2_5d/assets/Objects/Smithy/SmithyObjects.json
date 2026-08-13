@@ -1,0 +1,483 @@
+{
+  "image": "Smithy/SmithyEnvironmentAtlas.png",
+  "objects": [
+    {
+      "id": "smithy_hearth",
+      "name": "Vyhen s kominovou kapotou",
+      "src": {
+        "x": 4,
+        "y": 4,
+        "w": 384,
+        "h": 384
+      },
+      "pivot": {
+        "x": 192,
+        "y": 380
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.11,
+          "y": 0.7,
+          "w": 0.78,
+          "h": 0.25
+        }
+      ],
+      "tags": [
+        "smithy",
+        "forge",
+        "workstation",
+        "hearth",
+        "interactable"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_hearth",
+        "radius": 74,
+        "prompt": "Pouzit vyhen"
+      }
+    },
+    {
+      "id": "smithy_anvil",
+      "name": "Kovadlina na spalku",
+      "src": {
+        "x": 392,
+        "y": 4,
+        "w": 256,
+        "h": 320
+      },
+      "pivot": {
+        "x": 128,
+        "y": 316
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.22,
+          "y": 0.7,
+          "w": 0.56,
+          "h": 0.25
+        }
+      ],
+      "tags": [
+        "smithy",
+        "anvil",
+        "workstation",
+        "interactable"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_anvil",
+        "radius": 62,
+        "prompt": "Pracovat na kovadline"
+      }
+    },
+    {
+      "id": "smithy_bellows",
+      "name": "Velke kovarske mechy",
+      "src": {
+        "x": 4,
+        "y": 392,
+        "w": 384,
+        "h": 288
+      },
+      "pivot": {
+        "x": 192,
+        "y": 284
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.1,
+          "y": 0.67,
+          "w": 0.8,
+          "h": 0.25
+        }
+      ],
+      "tags": [
+        "smithy",
+        "bellows",
+        "workstation",
+        "interactable"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_bellows",
+        "radius": 72,
+        "prompt": "Obsluhovat mechy"
+      }
+    },
+    {
+      "id": "smithy_quench_tub",
+      "name": "Kalici kad",
+      "src": {
+        "x": 392,
+        "y": 392,
+        "w": 288,
+        "h": 256
+      },
+      "pivot": {
+        "x": 144,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.1,
+          "y": 0.56,
+          "w": 0.8,
+          "h": 0.33
+        }
+      ],
+      "tags": [
+        "smithy",
+        "quench",
+        "water",
+        "workstation",
+        "interactable"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_quench",
+        "radius": 60,
+        "prompt": "Kalit vyrobek"
+      }
+    },
+    {
+      "id": "smithy_grindstone",
+      "name": "Rucni brusny kamen",
+      "src": {
+        "x": 684,
+        "y": 392,
+        "w": 320,
+        "h": 256
+      },
+      "pivot": {
+        "x": 160,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.12,
+          "y": 0.68,
+          "w": 0.76,
+          "h": 0.24
+        }
+      ],
+      "tags": [
+        "smithy",
+        "grindstone",
+        "workstation",
+        "interactable"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_grindstone",
+        "radius": 64,
+        "prompt": "Brousit"
+      }
+    },
+    {
+      "id": "smithy_workbench",
+      "name": "Kovarsky pracovni stul",
+      "src": {
+        "x": 4,
+        "y": 684,
+        "w": 384,
+        "h": 288
+      },
+      "pivot": {
+        "x": 192,
+        "y": 284
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.08,
+          "y": 0.68,
+          "w": 0.84,
+          "h": 0.24
+        }
+      ],
+      "tags": [
+        "smithy",
+        "workbench",
+        "workstation",
+        "interactable"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_workbench",
+        "radius": 72,
+        "prompt": "Pouzit pracovni stul"
+      }
+    },
+    {
+      "id": "smithy_tool_rack",
+      "name": "Nastenny drzak kovarskeho naradi",
+      "src": {
+        "x": 392,
+        "y": 684,
+        "w": 384,
+        "h": 256
+      },
+      "pivot": {
+        "x": 192,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [],
+      "tags": [
+        "smithy",
+        "tools",
+        "wall_prop",
+        "decoration"
+      ],
+      "solid": false,
+      "has_sprite": true,
+      "scale": 1.0
+    },
+    {
+      "id": "smithy_charcoal",
+      "name": "Kosiky s drevenym uhlim",
+      "src": {
+        "x": 4,
+        "y": 976,
+        "w": 288,
+        "h": 256
+      },
+      "pivot": {
+        "x": 144,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.12,
+          "y": 0.62,
+          "w": 0.76,
+          "h": 0.29
+        }
+      ],
+      "tags": [
+        "smithy",
+        "charcoal",
+        "fuel",
+        "storage"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0
+    },
+    {
+      "id": "smithy_iron_rack",
+      "name": "Stojan se zeleznymi polotovary",
+      "src": {
+        "x": 296,
+        "y": 976,
+        "w": 384,
+        "h": 256
+      },
+      "pivot": {
+        "x": 192,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.07,
+          "y": 0.7,
+          "w": 0.86,
+          "h": 0.21
+        }
+      ],
+      "tags": [
+        "smithy",
+        "iron_stock",
+        "storage"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0
+    },
+    {
+      "id": "smithy_firewood",
+      "name": "Palivove drivi a stipaci spalek",
+      "src": {
+        "x": 684,
+        "y": 976,
+        "w": 320,
+        "h": 256
+      },
+      "pivot": {
+        "x": 160,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.08,
+          "y": 0.62,
+          "w": 0.84,
+          "h": 0.3
+        }
+      ],
+      "tags": [
+        "smithy",
+        "firewood",
+        "fuel",
+        "storage"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0
+    },
+    {
+      "id": "smithy_storage",
+      "name": "Drobny sklad kovarny",
+      "src": {
+        "x": 4,
+        "y": 1236,
+        "w": 320,
+        "h": 256
+      },
+      "pivot": {
+        "x": 160,
+        "y": 252
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [
+        {
+          "x": 0.07,
+          "y": 0.58,
+          "w": 0.86,
+          "h": 0.34
+        }
+      ],
+      "tags": [
+        "smithy",
+        "storage",
+        "containers"
+      ],
+      "solid": true,
+      "has_sprite": true,
+      "scale": 1.0
+    },
+    {
+      "id": "smithy_exit_door",
+      "name": "Otevrene dvere z kovarny",
+      "src": {
+        "x": 328,
+        "y": 1236,
+        "w": 256,
+        "h": 384
+      },
+      "pivot": {
+        "x": 128,
+        "y": 380
+      },
+      "collider": {
+        "x": 0,
+        "y": 0,
+        "w": 1,
+        "h": 1,
+        "enabled": false
+      },
+      "collision_rects": [],
+      "tags": [
+        "smithy",
+        "door",
+        "portal",
+        "map_link",
+        "interactable"
+      ],
+      "solid": false,
+      "has_sprite": true,
+      "scale": 1.0,
+      "interaction": {
+        "id": "smithy_exit",
+        "radius": 54,
+        "prompt": "Odejit do Blatcu"
+      }
+    }
+  ]
+}

@@ -1,0 +1,15 @@
+{
+  "schema": "remeslo-stredoveku.smithing-imgui-validation.v1",
+  "status": "passed",
+  "atlas_size": [
+    2048,
+    1024
+  ],
+  "atlas_mode": "RGBA",
+  "atlas_entries": 63,
+  "standalone_runtime_png": 63,
+  "nine_slice_fragments": 36,
+  "cpp_rect_constants": 63,
+  "errors": [],
+  "warnings": []
+}

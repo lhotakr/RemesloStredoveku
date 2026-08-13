@@ -165,7 +165,7 @@ void Campaign::renderFogOfWar(int screenW, int screenH)
     const float outerRadius = isNightFogMode ? 9.5f : 10.0f;
 
     // -------------------------------------------------
-    // 1) Vzdálený textured fog po tilech
+    // 1) Vzdï¿½lenï¿½ textured fog po tilech
     // -------------------------------------------------
     const int firstTileX = std::max(0, m_camX / m_tileSize);
     const int firstTileY = std::max(0, m_camY / m_tileSize);
@@ -226,9 +226,9 @@ void Campaign::renderFogOfWar(int screenW, int screenH)
     
     if (!isNightFogMode) {
         // -------------------------------------------------
-        // 2) Jemný textured pøechodový prstenec
+        // 2) Jemnï¿½ textured pï¿½echodovï¿½ prstenec
         // -------------------------------------------------
-        const int step = 4; // 2 = jemnìjší, 4 = rychlejší
+        const int step = 4; // 2 = jemnï¿½jï¿½ï¿½, 4 = rychlejï¿½ï¿½
 
         const int ringPx = (int)std::ceil((outerRadius + 1.0f) * (float)m_tileSize);
         const int playerScreenX = (int)std::lround(m_player.x) - m_camX;
