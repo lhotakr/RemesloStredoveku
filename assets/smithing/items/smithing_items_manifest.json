@@ -1,0 +1,92 @@
+{
+  "schemaVersion": 2,
+  "craftId": "smithing",
+  "spriteRoot": "sprites/smithing",
+  "frameSize": [128, 128],
+  "stateOrder": [
+    "raw_material",
+    "forged_blank",
+    "unfinished",
+    "ruined",
+    "provisional",
+    "common",
+    "honest",
+    "excellent",
+    "masterwork"
+  ],
+  "stateGroups": {
+    "productionStage": ["raw_material", "forged_blank", "unfinished"],
+    "qualityTier": ["ruined", "provisional", "common", "honest", "excellent", "masterwork"]
+  },
+  "items": [
+    {
+      "id": "nail",
+      "name": "Hřebík",
+      "description": "Ručně kovaný stavební hřebík se čtyřhranným dříkem.",
+      "spritePattern": "nail/nail_{state}_128.png",
+      "defectInRuinedState": "prasklina pod hlavou a zlomený dřík"
+    },
+    {
+      "id": "staple",
+      "name": "Skoba",
+      "description": "Masivní skoba pro spojování dřeva a kotvení stavebních prvků.",
+      "spritePattern": "staple/staple_{state}_128.png",
+      "defectInRuinedState": "prasklý hřbet a vybočené rameno"
+    },
+    {
+      "id": "hook",
+      "name": "Pracovní hák",
+      "description": "Užitkový hák s probitým okem pro dílnu nebo domácnost.",
+      "spritePattern": "hook/hook_{state}_128.png",
+      "defectInRuinedState": "zlomený krček a deformované závěsné oko"
+    },
+    {
+      "id": "horseshoe",
+      "name": "Podkova",
+      "description": "Ručně tvarovaná podkova pro pracovního koně.",
+      "spritePattern": "horseshoe/horseshoe_{state}_128.png",
+      "defectInRuinedState": "prasklina ve špici a silné zkroucení"
+    },
+    {
+      "id": "chisel",
+      "name": "Tesařské dláto",
+      "description": "Kované dláto s dřevěnou rukojetí pro tesařské a truhlářské práce.",
+      "spritePattern": "chisel/chisel_{state}_128.png",
+      "defectInRuinedState": "rozštěpené ostří a prasklá rukojeť"
+    },
+    {
+      "id": "knife",
+      "name": "Pracovní nůž",
+      "description": "Jednoduchý užitkový nůž s trnem a jasanovou rukojetí.",
+      "spritePattern": "knife/knife_{state}_128.png",
+      "defectInRuinedState": "prasklina u trnu a rozštípnutá rukojeť"
+    },
+    {
+      "id": "sickle",
+      "name": "Srp",
+      "description": "Běžný pracovní srp pro sklizeň obilí a bylin.",
+      "spritePattern": "sickle/sickle_{state}_128.png",
+      "defectInRuinedState": "prasklina u trnu a deformovaná čepel"
+    },
+    {
+      "id": "hoe",
+      "name": "Polní motyka",
+      "description": "Obyčejná pracovní motyka; tvarem navazuje na hlavní artefakt, ale není magická.",
+      "spritePattern": "hoe/hoe_{state}_128.png",
+      "defectInRuinedState": "prasklina u tuleje a šikmé nasazení"
+    },
+    {
+      "id": "axe",
+      "name": "Pracovní sekera",
+      "description": "Středověká pracovní sekera pro lesní a tesařské práce.",
+      "spritePattern": "axe/axe_{state}_128.png",
+      "defectInRuinedState": "prasklé oko a zkroucené ostří"
+    }
+  ],
+  "atlas": {
+    "file": "sprites/smithing/smithing_items_9states_atlas_1152x1152.png",
+    "columns": 9,
+    "rows": 9,
+    "rowOrder": ["nail", "staple", "hook", "horseshoe", "chisel", "knife", "sickle", "hoe", "axe"]
+  }
+}

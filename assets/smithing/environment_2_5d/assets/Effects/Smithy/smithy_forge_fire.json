@@ -1,0 +1,13 @@
+{
+  "image": "Effects/Smithy/smithy_forge_fire_4frames.png",
+  "frame_width": 256,
+  "frame_height": 192,
+  "frame_count": 4,
+  "frame_time_ms": 110,
+  "loop": true,
+  "pivot": {
+    "x": 128,
+    "y": 188
+  },
+  "recommended_blend": "alpha_or_additive"
+}

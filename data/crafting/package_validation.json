@@ -1,0 +1,15 @@
+{
+  "ok": true,
+  "full_crafts": 13,
+  "work_tracks": 6,
+  "smithing_items": 9,
+  "smithing_states_per_item": 11,
+  "file_count_before_validation_files": 418,
+  "component_validations": {
+    "assets/smithing/imgui/integration/validation.json": true,
+    "assets/smithing/skill_tree_node_editor/integration/validation.json": true,
+    "assets/smithing/environment_2_5d/validation.json": true,
+    "assets/shared/fog_of_war/validation.json": true
+  },
+  "errors": []
+}

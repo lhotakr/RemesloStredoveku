@@ -1,0 +1,1440 @@
+{
+  "schema": "remeslo-stredoveku.smithing-imgui-assets.v1",
+  "atlas": {
+    "file": "assets/atlases/smithing_ui_atlas_2048.png",
+    "size": [
+      2048,
+      1024
+    ],
+    "padding": 4,
+    "filter": "linear",
+    "wrap": "clamp"
+  },
+  "reference_resolution": [
+    1920,
+    1080
+  ],
+  "font_policy": "No text is baked into runtime sprites. Render UTF-8 Czech text with ImGui.",
+  "palette": {
+    "ink": "#160f0a",
+    "charred_wood": "#3a2315",
+    "blackened_iron": "#25221f",
+    "parchment": "#d7c198",
+    "parchment_light": "#ead7ad",
+    "parchment_dark": "#b79866",
+    "ember": "#f07a31",
+    "hot_metal": "#ffc05b",
+    "steel": "#9aabb3",
+    "positive": "#8fa679",
+    "warning": "#c49a4c",
+    "damage": "#a25745",
+    "text_light": "#eadfc8",
+    "muted": "#b9aa91"
+  },
+  "nine_slice": {
+    "panel_parchment": {
+      "sprite": "chrome/panel_parchment",
+      "border": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "minimum_size": [
+        96,
+        96
+      ]
+    },
+    "panel_wood": {
+      "sprite": "chrome/panel_wood",
+      "border": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "minimum_size": [
+        96,
+        96
+      ]
+    },
+    "panel_iron": {
+      "sprite": "chrome/panel_iron",
+      "border": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "minimum_size": [
+        96,
+        96
+      ]
+    },
+    "panel_overlay": {
+      "sprite": "chrome/panel_overlay",
+      "border": [
+        32,
+        32,
+        32,
+        32
+      ],
+      "minimum_size": [
+        96,
+        96
+      ]
+    }
+  },
+  "nine_slice_fragments": {
+    "panel_parchment": "assets/chrome/panel_parchment_9slice/*.png",
+    "panel_wood": "assets/chrome/panel_wood_9slice/*.png",
+    "panel_iron": "assets/chrome/panel_iron_9slice/*.png",
+    "panel_overlay": "assets/chrome/panel_overlay_9slice/*.png"
+  },
+  "recommended_sizes": {
+    "button": [
+      160,
+      48
+    ],
+    "station_tab": [
+      52,
+      82
+    ],
+    "sense_chip_height": 34,
+    "observation_card_height": 74,
+    "keycap_height": 38,
+    "station_icon": [
+      28,
+      28
+    ],
+    "observation_icon": [
+      32,
+      32
+    ]
+  },
+  "sprites": {
+    "chrome/panel_iron": {
+      "file": "assets/chrome/panel_iron.png",
+      "src": [
+        4,
+        4,
+        192,
+        192
+      ],
+      "uv0": [
+        0.00195312,
+        0.00390625
+      ],
+      "uv1": [
+        0.09570312,
+        0.19140625
+      ],
+      "native_size": [
+        192,
+        192
+      ]
+    },
+    "chrome/panel_overlay": {
+      "file": "assets/chrome/panel_overlay.png",
+      "src": [
+        204,
+        4,
+        192,
+        192
+      ],
+      "uv0": [
+        0.09960938,
+        0.00390625
+      ],
+      "uv1": [
+        0.19335938,
+        0.19140625
+      ],
+      "native_size": [
+        192,
+        192
+      ]
+    },
+    "chrome/panel_parchment": {
+      "file": "assets/chrome/panel_parchment.png",
+      "src": [
+        404,
+        4,
+        192,
+        192
+      ],
+      "uv0": [
+        0.19726562,
+        0.00390625
+      ],
+      "uv1": [
+        0.29101562,
+        0.19140625
+      ],
+      "native_size": [
+        192,
+        192
+      ]
+    },
+    "chrome/panel_wood": {
+      "file": "assets/chrome/panel_wood.png",
+      "src": [
+        604,
+        4,
+        192,
+        192
+      ],
+      "uv0": [
+        0.29492188,
+        0.00390625
+      ],
+      "uv1": [
+        0.38867188,
+        0.19140625
+      ],
+      "native_size": [
+        192,
+        192
+      ]
+    },
+    "chrome/portrait_medallion": {
+      "file": "assets/chrome/portrait_medallion.png",
+      "src": [
+        804,
+        4,
+        128,
+        128
+      ],
+      "uv0": [
+        0.39257812,
+        0.00390625
+      ],
+      "uv1": [
+        0.45507812,
+        0.12890625
+      ],
+      "native_size": [
+        128,
+        128
+      ]
+    },
+    "indicators/focus_glow": {
+      "file": "assets/indicators/focus_glow.png",
+      "src": [
+        940,
+        4,
+        128,
+        128
+      ],
+      "uv0": [
+        0.45898438,
+        0.00390625
+      ],
+      "uv1": [
+        0.52148438,
+        0.12890625
+      ],
+      "native_size": [
+        128,
+        128
+      ]
+    },
+    "indicators/target_reticle": {
+      "file": "assets/indicators/target_reticle.png",
+      "src": [
+        1076,
+        4,
+        128,
+        128
+      ],
+      "uv0": [
+        0.52539062,
+        0.00390625
+      ],
+      "uv1": [
+        0.58789062,
+        0.12890625
+      ],
+      "native_size": [
+        128,
+        128
+      ]
+    },
+    "controls/tab_active": {
+      "file": "assets/controls/tab_active.png",
+      "src": [
+        1212,
+        4,
+        112,
+        128
+      ],
+      "uv0": [
+        0.59179688,
+        0.00390625
+      ],
+      "uv1": [
+        0.64648438,
+        0.12890625
+      ],
+      "native_size": [
+        112,
+        128
+      ]
+    },
+    "controls/tab_completed": {
+      "file": "assets/controls/tab_completed.png",
+      "src": [
+        1332,
+        4,
+        112,
+        128
+      ],
+      "uv0": [
+        0.65039062,
+        0.00390625
+      ],
+      "uv1": [
+        0.70507812,
+        0.12890625
+      ],
+      "native_size": [
+        112,
+        128
+      ]
+    },
+    "controls/tab_hover": {
+      "file": "assets/controls/tab_hover.png",
+      "src": [
+        1452,
+        4,
+        112,
+        128
+      ],
+      "uv0": [
+        0.70898438,
+        0.00390625
+      ],
+      "uv1": [
+        0.76367188,
+        0.12890625
+      ],
+      "native_size": [
+        112,
+        128
+      ]
+    },
+    "controls/tab_locked": {
+      "file": "assets/controls/tab_locked.png",
+      "src": [
+        1572,
+        4,
+        112,
+        128
+      ],
+      "uv0": [
+        0.76757812,
+        0.00390625
+      ],
+      "uv1": [
+        0.82226562,
+        0.12890625
+      ],
+      "native_size": [
+        112,
+        128
+      ]
+    },
+    "controls/tab_normal": {
+      "file": "assets/controls/tab_normal.png",
+      "src": [
+        1692,
+        4,
+        112,
+        128
+      ],
+      "uv0": [
+        0.82617188,
+        0.00390625
+      ],
+      "uv1": [
+        0.88085938,
+        0.12890625
+      ],
+      "native_size": [
+        112,
+        128
+      ]
+    },
+    "chrome/title_plaque": {
+      "file": "assets/chrome/title_plaque.png",
+      "src": [
+        4,
+        204,
+        384,
+        112
+      ],
+      "uv0": [
+        0.00195312,
+        0.19921875
+      ],
+      "uv1": [
+        0.18945312,
+        0.30859375
+      ],
+      "native_size": [
+        384,
+        112
+      ]
+    },
+    "controls/observation_damage": {
+      "file": "assets/controls/observation_damage.png",
+      "src": [
+        396,
+        204,
+        320,
+        84
+      ],
+      "uv0": [
+        0.19335938,
+        0.19921875
+      ],
+      "uv1": [
+        0.34960938,
+        0.28125
+      ],
+      "native_size": [
+        320,
+        84
+      ]
+    },
+    "controls/observation_neutral": {
+      "file": "assets/controls/observation_neutral.png",
+      "src": [
+        724,
+        204,
+        320,
+        84
+      ],
+      "uv0": [
+        0.35351562,
+        0.19921875
+      ],
+      "uv1": [
+        0.50976562,
+        0.28125
+      ],
+      "native_size": [
+        320,
+        84
+      ]
+    },
+    "controls/observation_positive": {
+      "file": "assets/controls/observation_positive.png",
+      "src": [
+        1052,
+        204,
+        320,
+        84
+      ],
+      "uv0": [
+        0.51367188,
+        0.19921875
+      ],
+      "uv1": [
+        0.66992188,
+        0.28125
+      ],
+      "native_size": [
+        320,
+        84
+      ]
+    },
+    "controls/observation_warning": {
+      "file": "assets/controls/observation_warning.png",
+      "src": [
+        1380,
+        204,
+        320,
+        84
+      ],
+      "uv0": [
+        0.67382812,
+        0.19921875
+      ],
+      "uv1": [
+        0.83007812,
+        0.28125
+      ],
+      "native_size": [
+        320,
+        84
+      ]
+    },
+    "controls/button_disabled": {
+      "file": "assets/controls/button_disabled.png",
+      "src": [
+        1708,
+        204,
+        320,
+        64
+      ],
+      "uv0": [
+        0.83398438,
+        0.19921875
+      ],
+      "uv1": [
+        0.99023438,
+        0.26171875
+      ],
+      "native_size": [
+        320,
+        64
+      ]
+    },
+    "controls/button_hover": {
+      "file": "assets/controls/button_hover.png",
+      "src": [
+        4,
+        324,
+        320,
+        64
+      ],
+      "uv0": [
+        0.00195312,
+        0.31640625
+      ],
+      "uv1": [
+        0.15820312,
+        0.37890625
+      ],
+      "native_size": [
+        320,
+        64
+      ]
+    },
+    "controls/button_normal": {
+      "file": "assets/controls/button_normal.png",
+      "src": [
+        332,
+        324,
+        320,
+        64
+      ],
+      "uv0": [
+        0.16210938,
+        0.31640625
+      ],
+      "uv1": [
+        0.31835938,
+        0.37890625
+      ],
+      "native_size": [
+        320,
+        64
+      ]
+    },
+    "controls/button_pressed": {
+      "file": "assets/controls/button_pressed.png",
+      "src": [
+        660,
+        324,
+        320,
+        64
+      ],
+      "uv0": [
+        0.32226562,
+        0.31640625
+      ],
+      "uv1": [
+        0.47851562,
+        0.37890625
+      ],
+      "native_size": [
+        320,
+        64
+      ]
+    },
+    "icons/observations/accept": {
+      "file": "assets/icons/observations/accept.png",
+      "src": [
+        988,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.48242188,
+        0.31640625
+      ],
+      "uv1": [
+        0.51367188,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/axis": {
+      "file": "assets/icons/observations/axis.png",
+      "src": [
+        1060,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.51757812,
+        0.31640625
+      ],
+      "uv1": [
+        0.54882812,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/color": {
+      "file": "assets/icons/observations/color.png",
+      "src": [
+        1132,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.55273438,
+        0.31640625
+      ],
+      "uv1": [
+        0.58398438,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/crack": {
+      "file": "assets/icons/observations/crack.png",
+      "src": [
+        1204,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.58789062,
+        0.31640625
+      ],
+      "uv1": [
+        0.61914062,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/edge": {
+      "file": "assets/icons/observations/edge.png",
+      "src": [
+        1276,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.62304688,
+        0.31640625
+      ],
+      "uv1": [
+        0.65429688,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/exit": {
+      "file": "assets/icons/observations/exit.png",
+      "src": [
+        1348,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.65820312,
+        0.31640625
+      ],
+      "uv1": [
+        0.68945312,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/fit": {
+      "file": "assets/icons/observations/fit.png",
+      "src": [
+        1420,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.69335938,
+        0.31640625
+      ],
+      "uv1": [
+        0.72460938,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/heat": {
+      "file": "assets/icons/observations/heat.png",
+      "src": [
+        1492,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.72851562,
+        0.31640625
+      ],
+      "uv1": [
+        0.75976562,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/impact": {
+      "file": "assets/icons/observations/impact.png",
+      "src": [
+        1564,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.76367188,
+        0.31640625
+      ],
+      "uv1": [
+        0.79492188,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/info": {
+      "file": "assets/icons/observations/info.png",
+      "src": [
+        1636,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.79882812,
+        0.31640625
+      ],
+      "uv1": [
+        0.83007812,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/reflection": {
+      "file": "assets/icons/observations/reflection.png",
+      "src": [
+        1708,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.83398438,
+        0.31640625
+      ],
+      "uv1": [
+        0.86523438,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/repair": {
+      "file": "assets/icons/observations/repair.png",
+      "src": [
+        1780,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.86914062,
+        0.31640625
+      ],
+      "uv1": [
+        0.90039062,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/shape": {
+      "file": "assets/icons/observations/shape.png",
+      "src": [
+        1852,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.90429688,
+        0.31640625
+      ],
+      "uv1": [
+        0.93554688,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/sound": {
+      "file": "assets/icons/observations/sound.png",
+      "src": [
+        1924,
+        324,
+        64,
+        64
+      ],
+      "uv0": [
+        0.93945312,
+        0.31640625
+      ],
+      "uv1": [
+        0.97070312,
+        0.37890625
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/sparks": {
+      "file": "assets/icons/observations/sparks.png",
+      "src": [
+        4,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.00195312,
+        0.38671875
+      ],
+      "uv1": [
+        0.03320312,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/steam": {
+      "file": "assets/icons/observations/steam.png",
+      "src": [
+        76,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.03710938,
+        0.38671875
+      ],
+      "uv1": [
+        0.06835938,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/surface": {
+      "file": "assets/icons/observations/surface.png",
+      "src": [
+        148,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.07226562,
+        0.38671875
+      ],
+      "uv1": [
+        0.10351562,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/thickness": {
+      "file": "assets/icons/observations/thickness.png",
+      "src": [
+        220,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.10742188,
+        0.38671875
+      ],
+      "uv1": [
+        0.13867188,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/vibration": {
+      "file": "assets/icons/observations/vibration.png",
+      "src": [
+        292,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.14257812,
+        0.38671875
+      ],
+      "uv1": [
+        0.17382812,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/observations/wood": {
+      "file": "assets/icons/observations/wood.png",
+      "src": [
+        364,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.17773438,
+        0.38671875
+      ],
+      "uv1": [
+        0.20898438,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/stations/anvil": {
+      "file": "assets/icons/stations/anvil.png",
+      "src": [
+        436,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.21289062,
+        0.38671875
+      ],
+      "uv1": [
+        0.24414062,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/stations/forge": {
+      "file": "assets/icons/stations/forge.png",
+      "src": [
+        508,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.24804688,
+        0.38671875
+      ],
+      "uv1": [
+        0.27929688,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/stations/grindstone": {
+      "file": "assets/icons/stations/grindstone.png",
+      "src": [
+        580,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.28320312,
+        0.38671875
+      ],
+      "uv1": [
+        0.31445312,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/stations/quench": {
+      "file": "assets/icons/stations/quench.png",
+      "src": [
+        652,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.31835938,
+        0.38671875
+      ],
+      "uv1": [
+        0.34960938,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/stations/testing": {
+      "file": "assets/icons/stations/testing.png",
+      "src": [
+        724,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.35351562,
+        0.38671875
+      ],
+      "uv1": [
+        0.38476562,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "icons/stations/workbench": {
+      "file": "assets/icons/stations/workbench.png",
+      "src": [
+        796,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.38867188,
+        0.38671875
+      ],
+      "uv1": [
+        0.41992188,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "indicators/phase_active": {
+      "file": "assets/indicators/phase_active.png",
+      "src": [
+        868,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.42382812,
+        0.38671875
+      ],
+      "uv1": [
+        0.45507812,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "indicators/phase_completed": {
+      "file": "assets/indicators/phase_completed.png",
+      "src": [
+        940,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.45898438,
+        0.38671875
+      ],
+      "uv1": [
+        0.49023438,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "indicators/phase_locked": {
+      "file": "assets/indicators/phase_locked.png",
+      "src": [
+        1012,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.49414062,
+        0.38671875
+      ],
+      "uv1": [
+        0.52539062,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "indicators/phase_pending": {
+      "file": "assets/indicators/phase_pending.png",
+      "src": [
+        1084,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.52929688,
+        0.38671875
+      ],
+      "uv1": [
+        0.56054688,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "indicators/phase_warning": {
+      "file": "assets/indicators/phase_warning.png",
+      "src": [
+        1156,
+        396,
+        64,
+        64
+      ],
+      "uv0": [
+        0.56445312,
+        0.38671875
+      ],
+      "uv1": [
+        0.59570312,
+        0.44921875
+      ],
+      "native_size": [
+        64,
+        64
+      ]
+    },
+    "controls/chip_active": {
+      "file": "assets/controls/chip_active.png",
+      "src": [
+        1228,
+        396,
+        192,
+        48
+      ],
+      "uv0": [
+        0.59960938,
+        0.38671875
+      ],
+      "uv1": [
+        0.69335938,
+        0.43359375
+      ],
+      "native_size": [
+        192,
+        48
+      ]
+    },
+    "controls/chip_damage": {
+      "file": "assets/controls/chip_damage.png",
+      "src": [
+        1428,
+        396,
+        192,
+        48
+      ],
+      "uv0": [
+        0.69726562,
+        0.38671875
+      ],
+      "uv1": [
+        0.79101562,
+        0.43359375
+      ],
+      "native_size": [
+        192,
+        48
+      ]
+    },
+    "controls/chip_normal": {
+      "file": "assets/controls/chip_normal.png",
+      "src": [
+        1628,
+        396,
+        192,
+        48
+      ],
+      "uv0": [
+        0.79492188,
+        0.38671875
+      ],
+      "uv1": [
+        0.88867188,
+        0.43359375
+      ],
+      "native_size": [
+        192,
+        48
+      ]
+    },
+    "controls/chip_warning": {
+      "file": "assets/controls/chip_warning.png",
+      "src": [
+        1828,
+        396,
+        192,
+        48
+      ],
+      "uv0": [
+        0.89257812,
+        0.38671875
+      ],
+      "uv1": [
+        0.98632812,
+        0.43359375
+      ],
+      "native_size": [
+        192,
+        48
+      ]
+    },
+    "controls/keycap_normal": {
+      "file": "assets/controls/keycap_normal.png",
+      "src": [
+        4,
+        468,
+        144,
+        48
+      ],
+      "uv0": [
+        0.00195312,
+        0.45703125
+      ],
+      "uv1": [
+        0.07226562,
+        0.50390625
+      ],
+      "native_size": [
+        144,
+        48
+      ]
+    },
+    "controls/keycap_pressed": {
+      "file": "assets/controls/keycap_pressed.png",
+      "src": [
+        156,
+        468,
+        144,
+        48
+      ],
+      "uv0": [
+        0.07617188,
+        0.45703125
+      ],
+      "uv1": [
+        0.14648438,
+        0.50390625
+      ],
+      "native_size": [
+        144,
+        48
+      ]
+    },
+    "indicators/status_damage": {
+      "file": "assets/indicators/status_damage.png",
+      "src": [
+        308,
+        468,
+        40,
+        40
+      ],
+      "uv0": [
+        0.15039062,
+        0.45703125
+      ],
+      "uv1": [
+        0.16992188,
+        0.49609375
+      ],
+      "native_size": [
+        40,
+        40
+      ]
+    },
+    "indicators/status_neutral": {
+      "file": "assets/indicators/status_neutral.png",
+      "src": [
+        356,
+        468,
+        40,
+        40
+      ],
+      "uv0": [
+        0.17382812,
+        0.45703125
+      ],
+      "uv1": [
+        0.19335938,
+        0.49609375
+      ],
+      "native_size": [
+        40,
+        40
+      ]
+    },
+    "indicators/status_positive": {
+      "file": "assets/indicators/status_positive.png",
+      "src": [
+        404,
+        468,
+        40,
+        40
+      ],
+      "uv0": [
+        0.19726562,
+        0.45703125
+      ],
+      "uv1": [
+        0.21679688,
+        0.49609375
+      ],
+      "native_size": [
+        40,
+        40
+      ]
+    },
+    "indicators/status_warning": {
+      "file": "assets/indicators/status_warning.png",
+      "src": [
+        452,
+        468,
+        40,
+        40
+      ],
+      "uv0": [
+        0.22070312,
+        0.45703125
+      ],
+      "uv1": [
+        0.24023438,
+        0.49609375
+      ],
+      "native_size": [
+        40,
+        40
+      ]
+    },
+    "chrome/separator_horizontal": {
+      "file": "assets/chrome/separator_horizontal.png",
+      "src": [
+        500,
+        468,
+        512,
+        16
+      ],
+      "uv0": [
+        0.24414062,
+        0.45703125
+      ],
+      "uv1": [
+        0.49414062,
+        0.47265625
+      ],
+      "native_size": [
+        512,
+        16
+      ]
+    }
+  }
+}

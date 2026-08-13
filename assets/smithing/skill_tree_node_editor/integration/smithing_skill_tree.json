@@ -1,0 +1,346 @@
+{
+  "schema": "remeslo-stredoveku.smithing-skill-tree.v1",
+  "editor": "thedmd/imgui-node-editor",
+  "layout": {
+    "mode": "fixed_gameplay_view",
+    "reference_canvas": [
+      2100,
+      950
+    ],
+    "node_size": [
+      270,
+      132
+    ],
+    "source_sprite_size": [
+      360,
+      176
+    ],
+    "allow_node_drag": false,
+    "allow_pan": true,
+    "allow_zoom": true,
+    "detail_panel_outside_canvas": true
+  },
+  "progression_rule": "Progress is proven through observation, real work and outcomes; it is not purchased with abstract points.",
+  "visibility_rule": {
+    "completed": "colored",
+    "active": "ember_glow",
+    "locked_near": "readable_with_light_fog",
+    "locked_far": "gray_with_heavy_fog",
+    "secret": "unnamed_without_outline_until_revealed"
+  },
+  "nodes": [
+    {
+      "id": 100,
+      "key": "observer",
+      "input_pin": 0,
+      "output_pin": 1001,
+      "position": [
+        0,
+        380
+      ],
+      "state": "completed",
+      "title_key": "skill.smithing.observer",
+      "title_cs": "Pozorovatel",
+      "rank": "observer",
+      "icon": "icons/observer",
+      "progress": 1.0,
+      "lessons": [
+        "forge_safety",
+        "fuel",
+        "tools",
+        "heat_color",
+        "tongs",
+        "bellows"
+      ],
+      "proof_key": "proof.smithing.observer"
+    },
+    {
+      "id": 110,
+      "key": "apprentice",
+      "input_pin": 1100,
+      "output_pin": 1101,
+      "position": [
+        330,
+        380
+      ],
+      "state": "completed",
+      "title_key": "skill.smithing.apprentice",
+      "title_cs": "Učeň",
+      "rank": "apprentice",
+      "icon": "icons/apprentice",
+      "progress": 1.0,
+      "lessons": [
+        "straighten",
+        "grind",
+        "nail",
+        "staple",
+        "hook",
+        "repair",
+        "quench"
+      ],
+      "proof_key": "proof.smithing.apprentice"
+    },
+    {
+      "id": 120,
+      "key": "journeyman",
+      "input_pin": 1200,
+      "output_pin": 1201,
+      "position": [
+        660,
+        380
+      ],
+      "state": "active",
+      "title_key": "skill.smithing.journeyman",
+      "title_cs": "Tovaryš",
+      "rank": "journeyman",
+      "icon": "icons/journeyman",
+      "progress": 0.46,
+      "lessons": [
+        "axe",
+        "chisel",
+        "knife",
+        "hoe",
+        "horseshoe",
+        "forge_weld",
+        "heat_treatment",
+        "material_estimate"
+      ],
+      "proof_key": "proof.smithing.journeyman"
+    },
+    {
+      "id": 131,
+      "key": "toolmaking",
+      "input_pin": 1310,
+      "output_pin": 1311,
+      "position": [
+        1020,
+        140
+      ],
+      "state": "locked_near",
+      "title_key": "skill.smithing.specialist.toolmaking",
+      "title_cs": "Nástrojařství",
+      "rank": "specialist",
+      "icon": "icons/toolmaking",
+      "progress": 0.0,
+      "lessons": [
+        "defect_detection",
+        "temperature_control"
+      ],
+      "proof_key": "proof.smithing.specialist"
+    },
+    {
+      "id": 132,
+      "key": "farriery",
+      "input_pin": 1320,
+      "output_pin": 1321,
+      "position": [
+        1020,
+        380
+      ],
+      "state": "locked_near",
+      "title_key": "skill.smithing.specialist.farriery",
+      "title_cs": "Podkovářství",
+      "rank": "specialist",
+      "icon": "icons/farriery",
+      "progress": 0.0,
+      "lessons": [
+        "defect_detection",
+        "temperature_control"
+      ],
+      "proof_key": "proof.smithing.specialist"
+    },
+    {
+      "id": 133,
+      "key": "building_ironwork",
+      "input_pin": 1330,
+      "output_pin": 1331,
+      "position": [
+        1020,
+        620
+      ],
+      "state": "locked_near",
+      "title_key": "skill.smithing.specialist.building_ironwork",
+      "title_cs": "Stavební kování",
+      "rank": "specialist",
+      "icon": "icons/building_ironwork",
+      "progress": 0.0,
+      "lessons": [
+        "defect_detection",
+        "temperature_control"
+      ],
+      "proof_key": "proof.smithing.specialist"
+    },
+    {
+      "id": 140,
+      "key": "master",
+      "input_pin": 1400,
+      "output_pin": 1401,
+      "position": [
+        1380,
+        380
+      ],
+      "state": "locked_far",
+      "title_key": "skill.smithing.master",
+      "title_cs": "Mistr",
+      "rank": "master",
+      "icon": "icons/master",
+      "progress": 0.0,
+      "lessons": [
+        "planning",
+        "resources",
+        "diagnostics",
+        "teamwork"
+      ],
+      "proof_key": "proof.smithing.master"
+    },
+    {
+      "id": 151,
+      "key": "innovator",
+      "input_pin": 1510,
+      "output_pin": 0,
+      "position": [
+        1740,
+        260
+      ],
+      "state": "secret",
+      "title_key": "skill.smithing.innovator",
+      "title_cs": "Inovátor",
+      "rank": "final",
+      "icon": "icons/innovator",
+      "progress": 0.0,
+      "lessons": [],
+      "proof_key": "proof.smithing.innovator",
+      "hidden_until_revealed": true
+    },
+    {
+      "id": 152,
+      "key": "workshop_master",
+      "input_pin": 1520,
+      "output_pin": 0,
+      "position": [
+        1740,
+        500
+      ],
+      "state": "secret",
+      "title_key": "skill.smithing.workshop_master",
+      "title_cs": "Mistr dílny",
+      "rank": "final",
+      "icon": "icons/workshop_master",
+      "progress": 0.0,
+      "lessons": [],
+      "proof_key": "proof.smithing.workshop_master",
+      "hidden_until_revealed": true
+    }
+  ],
+  "links": [
+    {
+      "id": 200,
+      "start_pin": 1001,
+      "end_pin": 1100,
+      "state": "completed",
+      "color": "#8fa679",
+      "thickness": 3
+    },
+    {
+      "id": 201,
+      "start_pin": 1101,
+      "end_pin": 1200,
+      "state": "active",
+      "color": "#f07a31",
+      "thickness": 4
+    },
+    {
+      "id": 210,
+      "start_pin": 1201,
+      "end_pin": 1310,
+      "state": "locked",
+      "color": "#625f5b",
+      "thickness": 3
+    },
+    {
+      "id": 211,
+      "start_pin": 1201,
+      "end_pin": 1320,
+      "state": "locked",
+      "color": "#625f5b",
+      "thickness": 3
+    },
+    {
+      "id": 212,
+      "start_pin": 1201,
+      "end_pin": 1330,
+      "state": "locked",
+      "color": "#625f5b",
+      "thickness": 3
+    },
+    {
+      "id": 220,
+      "start_pin": 1311,
+      "end_pin": 1400,
+      "state": "locked",
+      "color": "#625f5b",
+      "thickness": 3
+    },
+    {
+      "id": 221,
+      "start_pin": 1321,
+      "end_pin": 1400,
+      "state": "locked",
+      "color": "#625f5b",
+      "thickness": 3
+    },
+    {
+      "id": 222,
+      "start_pin": 1331,
+      "end_pin": 1400,
+      "state": "locked",
+      "color": "#625f5b",
+      "thickness": 3
+    },
+    {
+      "id": 230,
+      "start_pin": 1401,
+      "end_pin": 1510,
+      "state": "secret",
+      "color": "#3e3d3a",
+      "thickness": 3
+    },
+    {
+      "id": 231,
+      "start_pin": 1401,
+      "end_pin": 1520,
+      "state": "secret",
+      "color": "#3e3d3a",
+      "thickness": 3
+    }
+  ],
+  "lesson_labels_cs": {
+    "forge_safety": "Bezpečnost výhně",
+    "fuel": "Druhy paliva",
+    "tools": "Nástroje",
+    "heat_color": "Barvy žáru",
+    "tongs": "Správné držení materiálu",
+    "bellows": "Práce s měchy",
+    "straighten": "Rovnání",
+    "grind": "Broušení",
+    "nail": "Hřebíky",
+    "staple": "Skoby",
+    "hook": "Háky",
+    "repair": "Jednoduché opravy",
+    "quench": "Základní kalení",
+    "axe": "Sekery",
+    "chisel": "Dláta",
+    "knife": "Nože",
+    "hoe": "Motyky",
+    "horseshoe": "Podkovy",
+    "forge_weld": "Svařování ohněm",
+    "heat_treatment": "Tepelné zpracování",
+    "material_estimate": "Odhad materiálu",
+    "defect_detection": "Rozpoznání vad železa",
+    "temperature_control": "Přesnější řízení teploty",
+    "planning": "Návrh postupu",
+    "resources": "Hospodaření se železem a uhlím",
+    "diagnostics": "Diagnostika cizích výrobků",
+    "teamwork": "Vedení společné práce"
+  }
+}

@@ -1,0 +1,121 @@
+<!doctype html>
+<html lang="cs">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Řemeslo středověku – návrh UI kovářských miniher</title>
+  <style>
+    :root {
+      --ink:#160f0a; --iron:#25221f; --iron2:#39332d; --iron3:#5b5147;
+      --wood:#3a2315; --wood2:#65402a; --parch:#d7c198; --parch2:#b79a68;
+      --ember:#f07a31; --ember2:#ffc05b; --steel:#9aabb3; --good:#8fa679;
+      --warn:#c49a4c; --bad:#a25745; --text:#eadfc8; --muted:#b9aa91;
+    }
+    *{box-sizing:border-box}
+    html,body{margin:0;width:100%;height:100%;background:#090706;color:var(--text);font-family:Georgia,"Times New Roman",serif;overflow:hidden}
+    #viewport{position:absolute;inset:0;display:grid;place-items:center;background:radial-gradient(circle at 50% 35%,#2e2018 0,#100c09 62%,#060504 100%)}
+    #screen{position:relative;width:1920px;height:1080px;overflow:hidden;transform-origin:center center;background:#140d08 url('assets/smithy-style-reference.png') center/cover no-repeat;box-shadow:0 0 90px #000}
+    #screen:before{content:"";position:absolute;inset:0;background:linear-gradient(90deg,rgba(7,5,3,.40),rgba(10,7,5,.08) 28%,rgba(10,7,5,.10) 70%,rgba(7,5,3,.58)),linear-gradient(0deg,rgba(7,5,3,.62),transparent 22%,transparent 76%,rgba(7,5,3,.55));backdrop-filter:saturate(.78)}
+    .iron-frame{border:3px solid #171411;outline:2px solid #5d5348;background:linear-gradient(#3b342e,#201d1a);box-shadow:inset 0 0 0 2px #0b0908,0 7px 18px #000b}
+    .wood{background:linear-gradient(90deg,rgba(22,13,8,.9),rgba(78,47,29,.92) 15%,rgba(46,27,17,.94) 50%,rgba(82,50,30,.92) 85%,rgba(23,14,9,.9));border:2px solid #17100b;box-shadow:inset 0 0 0 2px #6c4a34,0 6px 14px #0009}
+    .parchment{color:#26180e;background:linear-gradient(135deg,#e0cda6,#cdb486 55%,#bda273);border:2px solid #6e5332;box-shadow:inset 0 0 18px #72542d55,0 5px 12px #0009}
+    .rivet:after,.rivet:before{content:"";position:absolute;width:12px;height:12px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#8b8175,#292520 63%,#0a0908);box-shadow:0 1px 2px #000}
+    .rivet:before{left:8px;top:8px}.rivet:after{right:8px;top:8px}
+    #title{position:absolute;z-index:3;left:28px;top:24px;width:390px;height:116px;padding:17px 24px 14px 36px}
+    #title .small{font-size:18px;letter-spacing:4px;color:#927d62}.title-main{font-size:36px;line-height:1.05;font-weight:bold;text-transform:uppercase;margin-top:8px}.title-sub{font-size:18px;color:#4d3927;margin-top:7px}
+    #phases{position:absolute;z-index:3;top:26px;left:440px;width:1042px;height:104px;padding:13px 18px;display:flex;align-items:center;gap:6px}
+    .phase{position:relative;flex:1;height:74px;text-align:center;color:#988c7b;padding-top:10px;font-size:15px;text-transform:uppercase;letter-spacing:.8px}
+    .phase .dot{display:block;margin:0 auto 7px;width:28px;height:28px;border-radius:50%;border:2px solid #796b59;background:#191613;box-shadow:inset 0 0 8px #000}
+    .phase:not(:last-child):after{content:"";position:absolute;top:24px;right:-8px;width:17px;height:3px;background:#5a5045}
+    .phase.done{color:#c7bda9}.phase.done .dot{background:radial-gradient(circle,var(--good),#33402c 68%);border-color:#aab996}
+    .phase.active{color:#ffe4b3}.phase.active .dot{background:radial-gradient(circle,var(--ember2),var(--ember) 52%,#68290e 75%);border-color:#ffcb78;box-shadow:0 0 16px #f37937,inset 0 0 6px #fff5}
+    #observe{position:absolute;z-index:3;right:28px;top:24px;width:372px;height:805px;padding:18px 18px 16px}
+    .panel-title{font-size:19px;letter-spacing:3px;color:#8f7551;text-align:center;text-transform:uppercase;padding-bottom:12px;border-bottom:1px solid #896d45}
+    #workpiece-card{margin-top:14px;height:170px;padding:15px;position:relative}.workpiece-name{font-size:24px;font-weight:bold}.workpiece-stage{font-size:16px;color:#5b4630;margin-top:4px}.mini-silhouette{position:absolute;left:20px;right:20px;bottom:18px;height:65px;border:2px solid #3c2e21;background:#2a211a;display:grid;place-items:center;overflow:hidden}.mini-silhouette:after{content:"";width:210px;height:22px;background:linear-gradient(90deg,#4b4c4b,#c05028,#ffb04b,#6c5d50);clip-path:polygon(0 35%,76% 18%,100% 45%,77% 72%,0 64%);filter:drop-shadow(0 0 8px #f56d32)}
+    #observations{display:flex;flex-direction:column;gap:12px;margin-top:18px}
+    .obs{position:relative;padding:10px 12px 11px 48px;min-height:67px;border-bottom:1px solid #775f3e}.obs .mark{position:absolute;left:6px;top:12px;width:30px;height:30px;border:2px solid #55422e;transform:rotate(45deg);background:#32251b}.obs .label{font-size:15px;text-transform:uppercase;letter-spacing:1.5px;color:#705638}.obs .value{font-size:20px;margin-top:4px}.obs.good .value{color:#344a2e}.obs.warn .value{color:#725019}.obs.bad .value{color:#7f3027}
+    #station-note{position:absolute;left:18px;right:18px;bottom:16px;min-height:105px;padding:14px 16px;font-size:17px;line-height:1.35;color:#3d2a18}
+    #playfield{position:absolute;z-index:2;left:28px;top:156px;width:1464px;height:675px;overflow:hidden;border:3px solid #19120d;box-shadow:inset 0 0 55px #000c,0 8px 22px #000c;background:radial-gradient(circle at 48% 42%,rgba(82,48,30,.15),rgba(5,4,3,.48) 76%)}
+    #playfield:before{content:"";position:absolute;inset:0;background:linear-gradient(0deg,rgba(4,3,2,.48),transparent 35%),radial-gradient(circle at 50% 45%,transparent 0,rgba(4,3,2,.38) 78%)}
+    #scene{position:absolute;inset:0}
+    #instruction{position:absolute;z-index:5;left:50%;top:19px;transform:translateX(-50%);padding:10px 24px;font-size:22px;letter-spacing:.6px;background:#110d09d9;border:1px solid #80664a;box-shadow:0 4px 12px #000;color:#f0e1c5;white-space:nowrap}
+    #sense-strip{position:absolute;z-index:5;left:22px;top:21px;display:flex;gap:8px}.sense{padding:7px 10px;background:#17110dd9;border:1px solid #624d38;color:#b9ab94;font-size:15px}.sense.on{color:#ffd397;border-color:#b0793e;box-shadow:0 0 12px #a84e1d55}
+    .tool-hint{position:absolute;z-index:5;right:18px;top:18px;padding:10px 14px;background:#15100cdd;border:1px solid #67503a;color:#d2c3aa;font-size:16px}
+    #mentor{position:absolute;z-index:4;left:28px;bottom:100px;width:880px;height:133px;padding:22px 32px 18px 132px}
+    .portrait{position:absolute;left:20px;bottom:14px;width:94px;height:94px;border-radius:50%;border:3px solid #33271c;background:radial-gradient(circle at 50% 35%,#9b765a 0 12%,#68503e 13% 28%,#33271f 29% 52%,#18130f 53%);box-shadow:inset 0 0 18px #000,0 3px 9px #000}.portrait:after{content:"B";position:absolute;inset:0;display:grid;place-items:center;font-size:34px;color:#e1c391;font-weight:bold}
+    .mentor-name{font-size:15px;letter-spacing:3px;color:#73583b;text-transform:uppercase}.mentor-quote{font-size:23px;line-height:1.25;margin-top:8px;color:#2c1d12;font-style:italic}
+    #controls{position:absolute;z-index:4;left:28px;right:28px;bottom:18px;height:72px;padding:10px 16px;display:flex;align-items:center;justify-content:center;gap:28px}
+    .control{display:flex;align-items:center;gap:10px;font-size:17px;color:#d9ccb7;white-space:nowrap}.key{min-width:39px;height:37px;padding:0 9px;display:grid;place-items:center;border:2px solid #6e6155;border-radius:4px;background:linear-gradient(#403a34,#191715);box-shadow:inset 0 0 0 2px #0c0b0a,0 3px 0 #090807;color:#f3ddba;font-family:Arial,sans-serif;font-weight:bold;font-size:15px}.control.exit{margin-left:auto;color:#bda98d}
+    #station-tabs{position:absolute;z-index:8;right:27px;bottom:96px;width:370px;height:135px;padding:10px 12px;display:grid;grid-template-columns:repeat(6,1fr);gap:7px;align-items:center}
+    .station-tab{height:78px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:7px;border:1px solid #635547;background:#1b1815;color:#948879;cursor:pointer;font:14px Georgia,serif}.station-tab:hover{color:#ead7b8;border-color:#ab8e65}.station-tab.active{color:#ffd89a;border-color:#d18b46;background:#33251a;box-shadow:0 0 12px #d4652544}.station-tab .num{font:700 13px Arial;color:#75695c}.station-tab .ico{font-size:24px;line-height:1}
+    .coal-bed{position:absolute;left:260px;top:280px;width:930px;height:240px;border-radius:50%;background:radial-gradient(ellipse,#ff8b31 0 8%,#a23817 14%,#32140c 32%,#100b08 65%);filter:drop-shadow(0 0 24px #f36a26)}
+    .coal-bed:before{content:"";position:absolute;inset:45px 90px;border-radius:50%;background:repeating-radial-gradient(circle at 45% 55%,#ff9f3c 0 8px,#4a1d12 9px 28px,#1c1410 29px 43px);opacity:.9}
+    .hotbar{position:absolute;left:310px;top:340px;width:850px;height:74px;transform:rotate(-4deg);clip-path:polygon(0 22%,86% 10%,100% 39%,85% 65%,0 80%);background:linear-gradient(90deg,#4d342a 0 12%,#9d4024 24%,#ff7c30 44%,#ffd16a 59%,#ff8b35 74%,#5f392d 100%);box-shadow:0 0 32px #ff7d34}
+    .heat-zones{position:absolute;left:352px;top:445px;width:760px;display:grid;grid-template-columns:repeat(3,1fr);gap:5px}.heat-zone{text-align:center;padding:8px;border-top:3px solid #7b5a3d;color:#c9bba3;font-size:17px}.heat-zone.hot{border-color:#ffbd68;color:#ffd69e;text-shadow:0 0 9px #f06d2d}
+    .bellows{position:absolute;left:48px;bottom:50px;width:185px;height:235px;border:5px solid #3c2618;border-radius:48% 48% 24% 24%;background:linear-gradient(90deg,#684029,#2b1c14,#77482c);transform:rotate(-8deg);box-shadow:inset 0 0 28px #000,0 12px 20px #000}.bellows:after{content:"";position:absolute;right:-130px;top:96px;width:145px;height:26px;background:#3d342c;clip-path:polygon(0 0,100% 35%,100% 65%,0 100%)}
+    .air{position:absolute;left:196px;bottom:146px;width:175px;height:65px;border-top:4px solid #91a7ad;border-radius:50%;opacity:.75;box-shadow:0 -5px 12px #b3d3d855}
+    .anvil{position:absolute;left:290px;top:360px;width:910px;height:180px;background:linear-gradient(#68625a,#292724 45%,#171615);clip-path:polygon(0 8%,75% 0,100% 28%,80% 43%,72% 100%,18% 100%,10% 54%,0 45%);box-shadow:0 28px 28px #000}
+    .workpiece{position:absolute;left:430px;top:338px;width:610px;height:72px;background:linear-gradient(#ffc666,#ef6b2c 55%,#75301e);clip-path:polygon(0 25%,78% 12%,100% 40%,79% 68%,0 80%);filter:drop-shadow(0 0 18px #ff6f2d)}
+    .target-outline{position:absolute;left:422px;top:321px;width:650px;height:108px;border:3px dashed #dbd0b8;clip-path:polygon(0 24%,78% 5%,100% 39%,79% 76%,0 84%);opacity:.58}
+    .strike{position:absolute;left:760px;top:320px;width:88px;height:88px;border:5px solid #ffcb77;border-radius:50%;box-shadow:0 0 24px #f37432,inset 0 0 18px #f37432}.strike:after,.strike:before{content:"";position:absolute;background:#ffcb77}.strike:after{left:39px;top:-22px;width:4px;height:132px}.strike:before{top:39px;left:-22px;height:4px;width:132px}
+    .hammer{position:absolute;left:1030px;top:125px;width:260px;height:68px;background:linear-gradient(#6b6259,#272421);transform:rotate(-38deg);box-shadow:0 8px 15px #000;clip-path:polygon(0 10%,38% 0,48% 25%,100% 35%,100% 65%,48% 75%,38% 100%,0 90%)}
+    .tub{position:absolute;left:490px;top:330px;width:600px;height:290px;border-radius:20px 20px 90px 90px;background:linear-gradient(90deg,#2b1b12,#6e4228 17%,#3b2418 50%,#745035 84%,#281a12);border:12px solid #211812;box-shadow:inset 0 12px 35px #000,0 20px 25px #000}.water{position:absolute;left:515px;top:355px;width:550px;height:100px;border-radius:50%;background:radial-gradient(ellipse,#8aa2a1,#385a60 50%,#172f36 80%);box-shadow:0 0 18px #a5d0cb55 inset}
+    .quench-piece{position:absolute;left:716px;top:125px;width:90px;height:430px;transform:rotate(8deg);background:linear-gradient(90deg,#512d24,#ff8735,#ffd273,#9a4226);clip-path:polygon(26% 0,74% 0,80% 82%,100% 100%,0 100%,20% 82%);filter:drop-shadow(0 0 20px #ff7530)}
+    .steam{position:absolute;width:260px;height:260px;left:630px;top:170px;background:radial-gradient(circle,#d8e0dcb3 0,transparent 65%);filter:blur(18px);opacity:.75}
+    .angle-guide{position:absolute;left:754px;top:85px;width:4px;height:510px;background:#d9cba766;transform-origin:bottom;transform:rotate(-8deg);border-left:2px dashed #e7dcc0}
+    .wheel{position:absolute;left:390px;top:175px;width:520px;height:520px;border-radius:50%;border:34px solid #5b554e;background:radial-gradient(circle,#241e19 0 16%,#83796d 17% 20%,#34302c 21% 60%,#6a625a 61% 67%,#2e2a27 68%);box-shadow:0 0 0 12px #21160f,0 25px 30px #000,inset 0 0 50px #000}.wheel:after{content:"";position:absolute;inset:30px;border-radius:50%;border:3px dashed #a19990;opacity:.45}
+    .blade{position:absolute;left:760px;top:325px;width:560px;height:78px;transform:rotate(-12deg);background:linear-gradient(#aab1af,#515552 55%,#252724);clip-path:polygon(0 12%,75% 0,100% 48%,76% 86%,0 75%);filter:drop-shadow(0 8px 10px #000)}
+    .sparks{position:absolute;left:770px;top:330px;width:450px;height:230px;background:repeating-linear-gradient(18deg,transparent 0 22px,#ff9f47 24px 26px,transparent 28px 51px);clip-path:polygon(0 0,100% 35%,100% 100%,5% 18%);opacity:.72;filter:drop-shadow(0 0 6px #ff7733)}
+    .bench{position:absolute;left:160px;top:350px;width:1140px;height:260px;background:linear-gradient(#765035,#3d291d 25%,#241810);border:9px solid #25170e;box-shadow:0 24px 28px #000,inset 0 10px 18px #9e765533}
+    .axe-head{position:absolute;left:555px;top:205px;width:350px;height:250px;background:linear-gradient(120deg,#8b8f8d,#353735 60%,#181a19);clip-path:polygon(28% 16%,74% 0,100% 24%,87% 68%,54% 100%,18% 83%,0 48%);filter:drop-shadow(0 12px 14px #000)}
+    .handle{position:absolute;left:705px;top:330px;width:98px;height:430px;background:linear-gradient(90deg,#5a3420,#b68251 45%,#704328);border-radius:48% 35% 25% 25%;transform:rotate(-5deg);box-shadow:8px 12px 15px #0008}
+    .fit-ring{position:absolute;left:676px;top:320px;width:150px;height:94px;border:5px dashed #ffc269;border-radius:50%;box-shadow:0 0 18px #ef7133}
+    .test-log{position:absolute;left:270px;top:285px;width:820px;height:280px;border-radius:120px;background:linear-gradient(#70442b,#321f15 45%,#1b110c);border:10px solid #21140c;box-shadow:0 24px 25px #000}.test-log:after{content:"";position:absolute;right:80px;top:50px;width:280px;height:180px;background:repeating-linear-gradient(165deg,transparent 0 16px,#9a6644 18px 22px);opacity:.42}
+    .test-axe{position:absolute;left:650px;top:55px;width:120px;height:580px;background:linear-gradient(90deg,#5c3722,#aa7445,#4c2f20);transform:rotate(-24deg);transform-origin:bottom;border-radius:40%;box-shadow:8px 12px 12px #000}.test-axe:before{content:"";position:absolute;left:-100px;top:-20px;width:300px;height:210px;background:linear-gradient(125deg,#999b98,#393b39 58%,#181918);clip-path:polygon(26% 20%,75% 0,100% 31%,74% 83%,31% 100%,0 60%);box-shadow:0 12px 14px #000}
+    .impact{position:absolute;left:810px;top:318px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,#ffc36b 0 4%,#ef7337 5% 9%,transparent 36%);box-shadow:0 0 22px #f47b38}
+    #version{position:absolute;z-index:9;right:37px;top:835px;color:#837566;font:13px Arial;letter-spacing:1px}
+  </style>
+</head>
+<body>
+<div id="viewport"><main id="screen">
+  <section id="title" class="parchment iron-frame rivet"><div class="small">ŘEMESLO STŘEDOVĚKU</div><div class="title-main" id="titleMain"></div><div class="title-sub" id="titleSub"></div></section>
+  <section id="phases" class="wood iron-frame rivet"></section>
+  <section id="playfield"><div id="scene"></div><div id="sense-strip"></div><div id="instruction"></div><div class="tool-hint" id="toolHint"></div></section>
+  <aside id="observe" class="parchment iron-frame rivet"><div class="panel-title">Co právě pozoruji</div><div id="workpiece-card" class="parchment"><div class="workpiece-name" id="workpiece"></div><div class="workpiece-stage" id="workstage"></div><div class="mini-silhouette"></div></div><div id="observations"></div><div id="station-note" class="parchment"></div></aside>
+  <section id="mentor" class="parchment iron-frame rivet"><div class="portrait"></div><div class="mentor-name">Beneš, kovář</div><div class="mentor-quote" id="mentorQuote"></div></section>
+  <nav id="station-tabs" class="wood iron-frame"></nav>
+  <footer id="controls" class="wood iron-frame rivet"></footer>
+  <div id="version">NÁVRH UI • 1920 × 1080 • 1–6 PŘEPNUTÍ PRACOVIŠTĚ</div>
+</main></div>
+<script>
+const phaseNames=['Materiál','Výheň','Kovadlina','Kalení','Broušení','Sestavení','Zkouška'];
+const stations=[
+ {id:'forge',key:'1',ico:'♨',name:'Výheň',sub:'Čtení žáru',phase:1,work:'Polotovar sekery',stage:'místní ohřev ostří',instruction:'Zahřej pracovní část rovnoměrně a včas ji vytáhni.',tool:'Kleště • měchy',senses:['barva','jiskry','zvuk'],obs:[['Barva','jasně oranžová','good'],['Ohřev','levá část chladnější','warn'],['Okuje','lehké','good'],['Jiskření','zatím žádné','good']],note:'Teplota zůstává skrytá. Rozhoduje barva kovu, okuje, jiskření a zvuk výhně.',quote:'Nežeň měchy bez rozmyslu. Ostří už pracuje, ale u oka je železo ještě tmavé.',controls:[['A / D','posunout'],['Q / E','otočit'],['Mezerník','měchy'],['Enter','vytáhnout']],scene:'forge'},
+ {id:'anvil',key:'2',ico:'⚒',name:'Kovadlina',sub:'Tvarování údery',phase:2,work:'Polotovar sekery',stage:'vytahování ostří',instruction:'Rozšiř ostří k cílovému obrysu a udrž osu výrobku.',tool:'Plochá strana kladiva',senses:['tvar','žár','zvuk'],obs:[['Žár','vhodný k práci','good'],['Osa','nepatrně utíká doprava','warn'],['Tloušťka','střed je příliš silný','warn'],['Povrch','bez prasklin','good']],note:'Cílový obrys je učňovská pomůcka. S praxí zeslábne a později zmizí.',quote:'Dobrá rána má směr. Teď ji vedeš doprava — výrobek obracej dřív, než ti uteče osa.',controls:[['Myš','místo úderu'],['LMB podržet','síla'],['RMB','obrátit'],['Kolečko','změnit nástroj']],scene:'anvil'},
+ {id:'quench',key:'3',ico:'≋',name:'Kalicí káď',sub:'Kalení ostří',phase:3,work:'Sekera',stage:'kalení pracovní hrany',instruction:'Ponoř pouze ostří, drž sklon a nereaguj zbrkle na páru.',tool:'Kleště • voda',senses:['pára','chvění','zvuk'],obs:[['Poloha','lehce nakloněná','warn'],['Hloubka','kalí se jen ostří','good'],['Pára','silná a souvislá','good'],['Chvění','mírné','good']],note:'Čas neodpočítává číslo. Hráč čte páru, syčení a odpor v kleštích.',quote:'Klidně. Neviklej s tím. Když ponoříš i oko, uděláš křehkým, co má zůstat houževnaté.',controls:[['Myš svisle','ponořit'],['Myš do stran','náklon'],['LMB','držet kleště'],['Enter','vyjmout']],scene:'quench'},
+ {id:'grind',key:'4',ico:'◉',name:'Brusný kámen',sub:'Ostření a chlazení',phase:4,work:'Sekera',stage:'tvorba ostří',instruction:'Drž stálý úhel, pohybuj ostřím a nenech je přehřát.',tool:'Brusný kámen • voda',senses:['jiskry','zvuk','odlesk'],obs:[['Úhel','stálý','good'],['Jiskry','jemné a krátké','good'],['Odlesk','pravá strana širší','warn'],['Žár ostří','začíná hřát','warn']],note:'Barva okraje a délka jisker nahrazují moderní ukazatel přehřátí.',quote:'Netlač na jedno místo. Veď celé ostří po kameni, jinak v něm vybrousíš důlek.',controls:[['Myš','vést ostří'],['LMB','přitlačit'],['S / W','úhel'],['C','ochladit']],scene:'grind'},
+ {id:'bench',key:'5',ico:'⌁',name:'Pracovní stůl',sub:'Nasazení topůrka',phase:5,work:'Sekera a topůrko',stage:'sestavení',instruction:'Usaď topůrko těsně, srovnej osu a zatluč dřevěný klín.',tool:'Poříz • palička • klín',senses:['vůle','osa','dřevo'],obs:[['Uložení','těsné','good'],['Osa','hlava míří mírně vlevo','warn'],['Topůrko','bez prasklin','good'],['Klín','ještě není usazen','warn']],note:'Odebrané dřevo se nevrátí. Hráč značí vysoká místa a ubírá je postupně.',quote:'Nespěchej s klínem. Nejdřív srovnej hlavu s topůrkem, potom teprve všechno zajisti.',controls:[['Myš','označit místo'],['LMB','ubrat dřevo'],['RMB','zkusit nasadit'],['Enter','zatlouct klín']],scene:'bench'},
+ {id:'test',key:'6',ico:'✦',name:'Zkouška',sub:'Funkční ověření',phase:6,work:'Hotová sekera',stage:'zkouška na polenu',instruction:'Prohlédni výrobek, proveď úder a rozhodni, zda obstál.',tool:'Hotový výrobek',senses:['zvuk','ráz','stopa'],obs:[['Záběr','čistý, ale mělký','warn'],['Topůrko','bez pohybu','good'],['Osa úderu','mírně vlevo','warn'],['Ostří','bez vyštípnutí','good']],note:'Jakost se ukáže až při skutečné práci. Hráč může kus přijmout, opravit nebo vyřadit.',quote:'Ostří drží a topůrko sedí. Jen hlava táhne doleva — na běžnou práci ano, mistrovský kus to není.',controls:[['Alt','prohlédnout'],['LMB','provést zkoušku'],['R','vrátit k opravě'],['Enter','přijmout']],scene:'test'}
+];
+let current=0;
+function sceneHTML(id){
+ const common={forge:'<div class="coal-bed"></div><div class="bellows"></div><div class="air"></div><div class="hotbar"></div><div class="heat-zones"><div class="heat-zone">chladnější</div><div class="heat-zone hot">pracovní žár</div><div class="heat-zone">klesající žár</div></div>',anvil:'<div class="anvil"></div><div class="target-outline"></div><div class="workpiece"></div><div class="strike"></div><div class="hammer"></div>',quench:'<div class="tub"></div><div class="water"></div><div class="steam"></div><div class="angle-guide"></div><div class="quench-piece"></div>',grind:'<div class="wheel"></div><div class="blade"></div><div class="sparks"></div>',bench:'<div class="bench"></div><div class="handle"></div><div class="axe-head"></div><div class="fit-ring"></div>',test:'<div class="test-log"></div><div class="test-axe"></div><div class="impact"></div>'}; return common[id];
+}
+function render(i){current=i;const s=stations[i];document.body.dataset.station=s.id;
+ document.getElementById('titleMain').textContent=s.name;document.getElementById('titleSub').textContent=s.sub;
+ document.getElementById('phases').innerHTML=phaseNames.map((p,n)=>`<div class="phase ${n<s.phase?'done':n===s.phase?'active':''}"><span class="dot"></span>${p}</div>`).join('');
+ document.getElementById('instruction').textContent=s.instruction;document.getElementById('toolHint').textContent=s.tool;
+ document.getElementById('sense-strip').innerHTML=s.senses.map(x=>`<span class="sense on">${x}</span>`).join('');
+ document.getElementById('workpiece').textContent=s.work;document.getElementById('workstage').textContent=s.stage;
+ document.getElementById('observations').innerHTML=s.obs.map(o=>`<div class="obs ${o[2]}"><span class="mark"></span><div class="label">${o[0]}</div><div class="value">${o[1]}</div></div>`).join('');
+ document.getElementById('station-note').textContent=s.note;document.getElementById('mentorQuote').textContent='„'+s.quote+'“';
+ document.getElementById('controls').innerHTML=s.controls.map(c=>`<div class="control"><span class="key">${c[0]}</span>${c[1]}</div>`).join('')+'<div class="control exit"><span class="key">Esc</span>odejít od pracoviště</div>';
+ document.getElementById('scene').innerHTML=sceneHTML(s.scene);
+ document.getElementById('station-tabs').innerHTML=stations.map((x,n)=>`<button class="station-tab ${n===i?'active':''}" data-i="${n}"><span class="num">${x.key}</span><span class="ico">${x.ico}</span>${x.name}</button>`).join('');
+ document.querySelectorAll('.station-tab').forEach(b=>b.onclick=()=>render(+b.dataset.i));
+}
+function fit(){const scale=Math.min(innerWidth/1920,innerHeight/1080);document.getElementById('screen').style.transform=`scale(${scale})`}
+addEventListener('resize',fit);addEventListener('keydown',e=>{const n=+e.key;if(n>=1&&n<=6)render(n-1)});fit();render(0);
+</script>
+</body>
+</html>

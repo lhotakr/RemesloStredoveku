@@ -1,0 +1,177 @@
+{
+  "schemaVersion": 1,
+  "spriteFrame": { "width": 128, "height": 128, "format": "png", "alpha": true },
+  "knowledgeStates": ["unknown", "heard", "observed", "tried", "mastered", "proven"],
+  "productionStages": ["raw_material", "workpiece", "unfinished", "finished"],
+  "qualityTiers": ["ruined", "provisional", "common", "honest", "excellent", "masterwork"],
+  "crafts": [
+    {
+      "id": "smithing",
+      "name": "Kovářství",
+      "milestones": [
+        { "rank": "observer", "title": "Oheň a železo", "imageSubject": "železný polotovar, uhlí a kovářské kleště" },
+        { "rank": "apprentice", "title": "Hřebíky a první oprava", "imageSubject": "série hřebíků a opravený srp" },
+        { "rank": "journeyman", "title": "Celý pracovní nástroj", "imageSubject": "běžný srp, sekera a motyka" },
+        { "rank": "specialist", "title": "Skrytá vada", "imageSubject": "prasklý kus vedle zachráněného výrobku" },
+        { "rank": "master", "title": "Sada pro druhé řemeslo", "imageSubject": "poctivá sada zemědělských a tesařských nástrojů" },
+        { "rank": "innovator_or_workshop_master", "title": "Přípravek nebo dílna", "imageSubject": "mistrovský nástroj, šablona a značka jakosti" }
+      ]
+    },
+    {
+      "id": "woodworking",
+      "name": "Tesařství a truhlářství",
+      "milestones": [
+        { "rank": "observer", "title": "Dřevo a směr vláken", "imageSubject": "tři druhy dřeva, sekera a dláto" },
+        { "rank": "apprentice", "title": "Kolík, topůrko a oprava", "imageSubject": "kolíky, topůrko a opravená část vrat" },
+        { "rank": "journeyman", "title": "Čep a dlab", "imageSubject": "přesný čepový spoj a dřevěná truhla" },
+        { "rank": "specialist", "title": "Konstrukce nebo jemná práce", "imageSubject": "tesařský rám vedle přesného kování truhly" },
+        { "rank": "master", "title": "Hradní dveře", "imageSubject": "masivní dveřní křídlo připravené k osazení" },
+        { "rank": "innovator_or_workshop_master", "title": "Šablona a vedení stavby", "imageSubject": "měřicí šablona, rozvržené trámy a mistrovská palice" }
+      ]
+    },
+    {
+      "id": "masonry",
+      "name": "Kamenictví a zednictví",
+      "milestones": [
+        { "rank": "observer", "title": "Kámen, vápno a malta", "imageSubject": "druhy kamene a zkušební miska malty" },
+        { "rank": "apprentice", "title": "Rovná vazba zdi", "imageSubject": "malý správně provázaný úsek zdiva" },
+        { "rank": "journeyman", "title": "Roh, otvor a schod", "imageSubject": "opracovaný schod a kamenné ostění" },
+        { "rank": "specialist", "title": "Oblouk, komín nebo pec", "imageSubject": "šablona oblouku a zkušební topeniště" },
+        { "rank": "master", "title": "Trvanlivá hradní oprava", "imageSubject": "opravené ostění nebo schodišťový blok" },
+        { "rank": "innovator_or_workshop_master", "title": "Šablona a bezpečná četa", "imageSubject": "kamenická šablona, kladka a mistrovská značka" }
+      ]
+    },
+    {
+      "id": "wheelwrighting",
+      "name": "Kolářství",
+      "milestones": [
+        { "rank": "observer", "title": "Náboj, paprsek a loukoť", "imageSubject": "rozložené části dřevěného kola" },
+        { "rank": "apprentice", "title": "Oprava paprsku", "imageSubject": "poškozený a správně nahrazený paprsek" },
+        { "rank": "journeyman", "title": "Sestavené kolo", "imageSubject": "souosé dřevěné kolo bez obruče" },
+        { "rank": "specialist", "title": "Obruč a skrytá vůle", "imageSubject": "okované kolo a měření vůle nápravy" },
+        { "rank": "master", "title": "Vůz nebo vodní kolo", "imageSubject": "pár kol, náprava a hotový podvozek" },
+        { "rank": "innovator_or_workshop_master", "title": "Přesná šablona", "imageSubject": "kolářská šablona, měřidlo a párované díly" }
+      ]
+    },
+    {
+      "id": "pottery",
+      "name": "Hrnčířství",
+      "milestones": [
+        { "rank": "observer", "title": "Příprava hlíny", "imageSubject": "vyčištěná hlína a nalezený kamínek" },
+        { "rank": "apprentice", "title": "Miska a první výpal", "imageSubject": "tři jednoduché misky v různých stavech" },
+        { "rank": "journeyman", "title": "Džbán a dávka pece", "imageSubject": "džbán, poklice a vyskládaná pec" },
+        { "rank": "specialist", "title": "Vada střepu", "imageSubject": "prasklý, deformovaný a správný střep" },
+        { "rank": "master", "title": "Série odolných nádob", "imageSubject": "sladěná sada kuchyňského nádobí" },
+        { "rank": "innovator_or_workshop_master", "title": "Směs a vedení tepla", "imageSubject": "vzorky hlíny, kachel a mistrovský džbán" }
+      ]
+    },
+    {
+      "id": "leatherworking",
+      "name": "Koželužství a ševcovství",
+      "milestones": [
+        { "rank": "observer", "title": "Čerstvá a zkažená kůže", "imageSubject": "dva jasně odlišné vzorky kůže a škrabka" },
+        { "rank": "apprentice", "title": "Řemen a rovný šev", "imageSubject": "kožený řemen, šídlo a zkušební šev" },
+        { "rank": "journeyman", "title": "Obuv nebo brašna", "imageSubject": "běžná středověká bota a pracovní brašna" },
+        { "rank": "specialist", "title": "Střih kolem přirozené vady", "imageSubject": "useň s rozvrženými díly a vynechanou vadou" },
+        { "rank": "master", "title": "Postroj nebo pár obuvi", "imageSubject": "odolný postroj a dobře padnoucí obuv" },
+        { "rank": "innovator_or_workshop_master", "title": "Úsporný střih a dílna", "imageSubject": "střihová šablona, minimum odpadu a mistrovský výrobek" }
+      ]
+    },
+    {
+      "id": "textiles",
+      "name": "Tkalcovství a krejčovství",
+      "milestones": [
+        { "rank": "observer", "title": "Od lnu k niti", "imageSubject": "len, vřeteno a vadná nit" },
+        { "rank": "apprentice", "title": "Hrubá příze a záplata", "imageSubject": "klubko příze a opravený kus plátna" },
+        { "rank": "journeyman", "title": "Plátno a základní oděv", "imageSubject": "rovnoměrné plátno a prostá košile" },
+        { "rank": "specialist", "title": "Střih, vazba nebo barva", "imageSubject": "střihové díly, vzorek vazby a barvená látka" },
+        { "rank": "master", "title": "Odolný společenský oděv", "imageSubject": "dobře padnoucí dobový oděv bez přepychu" },
+        { "rank": "innovator_or_workshop_master", "title": "Úspora materiálu", "imageSubject": "střihový plán, nástroje a mistrovská textilie" }
+      ]
+    },
+    {
+      "id": "bowyery",
+      "name": "Výroba luků a šípů",
+      "milestones": [
+        { "rank": "observer", "title": "Vlákna dřeva a bezpečnost", "imageSubject": "bezpečný a vyřazený polotovar luku" },
+        { "rank": "apprentice", "title": "Rovný šípový dřík", "imageSubject": "sada rovných dříků, peří a končíky" },
+        { "rank": "journeyman", "title": "Vyvážený luk a šípy", "imageSubject": "prostý lovecký luk a sada šípů" },
+        { "rank": "specialist", "title": "Slabé místo při napínání", "imageSubject": "kontrola průhybu a označené slabé místo" },
+        { "rank": "master", "title": "Souprava pro střelce", "imageSubject": "luk, tětiva, toulec a hmotnostně sladěné šípy" },
+        { "rank": "innovator_or_workshop_master", "title": "Měření průhybu", "imageSubject": "dobová měřicí šablona a mistrovský luk" }
+      ]
+    },
+    {
+      "id": "brewing",
+      "name": "Pivovarnictví",
+      "milestones": [
+        { "rank": "observer", "title": "Slad, voda a čistota", "imageSubject": "ječmen, slad, voda a čistá nádoba" },
+        { "rank": "apprentice", "title": "Malá várka", "imageSubject": "naklíčený slad a malá kvasná nádoba" },
+        { "rank": "journeyman", "title": "Celý var", "imageSubject": "varná nádoba, scezování a sud" },
+        { "rank": "specialist", "title": "Zachránit nebo vylít", "imageSubject": "dobrá a kontaminovaná várka v odlišných nádobách" },
+        { "rank": "master", "title": "Stálá slavnostní várka", "imageSubject": "sladěná řada sudů a zkušební džbán" },
+        { "rank": "innovator_or_workshop_master", "title": "Teplo, voda a provoz", "imageSubject": "varná nádoba, měrná hůl a mistrovský sud" }
+      ]
+    },
+    {
+      "id": "scribal",
+      "name": "Písařství a knihařství",
+      "milestones": [
+        { "rank": "observer", "title": "Brk, inkoust a předloha", "imageSubject": "seříznutý brk, kalamář a linkovaný list" },
+        { "rank": "apprentice", "title": "Krátký opis a sešit", "imageSubject": "čitelný krátký zápis a sešitá složka" },
+        { "rank": "journeyman", "title": "Pracovní zápisník", "imageSubject": "svázaný pracovní zápisník a opravný nožík" },
+        { "rank": "specialist", "title": "Poškozená předloha", "imageSubject": "neúplný list a poctivě označené nejisté místo" },
+        { "rank": "master", "title": "Velká kniha dílny", "imageSubject": "odolná kniha se sponami a rejstříkem" },
+        { "rank": "innovator_or_workshop_master", "title": "Uchovaná zkušenost", "imageSubject": "rejstřík, schéma nástroje a mistrovská vazba" }
+      ]
+    },
+    {
+      "id": "herbalism",
+      "name": "Bylinkářství",
+      "milestones": [
+        { "rank": "observer", "title": "Znaky rostliny", "imageSubject": "list, květ, lodyha a jednoduchá lupa bez moderní konstrukce" },
+        { "rank": "apprentice", "title": "Bezpečný sběr", "imageSubject": "košík jitrocele, řebříčku a kopřivy" },
+        { "rank": "journeyman", "title": "Sušení a jednoduchý lék", "imageSubject": "sušený svazek, čaj a mast" },
+        { "rank": "specialist", "title": "Záměna a znehodnocení", "imageSubject": "správná bylina, nebezpečná záměna a plesnivá zásoba" },
+        { "rank": "master", "title": "Herbář regionu", "imageSubject": "svázaný herbář a léčebná souprava" },
+        { "rank": "innovator_or_workshop_master", "title": "Předatelná znalost", "imageSubject": "porovnávací list, sušicí rám a mistrovský herbář" }
+      ]
+    },
+    {
+      "id": "healing",
+      "name": "Ranhojičství",
+      "milestones": [
+        { "rank": "observer", "title": "Pořadí pomoci", "imageSubject": "čisté plátno, voda, obvaz a jednoduché nůžky" },
+        { "rank": "apprentice", "title": "Vyčištěná rána", "imageSubject": "čistý obvaz, miska a balíček prádla" },
+        { "rank": "journeyman", "title": "Dlaha a stabilizace", "imageSubject": "dřevěná dlaha, obinadlo a léčebný váček" },
+        { "rank": "specialist", "title": "Nejasné příznaky", "imageSubject": "tři léčebné prostředky a poznámka o nejistotě" },
+        { "rank": "master", "title": "Polní léčebná souprava", "imageSubject": "ucelená sada obvazů, dlah, nádob a záznamů" },
+        { "rank": "innovator_or_workshop_master", "title": "Péče a zásoby", "imageSubject": "uspořádaná truhlička a mistrovská léčebná sada" }
+      ]
+    },
+    {
+      "id": "cooking",
+      "name": "Vaření a uchování potravin",
+      "milestones": [
+        { "rank": "observer", "title": "Oheň a známky zkažení", "imageSubject": "kotlík, vařečka a čerstvá vedle zkažené suroviny" },
+        { "rank": "apprentice", "title": "Kaše a polévka", "imageSubject": "prostá kaše, polévka a dobře vedené ohniště" },
+        { "rank": "journeyman", "title": "Chléb a celé jídlo", "imageSubject": "bochník, kotlík a běžné jídlo domácnosti" },
+        { "rank": "specialist", "title": "Sušení, solení a uzení", "imageSubject": "sušené byliny, solená ryba a uzené maso" },
+        { "rank": "master", "title": "Zásoby nebo hostina", "imageSubject": "uspořádané zimní zásoby a slavnostní pokrm" },
+        { "rank": "innovator_or_workshop_master", "title": "Úsporná kuchyně", "imageSubject": "rozvržené zásoby, nádoby a mistrovský pokrm bez přepychu" }
+      ]
+    }
+  ],
+  "hiddenCraft": {
+    "id": "artifact_mystery",
+    "nameWhenLocked": null,
+    "nameWhenRevealed": "Tajemství artefaktu",
+    "pageTreatment": "full_fog",
+    "unlockRequirements": [
+      "mastery_at_least_80_percent_in_all_13_worldly_crafts",
+      "great_workshop_book_of_houska",
+      "completed_cross_craft_master_project",
+      "lost_manuscript_found"
+    ]
+  }
+}
