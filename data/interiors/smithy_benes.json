@@ -1,0 +1,288 @@
+{
+  "id": "smithy_benes",
+  "name": "Kovarna v Blatcich",
+  "fov_degrees": 74,
+  "eye_height": 0.56,
+  "spawn": {
+    "x": 10.0,
+    "y": 12.2,
+    "angle_degrees": 270,
+    "pitch": -0.02
+  },
+  "textures": {
+    "U": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_wall_plaster_stone.png",
+    "V": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_wall_sooty_stone.png",
+    "D": "assets/Interior/door_wood_heavy.png",
+    "F": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_floor_earth_stone.png",
+    "C": "assets/smithing/environment_2_5d/assets/Textures/Smithy/smithy_ceiling_oak_beams.png",
+    "H": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_hearth.png",
+    "M": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_bellows.png",
+    "A": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_anvil.png",
+    "Q": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_quench_tub.png",
+    "G": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_grindstone.png",
+    "W": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_workbench.png",
+    "T": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_tool_rack.png",
+    "I": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_iron_rack.png",
+    "L": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_charcoal.png",
+    "Y": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_firewood.png",
+    "S": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_storage.png",
+    "E": "assets/smithing/environment_2_5d/assets/Objects/Smithy/smithy_exit_door.png",
+    "O": "assets/smithing/environment_2_5d/assets/Effects/Smithy/smithy_forge_fire_00.png"
+  },
+  "grid": [
+    "UUUUUUUUUUVVVVVVVVVV",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "U..................V",
+    "UUUUUUUUUUDUUUUUUUUU"
+  ],
+  "sector_grid": [
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAABBBBBBBBB",
+    "CCCCCCAAAAAAAAABBBBB",
+    "CCCCCCAAAAAAAAABBBBB",
+    "CCCCCCAAAAAAAAABBBBB",
+    "CCCCCCAAAAADDDDAAAAA",
+    "CCCCCCAAAAADDDDAAAAA",
+    "CCCCCCAAAAADDDDAAAAA"
+  ],
+  "sectors": {
+    "A": {
+      "id": "smithy_main_floor",
+      "name": "Pruchod mezi stanovisti",
+      "floor_texture": "F",
+      "ceiling_texture": "C",
+      "boundary_texture": "U",
+      "floor_color": [54, 46, 38],
+      "ceiling_color": [55, 42, 29],
+      "floor_height": 0.0,
+      "ceiling_height": 2.55,
+      "ambient": 0.64
+    },
+    "B": {
+      "id": "smithy_hot_bay",
+      "name": "Vyhen a mechy",
+      "floor_texture": "F",
+      "ceiling_texture": "C",
+      "boundary_texture": "V",
+      "floor_color": [50, 41, 35],
+      "ceiling_color": [40, 30, 24],
+      "floor_height": 0.0,
+      "ceiling_height": 2.55,
+      "ambient": 0.52
+    },
+    "C": {
+      "id": "smithy_storage_bay",
+      "name": "Sklad naradi a polotovaru",
+      "floor_texture": "F",
+      "ceiling_texture": "C",
+      "boundary_texture": "U",
+      "floor_color": [58, 49, 39],
+      "ceiling_color": [59, 45, 31],
+      "floor_height": 0.0,
+      "ceiling_height": 2.45,
+      "ambient": 0.58
+    },
+    "D": {
+      "id": "smithy_entry",
+      "name": "Vstup z Blatcu",
+      "floor_texture": "F",
+      "ceiling_texture": "C",
+      "boundary_texture": "U",
+      "floor_color": [64, 54, 43],
+      "ceiling_color": [66, 50, 34],
+      "floor_height": 0.0,
+      "ceiling_height": 2.55,
+      "ambient": 0.76
+    }
+  },
+  "doors": [
+    {
+      "id": "smithy_exit_transition",
+      "x": 10,
+      "y": 13,
+      "locked": false,
+      "open": true,
+      "speed": 2.0,
+      "motion": "transition",
+      "target_interior": "campaign:blatce.rvm",
+      "target_spawn": "spawn_from_Smithy_in_Blatce"
+    }
+  ],
+  "sprites": [
+    {
+      "id": "smithy_exit_door",
+      "texture": "E",
+      "x": 10.0,
+      "y": 12.78,
+      "z_offset": 0.0,
+      "scale": 1.65,
+      "solid": false,
+      "render_mode": "billboard",
+      "interaction_label": "E - vyjit do Blatcu",
+      "target_interior": "campaign:blatce.rvm",
+      "target_spawn": "spawn_from_Smithy_in_Blatce"
+    },
+    {
+      "id": "smithy_hearth",
+      "texture": "H",
+      "x": 15.94,
+      "y": 4.84,
+      "z_offset": 0.0,
+      "scale": 1.85,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "E - pouzit vyhen"
+    },
+    {
+      "id": "smithy_forge_fire",
+      "texture": "O",
+      "x": 15.85,
+      "y": 4.55,
+      "z_offset": 0.34,
+      "scale": 0.82,
+      "solid": false,
+      "render_mode": "billboard",
+      "animated": false,
+      "emits_light": true,
+      "light_color": [255, 136, 62],
+      "light_radius": 4.2,
+      "light_intensity": 1.55,
+      "light_height": 1.1,
+      "light_flicker": 0.26
+    },
+    {
+      "id": "smithy_bellows",
+      "texture": "M",
+      "x": 12.81,
+      "y": 4.84,
+      "z_offset": 0.0,
+      "scale": 1.25,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "E - obsluhovat mechy"
+    },
+    {
+      "id": "smithy_anvil",
+      "texture": "A",
+      "x": 11.09,
+      "y": 7.81,
+      "z_offset": 0.0,
+      "scale": 1.15,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "E - pracovat na kovadline"
+    },
+    {
+      "id": "smithy_quench_tub",
+      "texture": "Q",
+      "x": 14.06,
+      "y": 8.36,
+      "z_offset": 0.0,
+      "scale": 0.95,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "E - kalit vyrobek"
+    },
+    {
+      "id": "smithy_grindstone",
+      "texture": "G",
+      "x": 16.25,
+      "y": 10.63,
+      "z_offset": 0.0,
+      "scale": 1.05,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "E - brousit"
+    },
+    {
+      "id": "smithy_workbench",
+      "texture": "W",
+      "x": 4.3,
+      "y": 5.47,
+      "z_offset": 0.0,
+      "scale": 1.25,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "E - pouzit pracovni stul"
+    },
+    {
+      "id": "smithy_tool_rack",
+      "texture": "T",
+      "x": 4.38,
+      "y": 3.83,
+      "z_offset": 0.62,
+      "scale": 1.05,
+      "solid": false,
+      "render_mode": "billboard",
+      "interaction_label": "Kovarske naradi na stene."
+    },
+    {
+      "id": "smithy_iron_rack",
+      "texture": "I",
+      "x": 5.16,
+      "y": 10.78,
+      "z_offset": 0.0,
+      "scale": 1.15,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "Zelezne polotovary pripravené ke kovani."
+    },
+    {
+      "id": "smithy_charcoal",
+      "texture": "L",
+      "x": 17.5,
+      "y": 7.34,
+      "z_offset": 0.0,
+      "scale": 0.85,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "Kosiky s drevenym uhlim."
+    },
+    {
+      "id": "smithy_firewood",
+      "texture": "Y",
+      "x": 16.88,
+      "y": 12.34,
+      "z_offset": 0.0,
+      "scale": 0.85,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "Palivove drivi pro vyhen."
+    },
+    {
+      "id": "smithy_storage",
+      "texture": "S",
+      "x": 2.81,
+      "y": 12.03,
+      "z_offset": 0.0,
+      "scale": 0.95,
+      "solid": true,
+      "render_mode": "billboard",
+      "interaction_label": "Drobny sklad kovarny."
+    }
+  ],
+  "spawns": {
+    "smithy_entry": {
+      "x": 10.0,
+      "y": 12.2,
+      "angle_degrees": 270,
+      "pitch": -0.02
+    }
+  }
+}
