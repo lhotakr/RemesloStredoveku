@@ -4,6 +4,11 @@
       "id": 1,
       "target_map": "houska.rvm",
       "target_spawn_id": "spawn_from_Blatce_in_Houska"
+    },
+    {
+      "id": 2,
+      "target_location": "smithy_benes",
+      "target_spawn_id": "smithy_entry"
     }
   ]
 }

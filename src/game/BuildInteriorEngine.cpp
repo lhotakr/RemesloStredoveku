@@ -88,7 +88,14 @@ bool parseCampaignLocation(const std::string& value, std::string& outMap)
 
 bool isEmptyCell(std::uint16_t value)
 {
-    return value == 0;
+    // Legacy one-character maps use '.' as the empty-floor marker. Older
+    // saves could carry that marker into grid_codes as numeric 46.
+    return value == 0 || value == static_cast<std::uint16_t>('.');
+}
+
+std::uint16_t normalizedGridTextureKey(std::uint16_t value)
+{
+    return isEmptyCell(value) ? 0 : value;
 }
 
 std::uint16_t textureKeyFromJson(const json& source, const char* numericName,
@@ -1347,7 +1354,12 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             std::vector<TextureKey> decoded;
             decoded.reserve(row.size());
             for (const auto& value : row)
-                decoded.push_back(static_cast<TextureKey>(std::clamp(value.get<int>(), 0, 65535)));
+            {
+                const auto key = static_cast<std::uint16_t>(
+                    std::clamp(value.get<int>(), 0, 65535));
+                decoded.push_back(static_cast<TextureKey>(
+                    normalizedGridTextureKey(key)));
+            }
             m_grid.push_back(std::move(decoded));
         }
     }
@@ -1359,7 +1371,8 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             std::vector<TextureKey> decoded;
             decoded.reserve(legacy.size());
             for (unsigned char c : legacy)
-                decoded.push_back(isEmptyCell(c) ? kNoTexture : static_cast<TextureKey>(c));
+                decoded.push_back(static_cast<TextureKey>(
+                    normalizedGridTextureKey(c)));
             m_grid.push_back(std::move(decoded));
         }
     }
@@ -1904,7 +1917,15 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
     for (const auto& pair : m_texturePaths)
         textures.push_back({{"key", pair.first}, {"path", pair.second}});
     root["textures"] = std::move(textures);
-    root["grid_codes"] = m_grid;
+    json gridCodes = json::array();
+    for (const auto& row : m_grid)
+    {
+        json codeRow = json::array();
+        for (TextureKey key : row)
+            codeRow.push_back(normalizedGridTextureKey(key));
+        gridCodes.push_back(std::move(codeRow));
+    }
+    root["grid_codes"] = std::move(gridCodes);
     json sectorCodes = json::array();
     bool canWriteLegacySectorGrid = true;
     for (const std::string& row : m_sectorGrid)

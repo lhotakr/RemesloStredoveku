@@ -116,6 +116,34 @@
     },
     {
       "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": false,
+      "id": "spawn_from_Smithy_in_Blatce",
+      "name": "Player spawn Smithy --> Blatce",
+      "pivot": {
+        "x": 0,
+        "y": 0
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "spawn",
+        "player"
+      ]
+    },
+    {
+      "collider": {
         "enabled": true,
         "h": 1,
         "w": 1,
@@ -134,6 +162,34 @@
       "src": {
         "h": 0,
         "w": 0,
+        "x": 0,
+        "y": 0
+      },
+      "tags": [
+        "map_link"
+      ]
+    },
+    {
+      "collider": {
+        "enabled": false,
+        "h": 1,
+        "w": 1,
+        "x": 0,
+        "y": 0
+      },
+      "has_sprite": true,
+      "id": "map_link_smithy_portal",
+      "image": "../smithing/environment_2_5d/assets/Objects/Smithy/smithy_exit_door.png",
+      "name": "Portal to Blatce smithy",
+      "pivot": {
+        "x": 128,
+        "y": 384
+      },
+      "scale": 1.0,
+      "solid": false,
+      "src": {
+        "h": 384,
+        "w": 256,
         "x": 0,
         "y": 0
       },
