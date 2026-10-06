@@ -6,9 +6,21 @@
 #include <string>
 #include <unordered_map>
 #include <vector>
+#include "InteriorInteractionEvent.h"
 #include "interior/TextureSpriteEditor.h"
 
 struct PlayerStats;
+
+struct InteriorAudioEmitter
+{
+    std::string objectId;
+    std::string soundId;
+    std::string soundPath;
+    double x = 0.0;
+    double y = 0.0;
+    double radius = 0.0;
+    int volume0_128 = 0;
+};
 
 // Build-inspired 2.5D interior renderer for Remeslo stredoveku.
 // It intentionally uses original code/data and does not copy Build Engine code.
@@ -37,6 +49,7 @@ public:
     bool loadInteriorAtSpawn(const std::string& interiorIdOrPath, const std::string& spawnId);
     bool saveInterior(const std::string& interiorIdOrPath = "");
     bool consumePendingCampaignTransition(std::string& outMap, std::string& outSpawnId);
+    bool consumePendingInteraction(InteriorInteractionEvent& outEvent);
 
     void setEditorMode(bool enabled);
     bool editorMode() const { return m_editorMode; }
@@ -47,6 +60,7 @@ public:
     bool isPlayerRunning() const { return m_playerRunning; }
     void getPlayerPose(double& outX, double& outY, double& outAngle, double& outPitch) const;
     void setPlayerPose(double x, double y, double angle, double pitch);
+    void collectAudioEmitters(std::vector<InteriorAudioEmitter>& outEmitters) const;
 
     const std::string& lastError() const { return m_lastError; }
     const std::string& currentInteriorId() const { return m_currentInteriorId; }
@@ -276,6 +290,7 @@ private:
     {
         std::string id;
         TextureKey texture = static_cast<TextureKey>('T');
+        std::array<TextureKey, 4> viewTextures{};
         double x = 0.0;
         double y = 0.0;
         double zOffset = 0.0;
@@ -310,9 +325,17 @@ private:
         double lightFlicker = 0.18;
         double lightMultiplier = 1.0;
 
+        std::string ambientSoundId;
+        std::string ambientSoundPath;
+        double ambientSoundRadius = 0.0;
+        int ambientSoundVolume = 96;
+
         std::string interactionLabel;
         std::string targetInterior;
         std::string targetSpawn;
+        std::string workshopId;
+        std::string stationId;
+        std::string actionId;
     };
 
     struct ProjectedVertex
@@ -352,6 +375,8 @@ private:
     std::string m_status;
     std::string m_pendingCampaignTransitionMap;
     std::string m_pendingCampaignTransitionSpawnId;
+    InteriorInteractionEvent m_pendingInteraction;
+    bool m_hasPendingInteraction = false;
 
     std::vector<std::vector<TextureKey>> m_grid;
     std::vector<std::string> m_sectorGrid;
@@ -400,6 +425,7 @@ private:
     const PlayerStats* m_playerStats = nullptr;
     bool m_playerMoving = false;
     bool m_playerRunning = false;
+    std::array<bool, SDL_NUM_SCANCODES> m_keyDown{};
     bool m_wasUseKeyDown = false;
     bool m_wasRecoverKeyDown = false;
     bool m_wasJumpKeyDown = false;
@@ -577,6 +603,7 @@ private:
     bool canStandAt(double x, double y) const;
     bool canMoveBetween(double fromX, double fromY, double toX, double toY) const;
     bool spriteBlocks(double x, double y) const;
+    void resetInputState();
     void tryMove(double dx, double dy);
     void recoverToLastSafePosition();
     void sanitizeEditorState();
@@ -607,6 +634,7 @@ private:
     void renderSprites(int screenW, int screenH, int horizon, double eyeZ);
     void renderBillboardSprite(const SpriteDef& sprite, int screenW, int screenH, int horizon, double eyeZ);
     void renderVoxelSprite(const SpriteDef& sprite, int screenW, int screenH, int horizon, double eyeZ);
+    TextureKey textureForSpriteView(const SpriteDef& sprite) const;
     void renderOverlay();
     void renderEditorOverlay();
     void refreshEditorMapList();

@@ -2,6 +2,7 @@
 #include <fstream>
 
 #include "Editor.h"
+#include "EditorHelpers.h"
 #include "imgui.h"
 #include "JsonUtils.h"
 #include "PathUtils.h"

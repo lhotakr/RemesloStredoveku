@@ -153,7 +153,8 @@ namespace playerprofile
             {"clothing_repair", ClampStat(v.clothingRepair)},
             {"rope_work", ClampStat(v.ropeWork)},
             {"woodcraft", ClampStat(v.woodcraft)},
-            {"improvisation", ClampStat(v.improvisation)}
+            {"improvisation", ClampStat(v.improvisation)},
+            {"smithing", ClampStat(v.smithing)}
         };
     }
 
@@ -165,6 +166,7 @@ namespace playerprofile
         v.ropeWork = ClampStat(j.value("rope_work", v.ropeWork));
         v.woodcraft = ClampStat(j.value("woodcraft", v.woodcraft));
         v.improvisation = ClampStat(j.value("improvisation", v.improvisation));
+        v.smithing = ClampStat(j.value("smithing", v.smithing));
     }
 
     inline json SaveSocial(const PlayerStats::SocialSkills& v)

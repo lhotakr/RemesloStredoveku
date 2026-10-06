@@ -1,0 +1,29 @@
+{
+  "schema": "remeslo.smithing.animation-audio-bindings.v1",
+  "animation_pack": "nail_forging_animations",
+  "audio_pack": "smithing_nail_audio_v1",
+  "bindings": [
+    {
+      "animation": "hammer_strike_heavy",
+      "event": "impact",
+      "call": "onHammerImpact",
+      "arguments": ["workpiece.temperature01", "pendingStrike.power01", "workpiece.scaleAmount01"]
+    },
+    {
+      "animation": "tongs_rotate_quarter",
+      "event": "grip_closed",
+      "call": "onGripClosed"
+    },
+    {
+      "animation": "tongs_rotate_quarter",
+      "event": "rotation_complete",
+      "call": "onRotationComplete"
+    },
+    {
+      "animation": "quench_steam",
+      "event": "water_contact",
+      "call": "onWaterContact",
+      "arguments": ["workpiece.temperature01"]
+    }
+  ]
+}

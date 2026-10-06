@@ -30,7 +30,7 @@
 namespace fs = std::filesystem;
 using json = nlohmann::json;
 
-static constexpr const char* kDefaultHouskaLocation = "castle:houska_1400/houska_exterior";
+static constexpr const char* kDefaultHouskaLocation = "smithy_benes";
 
 static SDL_Texture* loadTexture(SDL_Renderer* r, const char* path, int& outW, int& outH)
 {
@@ -166,6 +166,22 @@ static std::string ResolveSavedInteriorLocationId(const std::string& interiorId)
 static fs::path ResolveCampaignMapPath(const std::string& mapPath)
 {
     fs::path path(mapPath);
+
+    const bool hasWindowsDrive =
+        mapPath.size() >= 2
+        && ((mapPath[0] >= 'A' && mapPath[0] <= 'Z') || (mapPath[0] >= 'a' && mapPath[0] <= 'z'))
+        && mapPath[1] == ':';
+    const bool hasWindowsSeparators = mapPath.find('\\') != std::string::npos;
+    if (hasWindowsDrive || hasWindowsSeparators)
+    {
+        const size_t lastSeparator = mapPath.find_last_of("/\\");
+        const std::string filename = lastSeparator == std::string::npos
+            ? mapPath
+            : mapPath.substr(lastSeparator + 1);
+        if (!filename.empty())
+            return ProjectRootPath() / "data" / "maps" / filename;
+    }
+
     if (path.is_absolute())
         return path;
     if (path.has_parent_path())
@@ -1251,7 +1267,7 @@ bool Game::saveProgressToSlot(int slotIndex)
     try
     {
         json j;
-        j["version"] = 2;
+        j["version"] = 3;
         j["slot"] = slotIndex + 1;
         j["slot_name"] = saveSlotName(slotIndex);
         j["saved_at"] = CurrentSaveTimestamp();
@@ -1959,6 +1975,7 @@ void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId,
     campaignflow::SetSelectedBackground(m_pendingBackground);
 
     m_campaign = new Campaign();
+    m_campaign->setLanguage(m_settings.language);
     if (!m_campaign->init(m_window, m_renderer)) {
         delete m_campaign;
         m_campaign = nullptr;
@@ -2179,6 +2196,13 @@ void Game::update(float dt)
                     dt,
                     m_interior2D->isPlayerMoving(),
                     m_interior2D->isPlayerRunning());
+
+            InteriorInteractionEvent interaction;
+            while (m_campaign && m_interior2D->consumePendingInteraction(interaction))
+                m_campaign->handleInteriorInteraction(interaction);
+
+            if (m_campaign)
+                m_campaign->updateInteriorAudio(m_interior2D);
 
             std::string campaignMap;
             std::string campaignSpawn;

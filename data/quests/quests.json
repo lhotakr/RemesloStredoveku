@@ -31,6 +31,14 @@
       "started_flag": "quest_matej_water_started",
       "ready_flag": "quest_matej_water_ready",
       "done_flag": "quest_matej_water_done"
+    },
+    {
+      "id": "benes_nail_training",
+      "title": "Benešova lekce hřebíků",
+      "description": "Beneš mi dal železo a chce vidět deset pokusů o ručně kovaný hřebík.",
+      "started_flag": "quest_benes_nails_started",
+      "ready_flag": "smithing.nail.basic",
+      "done_flag": "quest_benes_nails_done"
     }
   ]
 }

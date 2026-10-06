@@ -1,0 +1,81 @@
+{
+  "schema": "remeslo.smithy-room-layout.v2-proposal",
+  "map_id": "smithy_benes",
+  "recommended_floor_size_world_units": { "w": 1280, "h": 896 },
+  "spawn_points": [
+    { "id": "smithy_entry", "x": 640, "y": 806, "facing": "north" }
+  ],
+  "objects": [
+    { "id": "smithy_exit_door", "x": 640, "y": 856, "scale": 1.0, "layer": "wall", "note": "hlavni vstup a portal z Blatcu" },
+    { "id": "smithy_hearth", "x": 1040, "y": 270, "scale": 1.0, "rotation_deg": 0, "zone": "hot_work" },
+    { "id": "smithy_bellows", "x": 835, "y": 285, "scale": 0.9, "rotation_deg": 0, "zone": "hot_work", "note": "hubice musi vizualne navazovat na vyhen" },
+    { "id": "smithy_anvil", "x": 765, "y": 470, "scale": 0.9, "rotation_deg": 25, "zone": "hot_work", "note": "na nepravidelnem dubovem spalku, ne na sudu" },
+    { "id": "smithy_quench_tub", "x": 930, "y": 515, "scale": 0.72, "rotation_deg": 0, "zone": "hot_work" },
+    { "id": "smithy_charcoal", "x": 1145, "y": 470, "scale": 0.68, "zone": "fuel_storage" },
+    { "id": "smithy_workbench", "x": 305, "y": 340, "scale": 0.92, "rotation_deg": 0, "zone": "cold_work" },
+    { "id": "smithy_tool_rack", "x": 310, "y": 220, "scale": 0.86, "layer": "wall", "zone": "cold_work" },
+    { "id": "smithy_iron_rack", "x": 250, "y": 610, "scale": 0.82, "rotation_deg": 0, "zone": "material_storage" },
+    { "id": "smithy_storage", "x": 145, "y": 765, "scale": 0.7, "zone": "material_storage" },
+    { "id": "smithy_grindstone", "x": 1050, "y": 700, "scale": 0.78, "rotation_deg": -15, "zone": "cold_work" },
+    { "id": "smithy_firewood", "x": 1095, "y": 800, "scale": 0.68, "zone": "fuel_storage" }
+  ],
+  "work_points": [
+    {
+      "id": "nail_forge",
+      "object_id": "smithy_hearth",
+      "x": 1000,
+      "y": 325,
+      "facing": "up",
+      "station": "forge"
+    },
+    {
+      "id": "nail_anvil",
+      "object_id": "smithy_anvil",
+      "x": 707,
+      "y": 490,
+      "facing": "right",
+      "station": "anvil"
+    },
+    {
+      "id": "nail_quench",
+      "object_id": "smithy_quench_tub",
+      "x": 875,
+      "y": 535,
+      "facing": "right",
+      "station": "quench"
+    }
+  ],
+  "proposed_new_objects": [
+    { "id": "smithy_oak_support_post", "x": 625, "y": 305, "scale": 1.0, "layer": "structure", "purpose": "prekryti prechodu materialu sten a rozdeleni dilny" },
+    { "id": "smithy_shuttered_window", "x": 260, "y": 150, "scale": 0.8, "layer": "wall", "purpose": "studene bocni denni svetlo nad ponkem" },
+    { "id": "smithy_bellows_nozzle", "x": 930, "y": 292, "scale": 1.0, "layer": "connector", "purpose": "fyzicke propojeni mechu s vyhni" },
+    { "id": "smithy_wall_shelf_small", "x": 485, "y": 205, "scale": 0.75, "layer": "wall", "purpose": "mensi nadoby, olej a rozpracovane zakazky" }
+  ],
+  "work_triangle": {
+    "objects": ["smithy_hearth", "smithy_anvil", "smithy_quench_tub"],
+    "target_max_edge_world_units": 340
+  },
+  "walkways": [
+    { "id": "entry_to_anvil", "from": { "x": 640, "y": 806 }, "to": { "x": 690, "y": 470 }, "minimum_width": 112 },
+    { "id": "anvil_to_forge", "from": { "x": 700, "y": 450 }, "to": { "x": 940, "y": 320 }, "minimum_width": 96 },
+    { "id": "entry_to_workbench", "from": { "x": 600, "y": 745 }, "to": { "x": 390, "y": 410 }, "minimum_width": 96 }
+  ],
+  "surface_zones": [
+    { "id": "forge_stone_apron", "center": { "x": 1020, "y": 390 }, "radius": 285, "material": "rough_stone_soot", "decals": ["ash", "coal_dust", "iron_scale"] },
+    { "id": "central_earth_floor", "center": { "x": 610, "y": 590 }, "radius": 500, "material": "compacted_earth", "decals": ["worn_paths", "damp_patches", "straw_sparse"] },
+    { "id": "quench_wet_zone", "center": { "x": 930, "y": 545 }, "radius": 120, "material": "earth_stone_wet", "decals": ["water_rings", "dark_mud"] }
+  ],
+  "lighting": {
+    "ambient": { "color": "#4a443a", "intensity": 0.34 },
+    "forge_light": { "x": 1035, "y": 325, "radius": 360, "color": "#ff7a32", "intensity": 1.0, "flicker": 0.06 },
+    "door_light": { "x": 640, "y": 820, "radius": 245, "color": "#d9e5df", "intensity": 0.46, "daylight_only": true },
+    "window_light": { "x": 275, "y": 225, "radius": 210, "color": "#cbd9d6", "intensity": 0.32, "daylight_only": true }
+  },
+  "wall_treatment": {
+    "left": "smithy_wall_plaster_stone",
+    "right": "smithy_wall_sooty_stone",
+    "transition_hidden_by": "smithy_oak_support_post",
+    "soot_gradient_center": { "x": 1040, "y": 265 }
+  },
+  "minimum_walkway_world_units": 96
+}

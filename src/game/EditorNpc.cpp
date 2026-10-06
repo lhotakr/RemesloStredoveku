@@ -426,6 +426,8 @@ bool Editor::loadMap(const char* path)
         return false;
     }
 
+    loadSequenceMarkersForMap(p.string());
+
     m_mapDirty = false;
     m_mapPath = fs::weakly_canonical(p).string();
     m_tileSize = m_map.tileSize();

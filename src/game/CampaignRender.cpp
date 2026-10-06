@@ -3014,6 +3014,10 @@ bool Campaign::drawItemSlot(
     if (m_dragItem.active && m_dragItem.source == &slot)
         borderColor = IM_COL32(255, 215, 80, 255);
 
+    const bool activeSmithingWorkpiece =
+        (slotKey == "qa_util1" || slotKey == "qa_util2") &&
+        (slot.itemId == "smithing_iron_rod_piece" || slot.itemId == "smithing_nail_workpiece");
+
     if (m_dragItem.active && ImGui::IsItemHovered())
     {
         ImU32 fillColor = canDropHere
@@ -3021,6 +3025,12 @@ bool Campaign::drawItemSlot(
             : IM_COL32(200, 70, 70, 50);
 
         ImGui::GetWindowDrawList()->AddRectFilled(min, max, fillColor);
+    }
+
+    if (activeSmithingWorkpiece)
+    {
+        ImGui::GetWindowDrawList()->AddRectFilled(min, max, IM_COL32(255, 140, 55, 34));
+        borderColor = IM_COL32(255, 164, 70, 255);
     }
 
     ImGui::GetWindowDrawList()->AddRect(min, max, borderColor, 0.0f, 0, 2.0f);
@@ -3404,6 +3414,7 @@ void Campaign::renderPlayerOverviewUI()
             PlayerOverviewSkill("Provaznictvi", s.craft.ropeWork);
             PlayerOverviewSkill("Prace se drevem", s.craft.woodcraft);
             PlayerOverviewSkill("Improvizace", s.craft.improvisation);
+            PlayerOverviewSkill("Kovarstvi", s.craft.smithing);
 
             PlayerOverviewHeader("Socialni");
             PlayerOverviewSkill("Zahajeni rozhovoru", s.social.conversationInitiation);
@@ -3652,10 +3663,20 @@ SDL_Texture* Campaign::getItemIconTexture(const ItemDef& def)
     if (it != m_itemIconCache.end())
         return it->second ? it->second : m_defaultItemIcon;
 
-    const std::string path = "assets/data/items/" + def.spriteId + ".png";
+    std::filesystem::path path;
+    if (def.spriteId.find('/') != std::string::npos || def.spriteId.find('\\') != std::string::npos)
+    {
+        path = def.spriteId;
+        if (!path.has_extension())
+            path += ".png";
+    }
+    else
+    {
+        path = std::filesystem::path("assets") / "data" / "items" / (def.spriteId + ".png");
+    }
 
     int w = 0, h = 0;
-    SDL_Texture* tex = loadTexture(m_renderer, path.c_str(), w, h);
+    SDL_Texture* tex = loadTexture(m_renderer, path.string().c_str(), w, h);
 
     m_itemIconCache[def.spriteId] = tex;
     return tex ? tex : m_defaultItemIcon;
@@ -4539,6 +4560,7 @@ void Campaign::renderSharedHudOverlay()
     renderConsole();
     renderInventoryUI();
     renderQuickAccessBar();
+    renderNailTrainingUi();
 }
 
 void Campaign::render()
@@ -4547,6 +4569,21 @@ void Campaign::render()
     SDL_GetRendererOutputSize(m_renderer, &screenW, &screenH);
 
     ensureCameraOnPlayer(screenW, screenH);
+    if (m_sequenceCameraOverride)
+    {
+        const int mapPixelW = m_map.width() * m_tileSize;
+        const int mapPixelH = m_map.height() * m_tileSize;
+        m_camX = (int)std::lround(m_sequenceCameraPos.x - screenW * 0.5f);
+        m_camY = (int)std::lround(m_sequenceCameraPos.y - screenH * 0.5f);
+        m_camX = std::clamp(m_camX, 0, std::max(0, mapPixelW - screenW));
+        m_camY = std::clamp(m_camY, 0, std::max(0, mapPixelH - screenH));
+    }
+    if (m_sequenceCameraShakeRemaining > 0.0f && m_sequenceCameraShakeIntensity > 0.0f)
+    {
+        const float phase = (float)SDL_GetTicks() * 0.05f;
+        m_camX += (int)std::lround(std::sin(phase) * m_sequenceCameraShakeIntensity * 6.0f);
+        m_camY += (int)std::lround(std::cos(phase * 1.37f) * m_sequenceCameraShakeIntensity * 4.0f);
+    }
 
     TerrainRenderer::View view;
     view.camX = m_camX;
@@ -4719,6 +4756,7 @@ void Campaign::render()
     }
 
     m_npcManager.render(m_renderer, m_camX, m_camY, m_characterManager);
+    renderSequenceActors();
     m_player.render(m_renderer, m_camX, m_camY, m_characterManager);
 
     // overlay pr?chod? / bran nad hr�?em
@@ -4772,6 +4810,7 @@ void Campaign::render()
     renderLightMask(screenW, screenH, darkness);
     ensureFowMask(screenW, screenH);
     renderFogOfWar(screenW, screenH);
+    renderSequenceOverlay();
     if (m_showDebugHud)
         renderDebugHud();
     if (m_questJournalOpen)

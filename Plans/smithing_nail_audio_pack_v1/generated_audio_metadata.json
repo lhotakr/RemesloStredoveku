@@ -1,0 +1,165 @@
+{
+  "sample_rate": 48000,
+  "sounds": [
+    {
+      "id": "nail_impact_hot_light_01",
+      "duration_ms": 480,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_light_01.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_light_01.ogg"
+    },
+    {
+      "id": "nail_impact_hot_light_02",
+      "duration_ms": 480,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_light_02.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_light_02.ogg"
+    },
+    {
+      "id": "nail_impact_hot_light_03",
+      "duration_ms": 480,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_light_03.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_light_03.ogg"
+    },
+    {
+      "id": "nail_impact_hot_light_04",
+      "duration_ms": 480,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_light_04.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_light_04.ogg"
+    },
+    {
+      "id": "nail_impact_hot_heavy_01",
+      "duration_ms": 720,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_heavy_01.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_heavy_01.ogg"
+    },
+    {
+      "id": "nail_impact_hot_heavy_02",
+      "duration_ms": 720,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_heavy_02.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_heavy_02.ogg"
+    },
+    {
+      "id": "nail_impact_hot_heavy_03",
+      "duration_ms": 720,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_hot_heavy_03.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_hot_heavy_03.ogg"
+    },
+    {
+      "id": "nail_impact_cooling_01",
+      "duration_ms": 700,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_cooling_01.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_cooling_01.ogg"
+    },
+    {
+      "id": "nail_impact_cooling_02",
+      "duration_ms": 700,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/nail_impact_cooling_02.wav",
+      "ogg": "assets/audio/smithing/nail/nail_impact_cooling_02.ogg"
+    },
+    {
+      "id": "tongs_grip_01",
+      "duration_ms": 240,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/tongs_grip_01.wav",
+      "ogg": "assets/audio/smithing/nail/tongs_grip_01.ogg"
+    },
+    {
+      "id": "tongs_rotate_quarter_01",
+      "duration_ms": 460,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/tongs_rotate_quarter_01.wav",
+      "ogg": "assets/audio/smithing/nail/tongs_rotate_quarter_01.ogg"
+    },
+    {
+      "id": "tongs_grip_02",
+      "duration_ms": 240,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/tongs_grip_02.wav",
+      "ogg": "assets/audio/smithing/nail/tongs_grip_02.ogg"
+    },
+    {
+      "id": "tongs_rotate_quarter_02",
+      "duration_ms": 460,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/tongs_rotate_quarter_02.wav",
+      "ogg": "assets/audio/smithing/nail/tongs_rotate_quarter_02.ogg"
+    },
+    {
+      "id": "tongs_settle_01",
+      "duration_ms": 240,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/tongs_settle_01.wav",
+      "ogg": "assets/audio/smithing/nail/tongs_settle_01.ogg"
+    },
+    {
+      "id": "scale_flakes_01",
+      "duration_ms": 370,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/scale_flakes_01.wav",
+      "ogg": "assets/audio/smithing/nail/scale_flakes_01.ogg"
+    },
+    {
+      "id": "quench_short_01",
+      "duration_ms": 1350,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/quench_short_01.wav",
+      "ogg": "assets/audio/smithing/nail/quench_short_01.ogg"
+    },
+    {
+      "id": "quench_heavy_01",
+      "duration_ms": 2300,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/quench_heavy_01.wav",
+      "ogg": "assets/audio/smithing/nail/quench_heavy_01.ogg"
+    },
+    {
+      "id": "bellows_push_01",
+      "duration_ms": 1180,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/bellows_push_01.wav",
+      "ogg": "assets/audio/smithing/nail/bellows_push_01.ogg"
+    },
+    {
+      "id": "forge_fire_loop_01",
+      "duration_ms": 6000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/forge_fire_loop_01.wav",
+      "ogg": "assets/audio/smithing/nail/forge_fire_loop_01.ogg"
+    },
+    {
+      "id": "smithy_room_loop_01",
+      "duration_ms": 8000,
+      "sample_rate": 48000,
+      "channels": 1,
+      "wav": "masters_wav/smithy_room_loop_01.wav",
+      "ogg": "assets/audio/smithing/nail/smithy_room_loop_01.ogg"
+    }
+  ]
+}

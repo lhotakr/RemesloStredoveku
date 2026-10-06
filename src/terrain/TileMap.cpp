@@ -266,6 +266,8 @@ bool TileMap::loadFromFile(const std::string& path)
 
     std::string magic;
     std::getline(f, magic);
+    if (!magic.empty() && magic.back() == '\r')
+        magic.pop_back();
 
     if (magic != "RVM4")
         return false;

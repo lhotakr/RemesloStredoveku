@@ -11,6 +11,8 @@
 #include "terrain/TileMap.h"
 #include "terrain/ObjectCatalog.h"
 #include "CharacterManager.h"
+#include "game/sequence/SequenceDefinition.h"
+#include "game/sequence/SequenceMarkers.h"
 
 struct NpcSpawn
 {
@@ -193,10 +195,15 @@ struct EditorUndoState
     std::vector<EditorNpcZone> npcZones;
     std::vector<EditorNpcSchedule> npcSchedules;
     std::vector<EditorForageSpawn> forageSpawns;
+    std::vector<sequence::SequenceDefinition> sequences;
+    std::vector<sequence::SequenceMarker> sequenceMarkers;
     int selectedNpcSpawnIndex = -1;
     int selectedNpcZoneIndex = -1;
     int selectedNpcScheduleIndex = -1;
     int selectedForageSpawnIndex = -1;
+    int selectedSequenceIndex = -1;
+    int selectedSequenceNodeIndex = -1;
+    int selectedSequenceActionIndex = -1;
     std::string label;
 };
 
@@ -249,6 +256,7 @@ private:
     void renderNpcZoneEditorContents();
     void renderForageDefinitionEditorContents();
     void renderForageSpawnEditorContents();
+    void renderSequenceEditorContents();
 
     void toggleFullscreen();
     void newMap();
@@ -450,7 +458,8 @@ private:
         Schedules,
         Dialogs,
         Quests,
-        Foraging
+        Foraging,
+        Sequences
     };
 
     EditorTab m_activeTab = EditorTab::Map;
@@ -544,6 +553,33 @@ private:
     float m_questGraphPanX = 32.0f;
     float m_questGraphPanY = 42.0f;
     float m_questGraphZoom = 1.0f;
+
+    // sequences
+    std::vector<sequence::SequenceDefinition> m_sequences;
+    std::vector<std::string> m_sequencePaths;
+    std::vector<sequence::SequenceMarker> m_sequenceMarkers;
+    int m_selectedSequenceIndex = -1;
+    int m_selectedSequenceNodeIndex = -1;
+    int m_selectedSequenceActionIndex = -1;
+    bool m_sequencePickMarkerMode = false;
+    int m_sequencePickActionIndex = -1;
+    bool m_sequencePreviewActive = false;
+    float m_sequencePreviewTimer = 0.0f;
+    char m_sequenceNewId[64] = "new_sequence";
+    char m_sequenceMarkerId[64] = "marker";
+    char m_sequenceValidationFilter[64] = "";
+
+    bool loadSequences();
+    bool saveSelectedSequence();
+    bool saveSequenceAt(int index);
+    bool loadSequenceMarkersForMap(const std::string& mapPath);
+    bool saveSequenceMarkersForMap(const std::string& mapPath);
+    void renderSequenceValidation(const sequence::SequenceDefinition& seq) const;
+    void renderSequenceActionEditor(sequence::ActionDef& action, int actionIndex);
+    std::string sequencePathForId(const std::string& id) const;
+    int findSequenceIndexById(const std::string& id) const;
+    int findSequenceNodeIndexById(const sequence::SequenceDefinition& seq, const std::string& id) const;
+    void pushSequenceUndo(const char* label);
 
 
     // foraging - herbs & fungi

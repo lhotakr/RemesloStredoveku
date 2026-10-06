@@ -80,6 +80,7 @@ struct PlayerStats
         float ropeWork = 0.0f;
         float woodcraft = 0.0f;
         float improvisation = 0.0f;
+        float smithing = 0.0f;
     };
 
     struct SocialSkills

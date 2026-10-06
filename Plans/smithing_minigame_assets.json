@@ -1,0 +1,89 @@
+{
+  "schema": "remeslo-stredoveku.smithing-minigame-assets.v1",
+  "reference_resolution": [1920, 1080],
+  "ui_playfield": [28, 156, 1464, 675],
+  "native_playfield_size": [1536, 768],
+  "composition_order": [
+    "background",
+    "workpiece",
+    "hands_and_tools",
+    "effects",
+    "code_drawn_feedback",
+    "smithing_ui"
+  ],
+  "backgrounds": {
+    "forge": "assets/backgrounds/forge_playfield_1536x768.jpg",
+    "anvil": "assets/backgrounds/anvil_playfield_1536x768.jpg",
+    "quench": "assets/backgrounds/quench_playfield_1536x768.jpg",
+    "grindstone": "assets/backgrounds/grindstone_playfield_1536x768.jpg",
+    "workbench": "assets/backgrounds/workbench_playfield_1536x768.jpg",
+    "testing": "assets/backgrounds/testing_playfield_1536x768.jpg"
+  },
+  "atlases": {
+    "hands_and_tools": {
+      "image": "assets/overlays/smithing_hands_tools_atlas_2048x1024.png",
+      "cell_size": [512, 512],
+      "columns": 4,
+      "rows": 2,
+      "blend": "alpha",
+      "cells": [
+        {"id": "tongs_closed", "src": [0, 0, 512, 512], "file": "assets/overlays/hands/tongs_closed_512.png"},
+        {"id": "tongs_open", "src": [512, 0, 512, 512], "file": "assets/overlays/hands/tongs_open_512.png"},
+        {"id": "hammer_ready", "src": [1024, 0, 512, 512], "file": "assets/overlays/hands/hammer_ready_512.png"},
+        {"id": "hammer_raised", "src": [1536, 0, 512, 512], "file": "assets/overlays/hands/hammer_raised_512.png"},
+        {"id": "axe_head_grip", "src": [0, 512, 512, 512], "file": "assets/overlays/hands/axe_head_grip_512.png"},
+        {"id": "grind_crank", "src": [512, 512, 512, 512], "file": "assets/overlays/hands/grind_crank_512.png"},
+        {"id": "finished_axe_grip", "src": [1024, 512, 512, 512], "file": "assets/overlays/hands/finished_axe_grip_512.png"},
+        {"id": "assembly_mallet", "src": [1536, 512, 512, 512], "file": "assets/overlays/hands/assembly_mallet_512.png"}
+      ]
+    },
+    "axe_workpiece": {
+      "image": "assets/overlays/axe_workpiece_stages_atlas_2048x1024.png",
+      "cell_size": [512, 512],
+      "columns": 4,
+      "rows": 2,
+      "blend": "alpha",
+      "cells": [
+        {"id": "iron_billet", "src": [0, 0, 512, 512], "file": "assets/overlays/workpiece_axe/iron_billet_512.png"},
+        {"id": "upset_billet", "src": [512, 0, 512, 512], "file": "assets/overlays/workpiece_axe/upset_billet_512.png"},
+        {"id": "spread_blank", "src": [1024, 0, 512, 512], "file": "assets/overlays/workpiece_axe/spread_blank_512.png"},
+        {"id": "punched_eye", "src": [1536, 0, 512, 512], "file": "assets/overlays/workpiece_axe/punched_eye_512.png"},
+        {"id": "refined_cold", "src": [0, 512, 512, 512], "file": "assets/overlays/workpiece_axe/refined_cold_512.png"},
+        {"id": "refined_hot", "src": [512, 512, 512, 512], "file": "assets/overlays/workpiece_axe/refined_hot_512.png"},
+        {"id": "quenched_wet", "src": [1024, 512, 512, 512], "file": "assets/overlays/workpiece_axe/quenched_wet_512.png"},
+        {"id": "finished", "src": [1536, 512, 512, 512], "file": "assets/overlays/workpiece_axe/finished_512.png"}
+      ]
+    },
+    "effects": {
+      "image": "assets/effects/smithing_vfx_atlas_2048x1024.png",
+      "cell_size": [512, 512],
+      "columns": 4,
+      "rows": 2,
+      "blend": "alpha_or_additive",
+      "cells": [
+        {"id": "anvil_sparks", "src": [0, 0, 512, 512], "file": "assets/effects/anvil_sparks_512.png"},
+        {"id": "drifting_embers", "src": [512, 0, 512, 512], "file": "assets/effects/drifting_embers_512.png"},
+        {"id": "quench_steam", "src": [1024, 0, 512, 512], "file": "assets/effects/quench_steam_512.png"},
+        {"id": "water_splash", "src": [1536, 0, 512, 512], "file": "assets/effects/water_splash_512.png"},
+        {"id": "heat_halo", "src": [0, 512, 512, 512], "file": "assets/effects/heat_halo_512.png"},
+        {"id": "grind_sparks", "src": [512, 512, 512, 512], "file": "assets/effects/grind_sparks_512.png"},
+        {"id": "wood_chips", "src": [1024, 512, 512, 512], "file": "assets/effects/wood_chips_512.png"},
+        {"id": "impact_dust", "src": [1536, 512, 512, 512], "file": "assets/effects/impact_dust_512.png"}
+      ]
+    }
+  },
+  "station_presets": {
+    "forge": ["forge", "refined_hot", "tongs_closed", "drifting_embers", "heat_halo"],
+    "anvil": ["anvil", "refined_hot", "tongs_closed", "hammer_ready", "hammer_raised", "anvil_sparks"],
+    "quench": ["quench", "refined_hot", "tongs_closed", "quench_steam", "water_splash"],
+    "grindstone": ["grindstone", "axe_head_grip", "grind_crank", "grind_sparks"],
+    "workbench": ["workbench", "axe_head_grip", "assembly_mallet", "wood_chips"],
+    "testing": ["testing", "finished_axe_grip", "impact_dust", "wood_chips"]
+  },
+  "runtime_notes": {
+    "temperature": "Tint only the workpiece layer; never tint the hands or background.",
+    "sparks": "Prefer a small code-driven particle system; atlas sprites are hero bursts and references.",
+    "deformation": "For the 2D prototype cross-fade between stages. A later 3D workpiece may replace only the workpiece layer.",
+    "camera": "Keep a fixed camera and preserve the UI playfield rectangle when moving the workpiece to 3D."
+  }
+}

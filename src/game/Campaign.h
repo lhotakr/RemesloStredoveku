@@ -3,6 +3,7 @@
 #include <string>
 #include <unordered_map>
 #include <array>
+#include <optional>
 
 #include "../terrain/TileMap.h"
 #include "../terrain/TerrainRenderer.h"
@@ -29,8 +30,16 @@
 
 #include "ForageDatabase.h"
 #include "ForageSystem.h"
+#include "InteriorInteractionEvent.h"
+#include "smithing/NailForgingController.h"
+#include "smithing/NailSmithing.h"
+#include "smithing/SmithingNailAudioController.h"
+#include "sequence/SequenceManager.h"
+#include "sequence/SequenceMarkers.h"
 
 #include <nlohmann/json.hpp>
+
+class BuildInteriorEngine;
 
 enum class DayPhase
 {
@@ -52,7 +61,7 @@ enum class Season
     Winter
 };
 
-class Campaign
+class Campaign : public sequence::ISequenceContext
 {
 public:
     bool init(SDL_Window* window, SDL_Renderer* renderer);
@@ -65,16 +74,19 @@ public:
     void render();
     bool handleSharedUiEvent(const SDL_Event& e);
     void updateSharedRuntime(float dt, bool playerMoving = false, bool playerRunning = false);
+    void updateInteriorAudio(const BuildInteriorEngine* interior);
     void renderSharedHudOverlay();
 
     bool loadMap(const std::string& path, const std::string& spawnId);
     bool saveMap(const std::string& path);
     bool consumePendingInteriorTransition(std::string& outInteriorId, std::string& outSpawnId);
     bool sharedUiBlocksMouseLook() const;
+    bool handleInteriorInteraction(const InteriorInteractionEvent& event);
     const std::string& currentMapPath() const { return m_currentMapPath; }
     float playerX() const;
     float playerY() const;
     void setPlayerPosition(float x, float y);
+    void setLanguage(const std::string& language) { m_language = (language == "en") ? "en" : "cs"; }
     const PlayerStats& playerStats() const { return m_player.stats; }
     PlayerStats& playerStats() { return m_player.stats; }
     void setGameDateTime(int day, int month, int year, int hour, int minute);
@@ -97,6 +109,7 @@ public:
 private:
     SDL_Window* m_window = nullptr;
     SDL_Renderer* m_renderer = nullptr;
+    std::string m_language;
 
     // world/camera
     int m_camX = 0, m_camY = 0;
@@ -156,6 +169,74 @@ private:
     static int ConsoleInputCallback(ImGuiInputTextCallbackData* data);
 
     bool shouldBlockLetterHotkeys() const;
+
+    // Sequences / cutscenes
+    void updateSequenceRuntime(float dt);
+    void renderSequenceActors();
+    void renderSequenceOverlay();
+    void loadSequenceMarkersForCurrentMap();
+    void clearSequenceActors();
+
+    void sequenceLog(const std::string& message) override;
+    bool hasStoryFlag(const std::string& flag) const override;
+    void setStoryFlag(const std::string& flag) override;
+    bool resolveMarker(const std::string& markerId, sequence::Vec2& out) const override;
+    bool spawnActor(const sequence::ActorSpawnDef& def) override;
+    void removeActor(const std::string& actorId) override;
+    bool getActorPosition(const std::string& actorId, sequence::Vec2& out) const override;
+    bool setActorPosition(const std::string& actorId, sequence::Vec2 pos) override;
+    void setActorAnimation(const std::string& actorId, const std::string& animationId) override;
+    void faceActor(const std::string& actorId, const std::string& directionOrTarget) override;
+    void setCameraPosition(sequence::Vec2 pos) override;
+    void setCameraFollow(const std::string& actorId) override;
+    void setCameraShake(float intensity, float duration) override;
+    void setFadeAlpha(float alpha) override;
+    void setFlashAlpha(float alpha) override;
+    void showSequenceText(const std::string& text, float duration) override;
+    void hideSequenceText() override;
+    void playMusic(const std::string& id, int loops, int fadeMs) override;
+    void stopMusic(int fadeMs) override;
+    void playSfx(const std::string& id) override;
+    void playVoice(const std::string& id) override;
+    void setTimeOfDay(const std::string& value) override;
+    void setWeather(const nlohmann::json& data) override;
+    bool loadMapForSequence(const std::string& mapIdOrPath, const std::string& spawnId) override;
+    void teleportPlayer(sequence::Vec2 pos) override;
+    void enablePlayerControl(bool enabled) override;
+    void startDialog(const std::string& npcOrDialogId) override;
+    void changeRendererMode(const std::string& mode) override;
+
+    struct SequenceActorRuntime
+    {
+        std::string id;
+        std::string kind;
+        std::string ref;
+        std::string sprite;
+        std::string characterId;
+        float x = 0.0f;
+        float y = 0.0f;
+        bool visible = true;
+        float rotation = 0.0f;
+        float scale = 1.0f;
+        std::string animation;
+    };
+
+    sequence::SequenceManager m_sequenceManager;
+    std::vector<sequence::SequenceMarker> m_sequenceMarkers;
+    std::unordered_map<std::string, SequenceActorRuntime> m_sequenceActors;
+    std::unordered_map<std::string, std::string> m_sequenceActorAliases;
+    bool m_sequencePlayerControlEnabled = true;
+    bool m_sequenceCameraOverride = false;
+    bool m_sequenceCameraFollow = false;
+    std::string m_sequenceCameraActor;
+    sequence::Vec2 m_sequenceCameraPos;
+    float m_sequenceCameraShakeIntensity = 0.0f;
+    float m_sequenceCameraShakeRemaining = 0.0f;
+    float m_sequenceFadeAlpha = 0.0f;
+    float m_sequenceFlashAlpha = 0.0f;
+    std::string m_sequenceText;
+    float m_sequenceTextRemaining = 0.0f;
+    std::string m_sequenceRendererMode = "2d";
 
 	std::string m_consoleAutocompleteBase;
 	std::vector<std::string> m_consoleAutocompleteMatches;
@@ -256,6 +337,17 @@ private:
     void resolvePlayerVsObjects();
 
     AudioManager m_audioManager;
+    smithing::SmithingNailAudioController m_smithingNailAudio{m_audioManager};
+    struct InteriorLoopAudioState
+    {
+        int channel = -1;
+        std::string path;
+        int volume0_128 = 0;
+        bool loadAttempted = false;
+        bool loaded = false;
+    };
+    std::unordered_map<std::string, InteriorLoopAudioState> m_interiorLoopAudio;
+    int m_nextInteriorLoopChannel = 20;
 	
     // items
     std::unordered_map<std::string, ItemDef> m_itemDefs;
@@ -314,6 +406,86 @@ private:
     SDL_Texture* getCraftIconTexture(const std::string& iconPath);
     void unloadItemIcons();
     void unloadCraftIcons();
+
+    struct SmithingMinigameAssets
+    {
+        bool loadAttempted = false;
+        SDL_Texture* forgeBackground = nullptr;
+        SDL_Texture* anvilBackground = nullptr;
+        SDL_Texture* quenchBackground = nullptr;
+        SDL_Texture* testingBackground = nullptr;
+        SDL_Texture* nailWorkpieceAtlas = nullptr;
+        SDL_Texture* nailDefectAtlas = nullptr;
+        SDL_Texture* handsToolsAtlas = nullptr;
+        SDL_Texture* effectsAtlas = nullptr;
+        SDL_Texture* nailAnimationWorkpieceAtlas = nullptr;
+        SDL_Texture* hammerStrikeAtlas = nullptr;
+        SDL_Texture* tongsRotateAtlas = nullptr;
+        SDL_Texture* nailAnimationEffectsAtlas = nullptr;
+    };
+
+    smithing::NailTrainingBatchState m_nailTrainingBatch;
+    smithing::NailForgingController m_nailForgingController;
+    SmithingMinigameAssets m_smithingAssets;
+    std::unordered_set<std::string> m_skillEvidence;
+    bool m_nailTrainingUiOpen = false;
+    bool m_hasLastNailEvaluation = false;
+    smithing::NailEvaluationResult m_lastNailEvaluation;
+    std::string m_nailTrainingStation = "stock";
+    std::string m_nailLastMessageKey;
+    float m_nailStrikePosition = 0.50f;
+    float m_nailStrikeForce = 0.55f;
+    int m_nailStrikeRotation = 0;
+    float m_nailStrikeFlash = 0.0f;
+    std::string m_nailVisualStation;
+    std::string m_nailPreviousVisualStation;
+    float m_nailStationTransition = 1.0f;
+    int m_nailVisualWorkpieceFrame = -1;
+    int m_nailPreviousWorkpieceFrame = -1;
+    bool m_nailVisualWorkpieceUsesAnimationAtlas = false;
+    bool m_nailPreviousWorkpieceUsesAnimationAtlas = false;
+    float m_nailWorkpieceTransition = 1.0f;
+    float m_nailToolSmoothedPosition = 0.50f;
+    float m_nailToolImpactPosition = 0.50f;
+    bool m_nailStrikeKeyWasDown = false;
+    bool m_nailStrikePowerSelecting = false;
+    float m_nailStrikePowerPhase = 0.0f;
+    bool m_nailForgeInserted = false;
+    bool m_nailForgeDragging = false;
+    float m_nailForgeZoneX = 0.50f;
+    float m_nailForgeZoneY = 0.50f;
+    float m_nailForgeHeatAccumulator = 0.0f;
+    bool m_nailQuenchActive = false;
+    std::string m_lastBenesGuidanceVoiceId;
+    float m_benesGuidanceVoiceCooldown = 0.0f;
+    int m_nailHammerFrame = 0;
+    int m_nailTongsFrame = 0;
+    int m_nailEffectFrame = -1;
+    std::optional<smithing::NailHammerStrike> m_pendingNailHammerStrike;
+
+    int currentGameMinuteSerial() const;
+    void beginBenesNailTraining();
+    void openNailTrainingStation(const std::string& stationId);
+    void updateSmithingTrainingRuntime(int elapsedGameMinutes, float dt);
+    void updateSmithingAudioForAnimationEvents();
+    void renderNailTrainingUi();
+    void renderNailTrainingDebugPanel();
+    bool applyCurrentNailHammerStrike();
+    bool ensureSmithingMinigameAssets();
+    void destroySmithingMinigameAssets();
+    void applyNailEvaluationResult(const smithing::NailEvaluationResult& result);
+    void grantSkillEvidence(const std::string& evidenceId);
+    int countInventoryItem(const std::string& itemId) const;
+    bool hasInventoryItem(const std::string& itemId) const;
+    bool consumeInventoryItem(const std::string& itemId, int count = 1);
+    bool addInventoryItem(const std::string& itemId, int count = 1, bool preferQuickWorkSlot = false);
+    bool issueSmithingTool(const std::string& itemId);
+    bool takeNailRodMaterial();
+    bool hasActiveNailWorkpieceItem() const;
+    void syncActiveNailWorkpieceItem();
+    void clearActiveNailWorkpieceItems();
+    bool canUseCurrentSmithingStation(std::string* outMessageKey = nullptr) const;
+    void quenchActiveNailWorkpiece();
 
     void renderDraggedItemIcon();
 
@@ -383,8 +555,6 @@ private:
 	bool m_questJournalOpen = false;
 
 	void renderQuestJournal();
-	bool hasStoryFlag(const std::string& flag) const;
-	void setStoryFlag(const std::string& flag);
 	bool isQuestActive(const QuestDef& q) const;
 	bool isQuestReadyToTurnIn(const QuestDef& q) const;
 	bool isQuestDone(const QuestDef& q) const;

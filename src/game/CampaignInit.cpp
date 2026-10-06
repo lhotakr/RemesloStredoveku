@@ -1,4 +1,5 @@
 #include "Campaign.h"
+#include "ControlSettings.h"
 #include "../PathUtils.h"
 #include "../JsonUtils.h"
 #include <nlohmann/json.hpp>
@@ -32,6 +33,105 @@ static float JsonFloatAny(const json& j, float def, std::initializer_list<const 
         }
     }
     return def;
+}
+
+struct ItemTextLocalization
+{
+    std::string name;
+    std::string description;
+    std::string flavorText;
+};
+
+static std::string JsonStringAny(const json& j, std::initializer_list<const char*> keys)
+{
+    for (const char* key : keys)
+    {
+        if (!j.contains(key))
+            continue;
+
+        const auto& v = j.at(key);
+        if (v.is_string())
+            return v.get<std::string>();
+    }
+
+    return std::string();
+}
+
+static std::string GameplayLanguage()
+{
+    json settings;
+    std::string err;
+    const fs::path settingsPath = pathutils::DataDir() / "settings" / "game_settings.json";
+    if (jsonutils::LoadJsonFileSafe(settingsPath.string(), settings, err))
+    {
+        const std::string language = settings.value("language", "cs");
+        if (language == "en")
+            return "en";
+    }
+
+    return "cs";
+}
+
+static bool LoadItemTextLocalizations(
+    const std::string& language,
+    std::unordered_map<std::string, ItemTextLocalization>& out,
+    std::string& outWarning)
+{
+    out.clear();
+    outWarning.clear();
+
+    const fs::path path = pathutils::DataDir() / "localization" / language / "items.json";
+    if (!fs::exists(path))
+    {
+        outWarning = "Item localization file not found: " + path.string();
+        return false;
+    }
+
+    json root;
+    std::string err;
+    if (!jsonutils::LoadJsonFileSafe(path.string(), root, err))
+    {
+        outWarning = "Item localization load failed: " + err;
+        return false;
+    }
+
+    if (!root.contains("items") || !root["items"].is_object())
+    {
+        outWarning = "Item localization missing object 'items': " + path.string();
+        return false;
+    }
+
+    for (auto it = root["items"].begin(); it != root["items"].end(); ++it)
+    {
+        if (!it.value().is_object())
+            continue;
+
+        ItemTextLocalization loc;
+        loc.name = JsonStringAny(it.value(), { "name" });
+        loc.description = JsonStringAny(it.value(), { "description" });
+        loc.flavorText = JsonStringAny(it.value(), { "flavorText", "flavor_text" });
+
+        if (!loc.name.empty() || !loc.description.empty() || !loc.flavorText.empty())
+            out[it.key()] = loc;
+    }
+
+    return true;
+}
+
+static void ApplyItemTextLocalization(
+    ItemDef& def,
+    const std::unordered_map<std::string, ItemTextLocalization>& localizations)
+{
+    const auto it = localizations.find(def.id);
+    if (it == localizations.end())
+        return;
+
+    if (!it->second.name.empty())
+        def.name = it->second.name;
+    if (!it->second.description.empty())
+        def.description = it->second.description;
+    if (!it->second.flavorText.empty())
+        def.flavorText = it->second.flavorText;
 }
 
 
@@ -367,7 +467,20 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
     if (!m_window || !m_renderer)
         return false;
 
+    if (!m_audioManager.init())
+    {
+        SDL_ShowSimpleMessageBox(
+            SDL_MESSAGEBOX_ERROR,
+            "Campaign audio init failed",
+            m_audioManager.lastError().c_str(),
+            m_window
+        );
+    }
+
     m_tileSize = 32;
+    m_sequenceManager.loadDirectory(pathutils::AssetsDir() / "sequences");
+    for (const auto& err : m_sequenceManager.errors())
+        SDL_Log("[sequence] %s", err.c_str());
 
     // character manager
     if (!m_characterManager.init(m_renderer, "assets/characters"))
@@ -852,7 +965,12 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
     }
 
     std::string itemErr;
-    if (!loadItemDefs("assets/data/items.json", &itemErr))
+    const std::string assetItemsPath =
+        (pathutils::AssetsDir()
+            / "data"
+            / "Items.json").string();
+
+    if (!loadItemDefs(assetItemsPath, &itemErr))
     {
         SDL_ShowSimpleMessageBox(
             SDL_MESSAGEBOX_ERROR,
@@ -954,6 +1072,12 @@ bool Campaign::loadItemDefs(const std::string& path, std::string* outError)
         return false;
     }
 
+    const std::string language = m_language.empty() ? GameplayLanguage() : m_language;
+    std::unordered_map<std::string, ItemTextLocalization> itemTextLocalizations;
+    std::string localizationWarning;
+    const bool hasItemTextLocalizations =
+        LoadItemTextLocalizations(language, itemTextLocalizations, localizationWarning);
+
     m_itemDefs.clear();
 
     for (const auto& ji : root["items"])
@@ -1002,6 +1126,9 @@ bool Campaign::loadItemDefs(const std::string& path, std::string* outError)
         if (def.id.empty())
             continue;
 
+        if (hasItemTextLocalizations)
+            ApplyItemTextLocalization(def, itemTextLocalizations);
+
         if (def.name.empty())
             def.name = def.id;
 
@@ -1049,18 +1176,30 @@ bool Campaign::loadItemDefs(const std::string& path, std::string* outError)
     if (m_defaultCursor)
         SDL_SetCursor(m_defaultCursor);
 
-    SDL_Log("ItemDefs loaded: %d", (int)m_itemDefs.size());
+    if (!localizationWarning.empty())
+        SDL_Log("%s", localizationWarning.c_str());
+
+    SDL_Log("ItemDefs loaded: %d language=%s localized=%d",
+        (int)m_itemDefs.size(),
+        language.c_str(),
+        hasItemTextLocalizations ? (int)itemTextLocalizations.size() : 0);
     return true;
 }
 
 
 void Campaign::shutdown()
 {
+    m_sequenceManager.stop();
+    clearSequenceActors();
     m_npcManager.clear();
     m_characterManager.shutdown();
 
+    m_smithingNailAudio.stopAmbience();
+    updateInteriorAudio(nullptr);
+    m_audioManager.shutdown();
 	destroyObjectAtlases();
     destroyForageAtlases();
+    destroySmithingMinigameAssets();
 
     if (m_skyOverlay)
     {
@@ -1171,12 +1310,14 @@ bool Campaign::loadMap(const std::string& path, const std::string& spawnId)
     }
 
     loadMapLinksForCurrentMap();
+    m_interactPressedLastFrame = SDL_GetKeyboardState(nullptr)[gamecontrols::Get().use] != 0;
 
     // Forage data are map-specific (*.forage.json), so reload them on map transitions too.
     if (!m_forageDb.archetypes().empty())
         loadForagingData();
 
     m_npcManager.loadNpcVoices(m_audioManager);
+    loadSequenceMarkersForCurrentMap();
     return true;
 }
 

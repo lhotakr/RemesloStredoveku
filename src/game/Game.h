@@ -2,7 +2,7 @@
 #include <SDL.h>
 #include <string>
 #include "audio/AudioManager.h"
-#include "game/playerstats.h"
+#include "game/PlayerStats.h"
 #include "ControlSettings.h"
 
 class Editor;

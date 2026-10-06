@@ -19,7 +19,8 @@ public:
 
     // SFX (volitelné, pøipraveno do budoucna)
     bool loadSfx(const std::string& id, const std::string& path);
-    void playSfx(const std::string& id, int loops = 0, int channel = -1);
+    void playSfx(const std::string& id, int loops = 0, int channel = -1, int volume0_128 = -1);
+    void stopSfxChannel(int channel);
     void setSfxVolume(int volume0_128);
 
     const std::string& lastError() const { return m_lastError; }
@@ -27,6 +28,7 @@ public:
 private:
     void setError(const std::string& s) { m_lastError = s; }
 	int m_voiceChannel = 31; // rezervováno pro voice lines, aby se nepøerušovaly navzájem ani hudbou
+    bool m_initialized = false;
 
     Mix_Music* m_music = nullptr;
     std::string m_musicPath;

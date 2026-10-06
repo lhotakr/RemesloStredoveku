@@ -1,6 +1,7 @@
 #define NOMINMAX
 #include "BuildInteriorEngine.h"
 
+#include "ControlSettings.h"
 #include "PlayerStats.h"
 #include "Utf8.h"
 #include "interior/InteriorMapLoader.h"
@@ -390,6 +391,8 @@ void BuildInteriorEngine::setMouseLookSuppressed(bool suppressed)
         return;
 
     m_mouseLookSuppressed = suppressed;
+    if (m_mouseLookSuppressed)
+        resetInputState();
     setMouseLookEnabled(!m_editorMode && !m_mouseLookSuppressed);
 }
 
@@ -418,6 +421,40 @@ void BuildInteriorEngine::setPlayerPose(double x, double y, double angle, double
     m_playerZInitialized = false;
     m_cameraFloorInitialized = false;
     m_sceneDirty = true;
+}
+
+void BuildInteriorEngine::collectAudioEmitters(std::vector<InteriorAudioEmitter>& outEmitters) const
+{
+    outEmitters.clear();
+
+    for (const SpriteDef& sprite : m_sprites)
+    {
+        if (sprite.ambientSoundId.empty() || sprite.ambientSoundRadius <= 0.01)
+            continue;
+
+        const double distance = std::hypot(sprite.x - m_posX, sprite.y - m_posY);
+        if (distance > sprite.ambientSoundRadius)
+            continue;
+
+        const double linear = 1.0 - distance / sprite.ambientSoundRadius;
+        const double shaped = linear * linear * (3.0 - 2.0 * linear);
+        const int volume = std::clamp(
+            static_cast<int>(std::lround(static_cast<double>(sprite.ambientSoundVolume) * shaped)),
+            0,
+            128);
+        if (volume <= 0)
+            continue;
+
+        InteriorAudioEmitter emitter;
+        emitter.objectId = sprite.id;
+        emitter.soundId = sprite.ambientSoundId;
+        emitter.soundPath = sprite.ambientSoundPath;
+        emitter.x = sprite.x;
+        emitter.y = sprite.y;
+        emitter.radius = sprite.ambientSoundRadius;
+        emitter.volume0_128 = volume;
+        outEmitters.push_back(std::move(emitter));
+    }
 }
 
 void BuildInteriorEngine::shutdown()
@@ -467,6 +504,7 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
         return;
     if (m_mouseLookSuppressed)
     {
+        resetInputState();
         setMouseLookEnabled(false);
         return;
     }
@@ -483,10 +521,20 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
     if (e.type == SDL_WINDOWEVENT)
     {
         if (e.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
+        {
+            resetInputState();
             setMouseLookEnabled(false);
+        }
         else if (e.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
             setMouseLookEnabled(true);
         return;
+    }
+
+    if ((e.type == SDL_KEYDOWN || e.type == SDL_KEYUP) && e.key.repeat == 0)
+    {
+        const SDL_Scancode scancode = e.key.keysym.scancode;
+        if (scancode >= 0 && scancode < SDL_NUM_SCANCODES)
+            m_keyDown[static_cast<std::size_t>(scancode)] = e.type == SDL_KEYDOWN;
     }
 
     // Standard FPS behaviour: the mouse is captured continuously while the
@@ -494,6 +542,7 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
     // again if the surrounding game state did not already change screens.
     if (e.type == SDL_KEYDOWN && e.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
     {
+        resetInputState();
         setMouseLookEnabled(false);
         return;
     }
@@ -508,6 +557,17 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
         m_pitch = std::clamp(m_pitch - static_cast<double>(e.motion.yrel) * 0.0028, -0.52, 0.52);
         m_sceneDirty = true;
     }
+}
+
+void BuildInteriorEngine::resetInputState()
+{
+    m_keyDown.fill(false);
+    m_wasUseKeyDown = false;
+    m_wasRecoverKeyDown = false;
+    m_wasJumpKeyDown = false;
+    m_playerMoving = false;
+    m_playerRunning = false;
+    m_moveBlend = 0.0;
 }
 
 void BuildInteriorEngine::update(float dt)
@@ -528,9 +588,7 @@ void BuildInteriorEngine::update(float dt)
 
     if (m_mouseLookSuppressed)
     {
-        m_wasUseKeyDown = false;
-        m_wasRecoverKeyDown = false;
-        m_wasJumpKeyDown = false;
+        resetInputState();
         return;
     }
 
@@ -546,7 +604,13 @@ void BuildInteriorEngine::update(float dt)
     updateDoors(dt);
     updateAnimatedEffects(dt);
 
+    SDL_PumpEvents();
     const Uint8* keys = SDL_GetKeyboardState(nullptr);
+    auto keyDown = [&](SDL_Scancode scancode) -> bool {
+        return scancode >= 0 && scancode < SDL_NUM_SCANCODES
+            ? m_keyDown[static_cast<std::size_t>(scancode)]
+            : false;
+    };
 
     // WantCaptureKeyboard can remain true merely because the editor window has
     // focus. Suppress movement only while the user is typing into a text field.
@@ -554,19 +618,22 @@ void BuildInteriorEngine::update(float dt)
 
     if (!m_editorMode)
     {
-        const bool useDown = keys[SDL_SCANCODE_E] != 0 || keys[SDL_SCANCODE_RETURN] != 0;
+        const bool useDown = keyDown(gamecontrols::Get().use) || keyDown(SDL_SCANCODE_RETURN);
         if (useDown && !m_wasUseKeyDown)
             useNearestInteraction();
         m_wasUseKeyDown = useDown;
     }
 
-    const bool recoverDown = keys[SDL_SCANCODE_HOME] != 0;
+    const bool recoverDown = keyDown(SDL_SCANCODE_HOME);
     if (recoverDown && !m_wasRecoverKeyDown)
         recoverToLastSafePosition();
     m_wasRecoverKeyDown = recoverDown;
 
     if (keyboardCaptured)
+    {
+        resetInputState();
         return;
+    }
 
     if (!m_playerZInitialized)
     {
@@ -575,7 +642,7 @@ void BuildInteriorEngine::update(float dt)
         m_grounded = true;
     }
 
-    const bool jumpDown = keys[SDL_SCANCODE_SPACE] != 0;
+    const bool jumpDown = keyDown(gamecontrols::Get().jump);
     if (jumpDown && !m_wasJumpKeyDown && m_grounded)
     {
         m_verticalVelocity = kJumpVelocity;
@@ -589,7 +656,8 @@ void BuildInteriorEngine::update(float dt)
     const double rightX = -std::sin(m_angle);
     const double rightY = std::cos(m_angle);
 
-    const bool running = keys[SDL_SCANCODE_LSHIFT] || keys[SDL_SCANCODE_RSHIFT];
+    const auto& controls = gamecontrols::Get();
+    const bool running = keyDown(controls.run) || keyDown(SDL_SCANCODE_LSHIFT) || keyDown(SDL_SCANCODE_RSHIFT);
     double moveSpeed = m_editorMode ? 3.4 : 2.55;
     if (!m_editorMode && m_playerStats)
         moveSpeed = static_cast<double>(m_playerStats->getLimitedMoveSpeed(running)) * kInteriorUnitsPerCampaignPixel;
@@ -600,10 +668,10 @@ void BuildInteriorEngine::update(float dt)
 
     double moveX = 0.0;
     double moveY = 0.0;
-    if (keys[SDL_SCANCODE_W]) { moveX += forwardX; moveY += forwardY; }
-    if (keys[SDL_SCANCODE_S]) { moveX -= forwardX; moveY -= forwardY; }
-    if (keys[SDL_SCANCODE_A]) { moveX -= rightX;   moveY -= rightY; }
-    if (keys[SDL_SCANCODE_D]) { moveX += rightX;   moveY += rightY; }
+    if (keyDown(controls.moveForward))  { moveX += forwardX; moveY += forwardY; }
+    if (keyDown(controls.moveBackward)) { moveX -= forwardX; moveY -= forwardY; }
+    if (keyDown(controls.moveLeft))     { moveX -= rightX;   moveY -= rightY; }
+    if (keyDown(controls.moveRight))    { moveX += rightX;   moveY += rightY; }
 
     const double moveLength = std::hypot(moveX, moveY);
     const bool requested = moveLength > 0.0001;
@@ -672,10 +740,16 @@ void BuildInteriorEngine::update(float dt)
     if (std::abs(m_playerZ - m_cameraFloorZ) < 0.0001)
         m_cameraFloorZ = m_playerZ;
 
-    const double targetBlend = requested ? 1.0 : 0.0;
-    m_moveBlend += (targetBlend - m_moveBlend) * std::min(1.0, static_cast<double>(dt) * 8.0);
-    if (std::abs(targetBlend - m_moveBlend) < 0.001)
-        m_moveBlend = targetBlend;
+    if (requested)
+    {
+        m_moveBlend += (1.0 - m_moveBlend) * std::min(1.0, static_cast<double>(dt) * 8.0);
+        if (std::abs(1.0 - m_moveBlend) < 0.001)
+            m_moveBlend = 1.0;
+    }
+    else
+    {
+        m_moveBlend = 0.0;
+    }
     if (requested && m_grounded)
         m_bobPhase += static_cast<double>(dt) * (running ? 11.0 : 8.0);
 
@@ -776,6 +850,17 @@ bool BuildInteriorEngine::consumePendingCampaignTransition(std::string& outMap, 
     outSpawnId = m_pendingCampaignTransitionSpawnId;
     m_pendingCampaignTransitionMap.clear();
     m_pendingCampaignTransitionSpawnId.clear();
+    return true;
+}
+
+bool BuildInteriorEngine::consumePendingInteraction(InteriorInteractionEvent& outEvent)
+{
+    if (!m_hasPendingInteraction)
+        return false;
+
+    outEvent = m_pendingInteraction;
+    m_pendingInteraction = InteriorInteractionEvent{};
+    m_hasPendingInteraction = false;
     return true;
 }
 
@@ -1731,6 +1816,15 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             SpriteDef sprite;
             sprite.id = source.value("id", makeSpriteId());
             sprite.texture = textureKeyFromJson(source, "texture_key", "texture", static_cast<TextureKey>('T'));
+            sprite.viewTextures.fill(kNoTexture);
+            if (source.contains("view_textures") && source["view_textures"].is_object())
+            {
+                const json& views = source["view_textures"];
+                sprite.viewTextures[0] = textureKeyFromJson(views, "front_texture_key", "front", kNoTexture);
+                sprite.viewTextures[1] = textureKeyFromJson(views, "right_texture_key", "right", kNoTexture);
+                sprite.viewTextures[2] = textureKeyFromJson(views, "back_texture_key", "back", kNoTexture);
+                sprite.viewTextures[3] = textureKeyFromJson(views, "left_texture_key", "left", kNoTexture);
+            }
             sprite.x = source.value("x", 2.5);
             sprite.y = source.value("y", 2.5);
             sprite.zOffset = source.value("z_offset", 0.0);
@@ -1784,9 +1878,17 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             sprite.lightFlicker = std::clamp(source.value("light_flicker", fireLike ? 0.20 : 0.0), 0.0, 0.75);
             sprite.lightMultiplier = 1.0;
 
+            sprite.ambientSoundId = source.value("ambient_sound_id", source.value("sound_id", std::string()));
+            sprite.ambientSoundPath = source.value("ambient_sound_path", source.value("sound_path", std::string()));
+            sprite.ambientSoundRadius = std::clamp(source.value("ambient_sound_radius", 0.0), 0.0, 48.0);
+            sprite.ambientSoundVolume = std::clamp(source.value("ambient_sound_volume", 96), 0, 128);
+
             sprite.interactionLabel = source.value("interaction_label", std::string());
             sprite.targetInterior = source.value("target_interior", std::string());
             sprite.targetSpawn = source.value("target_spawn", std::string());
+            sprite.workshopId = source.value("workshop", std::string());
+            sprite.stationId = source.value("station", std::string());
+            sprite.actionId = source.value("action", std::string());
             m_sprites.push_back(sprite);
         }
     }
@@ -2076,7 +2178,7 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
     json sprites = json::array();
     for (const SpriteDef& s : m_sprites)
     {
-        sprites.push_back({
+        json spriteJson = {
             {"id", s.id},
             {"texture_key", s.texture},
             {"x", s.x}, {"y", s.y},
@@ -2098,8 +2200,29 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
             {"light_flicker", s.lightFlicker},
             {"interaction_label", s.interactionLabel},
             {"target_interior", s.targetInterior},
-            {"target_spawn", s.targetSpawn}
-        });
+            {"target_spawn", s.targetSpawn},
+            {"workshop", s.workshopId},
+            {"station", s.stationId},
+            {"action", s.actionId}
+        };
+        if (!s.ambientSoundId.empty() || !s.ambientSoundPath.empty() || s.ambientSoundRadius > 0.0)
+        {
+            spriteJson["ambient_sound_id"] = s.ambientSoundId;
+            spriteJson["ambient_sound_path"] = s.ambientSoundPath;
+            spriteJson["ambient_sound_radius"] = s.ambientSoundRadius;
+            spriteJson["ambient_sound_volume"] = s.ambientSoundVolume;
+        }
+        if (std::any_of(s.viewTextures.begin(), s.viewTextures.end(),
+                        [](TextureKey key) { return key != kNoTexture; }))
+        {
+            spriteJson["view_textures"] = {
+                {"front_texture_key", s.viewTextures[0]},
+                {"right_texture_key", s.viewTextures[1]},
+                {"back_texture_key", s.viewTextures[2]},
+                {"left_texture_key", s.viewTextures[3]}
+            };
+        }
+        sprites.push_back(std::move(spriteJson));
     }
     root["sprites"] = sprites;
 
@@ -2676,9 +2799,17 @@ bool BuildInteriorEngine::loadCastleEntityOverlay(const std::string& castleId,
         sprite.lightFlicker = std::clamp(source.value("light_flicker", fireLike ? 0.20 : 0.0), 0.0, 0.75);
         sprite.lightMultiplier = 1.0;
 
+        sprite.ambientSoundId = source.value("ambient_sound_id", source.value("sound_id", std::string()));
+        sprite.ambientSoundPath = source.value("ambient_sound_path", source.value("sound_path", std::string()));
+        sprite.ambientSoundRadius = std::clamp(source.value("ambient_sound_radius", 0.0), 0.0, 48.0);
+        sprite.ambientSoundVolume = std::clamp(source.value("ambient_sound_volume", 96), 0, 128);
+
         sprite.interactionLabel = source.value("interaction_label", std::string());
         sprite.targetInterior = source.value("target_interior", std::string());
         sprite.targetSpawn = source.value("target_spawn", std::string());
+        sprite.workshopId = source.value("workshop", std::string());
+        sprite.stationId = source.value("station", std::string());
+        sprite.actionId = source.value("action", std::string());
         if (existingIt != m_sprites.end())
             *existingIt = std::move(sprite);
         else
@@ -2770,8 +2901,18 @@ bool BuildInteriorEngine::saveCastleEntityOverlay()
             {"light_flicker", sprite.lightFlicker},
             {"interaction_label", sprite.interactionLabel},
             {"target_interior", sprite.targetInterior},
-            {"target_spawn", sprite.targetSpawn}
+            {"target_spawn", sprite.targetSpawn},
+            {"workshop", sprite.workshopId},
+            {"station", sprite.stationId},
+            {"action", sprite.actionId}
         };
+        if (!sprite.ambientSoundId.empty() || !sprite.ambientSoundPath.empty() || sprite.ambientSoundRadius > 0.0)
+        {
+            entity["ambient_sound_id"] = sprite.ambientSoundId;
+            entity["ambient_sound_path"] = sprite.ambientSoundPath;
+            entity["ambient_sound_radius"] = sprite.ambientSoundRadius;
+            entity["ambient_sound_volume"] = sprite.ambientSoundVolume;
+        }
 
         const auto textureIt = m_texturePaths.find(sprite.texture);
         if (textureIt != m_texturePaths.end() && !textureIt->second.empty())
@@ -4849,7 +4990,7 @@ BuildInteriorEngine::SpriteDef* BuildInteriorEngine::nearestUsableSprite(double 
     double bestDistance = maxDistance;
     for (SpriteDef& s : m_sprites)
     {
-        if (s.interactionLabel.empty() && s.targetInterior.empty()) continue;
+        if (s.interactionLabel.empty() && s.targetInterior.empty() && s.actionId.empty()) continue;
         const double dx = s.x - m_posX;
         const double dy = s.y - m_posY;
         const double distance = std::sqrt(dx * dx + dy * dy);
@@ -5158,6 +5299,20 @@ void BuildInteriorEngine::useNearestInteraction()
                 return;
             if (!loadInteriorAtSpawn(target, sprite->targetSpawn))
                 m_status = U8("Přechod se nezdařil: ") + target;
+            return;
+        }
+        if (!sprite->actionId.empty())
+        {
+            m_pendingInteraction = InteriorInteractionEvent{
+                m_currentInteriorId,
+                sprite->id,
+                sprite->workshopId.empty() ? m_currentInteriorId : sprite->workshopId,
+                sprite->stationId,
+                sprite->actionId,
+                sprite->interactionLabel
+            };
+            m_hasPendingInteraction = true;
+            m_status = sprite->interactionLabel.empty() ? U8("Pracoviště je připravené.") : sprite->interactionLabel;
             return;
         }
         m_status = sprite->interactionLabel.empty() ? U8("Objekt nemá použití.") : sprite->interactionLabel;
@@ -7256,7 +7411,8 @@ void BuildInteriorEngine::renderSwingDoors(int screenW, int screenH, int horizon
 void BuildInteriorEngine::renderBillboardSprite(const SpriteDef& sprite, int screenW, int screenH,
                                                  int horizon, double eyeZ)
 {
-    const TextureRef* texturePtr = m_textureLookup[static_cast<std::size_t>(sprite.texture)];
+    const TextureKey viewTexture = textureForSpriteView(sprite);
+    const TextureRef* texturePtr = m_textureLookup[static_cast<std::size_t>(viewTexture)];
     if (!texturePtr || texturePtr->pixels.empty() || texturePtr->w <= 0 || texturePtr->h <= 0)
         return;
     const TextureRef& texture = *texturePtr;
@@ -7314,6 +7470,27 @@ void BuildInteriorEngine::renderBillboardSprite(const SpriteDef& sprite, int scr
             m_dynamicDepthBuffer[pixelIndex] = transformY;
         }
     }
+}
+
+BuildInteriorEngine::TextureKey BuildInteriorEngine::textureForSpriteView(const SpriteDef& sprite) const
+{
+    if (!std::any_of(sprite.viewTextures.begin(), sprite.viewTextures.end(),
+                    [](TextureKey key) { return key != kNoTexture; }))
+        return sprite.texture;
+
+    const double viewAngle = std::atan2(m_posY - sprite.y, m_posX - sprite.x);
+    const double relative = wrapAngle(viewAngle - sprite.yaw);
+    const double sector = kPi * 0.25;
+    int index = 0;
+    if (relative >= sector && relative < 3.0 * sector)
+        index = 1;
+    else if (relative <= -sector && relative > -3.0 * sector)
+        index = 3;
+    else if (std::abs(relative) >= 3.0 * sector)
+        index = 2;
+
+    const TextureKey selected = sprite.viewTextures[static_cast<std::size_t>(index)];
+    return selected != kNoTexture ? selected : sprite.texture;
 }
 
 void BuildInteriorEngine::renderVoxelSprite(const SpriteDef& sprite, int screenW, int screenH,
@@ -8358,12 +8535,29 @@ void BuildInteriorEngine::renderEditorOverlay()
                     if (ImGui::SliderFloat(U8("Míra mihotání"), &flicker, 0.0f, 0.65f, "%.2f")) { s.lightFlicker = flicker; objectChanged = true; }
                 }
 
+                ImGui::Separator();
+                ImGui::TextUnformatted(U8("Zvuk objektu"));
+                char ambientSoundId[96]; std::snprintf(ambientSoundId, sizeof(ambientSoundId), "%s", s.ambientSoundId.c_str());
+                if (ImGui::InputText("Ambient sound ID", ambientSoundId, sizeof(ambientSoundId))) { s.ambientSoundId = ambientSoundId; objectChanged = true; }
+                char ambientSoundPath[192]; std::snprintf(ambientSoundPath, sizeof(ambientSoundPath), "%s", s.ambientSoundPath.c_str());
+                if (ImGui::InputText("Ambient sound path", ambientSoundPath, sizeof(ambientSoundPath))) { s.ambientSoundPath = ambientSoundPath; objectChanged = true; }
+                float soundRadius = static_cast<float>(s.ambientSoundRadius);
+                int soundVolume = s.ambientSoundVolume;
+                if (ImGui::SliderFloat(U8("Dosah zvuku"), &soundRadius, 0.0f, 24.0f, "%.2f")) { s.ambientSoundRadius = soundRadius; objectChanged = true; }
+                if (ImGui::SliderInt(U8("Hlasitost zvuku"), &soundVolume, 0, 128)) { s.ambientSoundVolume = soundVolume; objectChanged = true; }
+
                 char label[160]; std::snprintf(label, sizeof(label), "%s", s.interactionLabel.c_str());
                 if (ImGui::InputText("Interaction label", label, sizeof(label))) { s.interactionLabel = label; objectChanged = true; }
                 char target[128]; std::snprintf(target, sizeof(target), "%s", s.targetInterior.c_str());
                 if (ImGui::InputText("Target interior", target, sizeof(target))) { s.targetInterior = target; objectChanged = true; }
                 char targetSpawn[128]; std::snprintf(targetSpawn, sizeof(targetSpawn), "%s", s.targetSpawn.c_str());
                 if (ImGui::InputText("Target spawn", targetSpawn, sizeof(targetSpawn))) { s.targetSpawn = targetSpawn; objectChanged = true; }
+                char workshop[128]; std::snprintf(workshop, sizeof(workshop), "%s", s.workshopId.c_str());
+                if (ImGui::InputText("Workshop", workshop, sizeof(workshop))) { s.workshopId = workshop; objectChanged = true; }
+                char station[128]; std::snprintf(station, sizeof(station), "%s", s.stationId.c_str());
+                if (ImGui::InputText("Station", station, sizeof(station))) { s.stationId = station; objectChanged = true; }
+                char action[128]; std::snprintf(action, sizeof(action), "%s", s.actionId.c_str());
+                if (ImGui::InputText("Action", action, sizeof(action))) { s.actionId = action; objectChanged = true; }
                 if (objectChanged)
                     m_sceneDirty = true;
                 if (ImGui::Button(U8("Přesunout ke kameře"))) { s.x = m_posX; s.y = m_posY; m_sceneDirty = true; }

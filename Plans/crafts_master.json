@@ -1,0 +1,745 @@
+{
+  "schema": "remeslo-stredoveku.complete-crafts.v1",
+  "title": "Řemeslo středověku — hlavní katalog řemesel",
+  "scope": {
+    "full_worldly_crafts": 13,
+    "short_work_tracks": 6,
+    "hidden_artifact_branch": true,
+    "region_rule": "Houska–Doksy–Velký rybník–Bezděz–Podbezdězí využívá specializaci, trh a dovoz; železo se nemusí těžit přímo v oblasti."
+  },
+  "progression": {
+    "ranks": [
+      "Pozorovatel",
+      "Učeň",
+      "Tovaryš",
+      "Specialista",
+      "Mistr"
+    ],
+    "final_choice": [
+      "Inovátor",
+      "Mistr dílny"
+    ],
+    "unlock_rule": "Hráč musí postup vidět, pochopit, prakticky provést a prokázat na skutečné práci.",
+    "books_rule": "Kniha může předat znalost, ale nenahrazuje motorickou dovednost ani mistrovu zkoušku.",
+    "failure_rule": "Rozpoznání vady, oprava a hospodárná záchrana výrobku jsou samostatné důkazy postupu.",
+    "knowledge_states": [
+      "neznámý",
+      "zaslechnutý",
+      "pozorovaný",
+      "vyzkoušený",
+      "osvojený",
+      "zvládnutý"
+    ]
+  },
+  "ui_visibility": {
+    "completed": "barevný a zřetelný",
+    "active": "barevný s jemnou září",
+    "locked_near": "čitelný, odbarvený a lehce zahalený",
+    "locked_far": "šedý a silně zahalený",
+    "secret": "bezejmenná silueta bez zřetelného obrysu až do odhalení"
+  },
+  "quality_tiers": [
+    "Zkažený",
+    "Provizorní",
+    "Běžný",
+    "Poctivý",
+    "Výborný",
+    "Mistrovský"
+  ],
+  "crafts": [
+    {
+      "name": "Kovářství",
+      "id": "smithing",
+      "mentor": "Beneš, vesnický kovář; později hradní nebo městský mistr",
+      "place": "Kovárna v Blatcích, hradní dílny, trh v Doksech",
+      "mods": "síla, obratnost, soustředění, pozorování, odolnost; stav nářadí a výhně",
+      "role": "Výroba a oprava nástrojů. Záměrně není postavené hlavně na zbraních; kovářství pohání zemědělství, dřevo, stavby i dopravu.",
+      "spec": "Nástrojařství; podkovářství; stavební kování. Kolářské kování je mezioborový uzel s prací se dřevem.",
+      "masterpiece": "Sada spolehlivých zemědělských nástrojů, kování mlýnského kola nebo kompletní kování vozu.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Bezpečnost výhně; druhy paliva; nástroje; barvy žáru; správné držení materiálu; práce s měchy.",
+          "mastery_evidence": "Udrží správný oheň, rozezná příliš studené a přepálené železo a bezpečně asistuje mistrovi."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Rovnání a broušení; hřebíky, skoby, háky; jednoduché opravy; základní kalení pod dohledem.",
+          "mastery_evidence": "Vyrobí stejnorodou sérii hřebíků a opraví srp bez praskliny nebo ztráty ostří."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Sekery, dláta, nože, motyky a podkovy; svařování ohněm; tepelné zpracování; odhad materiálu.",
+          "mastery_evidence": "Samostatně zhotoví nebo opraví celý pracovní nástroj a obhájí volbu postupu."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba specializace; složité spoje a kování; rozpoznání vad železa; přesnější řízení teploty.",
+          "mastery_evidence": "Zakázka se skrytou vadou: hráč musí problém objevit, napravit a neplýtvat materiálem."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Návrh postupu; hospodaření se železem a uhlím; diagnostika cizích výrobků; vedení společné práce.",
+          "mastery_evidence": "Mistrovský projekt přijme alespoň jeden další řemeslník, který na jeho spolehlivosti závisí."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje přípravky, spotřebu paliva nebo tvar nástroje. Mistr dílny učí, plánuje zásoby a ručí za jakost.",
+          "mastery_evidence": "Jedna cesta stačí k završení oboru; druhá zůstává dlouhodobým cílem."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-00.png",
+      "design_status": "complete",
+      "runtime_asset_status": "reference_implementation_complete",
+      "runtime_asset_root": "assets/smithing"
+    },
+    {
+      "name": "Tesařství a truhlářství",
+      "id": "woodworking",
+      "mentor": "Matěj pro venkovské opravy; zkušený tesař v Doksech nebo na Housce",
+      "place": "Statek, staveniště, hradní údržba, lesní pracovní místa",
+      "mods": "obratnost, síla, pozorování, improvizace, zpracování dřeva, práce s lanem",
+      "role": "Jedna společná větev do úrovně tovaryše; specialista se rozdělí na konstrukční tesařství, jemnější truhlářství nebo stavební opravy. Kolářství je kvůli geometrii kol a závislosti na kováři samostatný obor.",
+      "spec": "Konstrukční tesařství; truhlářství a nábytek; stavební výdřeva a opravy. Bečvářství může být pozdější místní specializace, pokud bude mít region dostatečné odbytiště.",
+      "masterpiece": "Nosná část krovu, přesná truhla s kováním nebo nové hradní dveře osazené do opraveného ostění.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Druhy dřeva; směr vláken; vlhkost; měření; bezpečné použití sekery, pily, pořízu a dláta.",
+          "mastery_evidence": "Vybere vhodné dřevo pro topůrko, kolík a nosný prvek a vysvětlí rozdíl."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Kolíky, topůrka, ploty, jednoduché spoje; ostření; oprava vrat a hospodářských předmětů.",
+          "mastery_evidence": "Opraví plot nebo vrata tak, aby spoj držel a dřevo zbytečně nepraskalo."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Čep a dlab; rámy; dveře; lavice, truhly a jednoduchý nábytek; čtení rozměrů z předlohy.",
+          "mastery_evidence": "Samostatně vytvoří předmět s několika přesnými spoji bez zakrytí chyb kovem nebo lanem."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Tesař řeší nosnost a stavbu; truhlář přesnost a povrch; stavební opravář diagnostiku starých konstrukcí.",
+          "mastery_evidence": "První zakázka, kde se chyba projeví až při sestavení; hráč musí najít příčinu."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Rozvržení materiálu; opravy starých konstrukcí; práce s křivým dřevem; vedení stavby nebo dílny.",
+          "mastery_evidence": "Mistrovský projekt obstojí při zatížení, počasí a kontrole objednavatele."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje spoj, pracovní přípravek nebo využití odpadu. Mistr dílny rozděluje práci, učí a ručí za stavbu.",
+          "mastery_evidence": "Završení oboru praktickým přínosem pro komunitu."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-01.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Kamenictví a zednictví",
+      "id": "masonry",
+      "mentor": "Hradní kameník, zednická četa nebo mistr při opravách Housky",
+      "place": "Lom, staveniště, vápenice, hradní zdi, kaple a hospodářské stavby",
+      "mods": "síla, odolnost, obratnost, pozorování, soustředění; kvalita kamene, malty a založení",
+      "role": "Od prostých oprav až po ostění, schody, klenby a pece. Hráč není osamělý stavitel hradu; vyšší práce jsou skupinové projekty.",
+      "spec": "Zednictví; kamenické opracování; pece, krby a technické stavby.",
+      "masterpiece": "Bezpečné ostění nebo schodiště, opravená část hradní zdi či dobře táhnoucí pec.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Druhy kamene; lomové vady; písek, vápno a malta; založení; přenos těžkých kusů a bezpečnost.",
+          "mastery_evidence": "Vybere vhodný kámen pro výplň, líc a opracovaný prvek a správně namíchá zkušební maltu."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Třídění kamene; jednoduché zdivo; spárování; dlažba; základní sekání a opravy.",
+          "mastery_evidence": "Postaví rovný úsek zdi, který drží vazbu a nevyboulí se."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Rohy, otvory, schody, sokly; přesnější opracování; lešení; čtení šablon.",
+          "mastery_evidence": "Dokončí stavební prvek v četě a správně naváže na cizí práci."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; oblouky a ostění; komíny a pece; diagnostika trhlin, vlhkosti a sedání.",
+          "mastery_evidence": "Opraví závadu bez pouhého zakrytí její příčiny."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Rozvržení stavby; šablony; řízení čety; posouzení starého zdiva; plánování kamene, malty a času.",
+          "mastery_evidence": "Mistrovský projekt obstojí po zatížení, zatopení pece nebo nepřízni počasí."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje šablonu, tah pece nebo pracovní postup. Mistr dílny organizuje četu a ručí za bezpečnost.",
+          "mastery_evidence": "Završení oboru veřejně viditelnou a trvanlivou stavbou."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-02.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Kolářství",
+      "id": "wheelwrighting",
+      "mentor": "Zkušený kolář v Doksech nebo Dubé; Beneš dodává obruče a osové kování",
+      "place": "Kolářská dílna, dvůr, sušárna dřeva, kovárna a cesty mezi Houskou, Doksy a Bezdězem",
+      "mods": "obratnost, síla, pozorování, soustředění, zpracování dřeva; geometrie kola, vlhkost dřeva a přesnost kování",
+      "role": "Samostatný obor na rozhraní truhlářství, dopravy a kovářství. Nejde jen o výrobu kola: hráč řeší náboje, loukotě, ráfky, nápravy, vůle a opravy vozu v terénu.",
+      "spec": "Vozová kola; vozy a nápravy; velká vodní kola a převody ve spolupráci s mlynářem.",
+      "masterpiece": "Pár shodných vozových kol s nasazenými obručemi nebo opravený vůz, který bezpečně obstojí na kamenité cestě.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Části kola a vozu; vhodné druhy dřeva; směr vláken; sušení; měření průměru, středu a vůle.",
+          "mastery_evidence": "Rozebere závadu kola na náboj, paprsek, loukoť, ráfek, obruč nebo nápravu a zvolí správný materiál."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Příprava šablon; dlabání náboje; opravy paprsků; mazání nápravy; jednoduché vozové díly.",
+          "mastery_evidence": "Opraví poškozený paprsek nebo vůli nápravy bez rozštípnutí okolního dřeva."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Sestavení kola; přesné rozteče; sesazení loukotí; spolupráce při nahřívání a nasazení železné obruče.",
+          "mastery_evidence": "Vyrobí kolo, které se otáčí bez výrazného házení a unese běžné zatížení."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; těžké vozy; nápravy a převody; diagnostika nerovnoměrného opotřebení; nouzové opravy na cestě.",
+          "mastery_evidence": "Najde skrytou příčinu opakovaného praskání a neopraví pouze viditelný následek."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Návrh celého podvozku; párování kol; plánování dřeva a kování; vedení společné práce koláře a kováře.",
+          "mastery_evidence": "Mistrovský vůz nebo vodní kolo projde zatížením, delší jízdou či souvislým provozem."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje šablony, mazání, výměnnost dílů nebo rozložení zatížení. Mistr dílny řídí sušení, zásoby a návaznost na kovárnu.",
+          "mastery_evidence": "Završení oboru prokazatelně delší životností a opravitelností, nikoli nápadným vzhledem."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-03.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Hrnčířství",
+      "id": "pottery",
+      "mentor": "Hrnčíř v Dubé nebo Doksech; Zdislava pro léčebné nádoby",
+      "place": "Hrnčířská dílna, naleziště hlíny, sušárna a pec",
+      "mods": "obratnost, soustředění, pozorování, paměť; vlhkost hlíny, sušení a teplota pece",
+      "role": "Zajišťuje nádoby pro vaření, skladování, léčiva i obchod. Výsledek vzniká v několika dnech a chyba se často projeví až při výpalu.",
+      "spec": "Kuchyňské nádobí; zásobní a přepravní nádoby; kamnářské a stavební prvky.",
+      "masterpiece": "Sada odolného kuchyňského nádobí, velká zásobnice nebo přesné kachle pro kamna.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Rozpoznání hlíny; čištění a hnětení; konzistence; části kruhu a pece; bezpečné sušení.",
+          "mastery_evidence": "Připraví hlínu bez kamínků a vzduchových kapes a vybere vhodné místo k sušení."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Ručně tvarované misky; jednoduché nádoby na kruhu; uchy; ořezání; základní výpal.",
+          "mastery_evidence": "Vyrobí několik nádob stejné velikosti, z nichž většina přežije sušení i výpal."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Tenkostěnné nádoby; poklice; džbány; engoba a jednoduchá výzdoba; skládání pece.",
+          "mastery_evidence": "Samostatná dávka pece s rozumnou zmetkovitostí a správným rozložením tepla."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba výrobkové větve; řízení atmosféry a teploty; náročné tvary; řešení prasklin a deformací.",
+          "mastery_evidence": "Rozpozná příčinu vady podle střepu a upraví příští dávku."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Návrh tvaru podle použití; plánování výroby; oprava pece; hospodaření s hlínou, palivem a časem.",
+          "mastery_evidence": "Mistrovská série obstojí při praktické zkoušce těsnosti, tepelného rázu nebo zatížení."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje směs, profil nádoby či vedení tepla. Mistr dílny řídí dávky, standardy a učedníky.",
+          "mastery_evidence": "Završení oboru opakovatelnou jakostí, ne jedním šťastným kusem."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-04.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Koželužství a ševcovství",
+      "id": "leatherworking",
+      "mentor": "Koželuh a švec v Dubé nebo Doksech; sedlář či řemenář podle specializace",
+      "place": "Koželužna mimo hustou zástavbu, ševcovská dílna, stáje a trh",
+      "mods": "obratnost, síla, odolnost, soustředění, hygiena; kvalita kůže, činidla a doba zpracování",
+      "role": "Dlouhodobé zpracování surové kůže a následná výroba obuvi, opasků, brašen, pochev, řemení a postrojů.",
+      "spec": "Ševcovství; řemenářství a brašnářství; sedlářství a postroje.",
+      "masterpiece": "Pár dobře padnoucí obuvi, odolný postroj nebo kompletní sada řemení pro vůz či mlýn.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Druhy kůží; stažení a konzervace; čištění; činění; bezpečnost, zápach a hygiena pracoviště.",
+          "mastery_evidence": "Rozezná čerstvou, zkaženou a špatně činěnou kůži a připraví ji k dalšímu kroku."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Škrábání, napínání, mazání; řezání pásků; šití sedlářským stehem; jednoduché váčky a opasky.",
+          "mastery_evidence": "Zhotoví rovný šev a řemen, který se při zatížení neroztrhne."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Obuv, brašny, pochvy, závěsy a řemení; tvarování za mokra; opravy starých výrobků.",
+          "mastery_evidence": "Samostatný výrobek projde zkouškou pohybu, zatížení a vlhkosti."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba výrobkové větve; střih složitých dílů; hospodaření s plochou kůže; kombinace s textilem, dřevem a kovem.",
+          "mastery_evidence": "Hráč musí využít kůži s přirozenými vadami bez oslabení důležité části."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Posouzení celé usně; návrh podle těla zvířete či člověka; řízení činění; vedení zakázky.",
+          "mastery_evidence": "Mistrovský výrobek je pohodlný, opravitelný a dlouhodobě odolný."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje střih, spoj nebo impregnaci. Mistr dílny řídí zásoby, čistotu, zakázky a učedníky.",
+          "mastery_evidence": "Završení oboru spolehlivostí v každodenním používání."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-05.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Tkalcovství a krejčovství",
+      "id": "textiles",
+      "mentor": "Grete a ženy domácností; později tkalec, krejčí nebo barvíř v městském centru",
+      "place": "Domácnost, pole lnu, máčírna, sušárna, stav a tržiště",
+      "mods": "obratnost, soustředění, paměť, oprava oděvu, práce s lanem; čistota a kvalita vlákna",
+      "role": "Propojuje pěstování lnu, zpracování vlákna, předení, tkaní, šití, barvení a opravy. První užitek přichází brzy, mistrovská látka až po dlouhém výrobním řetězci.",
+      "spec": "Předení a tkaní; krejčovství a opravy; barvení a dokončování textilu. Provaznictví je kratší podpůrná dráha.",
+      "masterpiece": "Souvislý kus rovnoměrného plátna, dobře padnoucí oděv nebo barevně a rozměrově stálá slavnostní textilie.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Celý řetězec lnu; třídění vláken; vřeteno, přeslice a stav; vady niti a látky.",
+          "mastery_evidence": "Správně seřadí kroky od sklizně po plátno a pozná nedostatečně zpracované vlákno."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Lámání a česání lnu; předení hrubé niti; jednoduché záplaty; příprava osnovy.",
+          "mastery_evidence": "Vytvoří použitelnou nit a opraví oděv bez dalšího trhání látky."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Rovnoměrná příze; osnova a útek; jednoduchá vazba; střih a sešití základního oděvu.",
+          "mastery_evidence": "Dokončí celý výrobek od vlákna po použitelný textilní předmět."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba textilní větve; jemnější vazby; přizpůsobení oděvu; moření, barvení a dokončení povrchu.",
+          "mastery_evidence": "Zakázka s omezeným materiálem prověří plánování střihu a schopnost opravit chybu."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Posouzení suroviny; návrh výrobku; barvení a dokončení; organizace domácí nebo dílenské výroby.",
+          "mastery_evidence": "Mistrovský výrobek musí být rovnoměrný, odolný a společensky přijatelný pro objednavatele."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje přípravek, vazbu nebo úsporu materiálu. Mistr dílny hlídá návaznost mnoha pracovníků a jakost.",
+          "mastery_evidence": "Završení oboru propojením techniky, organizace a vkusu."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-06.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Výroba luků a šípů",
+      "id": "bowyery",
+      "mentor": "Lesník, zkušený lovec nebo hradní střelec; specializovaný výrobce na trhu či u posádky Bezdězu",
+      "place": "Les pro výběr dřeva, suchá dílna, tržiště, hradní zázemí a střelnice pro ověření výrobku",
+      "mods": "obratnost, pozorování, soustředění, paměť, zpracování dřeva; směr vláken, vlhkost, vyvážení a jakost šlachy",
+      "role": "Výrobní větev oddělená od samotné lukostřelby. Odpovídá českému prostředí kolem roku 1400: lovecké a obranné luky, opravy, šípy a tětivy, nikoli anglická legenda o všudypřítomném dlouhém luku.",
+      "spec": "Lukařství; šípařství; tětivy, pouzdra a polní opravy ve vazbě na textil a kůži.",
+      "masterpiece": "Vyvážený lovecký luk s bezpečnou tětivou a sadou hmotnostně sladěných šípů, ověřený střelcem na různou vzdálenost.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Druhy dřeva; letokruhy a suky; části luku a šípu; bezpečné napínání; peří, hroty a tětivy.",
+          "mastery_evidence": "Vyřadí nebezpečný polotovar, určí směr vláken a rozezná poškozenou tětivu."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Rovnání dříků; zářezy; lepení a vázání per; jednoduché tětivy; údržba a drobné opravy.",
+          "mastery_evidence": "Vyrobí několik rovných šípových dříků se shodnou délkou a bezpečným končíkem."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Hrubování a postupné ohýbání luku; vyvažování ramen; osazení hrotů; hmotnostní třídění šípů.",
+          "mastery_evidence": "Dokončí běžný luk bez nebezpečného lomu a sadu šípů s předvídatelným letem."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; kompenzace vlastností kusu dřeva; přesnější vyvažování; lovecké, cvičné a účelové šípy.",
+          "mastery_evidence": "Odhalí slabé místo při postupném napínání a výrobek opraví nebo bezpečně vyřadí."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Návrh podle postavy střelce a účelu; kontrola celé výrobní dávky; hospodaření s kvalitním dřevem a hroty.",
+          "mastery_evidence": "Mistrovská souprava je bezpečná, opravitelná a přijata zkušeným střelcem po praktické zkoušce."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje šablonu, měření průhybu či stálost šípů. Mistr dílny řídí sušení, párování dílů a kontrolu bezpečnosti.",
+          "mastery_evidence": "Završení oboru stabilitou celé soupravy, nikoli jedním mimořádným výstřelem."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-07.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Pivovarnictví",
+      "id": "brewing",
+      "mentor": "Zkušená hospodyně pro slabé domácí pivo; později sladovník nebo právem oprávněný pivovarník v Doksech či Dubé",
+      "place": "Hospodářský dvůr, sladovna nebo městský pivovar; voda, hvozd, varná nádoba, kvasná káď a sklep",
+      "mods": "soustředění, paměť, pozorování, vaření, hygiena a organizace práce; obilí, voda, teplota, kvasnice a čistota nádoby",
+      "role": "Samostatný dlouhý proces od sladu přes vystírání a var po kvašení a skladování. Přístup závisí na místních právech a hospodářství; hráč si nepostaví volně pivovar v každé vsi.",
+      "spec": "Sladování; domácí a běžné pivo; větší várky, skladování a provoz pivovaru podle místních práv.",
+      "masterpiece": "Stálá várka pro svátek nebo pracovní četu, která je zdravotně bezpečná, chuťově vyrovnaná a připravená včas.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Obilí a slad; kvalita vody; nádoby; čistota; rozdíl mezi vystíráním, varem, chlazením a kvašením.",
+          "mastery_evidence": "Správně připraví a vyčistí zařízení, pozná zkaženou surovinu a udrží bezpečné pořadí práce."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Máčení a klíčení obilí; sušení sladu; drcení; ohřev vody; péče o malou kvasnou nádobu.",
+          "mastery_evidence": "Připraví použitelný slad a jednoduchou malou várku pod dohledem bez zkažení."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Vystírání; scezování; var; chmel či jiné dobové ochucení; chlazení, zakvašení a stáčení.",
+          "mastery_evidence": "Samostatně vede celou běžnou várku a včas rozpozná nesprávnou teplotu či začínající kontaminaci."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; řízení síly a chuti; opakování stejné várky; využití mláta; diagnostika chyb sladu a kvašení.",
+          "mastery_evidence": "Zachrání ještě opravitelnou várku nebo ji včas vyřadí, aniž by ohrozil domácnost."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Plánování zásob, vody, paliva a nádob; větší várky; sklepní režim; organizace pomocníků a odbytu.",
+          "mastery_evidence": "Mistrovský nápoj obstojí při opakovaném uvaření a hodnocení více odběratelů."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje hospodaření s teplem, vodou nebo stálost várky. Mistr dílny řídí slad, var, kvašení, zásoby a čistotu.",
+          "mastery_evidence": "Završení oboru spolehlivým provozem v mezích dobových práv a dostupných surovin."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-08.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Písařství a knihařství",
+      "id": "scribal",
+      "mentor": "Kněz, písař hradní správy nebo městský písař; knihař a iluminátor až ve větším centru",
+      "place": "Fara, hradní kancelář, městská správa, klášterní nebo městská dílna; přístup je společensky i jazykově omezený",
+      "mods": "soustředění, paměť, pozorování, jemná obratnost, historie a dobový společenský protokol; gramotnost, latina, světlo a kvalita materiálu",
+      "role": "Pozdní učené řemeslo. Hráč se neučí jen číst: připravuje inkoust a brk, opisuje, vede záznamy, skládá složky, šije knižní blok a opravuje vazbu. Otevírá Velkou knihu dílny.",
+      "spec": "Opisování a kancelářské záznamy; knihařství a opravy; jednoduchá výzdoba, schémata a značky dílen.",
+      "masterpiece": "Velká kniha dílny: přesný, svázaný a svědky potvrzený záznam postupů, vad a mistrovských výrobků všech třinácti oborů.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Psací materiály; výroba a seříznutí brku; inkoust; linkování; držení předlohy; význam pečetí a záznamů.",
+          "mastery_evidence": "Připraví pracoviště a přesně rozezná, co je opis, poznámka, účet, právní zápis a církevní text."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Tah písma; čísla a jednoduché účty; krátké opisy; sušení inkoustu; skládání a sešívání cvičných složek.",
+          "mastery_evidence": "Bez významové chyby opíše krátký zápis a vytvoří jednoduchý sešit, který se nerozpadá."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Delší texty; opravy chyb; rejstřík značek; výroba knižního bloku; desky, potah a jednoduché spony.",
+          "mastery_evidence": "Samostatně vytvoří použitelný pracovní zápisník a doloží jeho čitelnost, úplnost a odolnost."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; úřední formule; latina podle původu postavy; náročné opravy vazby; schémata nástrojů a postupů.",
+          "mastery_evidence": "Zpracuje neúplnou nebo poškozenou předlohu, přizná nejistá místa a nezmění smysl textu."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Redakce rozsáhlého svazku; ověřování svědků; trvanlivé materiály; organizace opisovačů a řemeslníků vazby.",
+          "mastery_evidence": "Velká kniha dílny je úplná, dohledatelná, fyzicky odolná a přijata mistry ostatních oborů."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zlepšuje rejstřík, schémata nebo předávání pracovních znalostí. Mistr dílny vede opis, vazbu, materiál a kontrolu významu.",
+          "mastery_evidence": "Završení oboru schopností uchovat cizí zkušenost bez jejího zkreslení."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-09.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Bylinkářství",
+      "id": "herbalism",
+      "mentor": "Zdislava; dílčí znalosti mají Anna, děti, pasáci i další obyvatelé",
+      "place": "Louky, cesty, potoky, lesní okraje, sušárna a bylinářčina domácnost",
+      "mods": "sběr, pozorování, soustředění, paměť, vnímání, pohodlí v přírodě; roční období a stanoviště",
+      "role": "Nejlépe připravená větev pro první plnou realizaci. Navazuje přímo na určování rostlin, volný popis znaků, sběr a zpracování.",
+      "spec": "Poznávání a sběr; léčivé zpracování; lidové a obřadní použití. Poslední větev pracuje s vírou a nejistotou, ne s potvrzenými kouzly.",
+      "masterpiece": "Spolehlivý herbář regionu a léčebná souprava pro konkrétní nemoc nebo zranění.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Tvar listu, květu a lodyhy; stanoviště; sezóna; bezpečné dotýkání; rozdíl mezi sběrem a určením.",
+          "mastery_evidence": "Správně popíše znaky běžné rostliny, i když ještě nezná její jméno."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Jitrocel, řebříček, kopřiva, šťovík a další základní druhy; správná část a čas sběru; čištění.",
+          "mastery_evidence": "Určí bezpečnou sadu běžných rostlin a nasbírá ji bez zničení stanoviště."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Jedovaté záměny; sušení; skladování; jednoduché čaje, obklady a masti ve spojení s ranhojičstvím.",
+          "mastery_evidence": "Připraví účinnou dávku a odhalí jednu nebezpečnou záměnu."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; obtížné druhy; kombinace; sezónní plán; posuzování síly, plísně a znehodnocení.",
+          "mastery_evidence": "Vyřeší případ, kde správná rostlina nestačí bez vhodného sběru a zpracování."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Ucelený herbář; práce s nejistotou; kontraindikace; výuka znaků; zásoby pro domácnost nebo vesnici.",
+          "mastery_evidence": "Mistrovská zkouška zahrnuje určení, zpracování, dávku i vysvětlení rizik."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor porovnává zkušenosti a zpřesňuje směsi. Mistr dílny vede sběr, sušení, záznamy a učedníky.",
+          "mastery_evidence": "Završení oboru znalostí, která je opakovatelná a bezpečně předatelná."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-10.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Ranhojičství",
+      "id": "healing",
+      "mentor": "Zdislava, zkušené ženy domácností a podle situace lazebník či městský ranhojič",
+      "place": "Domácnosti, bylinářčina světnice, statek, cesta a místa pracovních úrazů",
+      "mods": "pozorování, soustředění, paměť, empatie, odolnost vůči stresu; čistota, nástroje a stav pacienta",
+      "role": "Praktická péče odpovídající možnostem kolem roku 1400. Neumožňuje zázračné léčení ani jistou diagnózu moderních nemocí.",
+      "spec": "Rány a krvácení; kosti a pohybová zranění; horečky, otravy a dlouhodobá péče.",
+      "masterpiece": "Zvládnutí vážného pracovního úrazu nebo epidemické situace včetně následné péče a zapojení komunity.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Posouzení vědomí, dýchání, krvácení a bolesti; hygiena; příprava vody, prádla, obvazů a prostoru.",
+          "mastery_evidence": "Správně určí pořadí pomoci a nezhorší stav zraněného."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Čištění ran; tlak a obvaz; drobné popáleniny; odpočinek, teplo a tekutiny; sledování zhoršení.",
+          "mastery_evidence": "Ošetří lehkou ránu a pozná, kdy musí přivolat zkušenějšího člověka."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Silnější krvácení; dlahy; horečka; běžné otravy; péče o nemocného; spolupráce s bylinkářstvím.",
+          "mastery_evidence": "Samostatně stabilizuje středně těžký stav a naplánuje další péči."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; rozlišení příčin podle příznaků; práce pod časem; improvizace s omezenými prostředky.",
+          "mastery_evidence": "Případ s nejasnými příznaky prověří rozhodnutí, pozorování a ochotu přiznat nejistotu."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Třídění více zraněných; dlouhodobé sledování; příprava pomocníků; prevence nákazy a vedení záznamu.",
+          "mastery_evidence": "Mistrovská zkouška hodnotí přežití, komplikace i kvalitu následné péče, ne rychlost klikání."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor zpřesňuje postupy pozorováním výsledků. Mistr dílny organizuje péči, zásoby a výuku.",
+          "mastery_evidence": "Završení oboru důvěryhodností a zodpovědností za druhé."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-11.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    },
+    {
+      "name": "Vaření a uchování potravin",
+      "id": "cooking",
+      "mentor": "Anna a další hospodyně; mlynář pro mouku, rybáři a trh pro suroviny",
+      "place": "Domácí ohniště, pec, mlýn, udírna, tržiště a komunitní slavnosti",
+      "mods": "vaření, soustředění, paměť, improvizace, tolerance potravy; kvalita surovin, nádoba, oheň a hygiena",
+      "role": "Základ přežití i přijetí do domácnosti. Od kaše a polévky vede k chlebu, kvašení, uzení a organizaci hostiny.",
+      "spec": "Běžná kuchyně; pečení a práce s obilím; sušení, solení, uzení a skladování. Pivovarnictví je samostatný obor.",
+      "masterpiece": "Bezpečné a dobře načasované jídlo pro celou domácnost nebo sváteční hostinu bez plýtvání zásobami.",
+      "rows": [
+        {
+          "rank": "Pozorovatel",
+          "nodes_and_skills": "Druhy ohniště; nádoby; voda a suroviny; známky zkažení; pořadí prací v domácí kuchyni.",
+          "mastery_evidence": "Připraví pracoviště, udrží oheň a pozná surovinu, která se nemá použít."
+        },
+        {
+          "rank": "Učeň",
+          "nodes_and_skills": "Kaše, jednoduché polévky, placky a bylinné nápoje; krájení, dávkování a řízení času.",
+          "mastery_evidence": "Uvaří jednoduché jídlo, které je bezpečné, syté a nepřipálené."
+        },
+        {
+          "rank": "Tovaryš",
+          "nodes_and_skills": "Chléb; složitější polévky; kombinace surovin; sušení, solení a základní kvašení; plán porcí.",
+          "mastery_evidence": "Připraví celé jídlo pro domácnost a správně načasuje více činností."
+        },
+        {
+          "rank": "Specialista",
+          "nodes_and_skills": "Volba větve; práce s těstem, masem, rybami nebo zásobami; náhrady chybějících surovin.",
+          "mastery_evidence": "Zakázka s omezenými zásobami prověří výživu, chuť, bezpečnost a hospodárnost."
+        },
+        {
+          "rank": "Mistr",
+          "nodes_and_skills": "Sezónní zásoby; velké dávky; slavnostní jídla; organizace pomocníků; diagnostika chyb pece a kvašení.",
+          "mastery_evidence": "Mistrovský projekt nasytí skupinu včas a bez následné nemoci či zbytečného odpadu."
+        },
+        {
+          "rank": "Inovátor / Mistr dílny",
+          "nodes_and_skills": "Inovátor vylepšuje postup z dostupných surovin. Mistr dílny řídí zásoby, oheň, pomocníky a výdej.",
+          "mastery_evidence": "Završení oboru schopností uživit komunitu, ne jen vytvořit drahý pokrm."
+        }
+      ],
+      "icon": "assets/crafts/icons/main-12.png",
+      "design_status": "complete",
+      "runtime_asset_status": "craft_icon_and_design_complete",
+      "runtime_asset_root": null
+    }
+  ],
+  "work_tracks": [
+    {
+      "id": "farming",
+      "name": "Zemědělství",
+      "icon": "assets/crafts/icons/main-13.png",
+      "activities": "Orba motykou a pluhem, setí, seno, žně, mlácení a skladování.",
+      "links": "Vaření, tkalcovství, pivovarnictví, kovářství a chov zvířat.",
+      "scope": "Plnější sezónní dráha po rozšíření polí; nepatří mezi 13 povinných mistrovství."
+    },
+    {
+      "id": "milling",
+      "name": "Mlynářství",
+      "icon": "assets/crafts/icons/main-14.png",
+      "activities": "Pytle, tok vody, čištění kamene, mletí, mouka a základní údržba převodů.",
+      "links": "Vaření, pivovarnictví, kolářství, dřevo, kov a kamenictví.",
+      "scope": "Silná profesní dráha navázaná na mlýn a Ondřeje; vyšší opravy jsou mezioborové."
+    },
+    {
+      "id": "fishing",
+      "name": "Rybářství a rybníkářství",
+      "icon": "assets/crafts/icons/main-15.png",
+      "activities": "Sítě, vrše, čluny, třídění úlovku, břehy, hráze, stavidla a hospodaření s rybníkem.",
+      "links": "Provaznictví, dřevo, vaření a obchod v Doksech.",
+      "scope": "Otevřít po zapojení Velkého rybníka a Doks; odbornější rybníkářství vyžaduje místního správce."
+    },
+    {
+      "id": "husbandry",
+      "name": "Chov zvířat",
+      "icon": "assets/crafts/icons/side-00.png",
+      "activities": "Pasení, krmení, dojení, stříž, čištění stáje, ošetření a rozpoznání potíží.",
+      "links": "Kůže, textil, vaření, zemědělství a kolářství.",
+      "scope": "Postup přes důvěru domácnosti a zodpovědnost za živé zvíře, ne přes výrobu předmětů."
+    },
+    {
+      "id": "forestry_charcoal",
+      "name": "Lesní práce a uhlířství",
+      "icon": "assets/crafts/icons/side-01.png",
+      "activities": "Výběr dřeva, kácení, štípání, klestí, doprava a pomalé pálení milíře.",
+      "links": "Kovářství, tesařství, hrnčířství, pivovarnictví a vaření.",
+      "scope": "Riziková surovinová dráha s lesními právy a právními následky; železo se do oblasti dováží."
+    },
+    {
+      "id": "rope_basketry",
+      "name": "Provaznictví a košíkářství",
+      "icon": "assets/crafts/icons/side-02.png",
+      "activities": "Příprava konopí a lýka, stáčení provazů, uzly, sítě, vrše, koše a jednoduché opravy.",
+      "links": "Textil, rybářství, zemědělství, dřevo, doprava a domácnost.",
+      "scope": "Krátká praktická dráha; vyšší lana a sítě vyžadují rovnoměrnost, měření a zkoušku zatížením."
+    }
+  ],
+  "artifact_branch": {
+    "ui_names": [
+      "Tajemství artefaktu",
+      "Paměť místa",
+      "Poznání motyky"
+    ],
+    "rule": "V UI nemusí být nazývána magií a paranormální výklad zůstává nejednoznačný.",
+    "milestones": [
+      {
+        "name": "První ozvěna",
+        "condition": "3 světské obory alespoň 40 %"
+      },
+      {
+        "name": "Spojení stop",
+        "condition": "6 oborů alespoň 60 %"
+      },
+      {
+        "name": "Paměť práce",
+        "condition": "4 obory na hodnosti Mistr"
+      },
+      {
+        "name": "Třináct svědectví",
+        "condition": "všech 13 světských oborů alespoň 80 %"
+      },
+      {
+        "name": "Velká kniha dílny",
+        "condition": "Písařství a knihařství: Mistr"
+      },
+      {
+        "name": "Ztracený rukopis",
+        "condition": "výzkum Housky a důvěra duchovních či správy"
+      },
+      {
+        "name": "Obnova artefaktu",
+        "condition": "mezioborový mistrovský projekt"
+      },
+      {
+        "name": "Návrat / setrvání",
+        "condition": "dokončený příběhový uzel"
+      }
+    ]
+  },
+  "implementation_status": {
+    "smithing": "Kompletní současná referenční grafická sada: předměty, minihry, ImGui, node editor, 2.5D kovárna a návrh obrazovek.",
+    "other_crafts": "Kompletní herní návrh a ilustrace oboru; provozní sprity a minihry se budou odvozovat ze společného vzoru kovářství."
+  }
+}

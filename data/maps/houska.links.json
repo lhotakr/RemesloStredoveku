@@ -7,8 +7,8 @@
     },
     {
       "id": 2,
-      "target_location": "castle:houska_1400/houska_exterior",
-      "target_spawn_id": "south_road"
+      "target_location": "smithy_benes",
+      "target_spawn_id": "smithy_entry"
     }
   ]
 }

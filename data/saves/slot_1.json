@@ -1,15 +1,15 @@
 {
-  "campaign_map": "D:\\Dev\\RemesloStredoveku\\data\\maps\\houska.rvm",
+  "campaign_map": "D:\\Dev\\RemesloStredoveku\\data\\maps\\blatce.rvm",
   "campaign_player": {
-    "x": 239.61952209472656,
-    "y": 175.22686767578125
+    "x": 2724.738037109375,
+    "y": 598.4343872070313
   },
-  "interior_id": "castle:houska_1400/houska_exterior",
+  "interior_id": "smithy_benes",
   "interior_player": {
-    "angle": -1.974239533857133,
-    "pitch": 0.01720000134110452,
-    "x": 24.211266793958547,
-    "y": 37.72751705858788
+    "angle": 4.71238898038469,
+    "pitch": -0.02,
+    "x": 10.0,
+    "y": 12.2
   },
   "mode": "interior_2d",
   "saved_at": "2026-08-06 17:46",

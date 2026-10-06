@@ -23,6 +23,20 @@
       "tile_x": 5,
       "tile_y": 13,
       "type_id": "farmer"
+    },
+    {
+      "character_id": "Character_2_char_10",
+      "greeting": "Když chceš do kovárny, nejdřív poslouchej železo.",
+      "hp": 100,
+      "id": "BenesKovar",
+      "mood": 55,
+      "name": "Beneš",
+      "npc_id": "benes_kovar",
+      "script_id": "benes_intro",
+      "surname": "",
+      "tile_x": 18,
+      "tile_y": 10,
+      "type_id": "blacksmith"
     }
   ]
 }

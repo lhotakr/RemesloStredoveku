@@ -1,4 +1,5 @@
 #include "Editor.h"
+#include "EditorHelpers.h"
 #include "PathUtils.h"
 #include <JsonUtils.h>
 

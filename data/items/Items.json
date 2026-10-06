@@ -30,6 +30,42 @@
       "weight": 3.0,
       "stackable": false,
       "max_stack": 1
+    },
+    {
+      "id": "smithing_iron_rod_piece",
+      "name": "Kus železné tyče",
+      "category": "Material",
+      "weight": 0.09,
+      "volume": 0.03,
+      "stackable": true,
+      "maxStack": 16
+    },
+    {
+      "id": "smithing_nail_workpiece",
+      "name": "Rozpracovaný hřebík",
+      "category": "Material",
+      "weight": 0.04,
+      "volume": 0.01,
+      "stackable": false,
+      "maxStack": 1
+    },
+    {
+      "id": "smithing_tongs",
+      "name": "Kovářské kleště",
+      "category": "Tool",
+      "weight": 0.65,
+      "volume": 0.35,
+      "equippable": true,
+      "equipSlot": "OffHand"
+    },
+    {
+      "id": "smithing_hammer",
+      "name": "Kovářské kladivo",
+      "category": "Tool",
+      "weight": 1.05,
+      "volume": 0.45,
+      "equippable": true,
+      "equipSlot": "MainHand"
     }
   ]
 }

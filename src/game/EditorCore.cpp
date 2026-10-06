@@ -385,6 +385,9 @@ bool Editor::init(SDL_Window* window, SDL_Renderer* renderer)
         m_lastIoStatus = "Forage species load failed.";
     }
 
+    loadSequences();
+    loadSequenceMarkersForMap(m_mapPath);
+
     return true;
 }
 
@@ -475,6 +478,50 @@ void Editor::handleEvent(const SDL_Event& e)
 
         if (e.button.button == SDL_BUTTON_LEFT)
         {
+            if (m_sequencePickMarkerMode && !io.WantCaptureMouse)
+            {
+                pushSequenceUndo("pick sequence marker");
+                sequence::SequenceMarker* marker = nullptr;
+                const std::string markerId = m_sequenceMarkerId;
+                for (auto& m : m_sequenceMarkers)
+                {
+                    if (m.id == markerId)
+                    {
+                        marker = &m;
+                        break;
+                    }
+                }
+                if (!marker)
+                {
+                    sequence::SequenceMarker m;
+                    m.id = markerId.empty() ? "marker" : markerId;
+                    m.type = "sequence";
+                    m_sequenceMarkers.push_back(std::move(m));
+                    marker = &m_sequenceMarkers.back();
+                }
+                marker->x = (float)worldX;
+                marker->y = (float)worldY;
+                m_sequencePickMarkerMode = false;
+
+                if (m_selectedSequenceIndex >= 0 &&
+                    m_selectedSequenceIndex < (int)m_sequences.size() &&
+                    m_selectedSequenceNodeIndex >= 0 &&
+                    m_selectedSequenceNodeIndex < (int)m_sequences[m_selectedSequenceIndex].nodes.size() &&
+                    m_sequencePickActionIndex >= 0 &&
+                    m_sequencePickActionIndex < (int)m_sequences[m_selectedSequenceIndex].nodes[m_selectedSequenceNodeIndex].actions.size())
+                {
+                    auto& action = m_sequences[m_selectedSequenceIndex].nodes[m_selectedSequenceNodeIndex].actions[m_sequencePickActionIndex];
+                    if (action.type == "move_actor")
+                        action.data["target_marker"] = marker->id;
+                    else
+                        action.data["marker"] = marker->id;
+                }
+
+                saveSequenceMarkersForMap(m_mapPath);
+                m_lastIoStatus = "Sequence marker picked: " + marker->id;
+                return;
+            }
+
             // 1) zone pick mode
             if (m_zonePickMode && !io.WantCaptureMouse)
             {
@@ -1138,6 +1185,22 @@ void Editor::render()
 
             renderBrushGhost(view);
             renderForageGhost(view);
+
+            for (const auto& marker : m_sequenceMarkers)
+            {
+                const int sx = (int)std::lround(marker.x) - view.camX;
+                const int sy = (int)std::lround(marker.y) - view.camY;
+                SDL_Rect r{sx - 5, sy - 5, 10, 10};
+                SDL_SetRenderDrawBlendMode(m_renderer, SDL_BLENDMODE_BLEND);
+                SDL_SetRenderDrawColor(m_renderer, 255, 210, 40, 210);
+                SDL_RenderFillRect(m_renderer, &r);
+                SDL_SetRenderDrawColor(m_renderer, 40, 30, 0, 255);
+                SDL_RenderDrawRect(m_renderer, &r);
+                ImGui::GetForegroundDrawList()->AddText(
+                    ImVec2((float)sx + 8.0f, (float)sy - 8.0f),
+                    IM_COL32(255, 230, 90, 255),
+                    marker.id.c_str());
+            }
         }
 
         for (int i = 0; i < (int)m_npcSpawns.size(); ++i)
@@ -1568,6 +1631,15 @@ void Editor::renderEditorWorkspace()
             }
             ImGui::EndChild();
 
+            ImGui::EndTabItem();
+        }
+
+        if (ImGui::BeginTabItem("Sequences"))
+        {
+            m_activeTab = EditorTab::Sequences;
+            m_npcPlacementMode = false;
+            m_foragePlacementMode = false;
+            renderSequenceEditorContents();
             ImGui::EndTabItem();
         }
 
