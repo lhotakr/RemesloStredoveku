@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component name="ProjectRunConfigurationManager">
+  <configuration default="false" name="RemesloStredoveku (with Audio)" type="CMakeRunConfiguration" factoryName="Application" REDIRECT_INPUT="false" ELEVATE="false" USE_EXTERNAL_CONSOLE="false" EMULATE_TERMINAL="false" PASS_PARENT_ENVS_2="true" PROJECT_NAME="RemesloStredoveku" TARGET_NAME="RemesloStredoveku" CONFIG_NAME="Debug" RUN_TARGET_PROJECT_NAME="RemesloStredoveku" RUN_TARGET_NAME="RemesloStredoveku">
+    <envs>
+      <env name="SDL_AUDIODRIVER" value="pulseaudio" />
+      <env name="PULSE_SERVER" value="unix:/run/user/1000/pulse/native" />
+      <env name="LD_LIBRARY_PATH" value="/usr/lib/x86_64-linux-gnu:/usr/lib/x86_64-linux-gnu/pulseaudio:/app/lib/x86_64-linux-gnu:/app/lib/x86_64-linux-gnu/pulseaudio:/run/host/usr/lib64:/run/host/usr/lib64/pulseaudio:/run/host/lib64" />
+    </envs>
+    <method v="2">
+      <option name="com.jetbrains.cidr.execution.CidrBuildBeforeRunTaskProvider$BuildBeforeRunTask" enabled="true" />
+    </method>
+  </configuration>
+</component>

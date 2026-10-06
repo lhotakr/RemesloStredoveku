@@ -1,0 +1,279 @@
+{
+    "id": "intro_houska",
+    "name": "Prijezd pod Housku",
+    "start": "arrival",
+    "flags": {
+        "started": "intro_houska_started",
+        "completed": "intro_houska_completed"
+    },
+    "nodes": [
+        {
+            "id": "arrival",
+            "next": "forest_walk",
+            "actions": [
+                {
+                    "type": "set_flag",
+                    "flag": "intro_houska_started"
+                },
+                {
+                    "type": "change_renderer_mode",
+                    "mode": "2_5d"
+                },
+                {
+                    "type": "set_time",
+                    "value": "late_afternoon"
+                },
+                {
+                    "type": "spawn_actor",
+                    "actor": "patrik",
+                    "kind": "player",
+                    "marker": "car_spawn",
+                    "character": "Character_1_char_01"
+                },
+                {
+                    "type": "spawn_actor",
+                    "actor": "car",
+                    "kind": "prop",
+                    "marker": "car_prop",
+                    "sprite": "modern_car",
+                    "scale": 1.0
+                },
+                {
+                    "type": "camera_follow",
+                    "actor": "patrik"
+                },
+                {
+                    "type": "fade_in",
+                    "duration": 1.0
+                },
+                {
+                    "type": "show_text",
+                    "text": "Pod hradem Houska",
+                    "duration": 2.4
+                },
+                {
+                    "type": "wait",
+                    "duration": 1.2
+                },
+                {
+                    "type": "move_actor",
+                    "actor": "patrik",
+                    "target_marker": "forest_path_start",
+                    "duration": 3.0
+                },
+                {
+                    "type": "hide_text"
+                }
+            ]
+        },
+        {
+            "id": "forest_walk",
+            "next": "camp",
+            "actions": [
+                {
+                    "type": "parallel",
+                    "actions": [
+                        {
+                            "type": "camera_follow",
+                            "actor": "patrik",
+                            "blocking": false
+                        },
+                        {
+                            "type": "play_music",
+                            "id": "forest_ambient",
+                            "blocking": false
+                        },
+                        {
+                            "type": "move_actor",
+                            "actor": "patrik",
+                            "target_marker": "camp_spot",
+                            "duration": 5.0
+                        }
+                    ]
+                },
+                {
+                    "type": "show_text",
+                    "text": "Tak. Jsem tu prvni.",
+                    "duration": 2.2
+                },
+                {
+                    "type": "wait",
+                    "duration": 1.0
+                },
+                {
+                    "type": "hide_text"
+                }
+            ]
+        },
+        {
+            "id": "camp",
+            "next": "evening",
+            "actions": [
+                {
+                    "type": "spawn_actor",
+                    "actor": "backpack",
+                    "kind": "prop",
+                    "marker": "camp_spot",
+                    "sprite": "backpack_modern_large",
+                    "scale": 0.7
+                },
+                {
+                    "type": "set_actor_animation",
+                    "actor": "patrik",
+                    "animation": "setup_hammock"
+                },
+                {
+                    "type": "spawn_actor",
+                    "actor": "hammock",
+                    "kind": "prop",
+                    "marker": "hammock_center",
+                    "sprite": "hammock_basic",
+                    "scale": 1.0
+                },
+                {
+                    "type": "wait",
+                    "duration": 2.5
+                }
+            ]
+        },
+        {
+            "id": "evening",
+            "next": "storm",
+            "actions": [
+                {
+                    "type": "set_time",
+                    "value": "evening"
+                },
+                {
+                    "type": "play_music",
+                    "id": "forest_evening",
+                    "blocking": false
+                },
+                {
+                    "type": "set_actor_animation",
+                    "actor": "patrik",
+                    "animation": "idle_down"
+                },
+                {
+                    "type": "wait",
+                    "duration": 2.0
+                }
+            ]
+        },
+        {
+            "id": "storm",
+            "next": "transition",
+            "actions": [
+                {
+                    "type": "set_weather",
+                    "rain": true,
+                    "rain_intensity": 0.75,
+                    "wind": 35.0,
+                    "cloudiness": 95.0
+                },
+                {
+                    "type": "play_sfx",
+                    "id": "thunder_distant"
+                },
+                {
+                    "type": "camera_shake",
+                    "duration": 0.6,
+                    "intensity": 0.2
+                },
+                {
+                    "type": "wait",
+                    "duration": 1.0
+                },
+                {
+                    "type": "play_sfx",
+                    "id": "thunder_close"
+                },
+                {
+                    "type": "screen_flash",
+                    "duration": 0.25,
+                    "intensity": 1.0
+                },
+                {
+                    "type": "fade_out",
+                    "duration": 1.2
+                }
+            ]
+        },
+        {
+            "id": "transition",
+            "next": "awakening",
+            "actions": [
+                {
+                    "type": "load_map",
+                    "map": "blatce.rvm",
+                    "spawn": "forest_morning_spawn"
+                },
+                {
+                    "type": "change_renderer_mode",
+                    "mode": "2d"
+                },
+                {
+                    "type": "spawn_actor",
+                    "actor": "patrik",
+                    "kind": "player",
+                    "marker": "forest_morning_spawn"
+                },
+                {
+                    "type": "set_time",
+                    "value": "morning"
+                },
+                {
+                    "type": "set_weather",
+                    "rain": false,
+                    "wind": 5.0,
+                    "cloudiness": 35.0
+                },
+                {
+                    "type": "fade_in",
+                    "duration": 1.5
+                }
+            ]
+        },
+        {
+            "id": "awakening",
+            "next": "meet_matej",
+            "actions": [
+                {
+                    "type": "disable_player_control"
+                },
+                {
+                    "type": "wait",
+                    "duration": 1.0
+                },
+                {
+                    "type": "show_text",
+                    "text": "Kde je auto?",
+                    "duration": 2.0
+                },
+                {
+                    "type": "wait",
+                    "duration": 1.0
+                },
+                {
+                    "type": "hide_text"
+                },
+                {
+                    "type": "enable_player_control"
+                }
+            ]
+        },
+        {
+            "id": "meet_matej",
+            "actions": [
+                {
+                    "type": "set_flag",
+                    "flag": "intro_houska_completed"
+                },
+                {
+                    "type": "end_sequence",
+                    "set_flag": "intro_houska_completed"
+                }
+            ]
+        }
+    ]
+}

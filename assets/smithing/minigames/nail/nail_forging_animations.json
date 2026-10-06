@@ -1,0 +1,133 @@
+{
+  "schema": "remeslo.smithing.animation-pack.v1",
+  "cell": { "width": 512, "height": 512, "pivot": { "x": 256, "y": 256 } },
+  "render_order": [
+    "workpiece",
+    "condition_overlay",
+    "tongs",
+    "hammer",
+    "effects"
+  ],
+  "animations": [
+    {
+      "id": "hammer_strike_heavy",
+      "image": "atlases/hammer_strike_atlas_2048x1024_v1.png",
+      "grid": { "columns": 4, "rows": 2 },
+      "playback": "once",
+      "frame_duration_ms": [80, 70, 80, 120, 50, 40, 80, 120],
+      "frames": [
+        "ready",
+        "lift",
+        "high_backswing",
+        "peak_anticipation",
+        "downswing",
+        "preimpact",
+        "impact",
+        "recovery"
+      ],
+      "events": [
+        { "frame": 6, "event": "impact" }
+      ]
+    },
+    {
+      "id": "tongs_rotate_quarter",
+      "image": "atlases/tongs_rotate_atlas_2048x1024_v1.png",
+      "grid": { "columns": 4, "rows": 2 },
+      "playback": "once_hold_last",
+      "frame_duration_ms": [90, 80, 90, 100, 90, 90, 100, 120],
+      "frames": [
+        "open_approach",
+        "closing",
+        "firm_grip",
+        "slight_lift",
+        "roll_begin",
+        "roll_half",
+        "roll_quarter",
+        "hold"
+      ],
+      "events": [
+        { "frame": 2, "event": "grip_closed" },
+        { "frame": 6, "event": "rotation_complete" }
+      ]
+    },
+    {
+      "id": "nail_workpiece_deformation",
+      "image": "atlases/nail_workpiece_deformation_atlas_2048x2048_v1.png",
+      "grid": { "columns": 4, "rows": 4 },
+      "playback": "state_driven",
+      "advance_on": "successful_impact",
+      "frames": [
+        { "id": "rod_heated", "phase": "drawing", "temperature": 1.0 },
+        { "id": "drawn_impact_1", "phase": "drawing", "temperature": 0.94 },
+        { "id": "drawn_impact_2", "phase": "drawing", "temperature": 0.88 },
+        { "id": "shank_drawn", "phase": "drawing", "temperature": 0.82 },
+        { "id": "point_begin", "phase": "point", "temperature": 0.76 },
+        { "id": "point_mid", "phase": "point", "temperature": 0.70 },
+        { "id": "point_forged", "phase": "point", "temperature": 0.64 },
+        { "id": "cut_score_transition", "phase": "cutting", "temperature": 0.60 },
+        { "id": "blank_cut_hot", "phase": "cutting", "temperature": 0.74 },
+        { "id": "head_upset_1", "phase": "heading", "temperature": 0.70 },
+        { "id": "head_upset_2", "phase": "heading", "temperature": 0.66 },
+        { "id": "head_partial_hot", "phase": "heading", "temperature": 0.62 },
+        { "id": "head_finish_transition", "phase": "heading", "temperature": 0.58 },
+        { "id": "nail_finished_hot", "phase": "cooling", "temperature": 0.52 },
+        { "id": "nail_cooling_red", "phase": "cooling", "temperature": 0.24 },
+        { "id": "nail_finished_cold", "phase": "finished", "temperature": 0.0 }
+      ]
+    },
+    {
+      "id": "sparks_small",
+      "image": "atlases/smithing_effects_animation_atlas_2048x2048_v1.png",
+      "grid": { "columns": 4, "rows": 4 },
+      "frame_indices": [0, 1, 2, 3],
+      "frame_duration_ms": [40, 60, 80, 100],
+      "playback": "once",
+      "anchor": "impact"
+    },
+    {
+      "id": "sparks_heavy",
+      "image": "atlases/smithing_effects_animation_atlas_2048x2048_v1.png",
+      "grid": { "columns": 4, "rows": 4 },
+      "frame_indices": [4, 5, 6, 7],
+      "frame_duration_ms": [40, 50, 80, 120],
+      "playback": "once",
+      "anchor": "impact"
+    },
+    {
+      "id": "quench_steam",
+      "image": "atlases/smithing_effects_animation_atlas_2048x2048_v1.png",
+      "grid": { "columns": 4, "rows": 4 },
+      "frame_indices": [8, 9, 10, 11],
+      "frame_duration_ms": [80, 120, 180, 220],
+      "playback": "once",
+      "anchor": "water_contact"
+    },
+    {
+      "id": "scale_flakes",
+      "image": "atlases/smithing_effects_animation_atlas_2048x2048_v1.png",
+      "grid": { "columns": 4, "rows": 4 },
+      "frame_indices": [12, 13, 14, 15],
+      "frame_duration_ms": [50, 70, 90, 130],
+      "playback": "once",
+      "anchor": "impact"
+    }
+  ],
+  "integration": {
+    "impact_event": {
+      "animation": "hammer_strike_heavy",
+      "frame": 6,
+      "actions": [
+        "advance_workpiece_state",
+        "spawn_sparks",
+        "spawn_scale_flakes",
+        "play_impact_sound",
+        "trigger_anvil_recoil"
+      ]
+    },
+    "anvil_recoil": {
+      "implemented_in_code": true,
+      "offset_pixels": [0, 2, 0],
+      "duration_ms": 100
+    }
+  }
+}

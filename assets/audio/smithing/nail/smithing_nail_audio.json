@@ -1,0 +1,108 @@
+{
+  "schema": "remeslo.smithing.audio-pack.v1",
+  "id": "smithing_nail_audio_v1",
+  "base_path": "assets/audio/smithing/nail",
+  "format": "ogg",
+  "sample_rate": 48000,
+  "channels": 1,
+  "sounds": [
+    { "id": "nail_impact_hot_light_01", "file": "nail_impact_hot_light_01.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_hot_light_02", "file": "nail_impact_hot_light_02.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_hot_light_03", "file": "nail_impact_hot_light_03.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_hot_light_04", "file": "nail_impact_hot_light_04.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_hot_heavy_01", "file": "nail_impact_hot_heavy_01.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_hot_heavy_02", "file": "nail_impact_hot_heavy_02.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_hot_heavy_03", "file": "nail_impact_hot_heavy_03.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_cooling_01", "file": "nail_impact_cooling_01.ogg", "bus": "smithing_impacts" },
+    { "id": "nail_impact_cooling_02", "file": "nail_impact_cooling_02.ogg", "bus": "smithing_impacts" },
+    { "id": "tongs_grip_01", "file": "tongs_grip_01.ogg", "bus": "smithing_tools" },
+    { "id": "tongs_grip_02", "file": "tongs_grip_02.ogg", "bus": "smithing_tools" },
+    { "id": "tongs_rotate_quarter_01", "file": "tongs_rotate_quarter_01.ogg", "bus": "smithing_tools" },
+    { "id": "tongs_rotate_quarter_02", "file": "tongs_rotate_quarter_02.ogg", "bus": "smithing_tools" },
+    { "id": "tongs_settle_01", "file": "tongs_settle_01.ogg", "bus": "smithing_tools" },
+    { "id": "scale_flakes_01", "file": "scale_flakes_01.ogg", "bus": "smithing_effects" },
+    { "id": "quench_short_01", "file": "quench_short_01.ogg", "bus": "smithing_effects" },
+    { "id": "quench_heavy_01", "file": "quench_heavy_01.ogg", "bus": "smithing_effects" },
+    { "id": "bellows_push_01", "file": "bellows_push_01.ogg", "bus": "smithing_tools" },
+    { "id": "forge_fire_loop_01", "file": "forge_fire_loop_01.ogg", "bus": "interior_object_ambience", "loop": true, "runtime_owner": "map_object" },
+    { "id": "smithy_room_loop_01", "file": "smithy_room_loop_01.ogg", "bus": "smithing_ambience", "loop": true },
+    { "id": "tongs_forge_place_01", "file": "tongs_forge_place_01.ogg", "bus": "smithing_tools", "optional": true },
+    { "id": "tongs_forge_rotate_01", "file": "tongs_forge_rotate_01.ogg", "bus": "smithing_tools", "optional": true },
+    { "id": "tongs_forge_settle_01", "file": "tongs_forge_settle_01.ogg", "bus": "smithing_tools", "optional": true },
+    { "id": "tongs_quench_lower_01", "file": "tongs_quench_lower_01.ogg", "bus": "smithing_tools", "optional": true },
+    { "id": "tongs_quench_lift_01", "file": "tongs_quench_lift_01.ogg", "bus": "smithing_tools", "optional": true },
+    { "id": "tongs_quench_settle_01", "file": "tongs_quench_settle_01.ogg", "bus": "smithing_tools", "optional": true },
+    { "id": "benes_hint_rotate_shank_01", "file": "benes_hint_rotate_shank_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_rotate_point_01", "file": "benes_hint_rotate_point_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_rotate_head_01", "file": "benes_hint_rotate_head_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_heat_start_01", "file": "benes_hint_heat_start_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_heat_more_01", "file": "benes_hint_heat_more_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_heat_ready_01", "file": "benes_hint_heat_ready_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_anvil_drawing_01", "file": "benes_hint_anvil_drawing_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_anvil_point_01", "file": "benes_hint_anvil_point_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_anvil_head_01", "file": "benes_hint_anvil_head_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_quench_01", "file": "benes_hint_quench_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_testing_01", "file": "benes_hint_testing_01.ogg", "bus": "mentor_voice", "optional": true },
+    { "id": "benes_hint_overheat_01", "file": "benes_hint_overheat_01.ogg", "bus": "mentor_voice", "optional": true }
+  ],
+  "variation_groups": {
+    "nail_impact_hot_light": [
+      "nail_impact_hot_light_01",
+      "nail_impact_hot_light_02",
+      "nail_impact_hot_light_03",
+      "nail_impact_hot_light_04"
+    ],
+    "nail_impact_hot_heavy": [
+      "nail_impact_hot_heavy_01",
+      "nail_impact_hot_heavy_02",
+      "nail_impact_hot_heavy_03"
+    ],
+    "nail_impact_cooling": [
+      "nail_impact_cooling_01",
+      "nail_impact_cooling_02"
+    ],
+    "tongs_grip": ["tongs_grip_01", "tongs_grip_02"],
+    "tongs_rotate_quarter": ["tongs_rotate_quarter_01", "tongs_rotate_quarter_02"],
+    "tongs_forge_work": ["tongs_forge_place_01", "tongs_forge_rotate_01", "tongs_forge_settle_01"],
+    "tongs_quench_work": ["tongs_quench_lower_01", "tongs_quench_lift_01", "tongs_quench_settle_01"]
+  },
+  "event_bindings": {
+    "impact": {
+      "hot_light": "nail_impact_hot_light",
+      "hot_heavy": "nail_impact_hot_heavy",
+      "cooling": "nail_impact_cooling",
+      "heavy_power_threshold": 0.68,
+      "cool_temperature_threshold": 0.45,
+      "minimum_interval_ms": 65
+    },
+    "grip_closed": {
+      "play_random": "tongs_grip",
+      "start_random": "tongs_rotate_quarter"
+    },
+    "rotation_complete": { "play": "tongs_settle_01" },
+    "water_contact": {
+      "play_if_temperature_at_least": 0.35,
+      "light": "quench_short_01",
+      "heavy": "quench_heavy_01",
+      "heavy_temperature_threshold": 0.72,
+      "once_per_quench": true
+    },
+    "scale_flakes": { "play": "scale_flakes_01", "minimum_scale_amount": 0.35 },
+    "bellows_push": { "play": "bellows_push_01" }
+    ,
+    "mentor_guidance": {
+      "rotate_shank": "benes_hint_rotate_shank_01",
+      "rotate_point": "benes_hint_rotate_point_01",
+      "rotate_head": "benes_hint_rotate_head_01",
+      "heat_start": "benes_hint_heat_start_01",
+      "heat_more": "benes_hint_heat_more_01",
+      "heat_ready": "benes_hint_heat_ready_01",
+      "anvil_drawing": "benes_hint_anvil_drawing_01",
+      "anvil_point": "benes_hint_anvil_point_01",
+      "anvil_head": "benes_hint_anvil_head_01",
+      "quench": "benes_hint_quench_01",
+      "testing": "benes_hint_testing_01",
+      "overheat": "benes_hint_overheat_01"
+    }
+  }
+}
