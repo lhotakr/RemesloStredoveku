@@ -8,8 +8,8 @@
       "name": "Matěj",
       "script_id": "matej_intro",
       "surname": "z Lípy",
-      "tile_x": 23,
-      "tile_y": 9,
+      "tile_x": 30,
+      "tile_y": 8,
       "type_id": "farmer"
     },
     {
@@ -31,11 +31,9 @@
       "id": "BenesKovar",
       "mood": 55,
       "name": "Beneš",
-      "npc_id": "benes_kovar",
       "script_id": "benes_intro",
-      "surname": "",
-      "tile_x": 18,
-      "tile_y": 10,
+      "tile_x": 29,
+      "tile_y": 15,
       "type_id": "blacksmith"
     }
   ]

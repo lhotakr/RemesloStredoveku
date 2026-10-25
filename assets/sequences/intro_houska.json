@@ -1,279 +1,512 @@
 {
+    "flags": {
+        "completed": "intro_houska_completed",
+        "started": "intro_houska_started"
+    },
     "id": "intro_houska",
     "name": "Prijezd pod Housku",
-    "start": "arrival",
-    "flags": {
-        "started": "intro_houska_started",
-        "completed": "intro_houska_completed"
-    },
     "nodes": [
         {
-            "id": "arrival",
-            "next": "forest_walk",
             "actions": [
                 {
-                    "type": "set_flag",
-                    "flag": "intro_houska_started"
+                    "blocking": false,
+                    "fade_ms": 1000,
+                    "id": "assets/audio/music/introCinematics.ogg",
+                    "loops": -1,
+                    "type": "play_music",
+                    "volume": 0.55
                 },
                 {
-                    "type": "change_renderer_mode",
-                    "mode": "2_5d"
+                    "blocking": true,
+                    "duration": 5.0,
+                    "scene": "Houska_first_view",
+                    "startDelay": 0.0,
+                    "type": "load_scene"
                 },
                 {
+                    "blocking": true,
+                    "duration": 3.0,
+                    "startDelay": 0.0,
+                    "type": "fade_in"
+                },
+                {
+                    "blocking": true,
+                    "duration": 3.0,
+                    "startDelay": 0.0,
+                    "type": "fade_out"
+                },
+                {
+                    "blocking": true,
+                    "duration": 0.0,
+                    "scene": "houska_intro_2d",
+                    "startDelay": 0.0,
+                    "type": "load_scene"
+                },
+                {
+                    "blocking": true,
+                    "duration": 3.0,
+                    "startDelay": 0.0,
+                    "type": "fade_in"
+                },
+                {
+                    "blocking": true,
+                    "duration": 3.0,
+                    "type": "fade_out"
+                },
+                {
+                    "blocking": true,
+                    "scene": "intro_houska_camp",
+                    "startDelay": 0.0,
+                    "type": "load_scene"
+                },
+                {
+                    "blocking": true,
+                    "duration": 1.0,
+                    "type": "fade_in"
+                },
+                {
+                    "blocking": true,
+                    "flag": "intro_houska_started",
+                    "type": "set_flag"
+                },
+                {
+                    "blocking": true,
                     "type": "set_time",
                     "value": "late_afternoon"
                 },
                 {
-                    "type": "spawn_actor",
+                    "blocking": true,
+                    "distance": 2.2,
+                    "duration": 3.0,
+                    "easing": "smooth",
+                    "follow_after": true,
+                    "target_actor": "patrik",
+                    "type": "camera_move"
+                },
+                {
+                    "blocking": true,
+                    "duration": 7.099999904632568,
+                    "text": "Tři hodiny jízdy za mnou ... tak jo ... najdu si nějaký pěkný místo na hamaku ... už padám únavou.",
+                    "type": "show_text"
+                },
+                {
+                    "blocking": false,
+                    "duration": 6.800000190734863,
+                    "fade_in_ms": 500,
+                    "fade_out_ms": 300,
+                    "type": "duck_music",
+                    "volume": 0.3
+                },
+                {
+                    "blocking": true,
+                    "id": "assets/audio/Cinematics/Intro/Intro_Patrik_00.mp3",
+                    "type": "play_voice"
+                },
+                {
+                    "blocking": true,
+                    "duration": 7.099999904632568,
+                    "type": "wait"
+                },
+                {
                     "actor": "patrik",
-                    "kind": "player",
-                    "marker": "car_spawn",
-                    "character": "Character_1_char_01"
+                    "animation": "walk_left",
+                    "type": "set_actor_animation"
                 },
                 {
-                    "type": "spawn_actor",
-                    "actor": "car",
-                    "kind": "prop",
-                    "marker": "car_prop",
-                    "sprite": "modern_car",
-                    "scale": 1.0
-                },
-                {
-                    "type": "camera_follow",
-                    "actor": "patrik"
-                },
-                {
-                    "type": "fade_in",
-                    "duration": 1.0
-                },
-                {
-                    "type": "show_text",
-                    "text": "Pod hradem Houska",
-                    "duration": 2.4
-                },
-                {
-                    "type": "wait",
-                    "duration": 1.2
-                },
-                {
-                    "type": "move_actor",
                     "actor": "patrik",
+                    "blocking": true,
+                    "duration": 3.0,
                     "target_marker": "forest_path_start",
-                    "duration": 3.0
+                    "type": "move_actor"
                 },
                 {
                     "type": "hide_text"
                 }
-            ]
+            ],
+            "id": "arrival",
+            "next": "forest_walk"
         },
         {
-            "id": "forest_walk",
-            "next": "camp",
             "actions": [
                 {
-                    "type": "parallel",
-                    "actions": [
-                        {
-                            "type": "camera_follow",
-                            "actor": "patrik",
-                            "blocking": false
-                        },
-                        {
-                            "type": "play_music",
-                            "id": "forest_ambient",
-                            "blocking": false
-                        },
-                        {
-                            "type": "move_actor",
-                            "actor": "patrik",
-                            "target_marker": "camp_spot",
-                            "duration": 5.0
-                        }
-                    ]
-                },
-                {
-                    "type": "show_text",
-                    "text": "Tak. Jsem tu prvni.",
-                    "duration": 2.2
-                },
-                {
-                    "type": "wait",
-                    "duration": 1.0
-                },
-                {
-                    "type": "hide_text"
-                }
-            ]
-        },
-        {
-            "id": "camp",
-            "next": "evening",
-            "actions": [
-                {
-                    "type": "spawn_actor",
-                    "actor": "backpack",
-                    "kind": "prop",
-                    "marker": "camp_spot",
-                    "sprite": "backpack_modern_large",
-                    "scale": 0.7
-                },
-                {
-                    "type": "set_actor_animation",
                     "actor": "patrik",
-                    "animation": "setup_hammock"
+                    "preserve_offset": true,
+                    "smoothing": 3.0,
+                    "type": "camera_follow"
                 },
                 {
-                    "type": "spawn_actor",
-                    "actor": "hammock",
-                    "kind": "prop",
-                    "marker": "hammock_center",
-                    "sprite": "hammock_basic",
-                    "scale": 1.0
+                    "actor": "patrik",
+                    "animation": "walk_left",
+                    "type": "set_actor_animation"
                 },
                 {
-                    "type": "wait",
-                    "duration": 2.5
+                    "actor": "patrik",
+                    "blocking": true,
+                    "duration": 9.0,
+                    "target_marker": "forest_path_end",
+                    "type": "move_actor"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "walk_left",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "actor": "patrik",
+                    "blocking": true,
+                    "duration": 1.5,
+                    "target_marker": "hoe_inspect",
+                    "type": "move_actor"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "idle_left",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "blocking": true,
+                    "duration": 1.7999999523162842,
+                    "easing": "smooth",
+                    "target_marker": "Motyka",
+                    "type": "camera_move"
+                },
+                {
+                    "duration": 6.199999809265137,
+                    "text": "Hm... zvláštní. Tohle vypadá dost starý... kde se to tady vzalo?",
+                    "type": "show_text"
+                },
+                {
+                    "blocking": false,
+                    "duration": 5.900000095367432,
+                    "fade_in_ms": 500,
+                    "fade_out_ms": 300,
+                    "type": "duck_music",
+                    "volume": 0.3
+                },
+                {
+                    "id": "assets/audio/Cinematics/Intro/Intro_Patrik_01.mp3",
+                    "type": "play_voice"
+                },
+                {
+                    "blocking": true,
+                    "duration": 6.199999809265137,
+                    "type": "wait"
+                },
+                {
+                    "type": "hide_text"
+                },
+                {
+                    "count": 1,
+                    "item": "artifact_hoe",
+                    "once_flag": "intro_houska_hoe_picked_up",
+                    "prop": "interior_object_3",
+                    "type": "pickup_item"
+                },
+                {
+                    "blocking": true,
+                    "distance": 3.0,
+                    "duration": 1.5,
+                    "easing": "smooth",
+                    "follow_after": true,
+                    "height": 1.3,
+                    "pitch": -0.03,
+                    "target_actor": "patrik",
+                    "type": "camera_move"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "walk_left",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "actor": "patrik",
+                    "blocking": true,
+                    "duration": 6.800000190734863,
+                    "target_marker": "camp_spot",
+                    "type": "move_actor"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "idle_right",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "blocking": true,
+                    "duration": 2.0,
+                    "easing": "smooth",
+                    "target_marker": "camp_camera",
+                    "type": "camera_move"
+                },
+                {
+                    "duration": 9.300000190734863,
+                    "text": "Hm... dva stromy akorát. To půjde. Tak jo, bágl dolů… ať máme kde spát.",
+                    "type": "show_text"
+                },
+                {
+                    "blocking": false,
+                    "duration": 9.0,
+                    "fade_in_ms": 500,
+                    "fade_out_ms": 300,
+                    "type": "duck_music",
+                    "volume": 0.3
+                },
+                {
+                    "id": "assets/audio/Cinematics/Intro/Intro_Patrik_02.mp3",
+                    "type": "play_voice"
+                },
+                {
+                    "blocking": true,
+                    "duration": 9.300000190734863,
+                    "type": "wait"
+                },
+                {
+                    "type": "hide_text"
                 }
-            ]
+            ],
+            "id": "forest_walk",
+            "next": "camp"
         },
         {
-            "id": "evening",
-            "next": "storm",
+            "actions": [
+                {
+                    "blocking": true,
+                    "prop": "backpack",
+                    "type": "show_prop"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "walk_up",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "actor": "patrik",
+                    "blocking": true,
+                    "duration": 1.600000023841858,
+                    "target_marker": "hammock_setup_left",
+                    "type": "move_actor"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "idle_right",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "blocking": true,
+                    "duration": 1.399999976158142,
+                    "type": "wait"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "walk_right",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "actor": "patrik",
+                    "blocking": true,
+                    "duration": 1.600000023841858,
+                    "target_marker": "hammock_setup_right",
+                    "type": "move_actor"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "idle_right",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "blocking": true,
+                    "duration": 1.399999976158142,
+                    "type": "wait"
+                },
+                {
+                    "prop": "hammock",
+                    "type": "show_prop"
+                },
+                {
+                    "blocking": true,
+                    "duration": 1.399999976158142,
+                    "type": "wait"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "walk_down",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "actor": "patrik",
+                    "blocking": true,
+                    "duration": 1.399999976158142,
+                    "target_marker": "camp_rest",
+                    "type": "move_actor"
+                },
+                {
+                    "actor": "patrik",
+                    "animation": "idle_left",
+                    "type": "set_actor_animation"
+                },
+                {
+                    "blocking": true,
+                    "duration": 1.5,
+                    "type": "wait"
+                }
+            ],
+            "id": "camp",
+            "next": "evening"
+        },
+        {
             "actions": [
                 {
                     "type": "set_time",
                     "value": "evening"
                 },
                 {
-                    "type": "play_music",
-                    "id": "forest_evening",
-                    "blocking": false
-                },
-                {
-                    "type": "set_actor_animation",
                     "actor": "patrik",
-                    "animation": "idle_down"
+                    "animation": "idle_left",
+                    "blocking": true,
+                    "type": "set_actor_animation"
                 },
                 {
-                    "type": "wait",
-                    "duration": 2.0
+                    "duration": 2.0,
+                    "type": "wait"
                 }
-            ]
+            ],
+            "id": "evening",
+            "next": "storm"
         },
         {
-            "id": "storm",
-            "next": "transition",
             "actions": [
                 {
-                    "type": "set_weather",
+                    "cloudiness": 95.0,
                     "rain": true,
                     "rain_intensity": 0.75,
-                    "wind": 35.0,
-                    "cloudiness": 95.0
+                    "type": "set_weather",
+                    "wind": 35.0
                 },
                 {
-                    "type": "play_sfx",
-                    "id": "thunder_distant"
+                    "id": "thunder_distant",
+                    "type": "play_sfx"
                 },
                 {
-                    "type": "camera_shake",
-                    "duration": 0.6,
-                    "intensity": 0.2
+                    "duration": 0.6000000238418579,
+                    "intensity": 0.2,
+                    "type": "camera_shake"
                 },
                 {
-                    "type": "wait",
-                    "duration": 1.0
+                    "duration": 1.0,
+                    "type": "wait"
                 },
                 {
-                    "type": "play_sfx",
-                    "id": "thunder_close"
+                    "blocking": true,
+                    "id": "assets/audio/Cinematics/Intro/Thunderstorm.wav",
+                    "type": "play_sfx"
                 },
                 {
-                    "type": "screen_flash",
                     "duration": 0.25,
-                    "intensity": 1.0
+                    "intensity": 1.0,
+                    "type": "screen_flash"
                 },
                 {
-                    "type": "fade_out",
-                    "duration": 1.2
+                    "duration": 1.2000000476837158,
+                    "type": "fade_out"
                 }
-            ]
+            ],
+            "id": "storm",
+            "next": "transition"
         },
         {
-            "id": "transition",
-            "next": "awakening",
             "actions": [
                 {
-                    "type": "load_map",
+                    "blocking": true,
+                    "mode": "2d",
+                    "type": "change_renderer_mode"
+                },
+                {
+                    "blocking": true,
                     "map": "blatce.rvm",
-                    "spawn": "forest_morning_spawn"
+                    "spawn": "forest_morning_spawn",
+                    "type": "load_map"
                 },
                 {
-                    "type": "change_renderer_mode",
-                    "mode": "2d"
+                    "blocking": true,
+                    "marker": "forest_morning_spawn",
+                    "type": "teleport_player"
                 },
                 {
-                    "type": "spawn_actor",
-                    "actor": "patrik",
-                    "kind": "player",
-                    "marker": "forest_morning_spawn"
-                },
-                {
+                    "blocking": true,
                     "type": "set_time",
                     "value": "morning"
                 },
                 {
-                    "type": "set_weather",
+                    "blocking": true,
+                    "cloudiness": 35.0,
                     "rain": false,
-                    "wind": 5.0,
-                    "cloudiness": 35.0
+                    "type": "set_weather",
+                    "wind": 5.0
                 },
                 {
-                    "type": "fade_in",
-                    "duration": 1.5
+                    "duration": 1.5,
+                    "type": "fade_in"
                 }
-            ]
+            ],
+            "id": "transition",
+            "next": "awakening"
         },
         {
-            "id": "awakening",
-            "next": "meet_matej",
             "actions": [
                 {
                     "type": "disable_player_control"
                 },
                 {
-                    "type": "wait",
-                    "duration": 1.0
+                    "duration": 1.0,
+                    "type": "wait"
                 },
                 {
-                    "type": "show_text",
-                    "text": "Kde je auto?",
-                    "duration": 2.0
+                    "blocking": false,
+                    "duration": 4.699999809265137,
+                    "fade_in_ms": 500,
+                    "fade_out_ms": 300,
+                    "type": "duck_music",
+                    "volume": 0.3
                 },
                 {
-                    "type": "wait",
-                    "duration": 1.0
+                    "blocking": true,
+                    "id": "assets/audio/Cinematics/Intro/Intro_Patrik_04.mp3",
+                    "type": "play_voice"
+                },
+                {
+                    "blocking": true,
+                    "duration": 2.0,
+                    "text": "Co... co se stalo? Počkat... kde mám auto?",
+                    "type": "show_text"
+                },
+                {
+                    "blocking": true,
+                    "duration": 5.0,
+                    "type": "wait"
                 },
                 {
                     "type": "hide_text"
                 },
                 {
+                    "blocking": true,
                     "type": "enable_player_control"
                 }
-            ]
+            ],
+            "id": "awakening",
+            "next": "meet_matej"
         },
         {
-            "id": "meet_matej",
             "actions": [
                 {
-                    "type": "set_flag",
-                    "flag": "intro_houska_completed"
+                    "flag": "intro_houska_completed",
+                    "type": "set_flag"
                 },
                 {
-                    "type": "end_sequence",
-                    "set_flag": "intro_houska_completed"
+                    "set_flag": "intro_houska_completed",
+                    "type": "end_sequence"
                 }
-            ]
+            ],
+            "id": "meet_matej"
         }
-    ]
+    ],
+    "start": "arrival"
 }

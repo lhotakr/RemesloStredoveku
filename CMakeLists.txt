@@ -139,7 +139,13 @@ add_executable(RemesloStredoveku
         src/game/Game.cpp
         src/game/Game.h
         src/game/BuildInteriorEngine.cpp
+        src/game/InteriorEditorGeometry.cpp
+        src/game/InteriorEditorAssets.cpp
+        src/game/InventorySpriteCatalog.cpp
         src/game/BuildInteriorEngine.h
+        src/game/CinematicScene.cpp
+        src/game/CinematicScene2D.cpp
+        src/game/CinematicScene.h
         src/game/InteriorInteractionEvent.h
         src/game/Campaign.cpp
         src/game/CampaignConsole.cpp
@@ -177,10 +183,13 @@ add_executable(RemesloStredoveku
         src/game/sequence/SequenceActions.cpp
         src/game/sequence/SequenceDefinition.h
         src/game/sequence/SequenceDefinition.cpp
+        src/game/sequence/SequenceEditing.cpp
         src/game/sequence/SequenceMarkers.h
         src/game/sequence/SequenceMarkers.cpp
         src/game/sequence/SequenceRuntime.h
         src/game/sequence/SequenceRuntime.cpp
+        src/game/sequence/SequenceTimeline.cpp
+        src/game/sequence/SequenceAudio.cpp
         src/game/sequence/SequenceManager.h
         src/game/sequence/SequenceManager.cpp
         src/game/smithing/NailSmithing.h
@@ -248,6 +257,12 @@ add_executable(RemesloStredoveku
         src/game/EditorDialogs.cpp
         src/game/EditorSchedules.cpp
         src/game/EditorSequences.cpp
+        src/game/EditorSequenceMarkers.cpp
+        src/game/EditorSequenceEntities.cpp
+        src/game/EditorSequenceScene2D.cpp
+        src/game/EditorSequenceTimeline.cpp
+        src/game/EditorSequenceMotion.cpp
+        src/game/EditorSequenceAudio.cpp
         src/game/EditorForage.cpp
         src/game/EditorHelpers.cpp
         src/game/EditorHelpers.h
@@ -346,3 +361,54 @@ target_compile_definitions(RemesloSmithingTests PRIVATE
 
 enable_testing()
 add_test(NAME RemesloSmithingTests COMMAND RemesloSmithingTests)
+
+add_executable(RemesloSequenceTests
+        src/tests/SequenceTests.cpp
+        src/audio/AudioManager.cpp
+        src/game/sequence/SequenceDefinition.cpp
+        src/game/sequence/SequenceEditing.cpp
+        src/game/sequence/SequenceActions.cpp
+        src/game/sequence/SequenceRuntime.cpp
+        src/game/sequence/SequenceMarkers.cpp
+        src/game/sequence/SequenceTimeline.cpp
+        src/game/sequence/SequenceAudio.cpp
+        src/game/sequence/SequenceManager.cpp
+        src/JsonUtils.cpp
+)
+target_include_directories(RemesloSequenceTests PRIVATE src third_party/nlohmann)
+target_link_libraries(RemesloSequenceTests PRIVATE PkgConfig::SDL2 PkgConfig::SDL2_MIXER)
+target_compile_definitions(RemesloSequenceTests PRIVATE SDL_MAIN_HANDLED REMESLO_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+add_test(NAME RemesloSequenceTests COMMAND RemesloSequenceTests)
+add_test(NAME RemesloSequenceAudioTests COMMAND RemesloSequenceTests --audio)
+
+add_executable(RemesloInteriorEditorTests
+        src/tests/InteriorEditorTests.cpp
+        src/CharacterManager.cpp
+        src/JsonUtils.cpp
+        src/game/CinematicScene.cpp
+        src/game/CinematicScene2D.cpp
+        src/game/sequence/SequenceMarkers.cpp
+        src/game/sequence/SequenceDefinition.cpp
+        src/game/sequence/SequenceEditing.cpp
+        src/game/sequence/SequenceRuntime.cpp
+        src/game/sequence/SequenceTimeline.cpp
+        src/terrain/ObjectCatalog.cpp
+        src/game/BuildInteriorEngine.cpp
+        src/game/InteriorEditorGeometry.cpp
+        src/game/InteriorEditorAssets.cpp
+        src/game/InventorySpriteCatalog.cpp
+        third_party/imgui/imgui.cpp
+        third_party/imgui/imgui_draw.cpp
+        third_party/imgui/imgui_tables.cpp
+        third_party/imgui/imgui_widgets.cpp
+)
+target_include_directories(RemesloInteriorEditorTests PRIVATE src third_party/nlohmann third_party/imgui)
+target_link_libraries(RemesloInteriorEditorTests PRIVATE PkgConfig::SDL2 PkgConfig::SDL2_IMAGE)
+target_compile_definitions(RemesloInteriorEditorTests PRIVATE SDL_MAIN_HANDLED REMESLO_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+if(MSVC)
+    target_compile_options(RemesloInteriorEditorTests PRIVATE /utf-8)
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
+    target_compile_options(RemesloInteriorEditorTests PRIVATE -finput-charset=UTF-8 -fexec-charset=UTF-8)
+endif()
+add_test(NAME RemesloInteriorEditorTests COMMAND RemesloInteriorEditorTests)
+set_tests_properties(RemesloInteriorEditorTests PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy")

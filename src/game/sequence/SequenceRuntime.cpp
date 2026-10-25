@@ -34,6 +34,16 @@ namespace sequence
         }
     }
 
+    CameraFollowSettings CameraFollowFromJson(const nlohmann::json& data)
+    {
+        CameraFollowSettings settings;
+        settings.preserveOffset = data.value("preserve_offset", true);
+        settings.lookAtActor = data.value("look_at_actor", true);
+        settings.smoothing = std::clamp(data.value("smoothing", 0.0f), 0.0f, 100.0f);
+        settings.distance = std::clamp(data.value("distance", 2.2f), 0.1f, 8192.0f);
+        return settings;
+    }
+
     bool SequenceRuntime::start(const SequenceDefinition* definition, ISequenceContext* context)
     {
         stop();
@@ -47,7 +57,26 @@ namespace sequence
         m_context = context;
         m_running = true;
         m_completed = false;
+        m_elapsed = 0.0f;
         enterNode(definition->start);
+        return m_node != nullptr;
+    }
+
+    bool SequenceRuntime::startAtNode(const SequenceDefinition* definition, ISequenceContext* context, const std::string& nodeId)
+    {
+        stop();
+        if (!definition || !context)
+        {
+            m_lastError = "SequenceRuntime::startAtNode missing definition or context.";
+            return false;
+        }
+
+        m_definition = definition;
+        m_context = context;
+        m_running = true;
+        m_completed = false;
+        m_elapsed = 0.0f;
+        enterNode(nodeId.empty() ? definition->start : nodeId);
         return m_node != nullptr;
     }
 
@@ -62,6 +91,7 @@ namespace sequence
         m_paused = false;
         m_completed = false;
         m_stepRequested = false;
+        m_elapsed = 0.0f;
         m_lastError.clear();
     }
 
@@ -116,6 +146,7 @@ namespace sequence
 
         if (dt < 0.0f)
             dt = 0.0f;
+        m_elapsed += dt;
 
         bool advanced = true;
         while (m_running && advanced)
@@ -158,6 +189,23 @@ namespace sequence
         update(1000.0f);
     }
 
+    bool SequenceRuntime::skip()
+    {
+        if (!m_definition || !m_context)
+            return false;
+        if (!m_definition->skippable)
+        {
+            m_context->sequenceLog("Sequence is not skippable: " + m_definition->id);
+            return false;
+        }
+
+        runFinalizationActions(m_definition->onSkipActions);
+        m_running = false;
+        m_paused = false;
+        m_completed = true;
+        return true;
+    }
+
     const Status SequenceRuntime::status() const
     {
         Status s;
@@ -166,9 +214,14 @@ namespace sequence
         s.completed = m_completed;
         s.sequenceId = m_definition ? m_definition->id : std::string();
         s.nodeId = m_node ? m_node->id : std::string();
+        s.nextNodeId = m_node ? m_node->next : std::string();
         s.actionIndex = m_currentAction;
+        s.elapsed = m_elapsed;
         if (m_currentAction >= 0 && m_currentAction < (int)m_actions.size())
+        {
             s.actionElapsed = m_actions[m_currentAction].elapsed;
+            collectActiveActions(m_actions[m_currentAction], m_currentAction, s.activeActionIndices);
+        }
         return s;
     }
 
@@ -190,6 +243,13 @@ namespace sequence
 
         if (!runtime.started)
         {
+            if (runtime.def->type == "parallel" && runtime.children.empty())
+                for (const auto& child : runtime.def->children)
+                {
+                    ActionRuntime childRuntime;
+                    childRuntime.def = &child;
+                    runtime.children.push_back(std::move(childRuntime));
+                }
             const ActionResult begin = beginAction(runtime, actionIndex);
             runtime.started = true;
             if (begin != ActionResult::Complete)
@@ -222,7 +282,31 @@ namespace sequence
                 runtime.to = readPosition(data, "target_marker", "target", "x", "y", runtime.from);
             }
             if (type == "camera_move")
-                runtime.to = readPosition(data, "target_marker", "target", "x", "y", Vec2{});
+            {
+                m_context->setCameraFollow("");
+                runtime.hasCameraPose = m_context->getCameraPose(runtime.cameraFrom);
+                runtime.cameraTo = readCameraPose(data, "target_marker", runtime.cameraFrom);
+                runtime.from = runtime.cameraFrom.position;
+                runtime.to = runtime.cameraTo.position;
+                runtime.hasFrom = runtime.hasCameraPose;
+                Vec2 target;
+                const auto actor = DataString(data, "target_actor");
+                if (!actor.empty() && m_context->getActorPosition(actor, target))
+                {
+                    float dx = runtime.cameraFrom.position.x - target.x;
+                    float dy = runtime.cameraFrom.position.y - target.y;
+                    float length = std::hypot(dx, dy);
+                    if (length < .0001f)
+                    {
+                        const float angle = runtime.cameraFrom.angleDegrees * 3.14159265358979323846f / 180;
+                        dx = -std::cos(angle); dy = -std::sin(angle); length = 1;
+                    }
+                    const float distance = std::clamp(data.value("distance", 2.2f), .1f, 8192.f);
+                    runtime.cameraTargetOffset = {dx / length * distance, dy / length * distance};
+                    runtime.hasCameraTarget = true;
+                }
+                else if (!actor.empty()) m_context->sequenceLog("Unknown camera target actor: " + actor);
+            }
             if (type == "fade_in")
                 m_context->setFadeAlpha(1.0f);
             if (type == "fade_out")
@@ -288,6 +372,18 @@ namespace sequence
             return ActionResult::Complete;
         }
 
+        if (type == "show_prop" || type == "show_actor")
+        {
+            m_context->setActorVisible(DataString(data, "prop", DataString(data, "actor", DataString(data, "id"))), true);
+            return ActionResult::Complete;
+        }
+
+        if (type == "hide_prop" || type == "hide_actor")
+        {
+            m_context->setActorVisible(DataString(data, "prop", DataString(data, "actor", DataString(data, "id"))), false);
+            return ActionResult::Complete;
+        }
+
         if (type == "remove_actor")
         {
             m_context->removeActor(DataString(data, "actor", DataString(data, "id")));
@@ -308,13 +404,20 @@ namespace sequence
 
         if (type == "set_camera")
         {
-            m_context->setCameraPosition(readPosition(data, "marker", "position", "x", "y", Vec2{}));
+            m_context->setCameraFollow("");
+            CameraPose current;
+            const bool hasPose = m_context->getCameraPose(current);
+            CameraPose markerPose;
+            if (hasPose || m_context->resolveCameraMarker(DataString(data, "marker"), markerPose))
+                m_context->setCameraPose(readCameraPose(data, "marker", current));
+            else
+                m_context->setCameraPosition(readPosition(data, "marker", "position", "x", "y", Vec2{}));
             return ActionResult::Complete;
         }
 
         if (type == "camera_follow")
         {
-            m_context->setCameraFollow(DataString(data, "actor"));
+            m_context->setCameraFollow(data.value("enabled", true) ? DataString(data, "actor") : std::string(), CameraFollowFromJson(data));
             return ActionResult::Complete;
         }
 
@@ -332,6 +435,8 @@ namespace sequence
 
         if (type == "play_music")
         {
+            if (data.contains("volume"))
+                m_context->setSequenceMusicVolume(data.value("volume", 1.0f), 0.0f);
             m_context->playMusic(DataString(data, "id", DataString(data, "path")), DataInt(data, "loops", -1), DataInt(data, "fade_ms", 500));
             return ActionResult::Complete;
         }
@@ -344,13 +449,43 @@ namespace sequence
 
         if (type == "play_sfx")
         {
-            m_context->playSfx(DataString(data, "id"));
+            m_context->playSfx(DataString(data, "id", DataString(data, "path")), data.value("volume", 1.0f));
             return ActionResult::Complete;
         }
 
         if (type == "play_voice")
         {
-            m_context->playVoice(DataString(data, "id"));
+            m_context->playVoice(DataString(data, "id", DataString(data, "path")), data.value("volume", 1.0f));
+            return ActionResult::Complete;
+        }
+
+        if (type == "set_music_volume")
+        {
+            m_context->setSequenceMusicVolume(data.value("volume", 1.0f), std::max(0, DataInt(data, "fade_ms", 500)) / 1000.0f);
+            return ActionResult::Complete;
+        }
+        if (type == "set_sfx_volume")
+        {
+            m_context->setSequenceSfxVolume(data.value("volume", 1.0f));
+            return ActionResult::Complete;
+        }
+        if (type == "duck_music")
+        {
+            m_context->duckSequenceMusic(data.value("volume", 0.3f), readDuration(action, 3.0f),
+                std::max(0, DataInt(data, "fade_out_ms", 300)) / 1000.0f,
+                std::max(0, DataInt(data, "fade_in_ms", 500)) / 1000.0f);
+            return ActionResult::Complete;
+        }
+        if (type == "restore_music")
+        {
+            m_context->restoreSequenceMusic(std::max(0, DataInt(data, "fade_ms", 500)) / 1000.0f);
+            return ActionResult::Complete;
+        }
+        if (type == "pickup_item")
+        {
+            if (!m_context->pickupSequenceItem(DataString(data, "item"), std::max(1, DataInt(data, "count", 1)),
+                DataString(data, "prop"), DataString(data, "once_flag")))
+                m_context->sequenceLog("Could not pick up item: " + DataString(data, "item"));
             return ActionResult::Complete;
         }
 
@@ -369,6 +504,12 @@ namespace sequence
         if (type == "load_map")
         {
             m_context->loadMapForSequence(DataString(data, "map", DataString(data, "path")), DataString(data, "spawn", DataString(data, "spawn_id")));
+            return ActionResult::Complete;
+        }
+
+        if (type == "load_scene")
+        {
+            m_context->loadScene(DataString(data, "scene", DataString(data, "id")));
             return ActionResult::Complete;
         }
 
@@ -418,7 +559,9 @@ namespace sequence
         const float duration = readDuration(action, 0.0f);
         runtime.elapsed += dt;
         const float t = duration <= 0.0f ? 1.0f : Clamp01(runtime.elapsed / duration);
-        const float eased = Smooth01(t);
+        const auto easing = DataString(data, "easing", "smooth");
+        const float eased = easing == "linear" ? t : (easing == "ease_in" ? t * t :
+            (easing == "ease_out" ? 1 - (1 - t) * (1 - t) : Smooth01(t)));
 
         if (type == "wait")
             return t >= 1.0f ? ActionResult::Complete : ActionResult::Running;
@@ -457,13 +600,44 @@ namespace sequence
 
         if (type == "camera_move")
         {
-            m_context->setCameraPosition(runtime.to);
-            return t >= 1.0f ? ActionResult::Complete : ActionResult::Running;
+            const auto targetActor = DataString(data, "target_actor");
+            Vec2 target;
+            if (runtime.hasCameraTarget && m_context->getActorPosition(targetActor, target))
+                runtime.cameraTo.position = {target.x + runtime.cameraTargetOffset.x, target.y + runtime.cameraTargetOffset.y};
+            CameraPose pose = runtime.cameraFrom;
+            pose.position.x += (runtime.cameraTo.position.x - pose.position.x) * eased;
+            pose.position.y += (runtime.cameraTo.position.y - pose.position.y) * eased;
+            pose.height += (runtime.cameraTo.height - pose.height) * eased;
+            pose.angleDegrees += std::remainder(runtime.cameraTo.angleDegrees - pose.angleDegrees, 360.0f) * eased;
+            pose.pitch += (runtime.cameraTo.pitch - pose.pitch) * eased;
+            auto lookAt = DataString(data, "look_at");
+            if (lookAt.empty()) lookAt = targetActor;
+            Vec2 lookPosition;
+            if (!lookAt.empty() && m_context->getActorPosition(lookAt, lookPosition) &&
+                std::hypot(lookPosition.x - pose.position.x, lookPosition.y - pose.position.y) > .0001f)
+            {
+                const float angle = std::atan2(lookPosition.y - pose.position.y, lookPosition.x - pose.position.x) * 180 / 3.14159265358979323846f;
+                pose.angleDegrees = runtime.cameraFrom.angleDegrees + std::remainder(angle - runtime.cameraFrom.angleDegrees, 360.f) * eased;
+            }
+            if (runtime.hasCameraPose) m_context->setCameraPose(pose);
+            else m_context->setCameraPosition(pose.position);
+            if (t >= 1 && data.value("follow_after", false))
+            {
+                auto actor = DataString(data, "follow_actor");
+                if (actor.empty()) actor = lookAt;
+                if (!actor.empty())
+                {
+                    auto settings = CameraFollowFromJson(data);
+                    settings.preserveOffset = true;
+                    m_context->setCameraFollow(actor, settings);
+                }
+            }
+            return t >= 1 ? ActionResult::Complete : ActionResult::Running;
         }
 
         if (type == "camera_shake")
         {
-            m_context->setCameraShake(data.value("intensity", 1.0f), duration);
+            m_context->setCameraShake(data.value("intensity", data.value("strength", 1.0f)), duration, data.value("frequency", 18.0f));
             return ActionResult::Complete;
         }
 
@@ -473,9 +647,13 @@ namespace sequence
     SequenceRuntime::ActionResult SequenceRuntime::updateParallel(ActionRuntime& runtime, float dt)
     {
         bool allBlockingComplete = true;
+        for (int phase = 0; phase < 2; ++phase)
         for (int i = 0; i < (int)runtime.children.size(); ++i)
         {
             auto& child = runtime.children[i];
+            // Resolve actor movement before dependent camera targets in this frame.
+            const bool camera = child.def && (child.def->type.rfind("camera_", 0) == 0 || child.def->type == "set_camera");
+            if (camera != (phase == 1)) continue;
             if (!child.completed)
             {
                 const ActionResult result = updateAction(child, dt, i);
@@ -498,6 +676,48 @@ namespace sequence
     bool SequenceRuntime::isActionBlocking(const ActionRuntime& runtime) const
     {
         return runtime.def ? runtime.def->blocking : false;
+    }
+
+    void SequenceRuntime::collectActiveActions(const ActionRuntime& runtime, int actionIndex, std::vector<int>& out) const
+    {
+        if (!runtime.def || runtime.completed)
+            return;
+        if (runtime.started || runtime.delayElapsed > 0.0f)
+            out.push_back(actionIndex);
+        if (runtime.def->type == "parallel")
+        {
+            for (int i = 0; i < (int)runtime.children.size(); ++i)
+                collectActiveActions(runtime.children[i], i, out);
+        }
+    }
+
+    void SequenceRuntime::runFinalizationActions(const std::vector<ActionDef>& actions)
+    {
+        std::vector<ActionRuntime> previous = std::move(m_actions);
+        const NodeDef* previousNode = m_node;
+        const int previousAction = m_currentAction;
+        m_actions.clear();
+        m_currentAction = 0;
+        for (const auto& action : actions)
+        {
+            ActionRuntime runtime;
+            runtime.def = &action;
+            if (action.type == "parallel")
+            {
+                for (const auto& child : action.children)
+                {
+                    ActionRuntime childRuntime;
+                    childRuntime.def = &child;
+                    runtime.children.push_back(std::move(childRuntime));
+                }
+            }
+
+            updateAction(runtime, 1000.0f, m_currentAction);
+            ++m_currentAction;
+        }
+        m_actions = std::move(previous);
+        m_node = previousNode;
+        m_currentAction = previousAction;
     }
 
     void SequenceRuntime::finishNode()
@@ -541,6 +761,18 @@ namespace sequence
         }
 
         return fallback;
+    }
+
+    CameraPose SequenceRuntime::readCameraPose(const nlohmann::json& data, const char* markerKey, CameraPose fallback) const
+    {
+        CameraPose result = fallback;
+        result.position = readPosition(data, markerKey, data.contains("target") ? "target" : "position", "x", "y", fallback.position);
+        const std::string marker = DataString(data, markerKey);
+        if (!marker.empty()) m_context->resolveCameraMarker(marker, result);
+        result.height = data.value("height", data.value("z", result.height));
+        result.angleDegrees = data.value("angle_degrees", result.angleDegrees);
+        result.pitch = data.value("pitch", result.pitch);
+        return result;
     }
 
     float SequenceRuntime::readDuration(const ActionDef& def, float fallback) const

@@ -5,6 +5,7 @@
 #include <cstdint>
 #include <string>
 #include <unordered_map>
+#include <unordered_set>
 #include <vector>
 #include "InteriorInteractionEvent.h"
 #include "interior/TextureSpriteEditor.h"
@@ -52,6 +53,7 @@ public:
     bool consumePendingInteraction(InteriorInteractionEvent& outEvent);
 
     void setEditorMode(bool enabled);
+    bool cancelEditorSectorPlacement();
     bool editorMode() const { return m_editorMode; }
     void setRuntimeOverlayVisible(bool visible);
     void setMouseLookSuppressed(bool suppressed);
@@ -66,7 +68,48 @@ public:
     const std::string& currentInteriorId() const { return m_currentInteriorId; }
     std::string currentInteriorLocationId() const;
 
+    struct ScenePoint { double x = 0.0, y = 0.0, z = 0.0; };
+    // Coordinates are normalized to the rendered image; projected points may lie outside [0, 1].
+    bool projectScenePoint(ScenePoint point, double& u, double& v, bool& occluded) const;
+    bool pickScenePoint(double u, double v, ScenePoint& point) const;
+    bool intersectSceneHeight(double u, double v, double worldZ, ScenePoint& point) const;
+    double sceneFloorHeight(double x, double y) const { return floorHeightAtWorld(x, y); }
+    double sceneEyeHeight() const { return m_eyeHeight; }
+    void setSceneEyeHeight(double height);
+    std::vector<std::vector<std::array<double, 2>>> sceneBoundaries() const;
+
+    struct RuntimeSpriteDef
+    {
+        std::string id;
+        std::string texturePath;
+        std::vector<std::uint32_t> pixels;
+        int pixelW = 0;
+        int pixelH = 0;
+        double x = 0.0;
+        double y = 0.0;
+        double zOffset = 0.0;
+        double scale = 0.75;
+        double yawDegrees = 0.0;
+        double voxelDepth = 0.0;
+        bool visible = true;
+        bool solid = false;
+        bool voxel = false;
+        bool floor = false;
+        double floorWidth = 0.0;
+        double floorDepth = 0.0;
+    };
+
+    bool upsertRuntimeSprite(const RuntimeSpriteDef& def);
+    bool setRuntimeSpritePosition(const std::string& id, double x, double y, double zOffset = 0.0);
+    bool getRuntimeSpritePosition(const std::string& id, double& outX, double& outY, double& outZOffset) const;
+    bool setRuntimeSpriteVisible(const std::string& id, bool visible);
+    bool setRuntimeSpriteScale(const std::string& id, double scale);
+    bool removeRuntimeSprite(const std::string& id);
+    void clearRuntimeSprites();
+    int runtimeSpriteCount() const;
+
 private:
+    friend struct BuildInteriorEditorTestAccess;
     using TextureKey = std::uint16_t;
     static constexpr TextureKey kNoTexture = 0;
     static constexpr TextureKey kLegacyTextureBase = 1;
@@ -102,6 +145,8 @@ private:
         int voxelGridH = 0;
         std::vector<TextureFrame> animationFrames;
         std::string path;
+        SDL_Rect sourceRect{};
+        std::string name;
     };
 
     struct SectorDef
@@ -283,7 +328,8 @@ private:
     enum class ObjectRenderMode
     {
         Billboard,
-        Voxel
+        Voxel,
+        Floor
     };
 
     struct SpriteDef
@@ -301,6 +347,9 @@ private:
         // World-space thickness. A value <= 0 uses an automatic fraction of
         // the object's height, which is useful for imported legacy sprites.
         double voxelDepth = 0.0;
+        // Floor footprint in world units; zero derives it from scale and texture aspect.
+        double floorWidth = 0.0;
+        double floorDepth = 0.0;
 
         // Animated fire/torch settings. Animation frames are discovered next to
         // the base texture as <stem>_anim_00.png, _01.png, ... . Each object
@@ -336,6 +385,7 @@ private:
         std::string workshopId;
         std::string stationId;
         std::string actionId;
+        bool visible = true;
     };
 
     struct ProjectedVertex
@@ -393,6 +443,7 @@ private:
     std::vector<WallSegmentDef> m_wallSegments;
     std::vector<WallSegmentDef> m_polygonBoundaryWalls;
     std::vector<PolygonSectorRegion> m_polygonSectors;
+    bool m_polygonGeometryPrimary = false;
     std::vector<VectorPortalDef> m_polygonPortals;
     std::vector<TraversalRampDef> m_traversalRamps;
     std::array<bool, 256> m_floorCutoutSectors{};
@@ -402,6 +453,9 @@ private:
     double m_floorCutoutMaxX = -1.0e30;
     double m_floorCutoutMaxY = -1.0e30;
     std::vector<SpriteDef> m_sprites;
+    std::unordered_set<std::string> m_runtimeSpriteIds;
+    std::unordered_map<std::string, TextureKey> m_runtimeTextureKeys;
+    TextureKey m_nextRuntimeTextureKey = 4096;
     std::vector<RuntimeLight> m_renderLights;
     std::unordered_map<std::string, SpawnDef> m_namedSpawns;
 
@@ -410,6 +464,10 @@ private:
     double m_angle = 0.0;
     double m_fov = 72.0 * 3.14159265358979323846 / 180.0;
     double m_eyeHeight = 0.56;
+    ScenePoint m_renderViewOrigin;
+    double m_renderViewAngle = 0.0;
+    double m_renderViewFov = 1.0;
+    int m_renderViewHorizon = 0;
     double m_pitch = 0.0;
     double m_bobPhase = 0.0;
     double m_moveBlend = 0.0;
@@ -449,6 +507,9 @@ private:
     // Per-pixel depth for hinged doors and voxel/billboard objects. Walls keep
     // their fast per-column z-buffer; dynamic geometry then adds finer depth.
     std::vector<double> m_dynamicDepthBuffer;
+    // The visible object at each preview pixel; uses the renderer's depth and alpha tests.
+    std::vector<int> m_editorObjectPixels;
+    int m_editorRenderingSprite = -1;
     struct SurfaceOcclusionHit
     {
         double distance = 0.0;
@@ -484,6 +545,19 @@ private:
         Objects
     };
 
+    struct EditorTextureAsset
+    {
+        std::string name, path, objectId, search;
+        SDL_Rect sourceRect{};
+        bool atlas = false;
+        bool inventory = false;
+    };
+    std::vector<EditorTextureAsset> m_editorTextureAssets;
+    bool m_editorTextureAssetsLoaded = false;
+    void refreshEditorTextureAssets();
+    bool renderEditorTexturePicker(const char* label, TextureKey& selected, bool objects = false);
+    TextureKey textureKeyForSource(const std::string& path, SDL_Rect sourceRect = {}, const std::string& name = {});
+
     // Editor state.
     std::vector<EditorMapChoice> m_editorMapChoices;
     int m_editorSelectedMap = -1;
@@ -499,8 +573,23 @@ private:
     int m_editorSelectedOpening = -1;
     bool m_editorPolygonPointMode = false;
     bool m_editorPolygonDragDirty = false;
+    bool m_editorSectorPlacement = false;
+    bool m_editorDrawingSector = false;
+    bool m_editorNewSectorWalls = false;
+    double m_editorNewSectorWidth = 4.0;
+    double m_editorNewSectorDepth = 4.0;
+    std::array<double, 2> m_editorSectorRectStart{};
+    std::array<double, 2> m_editorSectorRectEnd{};
     bool m_editorDefaultSpawnDirty = false;
-    EditorMapTool m_editorMapTool = EditorMapTool::Tiles;
+    EditorMapTool m_editorMapTool = EditorMapTool::Polygons;
+    bool m_editorSelectObjectsTab = false;
+    bool m_editorOpenObjectInspectorOnRelease = false;
+    bool m_editorCameraCollision = false;
+    bool m_editorDraggingSprite = false;
+    bool m_editorDraggingVertex = false;
+    double m_editorDragOffsetX = 0.0;
+    double m_editorDragOffsetY = 0.0;
+    std::array<double, 4> m_editorDragBounds{};
     float m_editorMapCellSize = 22.0f;
 
     // Stair wizard. Stairs are authored as a run of real floor-height sectors,
@@ -519,7 +608,7 @@ private:
     // texture and SDL scales it to the window.
     float m_gameRenderScale = 0.36f;
     float m_editorRenderScale = 0.30f;
-    bool m_editorPreview3D = false;
+    bool m_editorPreview3D = true;
     bool m_fastFloorCasting = true;
 
     bool loadInteriorAtSpawnUnsafe(const std::string& interiorIdOrPath, const std::string& spawnId);
@@ -548,7 +637,11 @@ private:
     bool loadTextureFrame(const std::string& absolutePath, TextureFrame& frame);
     void loadTextureAnimationFrames(TextureRef& texture);
     void prepareTextureModels();
-    bool loadTextureForCell(TextureKey key, const std::string& relativePath);
+    bool loadTextureForCell(TextureKey key, const std::string& relativePath, SDL_Rect sourceRect = {}, const std::string& name = {});
+    bool loadTexturePixelsForCell(TextureKey key, const std::vector<std::uint32_t>& pixels, int width, int height, const std::string& debugPath);
+    TextureKey textureKeyForRuntimePath(const std::string& texturePath);
+    SpriteDef* findSpriteById(const std::string& id);
+    const SpriteDef* findSpriteById(const std::string& id) const;
     bool saveCastleMapSectors();
     const TextureFrame* activeAnimationFrame(const TextureRef& texture, const SpriteDef& sprite) const;
     void ensureSceneBuffer(int width, int height);
@@ -632,6 +725,7 @@ private:
     void renderVectorWalls(int screenW, int screenH, int horizon, double eyeZ);
     void renderSwingDoors(int screenW, int screenH, int horizon, double eyeZ);
     void renderSprites(int screenW, int screenH, int horizon, double eyeZ);
+    void renderFloorSprite(const SpriteDef& sprite, int screenW, int screenH, int horizon, double eyeZ);
     void renderBillboardSprite(const SpriteDef& sprite, int screenW, int screenH, int horizon, double eyeZ);
     void renderVoxelSprite(const SpriteDef& sprite, int screenW, int screenH, int horizon, double eyeZ);
     TextureKey textureForSpriteView(const SpriteDef& sprite) const;
@@ -640,6 +734,13 @@ private:
     void refreshEditorMapList();
     void renderEditorMap();
     void renderEditorPolygons();
+    void renderEditorSectorPlacement(bool showSectorPicker);
+    bool createEditorSectorRectangle(double x0, double y0, double x1, double y1);
+    void renderEditorEnvironmentSize();
+    bool resizeEditorEnvironment(double width, double height);
+    bool resizeEditorPolygon(int index, double width, double height);
+    bool convertEditorGridToPolygons();
+    int pickEditorObject(int screenX, int screenY) const;
     void paintEditorCell(int x, int y, bool sectorOnly);
     void generateEditorStairs();
     void ensureSectorGrid();

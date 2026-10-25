@@ -30,8 +30,10 @@ namespace sequence
         std::string id;
         std::string name;
         std::string start;
+        bool skippable = false;
         nlohmann::json flags = nlohmann::json::object();
         nlohmann::json transitions = nlohmann::json::object();
+        std::vector<ActionDef> onSkipActions;
         std::vector<NodeDef> nodes;
 
         const NodeDef* findNode(const std::string& nodeId) const;

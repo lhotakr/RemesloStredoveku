@@ -207,10 +207,6 @@ static void ApplyStartingLoadout(
     player.inventory = PlayerInventory{};
     player.inventory.initDefaults();
 
-    auto it = defs.find("artifact_hoe");
-    if (it != defs.end())
-        player.inventory.pockets.addItem(it->second, 1, defs);
-
     switch (background)
     {
     case PlayerStats::Background::Survivalist:
@@ -478,6 +474,8 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
     }
 
     m_tileSize = 32;
+    if (!m_cinematicScene.init(m_window, m_renderer, &m_characterManager))
+        SDL_Log("CinematicScene init failed.");
     m_sequenceManager.loadDirectory(pathutils::AssetsDir() / "sequences");
     for (const auto& err : m_sequenceManager.errors())
         SDL_Log("[sequence] %s", err.c_str());
@@ -1190,6 +1188,7 @@ bool Campaign::loadItemDefs(const std::string& path, std::string* outError)
 void Campaign::shutdown()
 {
     m_sequenceManager.stop();
+    m_cinematicScene.shutdown();
     clearSequenceActors();
     m_npcManager.clear();
     m_characterManager.shutdown();

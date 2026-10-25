@@ -34,6 +34,7 @@
 #include "smithing/NailForgingController.h"
 #include "smithing/NailSmithing.h"
 #include "smithing/SmithingNailAudioController.h"
+#include "CinematicScene.h"
 #include "sequence/SequenceManager.h"
 #include "sequence/SequenceMarkers.h"
 
@@ -59,6 +60,12 @@ enum class Season
     Summer,
     Autumn,
     Winter
+};
+
+enum class GameRenderMode
+{
+    Campaign2D,
+    Cinematic25D
 };
 
 class Campaign : public sequence::ISequenceContext
@@ -87,11 +94,22 @@ public:
     float playerY() const;
     void setPlayerPosition(float x, float y);
     void setLanguage(const std::string& language) { m_language = (language == "en") ? "en" : "cs"; }
+    void setMusicVolume(int volume) { m_audioManager.setMusicVolume(volume); }
     const PlayerStats& playerStats() const { return m_player.stats; }
     PlayerStats& playerStats() { return m_player.stats; }
     void setGameDateTime(int day, int month, int year, int hour, int minute);
     nlohmann::json saveRuntimeState() const;
     void loadRuntimeState(const nlohmann::json& state);
+    bool startNewGameIntro();
+    bool isIntroPlaying() const { return m_newGameIntroActive; }
+    bool startSequencePreview(const sequence::SequenceDefinition& definition, const std::string& nodeId, const std::string& sceneId,
+        float seekTime = -1.0f, const nlohmann::json& sceneDocument = nlohmann::json(),
+        const std::unordered_map<std::string, nlohmann::json>& sceneDocuments = {});
+    void updateSequencePreview(float dt);
+    void pauseSequencePreview(bool paused);
+    void stepSequencePreview() { m_sequenceManager.stepAction(); }
+    sequence::Status sequenceStatus() const { return m_sequenceManager.status(); }
+    const std::string& sequenceText() const { return m_sequenceText; }
 
 	NpcDefinitionRegistry m_npcDefinitions;
 
@@ -180,16 +198,22 @@ private:
     void sequenceLog(const std::string& message) override;
     bool hasStoryFlag(const std::string& flag) const override;
     void setStoryFlag(const std::string& flag) override;
+    bool loadScene(const std::string& sceneId) override;
     bool resolveMarker(const std::string& markerId, sequence::Vec2& out) const override;
+    bool resolveCameraMarker(const std::string& markerId, sequence::CameraPose& out) const override;
+    bool getCameraPose(sequence::CameraPose& out) const override;
+    void setCameraPose(const sequence::CameraPose& pose) override;
     bool spawnActor(const sequence::ActorSpawnDef& def) override;
     void removeActor(const std::string& actorId) override;
+    void setActorVisible(const std::string& actorId, bool visible) override;
     bool getActorPosition(const std::string& actorId, sequence::Vec2& out) const override;
     bool setActorPosition(const std::string& actorId, sequence::Vec2 pos) override;
     void setActorAnimation(const std::string& actorId, const std::string& animationId) override;
     void faceActor(const std::string& actorId, const std::string& directionOrTarget) override;
     void setCameraPosition(sequence::Vec2 pos) override;
     void setCameraFollow(const std::string& actorId) override;
-    void setCameraShake(float intensity, float duration) override;
+    void setCameraFollow(const std::string& actorId, const sequence::CameraFollowSettings& settings) override;
+    void setCameraShake(float intensity, float duration, float frequency) override;
     void setFadeAlpha(float alpha) override;
     void setFlashAlpha(float alpha) override;
     void showSequenceText(const std::string& text, float duration) override;
@@ -198,6 +222,13 @@ private:
     void stopMusic(int fadeMs) override;
     void playSfx(const std::string& id) override;
     void playVoice(const std::string& id) override;
+    void playSfx(const std::string& id, float volume) override;
+    void playVoice(const std::string& id, float volume) override;
+    void setSequenceMusicVolume(float volume, float fadeSeconds) override;
+    void setSequenceSfxVolume(float volume) override;
+    void duckSequenceMusic(float volume, float holdSeconds, float fadeOutSeconds, float fadeInSeconds) override;
+    void restoreSequenceMusic(float fadeSeconds) override;
+    bool pickupSequenceItem(const std::string& item, int count, const std::string& prop, const std::string& onceFlag) override;
     void setTimeOfDay(const std::string& value) override;
     void setWeather(const nlohmann::json& data) override;
     bool loadMapForSequence(const std::string& mapIdOrPath, const std::string& spawnId) override;
@@ -222,6 +253,14 @@ private:
     };
 
     sequence::SequenceManager m_sequenceManager;
+    bool m_newGameIntroActive = false;
+    bool m_sequencePreviewMode = false;
+    std::unordered_map<std::string, nlohmann::json> m_sequencePreviewSceneDocuments;
+    bool m_sequencePreviewSeeking = false;
+    std::string m_sequenceSeekMusic;
+    float m_sequenceSeekMusicStart = 0.0f;
+    int m_sequenceSeekMusicLoops = -1;
+    CinematicScene m_cinematicScene;
     std::vector<sequence::SequenceMarker> m_sequenceMarkers;
     std::unordered_map<std::string, SequenceActorRuntime> m_sequenceActors;
     std::unordered_map<std::string, std::string> m_sequenceActorAliases;
@@ -236,7 +275,7 @@ private:
     float m_sequenceFlashAlpha = 0.0f;
     std::string m_sequenceText;
     float m_sequenceTextRemaining = 0.0f;
-    std::string m_sequenceRendererMode = "2d";
+    GameRenderMode m_renderMode = GameRenderMode::Campaign2D;
 
 	std::string m_consoleAutocompleteBase;
 	std::vector<std::string> m_consoleAutocompleteMatches;

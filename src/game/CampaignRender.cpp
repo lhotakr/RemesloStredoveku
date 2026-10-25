@@ -4568,6 +4568,17 @@ void Campaign::render()
     int screenW = 0, screenH = 0;
     SDL_GetRendererOutputSize(m_renderer, &screenW, &screenH);
 
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        m_cinematicScene.render();
+        renderSequenceOverlay();
+        if (m_sequencePreviewMode)
+            return;
+        renderConsole();
+        updateInspectCursor();
+        return;
+    }
+
     ensureCameraOnPlayer(screenW, screenH);
     if (m_sequenceCameraOverride)
     {
@@ -4811,6 +4822,8 @@ void Campaign::render()
     ensureFowMask(screenW, screenH);
     renderFogOfWar(screenW, screenH);
     renderSequenceOverlay();
+    if (m_sequencePreviewMode)
+        return;
     if (m_showDebugHud)
         renderDebugHud();
     if (m_questJournalOpen)

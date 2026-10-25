@@ -340,6 +340,11 @@ bool Editor::init(SDL_Window* window, SDL_Renderer* renderer)
         return false;
     }
 
+    if (!m_sequencePreviewScene.init(m_window, m_renderer, &m_characterManager))
+    {
+        m_lastIoStatus = "Sequence preview scene init failed.";
+    }
+
     m_projectRoot = pathutils::ProjectRoot().string();
     m_mapsDir = pathutils::MapsDir().string();
 
@@ -393,6 +398,15 @@ bool Editor::init(SDL_Window* window, SDL_Renderer* renderer)
 
 void Editor::shutdown()
 {
+    stopSequencePreview();
+    m_sequenceAudioPlayer.shutdown();
+    m_sequenceAudioReady = false;
+    if (m_sequencePreviewTexture)
+    {
+        SDL_DestroyTexture(m_sequencePreviewTexture);
+        m_sequencePreviewTexture = nullptr;
+    }
+    m_sequencePreviewScene.shutdown();
     m_characterManager.shutdown();
     m_tileset.destroyAtlas();
 
@@ -407,6 +421,21 @@ void Editor::handleEvent(const SDL_Event& e)
     if (e.type == SDL_QUIT)
     {
         m_running = false;
+        return;
+    }
+
+    if (m_sequenceEditorOpen)
+    {
+        if (e.type == SDL_DROPFILE && e.drop.file)
+        {
+            importSequenceAudio(e.drop.file);
+            return;
+        }
+        if (e.type == SDL_KEYDOWN && e.key.repeat == 0 && e.key.keysym.sym == SDLK_ESCAPE)
+        {
+            stopSequencePreview();
+            return;
+        }
         return;
     }
 
@@ -661,6 +690,10 @@ void Editor::handleEvent(const SDL_Event& e)
 
 void Editor::update(float dt)
 {
+    updateSequencePreview(dt);
+    if (m_sequenceEditorOpen)
+        return;
+
     ImGuiIO& io = ImGui::GetIO();
 
     const Uint8* ks = SDL_GetKeyboardState(nullptr);
@@ -1070,6 +1103,12 @@ void Editor::update(float dt)
 void Editor::render()
 {
     ImGui::GetIO().FontGlobalScale = m_uiFontScale;
+
+    if (m_sequenceEditorOpen)
+    {
+        renderSequenceEditorWorkspace();
+        return;
+    }
 
     m_renderMapOutsideMapTab = true;
 
@@ -1554,7 +1593,9 @@ void Editor::renderEditorWorkspace()
 
     if (ImGui::BeginTabBar("EditorTabs"))
     {
-        if (ImGui::BeginTabItem("Map"))
+        const ImGuiTabItemFlags mapTabFlags = m_selectMapTab ? ImGuiTabItemFlags_SetSelected : 0;
+        m_selectMapTab = false;
+        if (ImGui::BeginTabItem("Map", nullptr, mapTabFlags))
         {
             m_activeTab = EditorTab::Map;
             renderBrushPanelContents();
@@ -1639,7 +1680,7 @@ void Editor::renderEditorWorkspace()
             m_activeTab = EditorTab::Sequences;
             m_npcPlacementMode = false;
             m_foragePlacementMode = false;
-            renderSequenceEditorContents();
+            openSequenceEditor();
             ImGui::EndTabItem();
         }
 

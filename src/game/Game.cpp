@@ -205,6 +205,8 @@ static const char* T(const std::string& lang, const char* key)
     if (std::strcmp(key, "start_campaign") == 0) return cs ? U8("Zahájit kampaň") : "Start campaign";
     if (std::strcmp(key, "load_game") == 0) return cs ? U8("Načíst hru") : "Load game";
     if (std::strcmp(key, "level_editor") == 0) return cs ? U8("Editor úrovní") : "Level editor";
+    if (std::strcmp(key, "sequence_editor") == 0) return "Sequence editor";
+    if (std::strcmp(key, "scene_editor") == 0) return cs ? U8("Editor scény") : "Scene editor";
     if (std::strcmp(key, "object_editor") == 0) return cs ? U8("Editor objektů") : "Object editor";
     if (std::strcmp(key, "texture_sprite_editor") == 0) return cs ? U8("Editor textur, spritů a animací") : "Texture, sprite & animation editor";
     if (std::strcmp(key, "interior_2d") == 0) return cs ? U8("2.5D interiér") : "2.5D interior";
@@ -931,6 +933,7 @@ void Game::applySettingsToRuntime()
     m_settings.sfxVolume = std::clamp(m_settings.sfxVolume, 0, 128);
     m_settings.voiceVolume = std::clamp(m_settings.voiceVolume, 0, 128);
     m_audio.setMusicVolume(m_settings.musicVolume);
+    if (m_campaign) m_campaign->setMusicVolume(m_settings.musicVolume);
     m_settings.controls.mouseSensitivity = std::clamp(m_settings.controls.mouseSensitivity, 0.15f, 4.0f);
     gamecontrols::Set(m_settings.controls);
 }
@@ -1261,6 +1264,13 @@ bool Game::saveProgressToSlot(int slotIndex)
 {
     if (!isGameplayMode())
         return false;
+    if (m_campaign && m_campaign->isIntroPlaying())
+    {
+        m_saveSlotStatus = m_settings.language == "en"
+            ? "Progress can be saved after the intro finishes."
+            : U8("Průběh lze uložit po dokončení úvodu.");
+        return false;
+    }
     if (slotIndex < 0 || slotIndex >= kSaveSlotCount)
         return false;
 
@@ -1797,7 +1807,7 @@ void Game::shutdown()
     m_running = false;
 }
 
-void Game::enterEditor()
+void Game::enterEditor(bool sequenceEditor)
 {
     if (m_editor) return;
 
@@ -1811,6 +1821,9 @@ void Game::enterEditor()
         return;
     }
 
+    if (sequenceEditor)
+        m_editor->openSequenceEditor();
+    m_editorOpenedForSequence = sequenceEditor;
     m_mode = Mode::Editor;
 }
 
@@ -1820,6 +1833,7 @@ void Game::leaveEditor()
     m_editor->shutdown();
     delete m_editor;
     m_editor = nullptr;
+    m_editorOpenedForSequence = false;
     m_mode = Mode::Menu;
 }
 
@@ -1964,10 +1978,12 @@ void Game::leaveInterior2D()
     m_interior2D->shutdown();
     delete m_interior2D;
     m_interior2D = nullptr;
-    m_mode = m_campaign ? Mode::Campaign : Mode::Menu;
+    m_mode = m_editor ? Mode::Editor : (m_campaign ? Mode::Campaign : Mode::Menu);
+    if (m_editor)
+        m_editor->refreshSequenceScenePreview();
 }
 
-void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId, bool useCustomStartDateTime)
+void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId, bool useCustomStartDateTime, bool playIntro)
 {
     if (m_campaign) return;
 
@@ -1976,6 +1992,7 @@ void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId,
 
     m_campaign = new Campaign();
     m_campaign->setLanguage(m_settings.language);
+    m_campaign->setMusicVolume(m_settings.musicVolume);
     if (!m_campaign->init(m_window, m_renderer)) {
         delete m_campaign;
         m_campaign = nullptr;
@@ -2008,6 +2025,9 @@ void Game::enterCampaign(const std::string& mapPath, const std::string& spawnId,
             m_newCampaignStartHour,
             m_newCampaignStartMinute);
     }
+
+    if (playIntro && !m_campaign->startNewGameIntro())
+        SDL_Log("New game intro could not start; continuing in the campaign.");
 
     m_mode = Mode::Campaign;
 }
@@ -2051,6 +2071,14 @@ void Game::handleEvent(const SDL_Event& e)
 {
     ImGui_ImplSDL2_ProcessEvent(&e);
 
+    if (e.type == SDL_DROPFILE)
+    {
+        if (m_mode == Mode::Editor && m_editor && m_editor->isSequenceEditorOpen())
+            m_editor->handleEvent(e);
+        SDL_free(e.drop.file);
+        return;
+    }
+
     if (e.type == SDL_QUIT) {
         m_running = false;
         return;
@@ -2091,7 +2119,10 @@ void Game::handleEvent(const SDL_Event& e)
             openGameMenu();
         }
         else if (m_mode == Mode::Editor) {
-            leaveEditor();
+            if (m_editor && m_editor->isSequenceEditorOpen())
+                m_editor->handleEvent(e);
+            else
+                leaveEditor();
         }
         else if (m_mode == Mode::ObjectEditor) {
             leaveObjectEditor();
@@ -2100,7 +2131,8 @@ void Game::handleEvent(const SDL_Event& e)
             leaveTextureSpriteEditor();
         }
         else if (m_mode == Mode::InteriorEditor) {
-            leaveInterior2D();
+            if (!m_interior2D || !m_interior2D->cancelEditorSectorPlacement())
+                leaveInterior2D();
         }
         else if (m_mode == Mode::StyleSelect || m_mode == Mode::Settings || m_mode == Mode::ProfileEditor) {
             m_mode = Mode::Menu;
@@ -2278,13 +2310,14 @@ void Game::render()
 
         if (m_mode == Mode::Menu)
         {
-            const ImVec2 panelSize(450.0f, 790.0f);
+            const ImVec2 panelSize(450.0f, std::min(850.0f, std::max(200.0f, vp.y - 190.0f)));
             const ImVec2 panelPos(
                 (vp.x - panelSize.x) * 0.5f,
                 std::max(170.0f, (vp.y - panelSize.y) * 0.52f));
 
             DrawMenuFrame(panelPos, panelSize);
             ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 38.0f, panelPos.y + 32.0f));
+            ImGui::BeginChild("MainMenuActions", ImVec2(panelSize.x - 76.0f, panelSize.y - 64.0f));
             ImGui::BeginGroup();
 
             ImGui::TextColored(ImVec4(0.86f, 0.76f, 0.54f, 1.0f), "%s", T(m_settings.language, "main_menu"));
@@ -2292,7 +2325,7 @@ void Game::render()
             ImGui::Spacing();
             ImGui::Spacing();
 
-            const ImVec2 btnSize(374.0f, 48.0f);
+            const ImVec2 btnSize(ImGui::GetContentRegionAvail().x, 48.0f);
             if (MedievalMenuButton(T(m_settings.language, "start_campaign"), btnSize, true))
                 m_mode = Mode::StyleSelect;
 
@@ -2303,6 +2336,14 @@ void Game::render()
             ImGui::Spacing();
             if (MedievalMenuButton(T(m_settings.language, "level_editor"), btnSize))
                 enterEditor();
+
+            ImGui::Spacing();
+            if (MedievalMenuButton(T(m_settings.language, "sequence_editor"), btnSize))
+                enterEditor(true);
+
+            ImGui::Spacing();
+            if (MedievalMenuButton(T(m_settings.language, "scene_editor"), btnSize))
+                enterInteriorEditor("intro_houska_camp");
 
             ImGui::Spacing();
             if (MedievalMenuButton(T(m_settings.language, "object_editor"), btnSize))
@@ -2339,6 +2380,7 @@ void Game::render()
             ImGui::TextColored(ImVec4(0.62f, 0.58f, 0.48f, 0.92f), "%s", T(m_settings.language, "hotkeys"));
 
             ImGui::EndGroup();
+            ImGui::EndChild();
         }
         else if (m_mode == Mode::StyleSelect)
         {
@@ -2413,7 +2455,7 @@ void Game::render()
 
             ImGui::SameLine();
             if (MedievalMenuButton(T(m_settings.language, "enter_campaign"), ImVec2(320.0f, 52.0f), true))
-                enterCampaign(std::string(), std::string(), true);
+                enterCampaign(std::string(), std::string(), true, true);
         }
         else if (m_mode == Mode::ProfileEditor)
         {
@@ -2619,7 +2661,14 @@ void Game::render()
     else if (m_mode == Mode::Editor)
     {
         if (m_editor)
+        {
             m_editor->render();
+            std::string interiorId;
+            if (m_editor->consumeSceneEditorRequest(interiorId))
+                enterInteriorEditor(interiorId);
+            else if (m_editorOpenedForSequence && !m_editor->isSequenceEditorOpen())
+                leaveEditor();
+        }
     }
     else if (m_mode == Mode::ObjectEditor)
     {

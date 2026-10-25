@@ -79,14 +79,15 @@ namespace sequence
         {
             nlohmann::json out = action.data.is_object() ? action.data : nlohmann::json::object();
             out["type"] = action.type;
-            if (action.startDelay > 0.0f)
+            out.erase("start_delay");
+            if (action.startDelay > 0.0f || out.contains("startDelay"))
                 out["startDelay"] = action.startDelay;
-            if (action.duration > 0.0f)
+            if (action.duration > 0.0f || out.contains("duration"))
                 out["duration"] = action.duration;
-            if (!action.blocking)
-                out["blocking"] = false;
+            if (!action.blocking || out.contains("blocking"))
+                out["blocking"] = action.blocking;
 
-            if (!action.children.empty())
+            if (action.type == "parallel" || !action.children.empty())
             {
                 out["actions"] = nlohmann::json::array();
                 for (const auto& child : action.children)
@@ -119,8 +120,19 @@ namespace sequence
         seq.id = root.value("id", "");
         seq.name = root.value("name", "");
         seq.start = root.value("start", root.value("initial_scene", ""));
+        seq.skippable = root.value("skippable", false);
         seq.flags = root.value("flags", nlohmann::json::object());
         seq.transitions = root.value("transitions", nlohmann::json::object());
+
+        if (root.contains("on_skip") && root["on_skip"].is_array())
+        {
+            for (const auto& a : root["on_skip"])
+            {
+                ActionDef action = ParseAction(a);
+                if (!action.type.empty())
+                    seq.onSkipActions.push_back(std::move(action));
+            }
+        }
 
         if (seq.id.empty())
             result.errors.push_back(sourceName + ": missing sequence id.");
@@ -218,10 +230,18 @@ namespace sequence
         root["id"] = sequence.id;
         root["name"] = sequence.name;
         root["start"] = sequence.start;
+        if (sequence.skippable)
+            root["skippable"] = true;
         if (!sequence.flags.empty())
             root["flags"] = sequence.flags;
         if (!sequence.transitions.empty())
             root["transitions"] = sequence.transitions;
+        if (!sequence.onSkipActions.empty())
+        {
+            root["on_skip"] = nlohmann::json::array();
+            for (const auto& action : sequence.onSkipActions)
+                root["on_skip"].push_back(ActionToJson(action));
+        }
 
         root["nodes"] = nlohmann::json::array();
         for (const auto& node : sequence.nodes)

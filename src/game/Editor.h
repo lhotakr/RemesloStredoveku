@@ -5,14 +5,20 @@
 #include <random>
 #include <string>
 #include <vector>
+#include "imgui.h"
 
 #include "terrain/TerrainTileset.h"
 #include "terrain/TerrainRenderer.h"
 #include "terrain/TileMap.h"
 #include "terrain/ObjectCatalog.h"
 #include "CharacterManager.h"
+#include "game/CinematicScene.h"
+#include "game/Campaign.h"
+#include <memory>
 #include "game/sequence/SequenceDefinition.h"
 #include "game/sequence/SequenceMarkers.h"
+#include "game/sequence/SequenceManager.h"
+#include "audio/AudioManager.h"
 
 struct NpcSpawn
 {
@@ -197,6 +203,14 @@ struct EditorUndoState
     std::vector<EditorForageSpawn> forageSpawns;
     std::vector<sequence::SequenceDefinition> sequences;
     std::vector<sequence::SequenceMarker> sequenceMarkers;
+    std::vector<sequence::SequenceMarker> sequenceSceneMarkers;
+    std::unordered_map<std::string, ImVec2> sequenceGraphLayout;
+    nlohmann::json sequenceSceneDocument;
+    std::unordered_map<std::string, nlohmann::json> sequenceSceneDrafts;
+    std::string editingSceneId, editingSceneOwner;
+    int selectedSequenceMarkerIndex = -1;
+    int selectedSequenceEntityIndex = -1;
+    int sequenceSelectionKind = 0;
     int selectedNpcSpawnIndex = -1;
     int selectedNpcZoneIndex = -1;
     int selectedNpcScheduleIndex = -1;
@@ -204,6 +218,7 @@ struct EditorUndoState
     int selectedSequenceIndex = -1;
     int selectedSequenceNodeIndex = -1;
     int selectedSequenceActionIndex = -1;
+    std::vector<int> sequenceTimelineSelection;
     std::string label;
 };
 
@@ -226,6 +241,36 @@ public:
     void handleEvent(const SDL_Event& e);
     void update(float dt);
     void render();
+    void openSequenceEditor();
+    bool isSequenceEditorOpen() const { return m_sequenceEditorOpen; }
+    bool consumeSceneEditorRequest(std::string& interiorId);
+    void refreshSequenceScenePreview();
+
+    void sequenceEditorPreviewLog(const std::string& message);
+    bool sequenceEditorPreviewHasFlag(const std::string& flag) const;
+    void sequenceEditorPreviewSetFlag(const std::string& flag);
+    bool sequenceEditorPreviewLoadScene(const std::string& sceneId);
+    bool sequenceEditorPreviewResolveMarker(const std::string& markerId, sequence::Vec2& out) const;
+    bool sequenceEditorPreviewSpawnActor(const sequence::ActorSpawnDef& def);
+    void sequenceEditorPreviewRemoveActor(const std::string& actorId);
+    void sequenceEditorPreviewSetActorVisible(const std::string& actorId, bool visible);
+    bool sequenceEditorPreviewGetActorPosition(const std::string& actorId, sequence::Vec2& out) const;
+    bool sequenceEditorPreviewSetActorPosition(const std::string& actorId, sequence::Vec2 pos);
+    void sequenceEditorPreviewSetActorAnimation(const std::string& actorId, const std::string& animationId);
+    void sequenceEditorPreviewFaceActor(const std::string& actorId, const std::string& directionOrTarget);
+    void sequenceEditorPreviewSetCameraPosition(sequence::Vec2 pos);
+    void sequenceEditorPreviewSetCameraFollow(const std::string& actorId, const sequence::CameraFollowSettings& settings = {});
+    void sequenceEditorPreviewSetCameraShake(float intensity, float duration, float frequency);
+    void sequenceEditorPreviewSetFadeAlpha(float alpha);
+    void sequenceEditorPreviewSetFlashAlpha(float alpha);
+    void sequenceEditorPreviewShowText(const std::string& text, float duration);
+    void sequenceEditorPreviewHideText();
+    void sequenceEditorPreviewSetTimeOfDay(const std::string& value);
+    void sequenceEditorPreviewSetWeather(const nlohmann::json& data);
+    bool sequenceEditorPreviewLoadMap(const std::string& mapIdOrPath, const std::string& spawnId);
+    void sequenceEditorPreviewTeleportPlayer(sequence::Vec2 pos);
+    void sequenceEditorPreviewEnablePlayerControl(bool enabled);
+    void sequenceEditorPreviewChangeRendererMode(const std::string& mode);
 
 private:
     struct EditorGraphNodePosition
@@ -468,6 +513,7 @@ private:
     bool m_showBrushGhost = true;
     bool m_renderMapOutsideMapTab = true;
     bool m_editorWorkspaceMaximized = false;
+    bool m_selectMapTab = false;
     float m_uiFontScale = 0.70f;
 
 private:
@@ -555,16 +601,138 @@ private:
     float m_questGraphZoom = 1.0f;
 
     // sequences
+    enum class SequenceEditorSelectionKind
+    {
+        None,
+        Sequence,
+        Node,
+        Action,
+        Marker,
+        Actor,
+        Prop,
+        Scene
+    };
+
+    struct SequenceGraphNodeLayout
+    {
+        float x = 0.0f;
+        float y = 0.0f;
+    };
+
+    struct SequenceValidationIssue
+    {
+        enum class Severity
+        {
+            Warning,
+            Error
+        };
+
+        Severity severity = Severity::Warning;
+        std::string message;
+        int nodeIndex = -1;
+        int actionIndex = -1;
+    };
+
     std::vector<sequence::SequenceDefinition> m_sequences;
     std::vector<std::string> m_sequencePaths;
     std::vector<sequence::SequenceMarker> m_sequenceMarkers;
+    std::vector<sequence::SequenceMarker> m_sequenceSceneMarkers;
+    nlohmann::json m_sequenceSceneDocument;
+    std::unordered_map<std::string, nlohmann::json> m_sequenceSceneDrafts;
+    std::string m_sequenceEditingSceneId, m_sequenceEditingSceneOwner;
+    char m_sequenceNewSceneId[96] = "new_scene_2d";
+    int m_sequenceDraggingImageLayer = -1;
+    bool m_sequenceImageDragProp = true, m_sequenceImageDragUndo = false;
+    ImVec2 m_sequenceImageDragOffset;
+    nlohmann::json m_sequenceNewSceneBackground = {{"background_image", "assets/modern/Houska_intro.png"}};
+    int m_sequenceMarkerTool = 0;
+    bool m_sequenceMarkerPlanView = false;
+    bool m_sequenceMarkerSnap = false;
+    bool m_sequenceMarkerFloorPlacement = true;
+    int m_sequenceDraggingMarker = -1;
+    bool m_sequenceMarkerDragChanged = false;
+    sequence::SequenceMarker m_sequenceMarkerDragStart;
+    ImVec2 m_sequenceMarkerDragMouse;
+    ImVec2 m_sequenceMarkerDragScreenOffset;
+    ImVec4 m_sequenceMarkerPlanBounds;
+    int m_sequenceMarkerDragAxis = 0;
+    bool m_sequenceMarkerInspectorUndo = false;
+    char m_sequenceMarkerFilter[96] = "";
+    char m_sequenceCharacterFilter[96] = "";
+    char m_sequenceEntityTextureFilter[128] = "";
+    std::vector<std::string> m_sequenceEntityTexturePaths;
+    std::vector<int> m_sequencePickActionPath;
+    int m_sequencePickNodeIndex = -1;
+    int m_sequencePickSequenceIndex = -1;
+    std::vector<std::string> m_sequenceSceneActors;
+    std::vector<std::string> m_sequenceSceneProps;
+    std::unordered_map<std::string, SequenceGraphNodeLayout> m_sequenceGraphLayout;
+    std::vector<SequenceValidationIssue> m_sequenceValidationIssues;
+    std::unordered_map<std::string, bool> m_sequencePreviewFlags;
+    nlohmann::json m_sequencePreviewWeather = nlohmann::json::object();
+    std::string m_sequencePreviewTimeOfDay;
+    std::string m_sequencePreviewText;
+    float m_sequencePreviewTextRemaining = 0.0f;
+    float m_sequencePreviewFadeAlpha = 0.0f;
+    float m_sequencePreviewFlashAlpha = 0.0f;
+    std::unique_ptr<Campaign> m_sequencePreviewCampaign;
+    SDL_Texture* m_sequencePreviewTexture = nullptr;
+    int m_sequencePreviewTextureWidth = 0;
+    int m_sequencePreviewTextureHeight = 0;
     int m_selectedSequenceIndex = -1;
     int m_selectedSequenceNodeIndex = -1;
     int m_selectedSequenceActionIndex = -1;
+    int m_selectedSequenceMarkerIndex = -1;
+    int m_selectedSequenceEntityIndex = -1;
+    SequenceEditorSelectionKind m_sequenceSelectionKind = SequenceEditorSelectionKind::None;
     bool m_sequencePickMarkerMode = false;
     int m_sequencePickActionIndex = -1;
+    bool m_sequenceEditorOpen = false;
+    std::string m_sceneEditorRequestedInterior;
+    bool m_sequenceEditorDirty = false;
+    bool m_sequenceLayoutDirty = false;
     bool m_sequencePreviewActive = false;
+    bool m_sequencePreviewPaused = false;
+    bool m_sequencePreviewSceneLoaded = false;
+    bool m_sequencePreviewOverlays = true;
+    bool m_sequenceFullPreview = false;
     float m_sequencePreviewTimer = 0.0f;
+    float m_sequenceGraphPanX = 32.0f;
+    float m_sequenceGraphPanY = 32.0f;
+    float m_sequenceGraphZoom = 1.0f;
+    int m_sequenceDraggingNodeIndex = -1;
+    int m_sequenceGraphLinkSource = -1;
+    ImVec2 m_sequenceDragOffset{0.0f, 0.0f};
+    std::vector<int> m_sequenceTimelineSelection;
+    std::vector<int> m_sequenceTimelineDragPath;
+    int m_sequenceTimelineNode = -1;
+    int m_sequenceTimelineSequence = -1;
+    float m_sequenceTimelineZoom = 1.0f;
+    float m_sequenceTimelineDragValue = 0.0f;
+    float m_sequenceTimelineDragScale = 1.0f;
+    bool m_sequenceTimelineResize = false;
+    bool m_sequenceTimelineDragChanged = false;
+    bool m_sequenceTimelineScrubbing = false;
+    bool m_sequenceTimelineSnap = true;
+    std::string m_sequenceMotionActor;
+    std::string m_sequenceMotionMarker;
+    float m_sequenceMotionDuration = 3.0f;
+    float m_sequenceMotionDistance = 2.2f;
+    bool m_sequenceMotionFollow = true;
+    float m_sequenceTimelineCursor = 0.0f;
+    float m_sequencePreviewNodeTimer = 0.0f;
+    std::string m_sequencePreviewNodeId;
+    bool m_sequenceAudioLibraryOpen = false;
+    bool m_sequenceAudioReady = false;
+    AudioManager m_sequenceAudioPlayer;
+    std::vector<std::string> m_sequenceAudioFiles;
+    std::string m_sequenceSelectedAudio;
+    std::string m_sequenceAudioBrowseDirectory;
+    char m_sequenceAudioImportPath[2048] = "";
+    char m_sequenceAudioFilter[128] = "";
+    int m_sequenceAudioKind = 0;
+    float m_sequenceAudioVolume = 1.0f;
+    CinematicScene m_sequencePreviewScene;
     char m_sequenceNewId[64] = "new_sequence";
     char m_sequenceMarkerId[64] = "marker";
     char m_sequenceValidationFilter[64] = "";
@@ -576,6 +744,71 @@ private:
     bool saveSequenceMarkersForMap(const std::string& mapPath);
     void renderSequenceValidation(const sequence::SequenceDefinition& seq) const;
     void renderSequenceActionEditor(sequence::ActionDef& action, int actionIndex);
+    void renderSequenceEditorWorkspace();
+    void renderSequenceEditorToolbar();
+    void renderSequenceBrowser();
+    void renderSequenceScenePreview();
+    void renderSequenceMarkerTools();
+    void renderSequenceMarkerViewport(ImVec2 pos, ImVec2 size);
+    void renderSequenceMarkerBrowser();
+    void renderSequenceMarkerInspector();
+    void renderSequenceEntityBrowser();
+    bool isSequenceImageScene() const;
+    void renderSequenceSceneSelector();
+    void renderSequenceImageSceneInspector();
+    void renderSequenceImageTools();
+    void renderSequenceImageViewport(ImVec2 pos, ImVec2 size);
+    void renderSequenceImageLayerInspector(bool prop, int index);
+    void addSequenceImageLayer(const char* type);
+    void deleteSequenceEntity(bool prop, int index);
+    bool renderSequenceTexturePicker(nlohmann::json& item, const char* key, bool pathField = true);
+    std::unordered_map<std::string, nlohmann::json> sequenceSceneDrafts() const;
+    void renderSequenceEntityInspector(bool prop, int index);
+    void renderSequenceMarkerEntities(const std::string& markerId);
+    bool renderSequenceCharacterPicker(nlohmann::json& entity);
+    void syncSequenceMarkerScene(bool reload = false);
+    nlohmann::json sequencePreviewSceneDocument() const;
+    void createSequenceMarker(BuildInteriorEngine::ScenePoint point, bool camera);
+    void createSequenceFloorDecoration(BuildInteriorEngine::ScenePoint point);
+    void deleteSelectedSequenceMarker();
+    bool renameSelectedSequenceMarker(const std::string& id);
+    void assignSequenceMarkerToAction(const std::string& id, bool recordUndo = true);
+    void renderSequenceNodeGraph();
+    void renderSequenceInspector();
+    void renderSequenceActionList(sequence::NodeDef& node);
+    void renderSequenceTimeline();
+    void renderSequenceMotionTools();
+    void renderSequenceCameraAction(sequence::ActionDef& action);
+    void renderSequenceMotionEasing(nlohmann::json& data);
+    void insertSequenceMotion(sequence::ActionDef action);
+    void renderSequenceAudioLibrary();
+    bool importSequenceAudio(const std::string& path);
+    void auditionSequenceAudio(const std::string& path, float volume = 1.0f);
+    void renderSequenceAudioAction(sequence::ActionDef& action);
+    void insertSequenceAudio(const std::string& path, const std::string& type);
+    void seekSequencePreview(float time);
+    void renderSequenceValidationPanel();
+    void handleSequenceEditorShortcuts();
+    void deleteSelectedSequenceNode();
+    void validateSelectedSequence();
+    void resetSequencePreviewState();
+    void updateSequencePreview(float dt);
+    void pauseSequencePreview(bool paused);
+    void stepSequencePreview();
+    bool playSelectedSequencePreview(bool fromSelectedNode);
+    void stopSequencePreview();
+    void restartSequencePreview(bool fromSelectedNode);
+    bool loadSelectedSequenceLayout();
+    bool saveSelectedSequenceLayout();
+    std::string sequenceLayoutPathForId(const std::string& id) const;
+    bool loadSequencePreviewSceneForSelection();
+    bool loadSequenceSceneMetadata(const std::string& sceneId);
+    bool saveSelectedSequenceSceneMetadata();
+    std::string selectedSequenceSceneId() const;
+    std::vector<std::string> selectedSequenceActorIds() const;
+    std::vector<std::string> selectedSequencePropIds() const;
+    std::vector<std::string> selectedSequenceMarkerIds() const;
+    void markSequenceDirty(const char* undoLabel);
     std::string sequencePathForId(const std::string& id) const;
     int findSequenceIndexById(const std::string& id) const;
     int findSequenceNodeIndexById(const sequence::SequenceDefinition& seq, const std::string& id) const;

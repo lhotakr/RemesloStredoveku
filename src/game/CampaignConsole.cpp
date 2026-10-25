@@ -843,6 +843,7 @@ void Campaign::executeConsoleCommand(const std::string& cmd)
         if (sub == "status")
         {
             const auto s = m_sequenceManager.status();
+            const auto scene = m_cinematicScene.status();
             std::ostringstream ss;
             ss << "Sequence status: running=" << (s.running ? "yes" : "no")
                << " completed=" << (s.completed ? "yes" : "no")
@@ -851,6 +852,20 @@ void Campaign::executeConsoleCommand(const std::string& cmd)
                << " action=" << s.actionIndex
                << " elapsed=" << s.actionElapsed;
             consoleLog(ss.str());
+            std::ostringstream rs;
+            rs << "Renderer: "
+               << (m_renderMode == GameRenderMode::Cinematic25D ? "2_5d" : "2d")
+               << " scene=" << scene.sceneId
+               << " actors=" << scene.actorCount
+               << " props=" << scene.propCount;
+            consoleLog(rs.str());
+            std::ostringstream cs;
+            cs << "Camera: x=" << scene.cameraX
+               << " y=" << scene.cameraY
+               << " angle=" << scene.cameraAngle
+               << " pitch=" << scene.cameraPitch
+               << " follow=" << scene.cameraFollowActor;
+            consoleLog(cs.str());
             return;
         }
 

@@ -1,4 +1,6 @@
 #include "AudioManager.h"
+#include <algorithm>
+#include <cmath>
 
 #include <SDL.h>
 #include <SDL_mixer.h>
@@ -11,6 +13,101 @@ static std::string mixErr()
     return e ? std::string(e) : std::string("Unknown SDL_mixer error");
 }
 static int g_audioOpenRefs = 0;
+
+namespace
+{
+    float AudioGain(float value) { return std::isfinite(value) ? std::clamp(value, 0.0f, 1.0f) : 1.0f; }
+    float AudioSeconds(float value) { return std::isfinite(value) ? std::max(0.0f, value) : 0.0f; }
+}
+
+void AudioManager::GainRamp::set(float gain, float seconds)
+{
+    from = value;
+    target = AudioGain(gain);
+    elapsed = 0.0f;
+    duration = AudioSeconds(seconds);
+    if (duration == 0.0f) value = target;
+}
+
+void AudioManager::GainRamp::update(float dt)
+{
+    elapsed = std::min(duration, elapsed + dt);
+    value = duration > 0.0f ? from + (target - from) * (elapsed / duration) : target;
+}
+
+void AudioManager::applyMusicVolume()
+{
+    if (m_initialized)
+        Mix_VolumeMusic(static_cast<int>(std::lround(m_musicVol * m_musicGain.value * m_duckGain.value)));
+}
+
+void AudioManager::applySfxVolumes()
+{
+    if (!m_initialized) return;
+    for (auto it = m_channelLevels.begin(); it != m_channelLevels.end();)
+    {
+        if (!Mix_Playing(it->first) || Mix_GetChunk(it->first) != it->second.chunk)
+            it = m_channelLevels.erase(it);
+        else
+        {
+            Mix_Volume(it->first, static_cast<int>(std::lround(m_sfxVol * m_sfxGain * it->second.gain)));
+            ++it;
+        }
+    }
+}
+
+void AudioManager::setMusicGain(float gain, float fadeSeconds)
+{
+    m_musicGain.set(gain, fadeSeconds);
+    applyMusicVolume();
+}
+
+void AudioManager::setSfxGain(float gain)
+{
+    m_sfxGain = AudioGain(gain);
+    applySfxVolumes();
+}
+
+void AudioManager::duckMusic(float gain, float holdSeconds, float fadeOutSeconds, float fadeInSeconds)
+{
+    m_duckGain.set(gain, fadeOutSeconds);
+    m_duckRemaining = m_duckGain.duration + AudioSeconds(holdSeconds);
+    m_duckFadeIn = AudioSeconds(fadeInSeconds);
+    applyMusicVolume();
+}
+
+void AudioManager::restoreMusic(float fadeSeconds)
+{
+    m_duckRemaining = -1.0f;
+    m_duckGain.set(1.0f, fadeSeconds);
+    applyMusicVolume();
+}
+
+void AudioManager::resetSequenceMix()
+{
+    setMusicGain(1.0f);
+    setSfxGain(1.0f);
+    restoreMusic(0.0f);
+}
+
+void AudioManager::update(float dt)
+{
+    if (m_paused || !std::isfinite(dt) || dt < 0.0f) return;
+    m_musicGain.update(dt);
+    if (m_duckRemaining >= 0.0f)
+    {
+        const float attackAndHold = std::min(dt, m_duckRemaining);
+        m_duckGain.update(attackAndHold);
+        m_duckRemaining -= attackAndHold;
+        if (m_duckRemaining <= 0.0f)
+        {
+            restoreMusic(m_duckFadeIn);
+            m_duckGain.update(dt - attackAndHold);
+        }
+    }
+    else m_duckGain.update(dt);
+    applyMusicVolume();
+}
 
 static bool envIsTruthy(const char* value)
 {
@@ -32,7 +129,7 @@ bool AudioManager::init(int frequency, int channels, int chunkSize)
         ++g_audioOpenRefs;
         m_initialized = true;
         Mix_AllocateChannels(32);
-        Mix_VolumeMusic(m_musicVol);
+        applyMusicVolume();
         return true;
     }
 
@@ -137,9 +234,9 @@ bool AudioManager::init(int frequency, int channels, int chunkSize)
     }
 
     Mix_AllocateChannels(32);
-    Mix_VolumeMusic(m_musicVol);
     ++g_audioOpenRefs;
     m_initialized = true;
+    applyMusicVolume();
     return true;
 }
 
@@ -152,6 +249,9 @@ void AudioManager::shutdown()
         if (kv.second) Mix_FreeChunk(kv.second);
     }
     m_sfx.clear();
+    m_channelLevels.clear();
+    m_paused = false;
+    resetSequenceMix();
 
     if (m_initialized)
     {
@@ -175,37 +275,36 @@ bool AudioManager::playMusic(const std::string& path, int loops, int fadeMs)
         return false;
     }
 
-    // kdy� u� hraje stejn� track, nic ned�lej
-    if (m_music && m_musicPath == path && Mix_PlayingMusic())
+    // Reusing the current track must not restart the soundtrack between nodes.
+    if (m_music && m_musicPath == path && Mix_PlayingMusic()) {
+        m_lastError.clear();
         return true;
+    }
 
-    // vym�� track
-    stopMusic(fadeMs);
-
+    // Validate the replacement before interrupting the current soundtrack.
     Mix_Music* mus = Mix_LoadMUS(path.c_str());
     if (!mus) {
         setError(mixErr());
         return false;
     }
 
+    stopMusic(fadeMs);
     m_music = mus;
     m_musicPath = path;
+    applyMusicVolume();
 
-    Mix_VolumeMusic(m_musicVol);
-
-    if (fadeMs > 0) {
-        if (Mix_FadeInMusic(m_music, loops, fadeMs) != 0) {
-            setError(mixErr());
-            return false;
-        }
-    }
-    else {
-        if (Mix_PlayMusic(m_music, loops) != 0) {
-            setError(mixErr());
-            return false;
-        }
+    const int result = fadeMs > 0
+        ? Mix_FadeInMusic(m_music, loops, fadeMs)
+        : Mix_PlayMusic(m_music, loops);
+    if (result != 0) {
+        setError(mixErr());
+        Mix_FreeMusic(m_music);
+        m_music = nullptr;
+        m_musicPath.clear();
+        return false;
     }
 
+    m_lastError.clear();
     return true;
 }
 
@@ -229,8 +328,7 @@ void AudioManager::stopMusic(int fadeMs)
 void AudioManager::setMusicVolume(int volume0_128)
 {
     m_musicVol = (volume0_128 < 0) ? 0 : (volume0_128 > 128 ? 128 : volume0_128);
-    if (m_initialized)
-        Mix_VolumeMusic(m_musicVol);
+    applyMusicVolume();
 }
 
 bool AudioManager::loadSfx(const std::string& id, const std::string& path)
@@ -258,46 +356,23 @@ bool AudioManager::loadSfx(const std::string& id, const std::string& path)
     }
 
     m_sfx[id] = ch;
-    Mix_VolumeChunk(ch, m_sfxVol);
+    Mix_VolumeChunk(ch, MIX_MAX_VOLUME);
 
     SDL_Log("SFX LOADED: id=%s path=%s", id.c_str(), path.c_str());
     return true;
 }
 
-void AudioManager::playVoice(const std::string& id)
+void AudioManager::playVoice(const std::string& id, int volume0_128)
 {
-    if (!m_initialized) {
-        SDL_Log("VOICE PLAY SKIPPED: audio is not initialized id=%s", id.c_str());
-        return;
-    }
-
-    auto it = m_sfx.find(id);
-    if (it == m_sfx.end()) {
-        SDL_Log("VOICE NOT FOUND IN MAP: %s", id.c_str());
-        return;
-    }
-
-    if (!it->second) {
-        SDL_Log("VOICE CHUNK NULL: %s", id.c_str());
-        return;
-    }
-
-    Mix_VolumeChunk(it->second, m_sfxVol);
-
-    SDL_Log("VOICE PLAY: id=%s channel=%d volume=%d",
-        id.c_str(), m_voiceChannel, m_sfxVol);
-
+    if (!m_initialized) return;
     Mix_HaltChannel(m_voiceChannel);
-
-    if (Mix_PlayChannel(m_voiceChannel, it->second, 0) == -1) {
-        SDL_Log("VOICE PLAY FAILED: id=%s err=%s",
-            id.c_str(), Mix_GetError());
-    }
+    playSfx(id, 0, m_voiceChannel, volume0_128);
 }
+
 void AudioManager::setSfxVolume(int volume0_128)
 {
-    m_sfxVol = (volume0_128 < 0) ? 0 : (volume0_128 > 128 ? 128 : volume0_128);
-    // nastav� se p�i play/load
+    m_sfxVol = std::clamp(volume0_128, 0, 128);
+    applySfxVolumes();
 }
 
 void AudioManager::playSfx(const std::string& id, int loops, int channel, int volume0_128)
@@ -315,17 +390,15 @@ void AudioManager::playSfx(const std::string& id, int loops, int channel, int vo
         return;
     }
 
-    int effectiveVolume = m_sfxVol;
-    if (volume0_128 >= 0)
-    {
-        const int clamped = (volume0_128 < 0) ? 0 : (volume0_128 > 128 ? 128 : volume0_128);
-        effectiveVolume = (m_sfxVol * clamped) / 128;
-    }
-    Mix_VolumeChunk(it->second, effectiveVolume);
-
-    if (Mix_PlayChannel(channel, it->second, loops) == -1)
-    {
+    const float gain = volume0_128 < 0 ? 1.0f : std::clamp(volume0_128, 0, 128) / 128.0f;
+    // Keep clip gain on each channel: two instances of one chunk can have different levels.
+    const int playedChannel = Mix_PlayChannel(channel, it->second, loops);
+    if (playedChannel == -1)
         SDL_Log("SFX PLAY FAILED: id=%s err=%s", id.c_str(), Mix_GetError());
+    else
+    {
+        m_channelLevels[playedChannel] = {it->second, gain};
+        Mix_Volume(playedChannel, static_cast<int>(std::lround(m_sfxVol * m_sfxGain * gain)));
     }
 }
 
@@ -333,4 +406,47 @@ void AudioManager::stopSfxChannel(int channel)
 {
     if (m_initialized && channel >= 0)
         Mix_HaltChannel(channel);
+}
+
+void AudioManager::pausePlayback(bool paused)
+{
+    m_paused = paused;
+    if (!m_initialized) return;
+    if (m_music)
+    {
+        if (paused) Mix_PauseMusic();
+        else Mix_ResumeMusic();
+    }
+    const int channels = Mix_AllocateChannels(-1);
+    for (int channel = 0; channel < channels; ++channel)
+    {
+        const auto* chunk = Mix_GetChunk(channel);
+        if (!chunk) continue;
+        for (const auto& entry : m_sfx)
+            if (entry.second == chunk)
+            {
+                if (paused) Mix_Pause(channel);
+                else Mix_Resume(channel);
+                break;
+            }
+    }
+}
+
+void AudioManager::seekMusic(double seconds, int loops)
+{
+    if (!m_initialized || !m_music || !std::isfinite(seconds)) return;
+#if SDL_MIXER_VERSION_ATLEAST(2, 6, 0)
+    const double duration = Mix_MusicDuration(m_music);
+    if (duration > 0.0)
+    {
+        if (loops >= 0 && seconds >= duration * (static_cast<double>(loops) + 1.0))
+        {
+            stopMusic(0);
+            return;
+        }
+        seconds = std::fmod(seconds, duration);
+    }
+#endif
+    Mix_RewindMusic();
+    if (Mix_SetMusicPosition(seconds) < 0) setError(mixErr());
 }

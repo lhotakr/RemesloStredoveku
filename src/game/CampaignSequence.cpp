@@ -2,6 +2,7 @@
 
 #include "PathUtils.h"
 #include "Utf8.h"
+#include "game/sequence/SequenceAudio.h"
 
 #include <SDL.h>
 #include <algorithm>
@@ -47,6 +48,69 @@ namespace
     }
 }
 
+bool Campaign::startNewGameIntro()
+{
+    m_audioManager.resetSequenceMix();
+    if (!m_sequenceManager.start("intro_houska", *this))
+        return false;
+
+    m_newGameIntroActive = true;
+    enablePlayerControl(false);
+    updateSequenceRuntime(0.0f);
+    return true;
+}
+
+bool Campaign::startSequencePreview(const sequence::SequenceDefinition& definition, const std::string& nodeId, const std::string& sceneId,
+    float seekTime, const nlohmann::json& sceneDocument,
+    const std::unordered_map<std::string, nlohmann::json>& sceneDocuments)
+{
+    m_sequencePreviewMode = true;
+    m_audioManager.resetSequenceMix();
+    m_sequencePreviewSceneDocuments = sceneDocuments;
+    if (sceneDocument.is_object()) m_sequencePreviewSceneDocuments[sceneId] = sceneDocument;
+    m_sequencePreviewSeeking = seekTime >= 0.0f;
+    m_sequenceSeekMusic.clear();
+    if (!nodeId.empty() && !sceneId.empty() && !loadScene(sceneId))
+        return false;
+    if (!m_sequenceManager.startDefinition(definition, *this, nodeId))
+        return false;
+    updateSequenceRuntime(0.0f);
+    if (m_sequencePreviewSeeking)
+    {
+        float remaining = std::isfinite(seekTime) ? std::max(0.0f, seekTime) : 0.0f;
+        // Rebuild scene state without sounding every clip crossed by the playhead.
+        const float step = std::max(0.01f, remaining / 60000.0f);
+        while (remaining > 0.00001f && m_sequenceManager.isRunning())
+        {
+            const float dt = std::min(step, remaining);
+            updateSequencePreview(dt);
+            remaining -= dt;
+        }
+        m_sequencePreviewSeeking = false;
+        if (!m_sequenceSeekMusic.empty())
+        {
+            playMusic(m_sequenceSeekMusic, m_sequenceSeekMusicLoops, 0);
+            m_audioManager.seekMusic(std::max(0.0f, m_sequenceManager.status().elapsed - m_sequenceSeekMusicStart), m_sequenceSeekMusicLoops);
+        }
+        pauseSequencePreview(true);
+    }
+    return true;
+}
+
+void Campaign::pauseSequencePreview(bool paused)
+{
+    m_sequenceManager.setPaused(paused);
+    m_audioManager.pausePlayback(paused);
+}
+
+void Campaign::updateSequencePreview(float dt)
+{
+    updateSequenceRuntime(dt);
+    m_player.update(dt, m_characterManager);
+    if (m_renderMode == GameRenderMode::Campaign2D)
+        updateFogOfWar();
+}
+
 void Campaign::updateSequenceRuntime(float dt)
 {
     if (m_sequenceTextRemaining > 0.0f)
@@ -59,9 +123,31 @@ void Campaign::updateSequenceRuntime(float dt)
     if (m_sequenceCameraShakeRemaining > 0.0f)
         m_sequenceCameraShakeRemaining = std::max(0.0f, m_sequenceCameraShakeRemaining - dt);
 
+    m_audioManager.update(dt);
+    const bool wasRunning = m_sequenceManager.isRunning();
     m_sequenceManager.update(dt);
+    if (wasRunning && !m_sequenceManager.isRunning())
+        m_audioManager.restoreMusic(0.3f);
 
-    if (m_sequenceCameraFollow && !m_sequenceCameraActor.empty())
+    // Follow the actor pose produced by this frame's sequence actions.
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+        m_cinematicScene.update(dt);
+
+    if (m_newGameIntroActive && !m_sequenceManager.isRunning())
+    {
+        m_newGameIntroActive = false;
+        changeRendererMode("2d");
+        enablePlayerControl(true);
+        m_sequenceCameraOverride = false;
+        m_sequenceCameraFollow = false;
+        m_sequenceCameraActor.clear();
+        m_sequenceFadeAlpha = 0.0f;
+        m_sequenceFlashAlpha = 0.0f;
+        hideSequenceText();
+        clearSequenceActors();
+    }
+
+    if (m_renderMode == GameRenderMode::Campaign2D && m_sequenceCameraFollow && !m_sequenceCameraActor.empty())
     {
         sequence::Vec2 pos;
         if (getActorPosition(m_sequenceCameraActor, pos))
@@ -149,7 +235,7 @@ void Campaign::renderSequenceOverlay()
         SDL_RenderFillRect(m_renderer, &r);
     }
 
-    if (!m_sequenceText.empty())
+    if (!m_sequencePreviewMode && !m_sequenceText.empty())
     {
         ImDrawList* fg = ImGui::GetForegroundDrawList();
         const ImVec2 textSize = ImGui::CalcTextSize(m_sequenceText.c_str());
@@ -181,6 +267,9 @@ void Campaign::sequenceLog(const std::string& message)
 
 bool Campaign::resolveMarker(const std::string& markerId, sequence::Vec2& out) const
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D && m_cinematicScene.resolveMarker(markerId, out))
+        return true;
+
     const auto* marker = sequence::FindMarker(m_sequenceMarkers, markerId);
     if (!marker)
         return false;
@@ -189,12 +278,42 @@ bool Campaign::resolveMarker(const std::string& markerId, sequence::Vec2& out) c
     return true;
 }
 
+bool Campaign::loadScene(const std::string& sceneId)
+{
+    if (sceneId.empty())
+    {
+        sequenceLog("load_scene missing scene id.");
+        return false;
+    }
+
+    const auto draft = m_sequencePreviewSceneDocuments.find(sceneId);
+    const bool ok = m_cinematicScene.loadScene(sceneId, [&](const std::string& msg)
+    {
+        sequenceLog(msg);
+    }, m_sequencePreviewMode && draft != m_sequencePreviewSceneDocuments.end() ? &draft->second : nullptr);
+    if (ok)
+    {
+        m_renderMode = GameRenderMode::Cinematic25D;
+        m_sequencePlayerControlEnabled = false;
+        m_sequenceCameraOverride = false;
+        m_sequenceCameraFollow = false;
+    }
+    return ok;
+}
+
 bool Campaign::spawnActor(const sequence::ActorSpawnDef& def)
 {
     if (def.actor.empty())
     {
         sequenceLog("spawn_actor missing actor id.");
         return false;
+    }
+
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        if (def.kind == "prop")
+            return m_cinematicScene.upsertProp(def, [&](const std::string& msg) { sequenceLog(msg); });
+        return m_cinematicScene.upsertActor(def, [&](const std::string& msg) { sequenceLog(msg); });
     }
 
     if (def.kind == "player")
@@ -231,12 +350,35 @@ bool Campaign::spawnActor(const sequence::ActorSpawnDef& def)
 
 void Campaign::removeActor(const std::string& actorId)
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        m_cinematicScene.removeActorOrProp(actorId);
+        return;
+    }
+
     m_sequenceActors.erase(actorId);
     m_sequenceActorAliases.erase(actorId);
 }
 
+void Campaign::setActorVisible(const std::string& actorId, bool visible)
+{
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        if (!m_cinematicScene.setActorVisible(actorId, visible))
+            sequenceLog("Unknown cinematic actor/prop: " + actorId);
+        return;
+    }
+
+    auto it = m_sequenceActors.find(actorId);
+    if (it != m_sequenceActors.end())
+        it->second.visible = visible;
+}
+
 bool Campaign::getActorPosition(const std::string& actorId, sequence::Vec2& out) const
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D && m_cinematicScene.getActorPosition(actorId, out))
+        return true;
+
     std::string resolved = actorId;
     const auto alias = m_sequenceActorAliases.find(actorId);
     if (alias != m_sequenceActorAliases.end())
@@ -277,6 +419,13 @@ bool Campaign::getActorPosition(const std::string& actorId, sequence::Vec2& out)
 
 bool Campaign::setActorPosition(const std::string& actorId, sequence::Vec2 pos)
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        if (!m_cinematicScene.setActorPosition(actorId, pos))
+            sequenceLog("Unknown cinematic actor/prop for move_actor: " + actorId);
+        return true;
+    }
+
     std::string resolved = actorId;
     const auto alias = m_sequenceActorAliases.find(actorId);
     if (alias != m_sequenceActorAliases.end())
@@ -318,6 +467,13 @@ bool Campaign::setActorPosition(const std::string& actorId, sequence::Vec2 pos)
 
 void Campaign::setActorAnimation(const std::string& actorId, const std::string& animationId)
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        if (!m_cinematicScene.setActorAnimation(actorId, animationId, [&](const std::string& msg) { sequenceLog(msg); }))
+            sequenceLog("Unknown cinematic actor for animation: " + actorId);
+        return;
+    }
+
     auto it = m_sequenceActors.find(actorId);
     if (it != m_sequenceActors.end())
         it->second.animation = animationId;
@@ -331,6 +487,13 @@ void Campaign::setActorAnimation(const std::string& actorId, const std::string& 
 
 void Campaign::faceActor(const std::string& actorId, const std::string& directionOrTarget)
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        if (!m_cinematicScene.faceActor(actorId, directionOrTarget))
+            sequenceLog("Unknown cinematic actor for face_actor: " + actorId);
+        return;
+    }
+
     sequence::Vec2 pos;
     sequence::Vec2 target;
     const bool hasPos = getActorPosition(actorId, pos);
@@ -362,19 +525,60 @@ void Campaign::faceActor(const std::string& actorId, const std::string& directio
 
 void Campaign::setCameraPosition(sequence::Vec2 pos)
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        m_cinematicScene.setCameraPosition(pos);
+        return;
+    }
+
     m_sequenceCameraOverride = true;
     m_sequenceCameraFollow = false;
     m_sequenceCameraPos = pos;
 }
 
+bool Campaign::resolveCameraMarker(const std::string& markerId, sequence::CameraPose& out) const
+{
+    return m_renderMode == GameRenderMode::Cinematic25D && m_cinematicScene.resolveCameraMarker(markerId, out);
+}
+
+bool Campaign::getCameraPose(sequence::CameraPose& out) const
+{
+    if (m_renderMode != GameRenderMode::Cinematic25D) return false;
+    out = m_cinematicScene.cameraPose();
+    return true;
+}
+
+void Campaign::setCameraPose(const sequence::CameraPose& pose)
+{
+    if (m_renderMode == GameRenderMode::Cinematic25D) m_cinematicScene.setCameraPose(pose);
+    else setCameraPosition(pose.position);
+}
+
 void Campaign::setCameraFollow(const std::string& actorId)
 {
+    setCameraFollow(actorId, {});
+}
+
+void Campaign::setCameraFollow(const std::string& actorId, const sequence::CameraFollowSettings& settings)
+{
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        m_cinematicScene.setCameraFollow(actorId, settings);
+        return;
+    }
+
     m_sequenceCameraFollow = !actorId.empty();
     m_sequenceCameraActor = actorId;
 }
 
-void Campaign::setCameraShake(float intensity, float duration)
+void Campaign::setCameraShake(float intensity, float duration, float frequency)
 {
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        m_cinematicScene.setCameraShake(intensity, duration, frequency);
+        return;
+    }
+
     m_sequenceCameraShakeIntensity = std::max(0.0f, intensity);
     m_sequenceCameraShakeRemaining = std::max(0.0f, duration);
 }
@@ -403,33 +607,100 @@ void Campaign::hideSequenceText()
 
 void Campaign::playMusic(const std::string& id, int loops, int fadeMs)
 {
+    if (m_sequencePreviewSeeking)
+    {
+        m_sequenceSeekMusic = id;
+        m_sequenceSeekMusicStart = m_sequenceManager.status().elapsed;
+        m_sequenceSeekMusicLoops = loops;
+        return;
+    }
     if (id.empty())
         return;
-    std::filesystem::path audioName(id);
-    if (!audioName.has_extension())
-        audioName.replace_extension(".ogg");
-    const std::filesystem::path path = std::filesystem::path(id).has_parent_path()
-        ? (pathutils::ProjectRoot() / id)
-        : (pathutils::AssetsDir() / "audio" / audioName);
+    const auto path = sequence::ResolveAudioPath(id, pathutils::ProjectRoot());
     if (!m_audioManager.playMusic(path.string(), loops, fadeMs))
         sequenceLog("Music failed: " + id + " | " + m_audioManager.lastError());
 }
 
 void Campaign::stopMusic(int fadeMs)
 {
+    if (m_sequencePreviewSeeking)
+    {
+        m_sequenceSeekMusic.clear();
+        return;
+    }
     m_audioManager.stopMusic(fadeMs);
 }
 
 void Campaign::playSfx(const std::string& id)
 {
+    playSfx(id, 1.0f);
+}
+
+void Campaign::playSfx(const std::string& id, float volume)
+{
+    if (m_sequencePreviewSeeking) return;
     if (!id.empty())
-        m_audioManager.playSfx(id);
+    {
+        const auto path = sequence::ResolveAudioPath(id, pathutils::ProjectRoot());
+        if (!m_audioManager.hasSfx(id) && std::filesystem::is_regular_file(path))
+            m_audioManager.loadSfx(id, path.string());
+        m_audioManager.playSfx(id, 0, -1, static_cast<int>(std::lround(Clamp01(volume) * 128)));
+    }
 }
 
 void Campaign::playVoice(const std::string& id)
 {
+    playVoice(id, 1.0f);
+}
+
+void Campaign::playVoice(const std::string& id, float volume)
+{
+    if (m_sequencePreviewSeeking) return;
     if (!id.empty())
-        m_audioManager.playVoice(id);
+    {
+        const auto path = sequence::ResolveAudioPath(id, pathutils::ProjectRoot());
+        if (!m_audioManager.hasSfx(id) && std::filesystem::is_regular_file(path))
+            m_audioManager.loadSfx(id, path.string());
+        m_audioManager.playVoice(id, static_cast<int>(std::lround(Clamp01(volume) * 128)));
+    }
+}
+
+void Campaign::setSequenceMusicVolume(float volume, float fadeSeconds)
+{
+    m_audioManager.setMusicGain(volume, fadeSeconds);
+}
+
+void Campaign::setSequenceSfxVolume(float volume)
+{
+    m_audioManager.setSfxGain(volume);
+}
+
+void Campaign::duckSequenceMusic(float volume, float holdSeconds, float fadeOutSeconds, float fadeInSeconds)
+{
+    m_audioManager.duckMusic(volume, holdSeconds, fadeOutSeconds, fadeInSeconds);
+}
+
+void Campaign::restoreSequenceMusic(float fadeSeconds)
+{
+    m_audioManager.restoreMusic(fadeSeconds);
+}
+
+bool Campaign::pickupSequenceItem(const std::string& item, int count, const std::string& prop, const std::string& onceFlag)
+{
+    sequence::Vec2 position;
+    if (!prop.empty() && !getActorPosition(prop, position))
+    {
+        sequenceLog("Pickup prop not found: " + prop);
+        return false;
+    }
+    // Re-entering an authored node must not award the same story object twice.
+    if (onceFlag.empty() || !hasStoryFlag(onceFlag))
+    {
+        if (!addInventoryItem(item, count)) return false;
+        if (!onceFlag.empty()) setStoryFlag(onceFlag);
+    }
+    if (!prop.empty()) setActorVisible(prop, false);
+    return true;
 }
 
 void Campaign::setTimeOfDay(const std::string& value)
@@ -537,9 +808,16 @@ void Campaign::startDialog(const std::string& npcOrDialogId)
 void Campaign::changeRendererMode(const std::string& mode)
 {
     if (mode == "2d" || mode == "2D")
-        m_sequenceRendererMode = "2d";
+    {
+        m_renderMode = GameRenderMode::Campaign2D;
+        m_cinematicScene.clear();
+        m_sequencePlayerControlEnabled = true;
+    }
     else if (mode == "2_5d" || mode == "2.5d" || mode == "2_5D")
-        m_sequenceRendererMode = "2_5d";
+    {
+        m_renderMode = GameRenderMode::Cinematic25D;
+        m_sequencePlayerControlEnabled = false;
+    }
     else
         sequenceLog("Unknown renderer mode: " + mode);
 }

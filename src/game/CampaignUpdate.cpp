@@ -35,6 +35,8 @@ bool Campaign::shouldBlockLetterHotkeys() const
 
 void Campaign::handleEvent(const SDL_Event& e)
 {
+    if (m_newGameIntroActive)
+        return;
     // 1) inspect p?es Alt + lev� klik
     if (e.type == SDL_MOUSEBUTTONDOWN &&
         e.button.button == SDL_BUTTON_LEFT &&
@@ -704,7 +706,15 @@ void Campaign::update(float dt)
     SDL_PumpEvents();
     const Uint8* ks = SDL_GetKeyboardState(nullptr);
 
-    if (m_consoleOpen || m_npcDialogOpen || !m_sequencePlayerControlEnabled)
+    if (m_renderMode == GameRenderMode::Cinematic25D)
+    {
+        m_player.vx = 0.0f;
+        m_player.vy = 0.0f;
+        m_player.isSprinting = false;
+        return;
+    }
+
+    if (m_consoleOpen || m_npcDialogOpen || m_newGameIntroActive || !m_sequencePlayerControlEnabled)
     {
         m_player.vx = 0.0f;
         m_player.vy = 0.0f;

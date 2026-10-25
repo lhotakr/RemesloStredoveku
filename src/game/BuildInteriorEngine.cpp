@@ -343,10 +343,21 @@ void BuildInteriorEngine::setEditorMode(bool enabled)
         return;
 
     m_editorMode = enabled;
+    if (!enabled) cancelEditorSectorPlacement();
+    resetInputState();
     setMouseLookEnabled(!enabled);
     if (enabled)
         m_editorRefreshMapListRequested = true;
     m_sceneDirty = true;
+}
+
+bool BuildInteriorEngine::cancelEditorSectorPlacement()
+{
+    if (!m_editorSectorPlacement && !m_editorDrawingSector)
+        return false;
+    m_editorSectorPlacement = false;
+    m_editorDrawingSector = false;
+    return true;
 }
 
 void BuildInteriorEngine::setRuntimeOverlayVisible(bool visible)
@@ -372,7 +383,7 @@ std::string BuildInteriorEngine::currentInteriorLocationId() const
 
 void BuildInteriorEngine::setMouseLookEnabled(bool enabled)
 {
-    if (m_editorMode || m_mouseLookSuppressed)
+    if (m_mouseLookSuppressed)
         enabled = false;
 
     if (!enabled)
@@ -457,6 +468,150 @@ void BuildInteriorEngine::collectAudioEmitters(std::vector<InteriorAudioEmitter>
     }
 }
 
+BuildInteriorEngine::SpriteDef* BuildInteriorEngine::findSpriteById(const std::string& id)
+{
+    auto it = std::find_if(m_sprites.begin(), m_sprites.end(), [&](const SpriteDef& sprite)
+    {
+        return sprite.id == id;
+    });
+    return it == m_sprites.end() ? nullptr : &*it;
+}
+
+const BuildInteriorEngine::SpriteDef* BuildInteriorEngine::findSpriteById(const std::string& id) const
+{
+    auto it = std::find_if(m_sprites.begin(), m_sprites.end(), [&](const SpriteDef& sprite)
+    {
+        return sprite.id == id;
+    });
+    return it == m_sprites.end() ? nullptr : &*it;
+}
+
+bool BuildInteriorEngine::upsertRuntimeSprite(const RuntimeSpriteDef& def)
+{
+    if (def.id.empty())
+        return false;
+
+    TextureKey key = kNoTexture;
+    if (!def.pixels.empty() && def.pixelW > 0 && def.pixelH > 0)
+    {
+        while (m_nextRuntimeTextureKey != kNoTexture && m_textures.contains(m_nextRuntimeTextureKey)) ++m_nextRuntimeTextureKey;
+        if (m_nextRuntimeTextureKey == kNoTexture) return false;
+        key = m_nextRuntimeTextureKey++;
+        if (!loadTexturePixelsForCell(key, def.pixels, def.pixelW, def.pixelH, def.id))
+            return false;
+    }
+    else
+    {
+        key = textureKeyForRuntimePath(def.texturePath);
+        if (key == kNoTexture)
+            return false;
+    }
+
+    SpriteDef sprite;
+    SpriteDef* existing = findSpriteById(def.id);
+    if (existing)
+        sprite = *existing;
+    sprite.id = def.id;
+    sprite.texture = key;
+    sprite.viewTextures.fill(kNoTexture);
+    sprite.x = def.x;
+    sprite.y = def.y;
+    sprite.zOffset = def.zOffset;
+    sprite.scale = std::clamp(def.scale, 0.10, 6.0);
+    sprite.solid = def.solid && !def.floor;
+    sprite.renderMode = def.floor ? ObjectRenderMode::Floor
+        : (def.voxel ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard);
+    sprite.floorWidth = std::clamp(def.floorWidth, 0.0, 128.0);
+    sprite.floorDepth = std::clamp(def.floorDepth, 0.0, 128.0);
+    sprite.yaw = def.yawDegrees * kPi / 180.0;
+    sprite.voxelDepth = std::clamp(def.voxelDepth, 0.0, 3.0);
+    sprite.visible = def.visible;
+
+    if (existing)
+        *existing = std::move(sprite);
+    else
+        m_sprites.push_back(std::move(sprite));
+
+    m_runtimeSpriteIds.insert(def.id);
+    prepareTextureModels();
+    m_sceneDirty = true;
+    return true;
+}
+
+bool BuildInteriorEngine::setRuntimeSpritePosition(const std::string& id, double x, double y, double zOffset)
+{
+    SpriteDef* sprite = findSpriteById(id);
+    if (!sprite)
+        return false;
+    sprite->x = x;
+    sprite->y = y;
+    sprite->zOffset = zOffset;
+    m_sceneDirty = true;
+    return true;
+}
+
+bool BuildInteriorEngine::getRuntimeSpritePosition(const std::string& id, double& outX, double& outY, double& outZOffset) const
+{
+    const SpriteDef* sprite = findSpriteById(id);
+    if (!sprite)
+        return false;
+    outX = sprite->x;
+    outY = sprite->y;
+    outZOffset = sprite->zOffset;
+    return true;
+}
+
+bool BuildInteriorEngine::setRuntimeSpriteVisible(const std::string& id, bool visible)
+{
+    SpriteDef* sprite = findSpriteById(id);
+    if (!sprite)
+        return false;
+    sprite->visible = visible;
+    m_sceneDirty = true;
+    return true;
+}
+
+bool BuildInteriorEngine::setRuntimeSpriteScale(const std::string& id, double scale)
+{
+    SpriteDef* sprite = findSpriteById(id);
+    if (!sprite)
+        return false;
+    sprite->scale = std::clamp(scale, 0.10, 6.0);
+    m_sceneDirty = true;
+    return true;
+}
+
+bool BuildInteriorEngine::removeRuntimeSprite(const std::string& id)
+{
+    const auto oldSize = m_sprites.size();
+    m_sprites.erase(std::remove_if(m_sprites.begin(), m_sprites.end(), [&](const SpriteDef& sprite)
+    {
+        return sprite.id == id;
+    }), m_sprites.end());
+    m_runtimeSpriteIds.erase(id);
+    if (m_sprites.size() == oldSize)
+        return false;
+    m_sceneDirty = true;
+    return true;
+}
+
+void BuildInteriorEngine::clearRuntimeSprites()
+{
+    if (m_runtimeSpriteIds.empty())
+        return;
+    m_sprites.erase(std::remove_if(m_sprites.begin(), m_sprites.end(), [&](const SpriteDef& sprite)
+    {
+        return m_runtimeSpriteIds.find(sprite.id) != m_runtimeSpriteIds.end();
+    }), m_sprites.end());
+    m_runtimeSpriteIds.clear();
+    m_sceneDirty = true;
+}
+
+int BuildInteriorEngine::runtimeSpriteCount() const
+{
+    return static_cast<int>(m_runtimeSpriteIds.size());
+}
+
 void BuildInteriorEngine::shutdown()
 {
     setMouseLookEnabled(false);
@@ -472,6 +627,7 @@ void BuildInteriorEngine::shutdown()
     m_framebuffer.clear();
     m_zBuffer.clear();
     m_dynamicDepthBuffer.clear();
+    m_editorObjectPixels.clear();
 
     clearTextures();
     m_grid.clear();
@@ -500,8 +656,6 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
     m_textureSpriteEditor.handleEvent(e);
     if (m_textureSpriteEditor.isOpen())
         return;
-    if (m_editorMode)
-        return;
     if (m_mouseLookSuppressed)
     {
         resetInputState();
@@ -515,9 +669,6 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
         e.type == SDL_MOUSEBUTTONUP ||
         e.type == SDL_MOUSEMOTION ||
         e.type == SDL_MOUSEWHEEL;
-    if (mouseEvent && io.WantCaptureMouse)
-        return;
-
     if (e.type == SDL_WINDOWEVENT)
     {
         if (e.window.event == SDL_WINDOWEVENT_FOCUS_LOST)
@@ -526,7 +677,7 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
             setMouseLookEnabled(false);
         }
         else if (e.window.event == SDL_WINDOWEVENT_FOCUS_GAINED)
-            setMouseLookEnabled(true);
+            setMouseLookEnabled(!m_editorMode);
         return;
     }
 
@@ -537,11 +688,39 @@ void BuildInteriorEngine::handleEvent(const SDL_Event& e)
             m_keyDown[static_cast<std::size_t>(scancode)] = e.type == SDL_KEYDOWN;
     }
 
+    // Release camera capture even when the pointer has returned over the UI.
+    if (m_editorMode && e.type == SDL_MOUSEBUTTONUP && e.button.button == SDL_BUTTON_RIGHT)
+    {
+        setMouseLookEnabled(false);
+        return;
+    }
+    if (mouseEvent && io.WantCaptureMouse && !m_mouseLook)
+        return;
+
+    if (m_editorMode && e.type == SDL_MOUSEBUTTONDOWN)
+    {
+        if (e.button.button == SDL_BUTTON_RIGHT)
+            setMouseLookEnabled(true);
+        else if (e.button.button == SDL_BUTTON_LEFT)
+        {
+            const int picked = pickEditorObject(e.button.x, e.button.y);
+            if (picked >= 0)
+            {
+                m_editorSelectedSprite = picked;
+                m_editorSelectObjectsTab = true;
+                m_sceneDirty = true;
+                m_status = U8("Vybrán objekt: ") + m_sprites[picked].id;
+            }
+        }
+        return;
+    }
+
     // Standard FPS behaviour: the mouse is captured continuously while the
     // game view is active. Escape releases it; clicking the view captures it
     // again if the surrounding game state did not already change screens.
     if (e.type == SDL_KEYDOWN && e.key.keysym.scancode == SDL_SCANCODE_ESCAPE)
     {
+        cancelEditorSectorPlacement();
         resetInputState();
         setMouseLookEnabled(false);
         return;
@@ -604,8 +783,6 @@ void BuildInteriorEngine::update(float dt)
     updateDoors(dt);
     updateAnimatedEffects(dt);
 
-    SDL_PumpEvents();
-    const Uint8* keys = SDL_GetKeyboardState(nullptr);
     auto keyDown = [&](SDL_Scancode scancode) -> bool {
         return scancode >= 0 && scancode < SDL_NUM_SCANCODES
             ? m_keyDown[static_cast<std::size_t>(scancode)]
@@ -668,10 +845,10 @@ void BuildInteriorEngine::update(float dt)
 
     double moveX = 0.0;
     double moveY = 0.0;
-    if (keyDown(controls.moveForward))  { moveX += forwardX; moveY += forwardY; }
-    if (keyDown(controls.moveBackward)) { moveX -= forwardX; moveY -= forwardY; }
-    if (keyDown(controls.moveLeft))     { moveX -= rightX;   moveY -= rightY; }
-    if (keyDown(controls.moveRight))    { moveX += rightX;   moveY += rightY; }
+    if (keyDown(controls.moveForward) || (m_editorMode && keyDown(SDL_SCANCODE_W)))  { moveX += forwardX; moveY += forwardY; }
+    if (keyDown(controls.moveBackward) || (m_editorMode && keyDown(SDL_SCANCODE_S))) { moveX -= forwardX; moveY -= forwardY; }
+    if (keyDown(controls.moveLeft) || (m_editorMode && keyDown(SDL_SCANCODE_A)))     { moveX -= rightX;   moveY -= rightY; }
+    if (keyDown(controls.moveRight) || (m_editorMode && keyDown(SDL_SCANCODE_D)))    { moveX += rightX;   moveY += rightY; }
 
     const double moveLength = std::hypot(moveX, moveY);
     const bool requested = moveLength > 0.0001;
@@ -681,15 +858,21 @@ void BuildInteriorEngine::update(float dt)
     {
         // Normalize diagonal movement and do only one collision/sliding pass.
         // This is both more FPS-like and cheaper than four independent moves.
-        tryMove(moveX / moveLength * step, moveY / moveLength * step);
+        if (m_editorMode && !m_editorCameraCollision)
+        {
+            m_posX += moveX / moveLength * step;
+            m_posY += moveY / moveLength * step;
+        }
+        else
+            tryMove(moveX / moveLength * step, moveY / moveLength * step);
     }
 
     // Keyboard looking remains as an accessibility/debug fallback. Normal play
     // uses relative mouse motion captured by handleEvent().
-    if (keys[SDL_SCANCODE_LEFT])  m_angle = wrapAngle(m_angle - turnSpeed);
-    if (keys[SDL_SCANCODE_RIGHT]) m_angle = wrapAngle(m_angle + turnSpeed);
-    if (keys[SDL_SCANCODE_UP])    m_pitch = std::clamp(m_pitch + 0.9 * dt, -0.52, 0.52);
-    if (keys[SDL_SCANCODE_DOWN])  m_pitch = std::clamp(m_pitch - 0.9 * dt, -0.52, 0.52);
+    if (keyDown(SDL_SCANCODE_LEFT))  m_angle = wrapAngle(m_angle - turnSpeed);
+    if (keyDown(SDL_SCANCODE_RIGHT)) m_angle = wrapAngle(m_angle + turnSpeed);
+    if (keyDown(SDL_SCANCODE_UP))    m_pitch = std::clamp(m_pitch + 0.9 * dt, -0.52, 0.52);
+    if (keyDown(SDL_SCANCODE_DOWN))  m_pitch = std::clamp(m_pitch - 0.9 * dt, -0.52, 0.52);
 
     // Vertical movement is still constrained to a single floor/ceiling pair.
     // Space adds a vertical impulse; gravity then returns the player to the
@@ -886,6 +1069,7 @@ void BuildInteriorEngine::swapLoadedMapState(BuildInteriorEngine& other)
     swap(m_wallSegments, other.m_wallSegments);
     swap(m_polygonBoundaryWalls, other.m_polygonBoundaryWalls);
     swap(m_polygonSectors, other.m_polygonSectors);
+    swap(m_polygonGeometryPrimary, other.m_polygonGeometryPrimary);
     swap(m_polygonPortals, other.m_polygonPortals);
     swap(m_traversalRamps, other.m_traversalRamps);
     swap(m_floorCutoutSectors, other.m_floorCutoutSectors);
@@ -895,6 +1079,9 @@ void BuildInteriorEngine::swapLoadedMapState(BuildInteriorEngine& other)
     swap(m_floorCutoutMaxX, other.m_floorCutoutMaxX);
     swap(m_floorCutoutMaxY, other.m_floorCutoutMaxY);
     swap(m_sprites, other.m_sprites);
+    swap(m_runtimeSpriteIds, other.m_runtimeSpriteIds);
+    swap(m_runtimeTextureKeys, other.m_runtimeTextureKeys);
+    swap(m_nextRuntimeTextureKey, other.m_nextRuntimeTextureKey);
     swap(m_namedSpawns, other.m_namedSpawns);
 
     swap(m_vectorSectorLookupW, other.m_vectorSectorLookupW);
@@ -982,6 +1169,12 @@ bool BuildInteriorEngine::loadInteriorAtSpawn(const std::string& interiorIdOrPat
 
     sanitizeEditorState();
     rebuildRenderLights();
+    m_editorObjectPixels.clear();
+    m_editorDraggingSprite = false;
+    m_editorDraggingVertex = false;
+    m_editorSectorPlacement = false;
+    m_editorDrawingSector = false;
+    m_editorOpenObjectInspectorOnRelease = false;
     m_sceneDirty = true;
     return true;
 }
@@ -1212,7 +1405,8 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
     const bool hasLegacyGrid = root.contains("grid") &&
         root["grid"].is_array() && !root["grid"].empty();
     const bool hasPolygonGeometry = root.contains("polygon_sectors") &&
-        root["polygon_sectors"].is_array() && !root["polygon_sectors"].empty();
+        root["polygon_sectors"].is_array() &&
+        (!root["polygon_sectors"].empty() || root.value("geometry_mode", std::string()) == "polygon_sectors");
 
     if (!hasNumericGrid && !hasLegacyGrid && !hasPolygonGeometry)
     {
@@ -1377,6 +1571,9 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
     m_vectorLookupOriginX = 0.0;
     m_vectorLookupOriginY = 0.0;
     m_sprites.clear();
+    m_runtimeSpriteIds.clear();
+    m_runtimeTextureKeys.clear();
+    m_nextRuntimeTextureKey = 4096;
     m_namedSpawns.clear();
     m_texturePaths.clear();
     m_lastError.clear();
@@ -1429,8 +1626,8 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
 
     m_fov = std::clamp(root.value("fov_degrees", 72.0), 45.0, 95.0) * kPi / 180.0;
 
-    const bool rootHasPolygonGeometry = root.contains("polygon_sectors") &&
-        root["polygon_sectors"].is_array() && !root["polygon_sectors"].empty();
+    const bool rootHasPolygonGeometry = hasPolygonGeometry;
+    m_polygonGeometryPrimary = rootHasPolygonGeometry;
     if (root.contains("grid_codes") && root["grid_codes"].is_array())
     {
         for (const auto& row : root["grid_codes"])
@@ -1562,7 +1759,15 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
             const TextureKey key = static_cast<TextureKey>(std::clamp(item.value("key", 0), 0, 65535));
             const std::string path = item.value("path", std::string());
             if (key != kNoTexture && !path.empty())
-                loadTextureForCell(key, path);
+            {
+                SDL_Rect rect{};
+                if (item.contains("source_rect") && item["source_rect"].is_object())
+                {
+                    const auto& source = item["source_rect"];
+                    rect = {source.value("x", 0), source.value("y", 0), source.value("w", 0), source.value("h", 0)};
+                }
+                loadTextureForCell(key, path, rect, item.value("name", std::string()));
+            }
         }
     }
     else if (root.contains("textures") && root["textures"].is_object())
@@ -1837,7 +2042,10 @@ bool BuildInteriorEngine::loadInteriorAtSpawnUnsafe(const std::string& interiorI
                 "render_mode", sprite.solid && !prefersBillboard
                     ? std::string("voxel")
                     : std::string("billboard"));
-            sprite.renderMode = renderMode == "voxel" || renderMode == "voxels" || renderMode == "3d"
+            sprite.floorWidth = std::clamp(source.value("floor_width", 0.0), 0.0, 128.0);
+            sprite.floorDepth = std::clamp(source.value("floor_depth", 0.0), 0.0, 128.0);
+            sprite.renderMode = renderMode == "floor" ? ObjectRenderMode::Floor
+                : renderMode == "voxel" || renderMode == "voxels" || renderMode == "3d"
                 ? ObjectRenderMode::Voxel
                 : ObjectRenderMode::Billboard;
             sprite.yaw = source.value("yaw_degrees", 0.0) * kPi / 180.0;
@@ -1973,10 +2181,10 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
         const bool savedSectors = saveCastleMapSectors();
         if (!savedSectors)
             return false;
+        if (!saveCastleGeometryOverlay())
+            return false;
         if (!saveCastleEntityOverlay())
-            SDL_LogWarn(SDL_LOG_CATEGORY_APPLICATION,
-                        "Castle entity overlay was not saved after sector save: %s",
-                        m_lastError.c_str());
+            return false;
         m_lastError.clear();
         m_status = U8("Uložena zdrojová mapa hradu.");
         return true;
@@ -1994,6 +2202,7 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
 
     json root;
     root["id"] = m_currentInteriorId;
+    root["geometry_mode"] = hasVectorGeometry() ? "polygon_sectors" : "legacy_grid";
     root["name"] = m_displayName;
     root["fov_degrees"] = m_fov * 180.0 / kPi;
     root["eye_height"] = m_eyeHeight;
@@ -2017,7 +2226,14 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
 
     json textures = json::array();
     for (const auto& pair : m_texturePaths)
-        textures.push_back({{"key", pair.first}, {"path", pair.second}});
+    {
+        json texture = {{"key", pair.first}, {"path", pair.second}};
+        const auto& ref = m_textures.at(pair.first);
+        if (ref.sourceRect.w > 0)
+            texture["source_rect"] = {{"x", ref.sourceRect.x}, {"y", ref.sourceRect.y}, {"w", ref.sourceRect.w}, {"h", ref.sourceRect.h}};
+        if (!ref.name.empty()) texture["name"] = ref.name;
+        textures.push_back(std::move(texture));
+    }
     root["textures"] = std::move(textures);
     json gridCodes = json::array();
     for (const auto& row : m_grid)
@@ -2185,7 +2401,8 @@ bool BuildInteriorEngine::saveInterior(const std::string& interiorIdOrPath)
             {"z_offset", s.zOffset},
             {"scale", s.scale},
             {"solid", s.solid},
-            {"render_mode", s.renderMode == ObjectRenderMode::Voxel ? "voxel" : "billboard"},
+            {"render_mode", s.renderMode == ObjectRenderMode::Floor ? "floor" : (s.renderMode == ObjectRenderMode::Voxel ? "voxel" : "billboard")},
+            {"floor_width", s.floorWidth}, {"floor_depth", s.floorDepth},
             {"yaw_degrees", s.yaw * 180.0 / kPi},
             {"voxel_depth", s.voxelDepth},
             {"animated", s.animated},
@@ -2704,26 +2921,17 @@ bool BuildInteriorEngine::loadCastleEntityOverlay(const std::string& castleId,
                     materialsPath.string().c_str(), ex.what());
     }
 
-    auto normalizedPath = [](const std::string& value) {
-        return lowerAscii(fs::path(value).lexically_normal().generic_string());
-    };
-
-    auto findTextureKey = [&](const std::string& relativePath) -> TextureKey
+    auto findTextureKey = [&](const std::string& path, const json& source) -> TextureKey
     {
-        if (relativePath.empty()) return static_cast<TextureKey>('T');
-        const std::string wanted = normalizedPath(relativePath);
-        for (const auto& pair : m_texturePaths)
+        if (path.empty()) return static_cast<TextureKey>('T');
+        SDL_Rect rect{};
+        if (source.contains("source_rect") && source["source_rect"].is_object())
         {
-            if (normalizedPath(pair.second) == wanted)
-                return pair.first;
+            const auto& value = source["source_rect"];
+            rect = {value.value("x", 0), value.value("y", 0), value.value("w", 0), value.value("h", 0)};
         }
-        TextureKey key = 256;
-        for (const auto& pair : m_textures)
-            if (pair.first >= key && pair.first < 65535) key = static_cast<TextureKey>(pair.first + 1);
-        while (key != 0 && m_textures.find(key) != m_textures.end()) ++key;
-        if (key != 0 && loadTextureForCell(key, relativePath))
-            return key;
-        return static_cast<TextureKey>('T');
+        const auto key = textureKeyForSource(path, rect, source.value("texture_name", std::string()));
+        return key != kNoTexture ? key : static_cast<TextureKey>('T');
     };
 
     int added = 0;
@@ -2743,7 +2951,7 @@ bool BuildInteriorEngine::loadCastleEntityOverlay(const std::string& castleId,
 
         SpriteDef sprite;
         sprite.id = id;
-        sprite.texture = findTextureKey(texturePath);
+        sprite.texture = findTextureKey(texturePath, source);
         sprite.x = source.value("x", 2.5);
         sprite.y = source.value("y", 2.5);
         sprite.zOffset = source.value("z_offset", 0.0);
@@ -2757,9 +2965,11 @@ bool BuildInteriorEngine::loadCastleEntityOverlay(const std::string& castleId,
             "render_mode", sprite.solid && !prefersBillboard
                 ? std::string("voxel")
                 : std::string("billboard"));
-        sprite.renderMode = renderMode == "voxel" || renderMode == "voxels" || renderMode == "3d"
-            ? ObjectRenderMode::Voxel
-            : ObjectRenderMode::Billboard;
+        sprite.floorWidth = std::clamp(source.value("floor_width", 0.0), 0.0, 128.0);
+        sprite.floorDepth = std::clamp(source.value("floor_depth", 0.0), 0.0, 128.0);
+        sprite.renderMode = renderMode == "floor" ? ObjectRenderMode::Floor
+            : (renderMode == "voxel" || renderMode == "voxels" || renderMode == "3d"
+                ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard);
         sprite.yaw = source.value("yaw_degrees", 0.0) * kPi / 180.0;
         sprite.voxelDepth = std::clamp(source.value("voxel_depth", 0.0), 0.0, 3.0);
 
@@ -2886,7 +3096,8 @@ bool BuildInteriorEngine::saveCastleEntityOverlay()
             {"z_offset", sprite.zOffset},
             {"scale", sprite.scale},
             {"solid", sprite.solid},
-            {"render_mode", sprite.renderMode == ObjectRenderMode::Voxel ? "voxel" : "billboard"},
+            {"render_mode", sprite.renderMode == ObjectRenderMode::Floor ? "floor" : (sprite.renderMode == ObjectRenderMode::Voxel ? "voxel" : "billboard")},
+            {"floor_width", sprite.floorWidth}, {"floor_depth", sprite.floorDepth},
             {"yaw_degrees", sprite.yaw * 180.0 / kPi},
             {"voxel_depth", sprite.voxelDepth},
             {"animated", sprite.animated},
@@ -2920,7 +3131,15 @@ bool BuildInteriorEngine::saveCastleEntityOverlay()
             const std::string normalized = lowerAscii(
                 fs::path(textureIt->second).lexically_normal().generic_string());
             const auto materialIt = materialByTexturePath.find(normalized);
-            if (materialIt != materialByTexturePath.end())
+            const auto& texture = m_textures.at(sprite.texture);
+            if (texture.sourceRect.w > 0)
+            {
+                entity["texture"] = textureIt->second;
+                entity["source_rect"] = {{"x", texture.sourceRect.x}, {"y", texture.sourceRect.y},
+                    {"w", texture.sourceRect.w}, {"h", texture.sourceRect.h}};
+                if (!texture.name.empty()) entity["texture_name"] = texture.name;
+            }
+            else if (materialIt != materialByTexturePath.end())
                 entity["material"] = materialIt->second;
             else
                 entity["texture"] = textureIt->second;
@@ -2983,6 +3202,38 @@ bool BuildInteriorEngine::loadCastleGeometryOverlay(const std::string& castleId,
     const bool hasPolygons = geometryRoot.contains("polygon_sectors") && geometryRoot["polygon_sectors"].is_array();
     if (!hasWalls && !hasPolygons) return false;
 
+    const bool replaceGeometry = geometryRoot.value("replace_geometry", false);
+    if (replaceGeometry)
+    {
+        m_polygonGeometryPrimary = true;
+        m_wallSegments.clear();
+        m_polygonSectors.clear();
+        m_traversalRamps.clear();
+        m_floorCutoutSectors.fill(false);
+        if (geometryRoot.contains("traversal_ramps"))
+            for (const auto& source : geometryRoot["traversal_ramps"])
+            {
+                TraversalRampDef ramp;
+                ramp.id = source.value("id", std::string());
+                ramp.startX = source.value("start_x", 0.0); ramp.startY = source.value("start_y", 0.0);
+                ramp.endX = source.value("end_x", 0.0); ramp.endY = source.value("end_y", 0.0);
+                ramp.startHeight = source.value("start_height", 0.0); ramp.endHeight = source.value("end_height", 0.0);
+                ramp.width = source.value("width", 1.0);
+                m_traversalRamps.push_back(std::move(ramp));
+            }
+        if (geometryRoot.contains("door_segments"))
+            for (const auto& source : geometryRoot["door_segments"])
+                for (auto& door : m_doors)
+                    if (door.id == source.value("id", std::string()))
+                    {
+                        door.hasSegment = true;
+                        door.segmentX0 = source.value("x0", 0.0); door.segmentY0 = source.value("y0", 0.0);
+                        door.segmentX1 = source.value("x1", 0.0); door.segmentY1 = source.value("y1", 0.0);
+                        door.x = static_cast<int>(std::floor(door.segmentX0));
+                        door.y = static_cast<int>(std::floor(door.segmentY0));
+                    }
+    }
+
     std::unordered_map<std::string, std::string> materialTextures;
     const fs::path materialsPath = castleRoot / "materials.json";
     try
@@ -3015,7 +3266,7 @@ bool BuildInteriorEngine::loadCastleGeometryOverlay(const std::string& castleId,
         if (relativePath.empty()) return static_cast<TextureKey>('1');
         const std::string wanted = normalizedPath(relativePath);
         for (const auto& pair : m_texturePaths)
-            if (normalizedPath(pair.second) == wanted) return pair.first;
+            if (m_textures.at(pair.first).sourceRect.w == 0 && normalizedPath(pair.second) == wanted) return pair.first;
         TextureKey key = 256;
         for (const auto& pair : m_textures)
             if (pair.first >= key && pair.first < 65535) key = static_cast<TextureKey>(pair.first + 1);
@@ -3155,7 +3406,7 @@ bool BuildInteriorEngine::loadCastleGeometryOverlay(const std::string& castleId,
             ++addedPolygons;
         }
     }
-    if (added > 0 || addedPolygons > 0)
+    if (replaceGeometry || added > 0 || addedPolygons > 0)
     {
         rebuildPolygonBoundaryWalls();
         rebuildVectorSectorLookup();
@@ -3163,7 +3414,7 @@ bool BuildInteriorEngine::loadCastleGeometryOverlay(const std::string& castleId,
         SDL_Log("Castle geometry overlay: added %d walls and %d polygon sectors for %s/%s",
                 added, addedPolygons, castleId.c_str(), mapId.c_str());
     }
-    return added > 0 || addedPolygons > 0;
+    return replaceGeometry || added > 0 || addedPolygons > 0;
 }
 
 bool BuildInteriorEngine::saveCastleGeometryOverlay()
@@ -3178,6 +3429,7 @@ bool BuildInteriorEngine::saveCastleGeometryOverlay()
     root["schema_version"] = 2;
     root["map_id"] = m_loadedCastleMapId;
     root["geometry_mode"] = "polygon_sectors";
+    root["replace_geometry"] = true;
     root["source_note"] = "Polygon sectors are primary geometry; the tile grid is optional compatibility data.";
 
     json authoredWalls = json::array();
@@ -3240,6 +3492,18 @@ bool BuildInteriorEngine::saveCastleGeometryOverlay()
         });
     }
     root["polygon_sectors"] = std::move(polygons);
+    root["traversal_ramps"] = json::array();
+    for (const auto& ramp : m_traversalRamps)
+        root["traversal_ramps"].push_back({
+            {"id", ramp.id}, {"start_x", ramp.startX}, {"start_y", ramp.startY},
+            {"end_x", ramp.endX}, {"end_y", ramp.endY},
+            {"start_height", ramp.startHeight}, {"end_height", ramp.endHeight}, {"width", ramp.width}});
+    root["door_segments"] = json::array();
+    for (const auto& door : m_doors)
+        if (door.hasSegment)
+            root["door_segments"].push_back({
+                {"id", door.id}, {"x0", door.segmentX0}, {"y0", door.segmentY0},
+                {"x1", door.segmentX1}, {"y1", door.segmentY1}});
 
     const fs::path outputPath = ProjectRootPath() / "data" / "castles" /
         m_loadedCastleId / "geometry" / (m_loadedCastleMapId + ".geometry.json");
@@ -3480,7 +3744,7 @@ bool BuildInteriorEngine::loadTextureFrame(const std::string& absolutePath, Text
 
 void BuildInteriorEngine::loadTextureAnimationFrames(TextureRef& texture)
 {
-    if (!texture.animationFrames.empty() || texture.path.empty())
+    if (!texture.animationFrames.empty() || texture.path.empty() || texture.sourceRect.w > 0)
         return;
 
     const fs::path basePath(resolveProjectPath(texture.path));
@@ -3544,7 +3808,7 @@ const BuildInteriorEngine::TextureFrame* BuildInteriorEngine::activeAnimationFra
     return &texture.animationFrames[static_cast<std::size_t>(index)];
 }
 
-bool BuildInteriorEngine::loadTextureForCell(TextureKey key, const std::string& relativePath)
+bool BuildInteriorEngine::loadTextureForCell(TextureKey key, const std::string& relativePath, SDL_Rect sourceRect, const std::string& name)
 {
     if (!m_renderer)
         return false;
@@ -3565,7 +3829,32 @@ bool BuildInteriorEngine::loadTextureForCell(TextureKey key, const std::string& 
         return false;
     }
 
+    if (sourceRect.w != 0 || sourceRect.h != 0)
+    {
+        if (sourceRect.x < 0 || sourceRect.y < 0 || sourceRect.w <= 0 || sourceRect.h <= 0 ||
+            sourceRect.w > converted->w || sourceRect.h > converted->h ||
+            sourceRect.x > converted->w - sourceRect.w || sourceRect.y > converted->h - sourceRect.h)
+        {
+            SDL_FreeSurface(converted);
+            m_status = "Invalid atlas rectangle: " + relativePath;
+            return false;
+        }
+        SDL_Surface* cropped = SDL_CreateRGBSurfaceWithFormat(0, sourceRect.w, sourceRect.h, 32, SDL_PIXELFORMAT_ARGB8888);
+        SDL_SetSurfaceBlendMode(converted, SDL_BLENDMODE_NONE);
+        if (!cropped || SDL_BlitSurface(converted, &sourceRect, cropped, nullptr) != 0)
+        {
+            if (cropped) SDL_FreeSurface(cropped);
+            SDL_FreeSurface(converted);
+            m_status = "Failed to crop atlas: " + relativePath;
+            return false;
+        }
+        SDL_FreeSurface(converted);
+        converted = cropped;
+    }
+
     TextureRef ref;
+    ref.sourceRect = sourceRect;
+    ref.name = name;
     ref.w = converted->w;
     ref.h = converted->h;
     ref.path = relativePath;
@@ -3594,6 +3883,56 @@ bool BuildInteriorEngine::loadTextureForCell(TextureKey key, const std::string& 
     rebuildTextureLookup();
     m_sceneDirty = true;
     return true;
+}
+
+bool BuildInteriorEngine::loadTexturePixelsForCell(TextureKey key, const std::vector<std::uint32_t>& pixels, int width, int height, const std::string& debugPath)
+{
+    if (!m_renderer || pixels.empty() || width <= 0 || height <= 0)
+        return false;
+
+    TextureRef ref;
+    ref.w = width;
+    ref.h = height;
+    ref.path = debugPath;
+    ref.pixels = pixels;
+    ref.texture = SDL_CreateTexture(
+        m_renderer,
+        SDL_PIXELFORMAT_ARGB8888,
+        SDL_TEXTUREACCESS_STATIC,
+        width,
+        height);
+    if (ref.texture)
+    {
+        SDL_UpdateTexture(ref.texture, nullptr, pixels.data(), width * static_cast<int>(sizeof(std::uint32_t)));
+        SDL_SetTextureBlendMode(ref.texture, SDL_BLENDMODE_BLEND);
+#if SDL_VERSION_ATLEAST(2, 0, 12)
+        SDL_SetTextureScaleMode(ref.texture, SDL_ScaleModeNearest);
+#endif
+    }
+
+    auto old = m_textures.find(key);
+    if (old != m_textures.end() && old->second.texture)
+        SDL_DestroyTexture(old->second.texture);
+    m_textures[key] = std::move(ref);
+    m_texturePaths[key] = debugPath;
+    rebuildTextureLookup();
+    m_sceneDirty = true;
+    return true;
+}
+
+BuildInteriorEngine::TextureKey BuildInteriorEngine::textureKeyForRuntimePath(const std::string& texturePath)
+{
+    if (texturePath.empty())
+        return kNoTexture;
+
+    const auto existingRuntime = m_runtimeTextureKeys.find(texturePath);
+    if (existingRuntime != m_runtimeTextureKeys.end())
+        return existingRuntime->second;
+
+    const TextureKey key = textureKeyForSource(texturePath);
+    if (key == kNoTexture) return key;
+    m_runtimeTextureKeys[texturePath] = key;
+    return key;
 }
 
 void BuildInteriorEngine::ensureSceneBuffer(int width, int height)
@@ -3653,7 +3992,7 @@ const BuildInteriorEngine::SectorDef& BuildInteriorEngine::sectorAt(int x, int y
 
 bool BuildInteriorEngine::hasVectorGeometry() const
 {
-    return !m_polygonSectors.empty();
+    return m_polygonGeometryPrimary || !m_polygonSectors.empty();
 }
 
 bool BuildInteriorEngine::pointInPolygon(const PolygonSectorRegion& region,
@@ -3872,6 +4211,7 @@ const BuildInteriorEngine::PolygonSectorRegion* BuildInteriorEngine::polygonRegi
 void BuildInteriorEngine::rebuildVectorSectorLookup()
 {
     m_vectorSectorLookup.clear();
+    m_floorCutoutSectors.fill(false);
     m_floorCutoutPolygonIndices.clear();
     m_floorCutoutMinX = 1.0e30;
     m_floorCutoutMinY = 1.0e30;
@@ -3888,6 +4228,7 @@ void BuildInteriorEngine::rebuildVectorSectorLookup()
     {
         if (m_polygonSectors[index].cutsUnderlyingFloor)
         {
+            m_floorCutoutSectors[static_cast<unsigned char>(m_polygonSectors[index].sector)] = true;
             m_floorCutoutPolygonIndices.push_back(index);
             m_floorCutoutMinX = std::min(
                 m_floorCutoutMinX, m_polygonSectors[index].minX);
@@ -5031,7 +5372,7 @@ bool BuildInteriorEngine::spriteBlocks(double x, double y) const
 {
     for (const SpriteDef& s : m_sprites)
     {
-        if (!s.solid) continue;
+        if (!s.solid || s.renderMode == ObjectRenderMode::Floor) continue;
         const TextureRef* texture = m_textureLookup[static_cast<std::size_t>(s.texture)];
         const double aspect = texture && texture->h > 0
             ? static_cast<double>(texture->w) / texture->h
@@ -5267,8 +5608,8 @@ void BuildInteriorEngine::sanitizeEditorState()
             m_editorSelectedOpening = -1;
     }
 
-    if (m_editorSectorBrush < 'A' || m_editorSectorBrush > 'Z')
-        m_editorSectorBrush = 'A';
+    if (m_sectors.find(m_editorSectorBrush) == m_sectors.end() && !m_sectors.empty())
+        m_editorSectorBrush = m_sectors.begin()->first;
     if (m_editorStairFirstSector < 'A' || m_editorStairFirstSector > 'Z')
         m_editorStairFirstSector = 'H';
 
@@ -5537,16 +5878,39 @@ void BuildInteriorEngine::renderScene(int renderW, int renderH)
     const double bob = std::sin(m_bobPhase) * 4.0 * m_moveBlend;
     const int horizon = std::clamp(static_cast<int>(screenH * (0.5 + m_pitch * 0.60) + bob),
                                    -screenH, screenH * 2);
+    m_renderViewOrigin = {m_posX, m_posY, eyeZ};
+    m_renderViewAngle = m_angle;
+    m_renderViewFov = m_fov;
+    m_renderViewHorizon = horizon;
 
     std::fill(m_framebuffer.begin(), m_framebuffer.end(), argb(10, 10, 12));
     std::fill(m_zBuffer.begin(), m_zBuffer.end(), kHuge);
     std::fill(m_dynamicDepthBuffer.begin(), m_dynamicDepthBuffer.end(), kHuge);
+    if (m_editorMode)
+        m_editorObjectPixels.assign(static_cast<std::size_t>(screenW) * screenH, -1);
+    else
+        m_editorObjectPixels.clear();
     rebuildRenderLights();
     renderFloorAndCeiling(screenW, screenH, horizon, eyeZ);
     renderDoorSoffits(screenW, screenH, horizon, eyeZ);
     renderPortalWalls(screenW, screenH, horizon, eyeZ);
     renderSwingDoors(screenW, screenH, horizon, eyeZ);
     renderSprites(screenW, screenH, horizon, eyeZ);
+
+    if (m_editorMode && m_editorSelectedSprite >= 0)
+    {
+        for (int y = 1; y < screenH - 1; ++y)
+            for (int x = 1; x < screenW - 1; ++x)
+            {
+                const auto p = static_cast<std::size_t>(y) * screenW + x;
+                if (m_editorObjectPixels[p] == m_editorSelectedSprite &&
+                    (m_editorObjectPixels[p - 1] != m_editorSelectedSprite ||
+                     m_editorObjectPixels[p + 1] != m_editorSelectedSprite ||
+                     m_editorObjectPixels[p - screenW] != m_editorSelectedSprite ||
+                     m_editorObjectPixels[p + screenW] != m_editorSelectedSprite))
+                    m_framebuffer[p] = argb(255, 205, 75);
+            }
+    }
 
     SDL_UpdateTexture(m_sceneTexture, nullptr, m_framebuffer.data(), screenW * static_cast<int>(sizeof(std::uint32_t)));
     SDL_RenderCopy(m_renderer, m_sceneTexture, nullptr, nullptr);
@@ -7408,6 +7772,88 @@ void BuildInteriorEngine::renderSwingDoors(int screenW, int screenH, int horizon
     }
 }
 
+void BuildInteriorEngine::renderFloorSprite(const SpriteDef& sprite, int screenW, int screenH,
+                                           int horizon, double eyeZ)
+{
+    const TextureRef* texture = m_textureLookup[static_cast<std::size_t>(sprite.texture)];
+    if (!texture || texture->pixels.empty()) return;
+    const TextureFrame* frame = activeAnimationFrame(*texture, sprite);
+    const int tw = frame ? frame->w : texture->w;
+    const int th = frame ? frame->h : texture->h;
+    const auto& pixels = frame ? frame->pixels : texture->pixels;
+    if (tw <= 0 || th <= 0 || pixels.empty()) return;
+    const double width = sprite.floorWidth > 0 ? sprite.floorWidth : sprite.scale * tw / th;
+    const double length = sprite.floorDepth > 0 ? sprite.floorDepth : sprite.scale;
+    const auto& sector = sectorAtWorld(sprite.x, sprite.y);
+    const double ground = floorHeightAtWorld(sprite.x, sprite.y);
+    // A small physical offset keeps the decal clear of the floor's depth samples.
+    constexpr double lift = 0.005;
+    const double baseZ = ground + sprite.zOffset + lift;
+    const double sx = sector.floorSlopeX, sy = sector.floorSlopeY;
+    const double ca = std::cos(sprite.yaw), sa = std::sin(sprite.yaw);
+    const double dx = std::cos(m_angle), dy = std::sin(m_angle);
+    const double plane = std::tan(m_fov * 0.5);
+
+    double minX = screenW, maxX = 0, minY = screenH, maxY = 0;
+    int behind = 0;
+    for (const auto& corner : {std::pair{-0.5, -0.5}, std::pair{0.5, -0.5},
+                               std::pair{0.5, 0.5}, std::pair{-0.5, 0.5}})
+    {
+        const double wx = sprite.x + ca * corner.first * width - sa * corner.second * length;
+        const double wy = sprite.y + sa * corner.first * width + ca * corner.second * length;
+        const double wz = baseZ + sx * (wx - sprite.x) + sy * (wy - sprite.y);
+        const double depth = dx * (wx - m_posX) + dy * (wy - m_posY);
+        if (depth <= 0.035) { ++behind; continue; }
+        const double px = screenW * 0.5 * (1 + (-dy * (wx - m_posX) + dx * (wy - m_posY)) / (plane * depth));
+        const double py = horizon - (wz - eyeZ) * screenH / depth;
+        minX = std::min(minX, px); maxX = std::max(maxX, px);
+        minY = std::min(minY, py); maxY = std::max(maxY, py);
+    }
+    if (behind == 4) return;
+    // A footprint crossing the near plane is still visible. Ray/plane testing
+    // clips each sample, avoiding huge projected coordinates or a vanishing quad.
+    if (behind) { minX = minY = 0; maxX = screenW; maxY = screenH; }
+    const int left = static_cast<int>(std::clamp(std::floor(minX) - 1, 0.0, double(screenW)));
+    const int right = static_cast<int>(std::clamp(std::ceil(maxX) + 1, 0.0, double(screenW)));
+    const int top = static_cast<int>(std::clamp(std::floor(minY) - 1, 0.0, double(screenH)));
+    const int bottom = static_cast<int>(std::clamp(std::ceil(maxY) + 1, 0.0, double(screenH)));
+    const double numerator = baseZ + sx * (m_posX - sprite.x) + sy * (m_posY - sprite.y) - eyeZ;
+    for (int y = top; y < bottom; ++y)
+    {
+        const double rayZ = (horizon - (y + 0.5)) / screenH;
+        for (int x = left; x < right; ++x)
+        {
+            const double cameraX = 2.0 * (x + 0.5) / screenW - 1.0;
+            const double rayX = dx - dy * plane * cameraX;
+            const double rayY = dy + dx * plane * cameraX;
+            const double denominator = rayZ - sx * rayX - sy * rayY;
+            if (std::abs(denominator) < 1e-9) continue;
+            const double depth = numerator / denominator;
+            if (depth <= 0.035 || !std::isfinite(depth)) continue;
+            const std::size_t pixel = static_cast<std::size_t>(y) * screenW + x;
+            // Equal-depth floor sprites layer in authored order.
+            if (depth > m_dynamicDepthBuffer[pixel] + 1e-6 || depth >= m_zBuffer[x]) continue;
+            const double wx = m_posX + depth * rayX, wy = m_posY + depth * rayY;
+            const double lx = wx - sprite.x, ly = wy - sprite.y;
+            const double u = 0.5 + (ca * lx + sa * ly) / width;
+            const double v = 0.5 + (-sa * lx + ca * ly) / length;
+            if (u < 0 || u >= 1 || v < 0 || v >= 1) continue;
+            // Do not bridge a stair, pit or a different floor height.
+            const double surfaceZ = ground + sx * lx + sy * ly;
+            if (std::abs(floorHeightAtWorld(wx, wy) - surfaceZ) > 0.025) continue;
+            std::uint32_t color = pixels[static_cast<std::size_t>(int(v * th)) * tw + int(u * tw)];
+            if (((color >> 24u) & 0xffu) < 8u) continue;
+            const double shade = std::clamp(sector.ambient / (1.0 + depth * 0.055), 0.20, 1.15);
+            color = applyWorldLighting(color, sprite.emitsLight ? std::max(1.0, shade) : shade,
+                                       wx, wy, surfaceZ + sprite.zOffset + lift, &sprite);
+            m_framebuffer[pixel] = alphaBlend(m_framebuffer[pixel], color);
+            m_dynamicDepthBuffer[pixel] = depth;
+            if (m_editorMode && m_editorRenderingSprite >= 0)
+                m_editorObjectPixels[pixel] = m_editorRenderingSprite;
+        }
+    }
+}
+
 void BuildInteriorEngine::renderBillboardSprite(const SpriteDef& sprite, int screenW, int screenH,
                                                  int horizon, double eyeZ)
 {
@@ -7468,6 +7914,8 @@ void BuildInteriorEngine::renderBillboardSprite(const SpriteDef& sprite, int scr
                                        bottomZ + sprite.scale * 0.56, &sprite);
             m_framebuffer[pixelIndex] = alphaBlend(m_framebuffer[pixelIndex], color);
             m_dynamicDepthBuffer[pixelIndex] = transformY;
+            if (m_editorMode && m_editorRenderingSprite >= 0)
+                m_editorObjectPixels[pixelIndex] = m_editorRenderingSprite;
         }
     }
 }
@@ -7621,14 +8069,29 @@ void BuildInteriorEngine::renderSprites(int screenW, int screenH, int horizon, d
         return dax*dax + day*day > dbx*dbx + dby*dby;
     });
 
+    // Decals blend onto the floor before upright objects. Depth still decides
+    // visibility, independently of object order or the distance to their centers.
+    for (std::size_t index = 0; index < m_sprites.size(); ++index)
+    {
+        const SpriteDef& sprite = m_sprites[index];
+        if (sprite.visible && sprite.renderMode == ObjectRenderMode::Floor)
+        {
+            m_editorRenderingSprite = static_cast<int>(index);
+            renderFloorSprite(sprite, screenW, screenH, horizon, eyeZ);
+        }
+    }
     for (int index : order)
     {
         const SpriteDef& sprite = m_sprites[index];
+        if (!sprite.visible || sprite.renderMode == ObjectRenderMode::Floor)
+            continue;
+        m_editorRenderingSprite = index;
         if (sprite.renderMode == ObjectRenderMode::Voxel)
             renderVoxelSprite(sprite, screenW, screenH, horizon, eyeZ);
         else
             renderBillboardSprite(sprite, screenW, screenH, horizon, eyeZ);
     }
+    m_editorRenderingSprite = -1;
 }
 
 void BuildInteriorEngine::renderOverlay()
@@ -7792,139 +8255,100 @@ void BuildInteriorEngine::renderEditorOverlay()
         return;
     }
 
-    // V24: reusable texture browser for sectors, walls and placed objects.
-    // Texture keys remain compatible with the renderer, but the editor now
-    // exposes their real asset paths instead of forcing manual one-character input.
-    auto textureDisplayName = [&](TextureKey key) -> std::string
+    auto texturePicker = [&](const char* label, TextureKey& selectedKey, bool objects = false)
     {
-        const auto it = m_textures.find(key);
-        std::string label;
-        label += std::to_string(key);
-        label += "  |  ";
-        if (it != m_textures.end() && !it->second.path.empty())
-            label += it->second.path;
-        else
-            label += U8("procedurální / bez cesty");
-        return label;
+        return renderEditorTexturePicker(label, selectedKey, objects);
     };
 
-    auto texturePicker = [&](const char* label, TextureKey& selectedKey) -> bool
-    {
-        bool changed = false;
-        const std::string preview = textureDisplayName(selectedKey);
-        if (ImGui::BeginCombo(label, preview.c_str()))
-        {
-            static char filter[128] = {};
-            ImGui::SetNextItemWidth(-FLT_MIN);
-            ImGui::InputText(U8("Hledat texturu"), filter, sizeof(filter));
-            const std::string filterLower = lowerAscii(filter);
-
-            std::vector<TextureKey> keys;
-            keys.reserve(m_textures.size());
-            for (const auto& pair : m_textures)
-                keys.push_back(pair.first);
-            std::sort(keys.begin(), keys.end(), [](TextureKey a, TextureKey b)
-            {
-                return a < b;
-            });
-
-            for (TextureKey key : keys)
-            {
-                const std::string row = textureDisplayName(key);
-                if (!filterLower.empty() &&
-                    lowerAscii(row).find(filterLower) == std::string::npos)
-                    continue;
-                const bool selected = selectedKey == key;
-                if (ImGui::Selectable(row.c_str(), selected))
-                {
-                    selectedKey = key;
-                    changed = true;
-                    m_sceneDirty = true;
-                }
-                if (selected)
-                    ImGui::SetItemDefaultFocus();
-            }
-            ImGui::EndCombo();
-        }
-        return changed;
-    };
-
-    ImGui::TextColored(ImVec4(0.98f, 0.82f, 0.46f, 1.0f), U8("Build-like portálové sektory – vlastní implementace"));
+    ImGui::TextColored(ImVec4(0.98f, 0.82f, 0.46f, 1.0f), U8("Polygonální editor scény"));
     ImGui::TextWrapped("%s", m_loadedPath.c_str());
     ImGui::Separator();
 
     if (m_editorRefreshMapListRequested || m_editorMapChoices.empty())
         refreshEditorMapList();
 
-    ImGui::TextUnformatted(U8("Načtení mapy projektu"));
-    const char* selectedLabel = (m_editorSelectedMap >= 0 &&
-        m_editorSelectedMap < static_cast<int>(m_editorMapChoices.size()))
-        ? m_editorMapChoices[m_editorSelectedMap].label.c_str()
-        : U8("Žádné mapy nenalezeny");
-    if (ImGui::BeginCombo("##ProjectMapSelector", selectedLabel))
+    if (ImGui::CollapsingHeader(U8("Mapa projektu a vlastnosti")))
     {
-        for (int i = 0; i < static_cast<int>(m_editorMapChoices.size()); ++i)
+        ImGui::TextUnformatted(U8("Načtení mapy projektu"));
+        const char* selectedLabel = (m_editorSelectedMap >= 0 &&
+            m_editorSelectedMap < static_cast<int>(m_editorMapChoices.size()))
+            ? m_editorMapChoices[m_editorSelectedMap].label.c_str()
+            : U8("Žádné mapy nenalezeny");
+        if (ImGui::BeginCombo("##ProjectMapSelector", selectedLabel))
         {
-            const bool selected = i == m_editorSelectedMap;
-            if (ImGui::Selectable(m_editorMapChoices[i].label.c_str(), selected))
-                m_editorSelectedMap = i;
-            if (selected)
-                ImGui::SetItemDefaultFocus();
+            for (int i = 0; i < static_cast<int>(m_editorMapChoices.size()); ++i)
+            {
+                const bool selected = i == m_editorSelectedMap;
+                if (ImGui::Selectable(m_editorMapChoices[i].label.c_str(), selected))
+                    m_editorSelectedMap = i;
+                if (selected)
+                    ImGui::SetItemDefaultFocus();
+            }
+            ImGui::EndCombo();
         }
-        ImGui::EndCombo();
-    }
-    if (ImGui::Button(U8("Načíst vybranou mapu"), ImVec2(180, 0)) &&
-        m_editorSelectedMap >= 0 &&
-        m_editorSelectedMap < static_cast<int>(m_editorMapChoices.size()))
-    {
-        m_editorPendingLoadTarget = m_editorMapChoices[m_editorSelectedMap].target;
-        m_editorLoadRequested = true;
-    }
-    ImGui::SameLine();
-    if (ImGui::Button(U8("Obnovit seznam"), ImVec2(130, 0)))
-        m_editorRefreshMapListRequested = true;
+        if (ImGui::Button(U8("Načíst vybranou mapu"), ImVec2(180, 0)) &&
+            m_editorSelectedMap >= 0 &&
+            m_editorSelectedMap < static_cast<int>(m_editorMapChoices.size()))
+        {
+            m_editorPendingLoadTarget = m_editorMapChoices[m_editorSelectedMap].target;
+            m_editorLoadRequested = true;
+        }
+        ImGui::SameLine();
+        if (ImGui::Button(U8("Obnovit seznam"), ImVec2(130, 0)))
+            m_editorRefreshMapListRequested = true;
 
-    static char manualMapTarget[320] = "";
-    ImGui::SetNextItemWidth(-150.0f);
-    ImGui::InputTextWithHint("##ManualMapTarget",
-                             U8("castle:houska_1400/nazev_mapy nebo cesta k JSON"),
-                             manualMapTarget, sizeof(manualMapTarget));
-    ImGui::SameLine();
-    if (ImGui::Button(U8("Načíst cestu"), ImVec2(130, 0)) && manualMapTarget[0] != '\0')
-    {
-        m_editorPendingLoadTarget = manualMapTarget;
-        m_editorLoadRequested = true;
+        static char manualMapTarget[320] = "";
+        ImGui::SetNextItemWidth(-150.0f);
+        ImGui::InputTextWithHint("##ManualMapTarget",
+                                 U8("castle:houska_1400/nazev_mapy nebo cesta k JSON"),
+                                 manualMapTarget, sizeof(manualMapTarget));
+        ImGui::SameLine();
+        if (ImGui::Button(U8("Načíst cestu"), ImVec2(130, 0)) && manualMapTarget[0] != '\0')
+        {
+            m_editorPendingLoadTarget = manualMapTarget;
+            m_editorLoadRequested = true;
+        }
+        ImGui::TextDisabled(U8("Castle mapy se vždy znovu přeloží ze zdrojového *.map.json."));
+        ImGui::Separator();
+
+        char idBuffer[128];
+        std::snprintf(idBuffer, sizeof(idBuffer), "%s", m_currentInteriorId.c_str());
+        if (ImGui::InputText("Interior ID", idBuffer, sizeof(idBuffer))) m_currentInteriorId = idBuffer;
+        char nameBuffer[160];
+        std::snprintf(nameBuffer, sizeof(nameBuffer), "%s", m_displayName.c_str());
+        if (ImGui::InputText("Display name", nameBuffer, sizeof(nameBuffer))) m_displayName = nameBuffer;
+
+        float fovDegrees = static_cast<float>(m_fov * 180.0 / kPi);
+        if (ImGui::SliderFloat("FOV", &fovDegrees, 45.0f, 95.0f, "%.0f deg"))
+        {
+            m_fov = fovDegrees * kPi / 180.0;
+            m_sceneDirty = true;
+        }
+        float eyeHeight = static_cast<float>(m_eyeHeight);
+        if (ImGui::SliderFloat("Eye height", &eyeHeight, 0.25f, 2.20f, "%.2f"))
+        {
+            m_eyeHeight = eyeHeight;
+            m_sceneDirty = true;
+        }
     }
-    ImGui::TextDisabled(U8("Castle mapy se vždy znovu přeloží ze zdrojového *.map.json."));
+
     ImGui::Separator();
-
-    char idBuffer[128];
-    std::snprintf(idBuffer, sizeof(idBuffer), "%s", m_currentInteriorId.c_str());
-    if (ImGui::InputText("Interior ID", idBuffer, sizeof(idBuffer))) m_currentInteriorId = idBuffer;
-    char nameBuffer[160];
-    std::snprintf(nameBuffer, sizeof(nameBuffer), "%s", m_displayName.c_str());
-    if (ImGui::InputText("Display name", nameBuffer, sizeof(nameBuffer))) m_displayName = nameBuffer;
-
-    float fovDegrees = static_cast<float>(m_fov * 180.0 / kPi);
-    if (ImGui::SliderFloat("FOV", &fovDegrees, 45.0f, 95.0f, "%.0f deg")) m_fov = fovDegrees * kPi / 180.0;
-    float eyeHeight = static_cast<float>(m_eyeHeight);
-    if (ImGui::SliderFloat("Eye height", &eyeHeight, 0.25f, 2.20f, "%.2f")) m_eyeHeight = eyeHeight;
-
-    ImGui::Separator();
-    ImGui::TextUnformatted(U8("Výkon náhledu"));
-    ImGui::Checkbox(U8("Živý 3D náhled na pozadí"), &m_editorPreview3D);
-    if (m_editorPreview3D)
+    if (ImGui::CollapsingHeader(U8("Výkon náhledu")))
     {
-        ImGui::SliderFloat(U8("Rozlišení 3D náhledu"), &m_editorRenderScale,
-                           0.15f, 0.60f, "%.2f x");
-        ImGui::TextDisabled(U8("Nižší hodnota výrazně zrychlí editor."));
+        ImGui::Checkbox(U8("Živý 3D náhled na pozadí"), &m_editorPreview3D);
+        if (m_editorPreview3D)
+        {
+            ImGui::SliderFloat(U8("Rozlišení 3D náhledu"), &m_editorRenderScale,
+                               0.15f, 0.60f, "%.2f x");
+            ImGui::TextDisabled(U8("Nižší hodnota výrazně zrychlí editor."));
+        }
+        if (ImGui::SliderFloat(U8("Rozlišení hry"), &m_gameRenderScale,
+                               0.20f, 1.00f, "%.2f x"))
+            m_sceneDirty = true;
+        if (ImGui::Checkbox(U8("Rychlé softwarové vykreslení (2 px podlahy / stěny v plném rozlišení)"),
+                            &m_fastFloorCasting))
+            m_sceneDirty = true;
     }
-    if (ImGui::SliderFloat(U8("Rozlišení hry"), &m_gameRenderScale,
-                           0.20f, 1.00f, "%.2f x"))
-        m_sceneDirty = true;
-    if (ImGui::Checkbox(U8("Rychlé softwarové vykreslení (2 px podlahy / stěny v plném rozlišení)"),
-                        &m_fastFloorCasting))
-        m_sceneDirty = true;
 
     if (ImGui::Button("Save JSON", ImVec2(120, 0))) saveInterior();
     ImGui::SameLine();
@@ -7938,39 +8362,34 @@ void BuildInteriorEngine::renderEditorOverlay()
     ImGui::SameLine();
     if (ImGui::Button(U8("Obnovit pozici"), ImVec2(140, 0))) recoverToLastSafePosition();
 
-    ImGui::SliderFloat("Map cell px", &m_editorMapCellSize, 10.0f, 36.0f, "%.0f");
+    ImGui::SliderFloat(U8("Měřítko mapy"), &m_editorMapCellSize, 10.0f, 36.0f, "%.0f");
+    ImGui::Checkbox(U8("Kolize kamery"), &m_editorCameraCollision);
+    renderEditorEnvironmentSize();
 
     if (ImGui::BeginTabBar("##BuildInteriorTabs"))
     {
         if (ImGui::BeginTabItem("Map"))
         {
-            ImGui::TextUnformatted(U8("Levý klik maluje stěnu/dveře, pravý klik přiřadí sektor."));
-            const char brushes[] = {'.','1','2','3','4','5','D'};
-            const char* labels[] = {"Empty","Stone","Plaster","Brick","Metal","Courtyard wall","Door"};
-            for (int i = 0; i < 7; ++i)
-            {
-                ImGui::PushID(i);
-                if (i > 0) ImGui::SameLine();
-                if (ImGui::RadioButton(labels[i], m_editorTileBrush == brushes[i])) m_editorTileBrush = brushes[i];
-                ImGui::PopID();
-            }
-            m_editorMapTool = EditorMapTool::Tiles;
-            renderEditorMap();
-            ImGui::EndTabItem();
-        }
-
-        if (ImGui::BeginTabItem("Polygons"))
-        {
-            renderEditorPolygons();
-            ImGui::Separator();
             m_editorMapTool = EditorMapTool::Polygons;
+            if (!hasVectorGeometry())
+            {
+                ImGui::TextWrapped(U8("Tato mapa ještě používá historickou mřížku. Pro úpravy geometrie ji převeďte na polygonální sektory."));
+                if (ImGui::Button(U8("Převést na polygonální sektory")))
+                    convertEditorGridToPolygons();
+            }
+            ImGui::TextWrapped(U8("Klik = výběr objektu nebo sektoru. Tažením přesuňte objekt či vrchol polygonu; Ctrl přichytává po 0.25."));
+            renderEditorSectorPlacement(true);
+            ImGui::BeginChild("PolygonMap", ImVec2(0, 300), true, ImGuiWindowFlags_HorizontalScrollbar);
             renderEditorMap();
+            ImGui::EndChild();
+            renderEditorPolygons();
             ImGui::EndTabItem();
         }
 
         if (ImGui::BeginTabItem("Sectors"))
         {
-            ImGui::TextWrapped(U8("Sektor určuje výšku podlahy a stropu. Rozdíl výšek se kreslí jako portálový dolní/horní segment stěny."));
+            m_editorMapTool = EditorMapTool::Polygons;
+            ImGui::TextWrapped(U8("Sektor určuje materiály a výšky. Po přípravě sektoru vložte jeho plochu do mapy tlačítky níže."));
             std::vector<char> sectorSymbols;
             sectorSymbols.reserve(m_sectors.size());
             for (const auto& pair : m_sectors)
@@ -8030,7 +8449,14 @@ void BuildInteriorEngine::renderEditorOverlay()
                     m_sceneDirty = true;
                 }
             }
-            ImGui::TextDisabled(U8("Zobrazené jsou jen načtené sektory; nový sektor se přidá dalším volným kódem do 255."));
+            ImGui::TextDisabled(U8("Přidat sektor vytvoří jeho nastavení. Plochu vložíte tažením v mapě nebo u kamery."));
+            renderEditorSectorPlacement(false);
+            if (m_editorSectorPlacement)
+            {
+                ImGui::BeginChild("SectorPlacementMap", ImVec2(0, 300), true, ImGuiWindowFlags_HorizontalScrollbar);
+                renderEditorMap();
+                ImGui::EndChild();
+            }
 
             const bool newSector = m_sectors.find(m_editorSectorBrush) == m_sectors.end();
             SectorDef& s = m_sectors[m_editorSectorBrush];
@@ -8275,7 +8701,7 @@ void BuildInteriorEngine::renderEditorOverlay()
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem("Stairs"))
+        if (!hasVectorGeometry() && ImGui::BeginTabItem("Stairs"))
         {
             ImGui::TextWrapped(U8("Schodiště se vytvoří jako řada skutečných výškových sektorů. Každý stupeň má vlastní podlahu a portálový renderer vykreslí jeho čelo."));
             const char* directions[] = {U8("Sever"), U8("Východ"), U8("Jih"), U8("Západ")};
@@ -8404,18 +8830,22 @@ void BuildInteriorEngine::renderEditorOverlay()
             ImGui::EndTabItem();
         }
 
-        if (ImGui::BeginTabItem("Objects"))
+        const bool focusObjects = m_editorSelectObjectsTab;
+        if (ImGui::BeginTabItem("Objects", nullptr, focusObjects ? ImGuiTabItemFlags_SetSelected : 0))
         {
-            ImGui::TextWrapped(U8("Objekty můžeš umisťovat jako billboard sprity nebo jako voxelové objekty. Nový objekt vznikne na pozici kamery a následně jej lze přesně doladit níže."));
+            cancelEditorSectorPlacement();
+            m_editorSelectObjectsTab = false;
+            ImGui::TextWrapped(U8("Objekty můžeš umisťovat jako billboard sprity, voxelové objekty nebo dekorace naplocho na podlaze. Nový objekt vznikne na pozici kamery a následně jej lze přesně doladit níže."));
             static TextureKey newObjectTexture = static_cast<TextureKey>('B');
             static int newObjectRenderMode = 0;
-            texturePicker(U8("Textura nového objektu"), newObjectTexture);
+            texturePicker(U8("Textura nového objektu"), newObjectTexture, true);
             const char* newObjectModes[] = {
                 U8("Obecný billboard"),
                 U8("Obecný voxel"),
-                U8("Obecný interaktivní marker")
+                U8("Obecný interaktivní marker"),
+                U8("Dekorace na podlaze")
             };
-            ImGui::Combo(U8("Typ nového objektu"), &newObjectRenderMode, newObjectModes, 3);
+            ImGui::Combo(U8("Typ nového objektu"), &newObjectRenderMode, newObjectModes, 4);
             if (ImGui::Button(U8("Přidat obecný objekt"), ImVec2(190, 0)))
             {
                 SpriteDef s;
@@ -8425,8 +8855,8 @@ void BuildInteriorEngine::renderEditorOverlay()
                 s.y = m_posY;
                 s.zOffset = 0.0;
                 s.scale = newObjectRenderMode == 2 ? 0.45 : 1.0;
-                s.renderMode = newObjectRenderMode == 1
-                    ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard;
+                s.renderMode = newObjectRenderMode == 3 ? ObjectRenderMode::Floor
+                    : (newObjectRenderMode == 1 ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard);
                 s.voxelDepth = newObjectRenderMode == 1 ? 0.30 : 0.0;
                 if (newObjectRenderMode == 2)
                     s.interactionLabel = U8("E – použít");
@@ -8438,7 +8868,9 @@ void BuildInteriorEngine::renderEditorOverlay()
             ImGui::TextDisabled(U8("umístění = aktuální kamera"));
             ImGui::Separator();
             m_editorMapTool = EditorMapTool::Objects;
+            ImGui::BeginChild("ObjectMap", ImVec2(0, 250), true, ImGuiWindowFlags_HorizontalScrollbar);
             renderEditorMap();
+            ImGui::EndChild();
             ImGui::Separator();
 
             for (int i = 0; i < static_cast<int>(m_sprites.size()); ++i)
@@ -8451,30 +8883,46 @@ void BuildInteriorEngine::renderEditorOverlay()
             {
                 SpriteDef& s = m_sprites[m_editorSelectedSprite];
                 bool objectChanged = false;
+                if (focusObjects)
+                    ImGui::SetScrollHereY(0.0f);
                 char id[128]; std::snprintf(id, sizeof(id), "%s", s.id.c_str());
                 if (ImGui::InputText("Object ID", id, sizeof(id))) { s.id = id; objectChanged = true; }
-                if (texturePicker(U8("Textura objektu"), s.texture)) objectChanged = true;
+                if (texturePicker(U8("Textura objektu"), s.texture, true)) objectChanged = true;
                 float px = static_cast<float>(s.x), py = static_cast<float>(s.y), pz = static_cast<float>(s.zOffset), scale = static_cast<float>(s.scale);
                 if (ImGui::DragFloat("X", &px, 0.05f)) { s.x = px; objectChanged = true; }
                 if (ImGui::DragFloat("Y", &py, 0.05f)) { s.y = py; objectChanged = true; }
                 if (ImGui::DragFloat("Z offset", &pz, 0.02f)) { s.zOffset = pz; objectChanged = true; }
                 if (ImGui::SliderFloat("Scale", &scale, 0.10f, 4.0f, "%.2f")) { s.scale = scale; objectChanged = true; }
-                if (ImGui::Checkbox("Solid", &s.solid)) objectChanged = true;
-                int renderMode = s.renderMode == ObjectRenderMode::Voxel ? 1 : 0;
-                const char* renderModes[] = {"Billboard", "Voxel 3D"};
-                if (ImGui::Combo("Render mode", &renderMode, renderModes, 2))
+                if (s.renderMode != ObjectRenderMode::Floor && ImGui::Checkbox("Solid", &s.solid)) objectChanged = true;
+                int renderMode = s.renderMode == ObjectRenderMode::Floor ? 2 : (s.renderMode == ObjectRenderMode::Voxel ? 1 : 0);
+                const char* renderModes[] = {"Billboard", "Voxel 3D", U8("Na podlaze")};
+                if (ImGui::Combo(U8("Vykreslení"), &renderMode, renderModes, 3))
                 {
-                    s.renderMode = renderMode == 1 ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard;
+                    s.renderMode = renderMode == 2 ? ObjectRenderMode::Floor
+                        : (renderMode == 1 ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard);
+                    if (s.renderMode == ObjectRenderMode::Floor) s.solid = false;
                     objectChanged = true;
                 }
-                if (s.renderMode == ObjectRenderMode::Voxel)
+                if (s.renderMode == ObjectRenderMode::Floor)
+                {
+                    float width = static_cast<float>(s.floorWidth), depth = static_cast<float>(s.floorDepth);
+                    if (ImGui::DragFloat(U8("Šířka (0 = auto)"), &width, 0.05f, 0, 128, "%.2f", ImGuiSliderFlags_AlwaysClamp))
+                    { s.floorWidth = width; objectChanged = true; }
+                    if (ImGui::DragFloat(U8("Délka (0 = auto)"), &depth, 0.05f, 0, 128, "%.2f", ImGuiSliderFlags_AlwaysClamp))
+                    { s.floorDepth = depth; objectChanged = true; }
+                    ImGui::TextWrapped(U8("Průhledný obrázek leží na podlaze a neblokuje chůzi. Rozměr 0 se odvodí z měřítka a poměru stran obrázku."));
+                }
+                if (s.renderMode != ObjectRenderMode::Billboard)
                 {
                     float yawDegrees = static_cast<float>(s.yaw * 180.0 / kPi);
-                    if (ImGui::SliderFloat("Voxel yaw", &yawDegrees, -180.0f, 180.0f, "%.0f deg"))
+                    if (ImGui::SliderFloat(U8("Natočení"), &yawDegrees, -180.0f, 180.0f, "%.0f deg"))
                     {
                         s.yaw = yawDegrees * kPi / 180.0;
                         objectChanged = true;
                     }
+                }
+                if (s.renderMode == ObjectRenderMode::Voxel)
+                {
                     float voxelDepth = static_cast<float>(s.voxelDepth);
                     if (ImGui::SliderFloat("Voxel depth (0 = auto)", &voxelDepth, 0.0f, 2.0f, "%.2f"))
                     {
@@ -8623,7 +9071,7 @@ void BuildInteriorEngine::renderEditorOverlay()
     }
 
     ImGui::Separator();
-    ImGui::TextUnformatted(U8("Kamera: W/S, A/D, šipky, mezerník skok. Home obnoví bezpečnou pozici. ESC zpět do menu."));
+    ImGui::TextWrapped(U8("Kamera: WASD pohyb, Shift rychleji, pravé tlačítko + myš rozhlížení. Levým klikem ve 3D vyberete objekt. Home obnoví pozici, ESC zpět do menu."));
     if (!m_status.empty()) ImGui::TextColored(ImVec4(0.66f, 0.92f, 0.58f, 1.0f), "%s", m_status.c_str());
     if (!m_lastError.empty()) ImGui::TextColored(ImVec4(1.0f, 0.48f, 0.35f, 1.0f), "%s", m_lastError.c_str());
     ImGui::End();
@@ -8676,31 +9124,10 @@ void BuildInteriorEngine::renderEditorOverlay()
 
 void BuildInteriorEngine::renderEditorPolygons()
 {
-    ImGui::TextWrapped(U8("Polygonální sektory jsou skutečná geometrie enginu. Každý prostor je definovaný třemi nebo více body; čtvercová mřížka už není zdrojem stěn."));
+    ImGui::TextWrapped(U8("Tvar sektoru upravíte tažením vrcholů v mapě. Vybraný vrchol můžete také posunout zadáním X/Y, vložit další bod nebo jej smazat."));
 
-    if (ImGui::Button(U8("Nový polygon u kamery")))
-    {
-        PolygonSectorRegion region;
-        region.id = "polygon_" + std::to_string(m_polygonSectors.size() + 1);
-        region.sector = m_editorSectorBrush;
-        region.vertices = {
-            {m_posX - 2.0, m_posY - 2.0},
-            {m_posX + 2.0, m_posY - 2.0},
-            {m_posX + 2.0, m_posY + 2.0},
-            {m_posX - 2.0, m_posY + 2.0}
-        };
-        updatePolygonBounds(region);
-        m_polygonSectors.push_back(std::move(region));
-        m_editorSelectedPolygon = static_cast<int>(m_polygonSectors.size()) - 1;
-        m_editorSelectedPolygonVertex = -1;
-        m_editorSelectedOpening = -1;
-        rebuildPolygonBoundaryWalls();
-        rebuildVectorSectorLookup();
-        m_sceneDirty = true;
-    }
-    ImGui::SameLine();
-    if (ImGui::Button(U8("Uložit geometry JSON")))
-        saveCastleGeometryOverlay();
+    if (ImGui::Button(U8("Uložit geometrii")))
+        saveInterior();
 
     const char* preview = m_editorSelectedPolygon >= 0 &&
                           m_editorSelectedPolygon < static_cast<int>(m_polygonSectors.size())
@@ -8727,6 +9154,12 @@ void BuildInteriorEngine::renderEditorPolygons()
         return;
 
     PolygonSectorRegion& region = m_polygonSectors[static_cast<std::size_t>(m_editorSelectedPolygon)];
+    double polygonWidth = region.maxX - region.minX;
+    double polygonHeight = region.maxY - region.minY;
+    bool resized = ImGui::InputDouble(U8("Šířka polygonu"), &polygonWidth, 0.25, 1.0, "%.2f");
+    resized |= ImGui::InputDouble(U8("Hloubka polygonu"), &polygonHeight, 0.25, 1.0, "%.2f");
+    if (resized)
+        resizeEditorPolygon(m_editorSelectedPolygon, polygonWidth, polygonHeight);
     if (!polygonIsSimple(region))
         ImGui::TextColored(ImVec4(1.0f, 0.35f, 0.28f, 1.0f),
                            "%s", U8("Polygon se protíná nebo má nulovou plochu; stěny se z něj negenerují."));
@@ -8770,6 +9203,7 @@ void BuildInteriorEngine::renderEditorPolygons()
         ImGui::EndCombo();
     }
     changed |= ImGui::Checkbox(U8("Vytvořit stěny po obvodu"), &region.boundarySolid);
+    changed |= ImGui::Checkbox(U8("Nahradit podlahu pod plochou"), &region.cutsUnderlyingFloor);
     int wallTextureKey = static_cast<int>(region.wallTexture);
     if (ImGui::InputInt(U8("Textura stěny (0 = sektor)"), &wallTextureKey))
     {
@@ -8911,14 +9345,13 @@ void BuildInteriorEngine::renderEditorMap()
 
     ImDrawList* draw = ImGui::GetWindowDrawList();
     const ImVec2 origin = ImGui::GetCursorScreenPos();
-    const float cellSize = vectorMode ? std::min(m_editorMapCellSize, 14.0f)
-                                      : m_editorMapCellSize;
+    const float cellSize = m_editorMapCellSize;
 
     double minWorldX = 0.0;
     double minWorldY = 0.0;
     double maxWorldX = 1.0;
     double maxWorldY = 1.0;
-    if (vectorMode)
+    if (vectorMode && !m_polygonSectors.empty())
     {
         minWorldX = m_polygonSectors.front().minX;
         minWorldY = m_polygonSectors.front().minY;
@@ -8936,14 +9369,26 @@ void BuildInteriorEngine::renderEditorMap()
         maxWorldX = std::ceil(maxWorldX) + 1.0;
         maxWorldY = std::ceil(maxWorldY) + 1.0;
     }
-    else
+    else if (!vectorMode)
     {
         maxWorldY = static_cast<double>(m_grid.size());
         maxWorldX = 0.0;
         for (const auto& row : m_grid)
             maxWorldX = std::max(maxWorldX, static_cast<double>(row.size()));
     }
+    else
+    {
+        minWorldX = std::floor(m_posX) - 4.0;
+        minWorldY = std::floor(m_posY) - 4.0;
+        maxWorldX = minWorldX + 8.0;
+        maxWorldY = minWorldY + 8.0;
+    }
 
+    if (m_editorDraggingSprite || m_editorDraggingVertex || m_editorDrawingSector)
+    {
+        minWorldX = m_editorDragBounds[0]; minWorldY = m_editorDragBounds[1];
+        maxWorldX = m_editorDragBounds[2]; maxWorldY = m_editorDragBounds[3];
+    }
     const int columns = std::max(1, static_cast<int>(std::ceil(maxWorldX - minWorldX)));
     const int rows = std::max(1, static_cast<int>(std::ceil(maxWorldY - minWorldY)));
     const ImVec2 size(columns * cellSize, rows * cellSize);
@@ -8957,6 +9402,14 @@ void BuildInteriorEngine::renderEditorMap()
     const int mouseX = static_cast<int>(std::floor(mouseWorldX));
     const int mouseY = static_cast<int>(std::floor(mouseWorldY));
     const bool shiftDown = ImGui::GetIO().KeyShift;
+    auto placementCoordinate = [&](double value) {
+        return ImGui::GetIO().KeyCtrl ? std::round(value * 4.0) / 4.0 : value;
+    };
+    if (m_editorSectorPlacement && (ImGui::IsKeyPressed(ImGuiKey_Escape) ||
+        (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Right))))
+    {
+        cancelEditorSectorPlacement();
+    }
 
     auto nearestSpriteAt = [&](double worldX, double worldY) {
         int best = -1;
@@ -8967,7 +9420,18 @@ void BuildInteriorEngine::renderEditorMap()
             const double radius = std::max(0.55, sprite.scale * 0.55);
             const double distance = std::hypot(sprite.x - worldX,
                                                sprite.y - worldY);
-            if (distance <= radius && distance < bestDistance)
+            bool inside = distance <= radius;
+            if (sprite.renderMode == ObjectRenderMode::Floor)
+            {
+                const TextureRef* texture = m_textureLookup[static_cast<std::size_t>(sprite.texture)];
+                const double aspect = texture && texture->h > 0 ? double(texture->w) / texture->h : 1.0;
+                const double width = sprite.floorWidth > 0 ? sprite.floorWidth : sprite.scale * aspect;
+                const double depth = sprite.floorDepth > 0 ? sprite.floorDepth : sprite.scale;
+                const double dx = worldX - sprite.x, dy = worldY - sprite.y;
+                inside = std::abs(std::cos(sprite.yaw) * dx + std::sin(sprite.yaw) * dy) <= width * 0.5 + 0.15
+                    && std::abs(-std::sin(sprite.yaw) * dx + std::cos(sprite.yaw) * dy) <= depth * 0.5 + 0.15;
+            }
+            if (inside && distance < bestDistance)
             {
                 bestDistance = distance;
                 best = i;
@@ -8987,146 +9451,137 @@ void BuildInteriorEngine::renderEditorMap()
         return true;
     };
 
-    if (hovered && shiftDown && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+    if (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
     {
+        m_editorDraggingSprite = false;
+        m_editorDraggingVertex = false;
+        m_editorDragBounds = {minWorldX, minWorldY, maxWorldX, maxWorldY};
         const int pickedSprite = nearestSpriteAt(mouseWorldX, mouseWorldY);
-        if (pickedSprite >= 0)
+        if (m_editorSectorPlacement && m_editorMapTool == EditorMapTool::Polygons)
         {
-            m_editorSelectedSprite = pickedSprite;
-            m_status = U8("Vybrán objekt: ") +
-                m_sprites[static_cast<std::size_t>(pickedSprite)].id;
+            m_editorDrawingSector = true;
+            m_editorSectorRectStart = {placementCoordinate(mouseWorldX), placementCoordinate(mouseWorldY)};
+            m_editorSectorRectEnd = m_editorSectorRectStart;
         }
-        else if (m_editorMapTool == EditorMapTool::Objects &&
-                 moveSelectedSpriteTo(mouseWorldX, mouseWorldY))
+        else if (shiftDown && m_editorMapTool == EditorMapTool::Objects && pickedSprite < 0)
+            moveSelectedSpriteTo(mouseWorldX, mouseWorldY);
+        else if (m_editorMapTool == EditorMapTool::Polygons && m_editorPolygonPointMode &&
+                 m_editorSelectedPolygon >= 0 && m_editorSelectedPolygon < static_cast<int>(m_polygonSectors.size()))
         {
-            m_status = U8("Objekt přesunut Shift-klikem.");
+            auto& region = m_polygonSectors[m_editorSelectedPolygon];
+            region.vertices.push_back({mouseWorldX, mouseWorldY});
+            m_editorSelectedPolygonVertex = static_cast<int>(region.vertices.size()) - 1;
+            updatePolygonBounds(region);
+            m_editorPolygonDragDirty = true;
         }
-        else if (!vectorMode && isInside(mouseX, mouseY))
+        else
         {
-            m_editorTileBrush = cellAt(mouseX, mouseY);
-            m_editorSectorBrush = sectorSymbolAt(mouseX, mouseY);
-            m_status = U8("Převzaty vlastnosti buňky: sektor ") +
-                sectorDisplayLabel(m_editorSectorBrush);
-        }
-        else if (vectorMode)
-        {
-            for (int polygonIndex =
-                     static_cast<int>(m_polygonSectors.size()) - 1;
-                 polygonIndex >= 0; --polygonIndex)
+            double bestDistance = 7.0 / cellSize;
+            int bestPolygon = -1, bestVertex = -1;
+            if (vectorMode && m_editorMapTool == EditorMapTool::Polygons)
+                for (int pi = 0; pi < static_cast<int>(m_polygonSectors.size()); ++pi)
+                    for (int vi = 0; vi < static_cast<int>(m_polygonSectors[pi].vertices.size()); ++vi)
+                    {
+                        const auto& vertex = m_polygonSectors[pi].vertices[vi];
+                        const double distance = std::hypot(vertex[0] - mouseWorldX, vertex[1] - mouseWorldY);
+                        if (distance < bestDistance)
+                        {
+                            bestDistance = distance; bestPolygon = pi; bestVertex = vi;
+                        }
+                    }
+            if (bestPolygon >= 0)
             {
-                const PolygonSectorRegion& region =
-                    m_polygonSectors[static_cast<std::size_t>(polygonIndex)];
-                if (!pointInPolygon(region, mouseWorldX, mouseWorldY))
-                    continue;
-                m_editorSelectedPolygon = polygonIndex;
-                m_editorSelectedPolygonVertex = -1;
+                m_editorSelectedPolygon = bestPolygon;
+                m_editorSelectedPolygonVertex = bestVertex;
                 m_editorSelectedOpening = -1;
-                m_editorSectorBrush = region.sector;
-                m_status = U8("Vybrán polygonový sektor ") +
-                    sectorDisplayLabel(region.sector);
-                break;
+                m_editorSectorBrush = m_polygonSectors[bestPolygon].sector;
+                m_editorDraggingVertex = true;
+                const auto& vertex = m_polygonSectors[bestPolygon].vertices[bestVertex];
+                m_editorDragOffsetX = vertex[0] - mouseWorldX;
+                m_editorDragOffsetY = vertex[1] - mouseWorldY;
+            }
+            else if (pickedSprite >= 0)
+            {
+                m_editorSelectedSprite = pickedSprite;
+                m_editorOpenObjectInspectorOnRelease = m_editorMapTool != EditorMapTool::Objects;
+                m_editorDraggingSprite = true;
+                m_editorDragOffsetX = m_sprites[pickedSprite].x - mouseWorldX;
+                m_editorDragOffsetY = m_sprites[pickedSprite].y - mouseWorldY;
+                m_sceneDirty = true;
+                m_status = U8("Vybrán objekt: ") + m_sprites[pickedSprite].id;
+            }
+            else if (vectorMode)
+            {
+                m_editorSelectedPolygonVertex = -1;
+                for (int pi = static_cast<int>(m_polygonSectors.size()) - 1; pi >= 0; --pi)
+                    if (pointInPolygon(m_polygonSectors[pi], mouseWorldX, mouseWorldY))
+                    {
+                        m_editorSelectedPolygon = pi;
+                        m_editorSelectedOpening = -1;
+                        m_editorSectorBrush = m_polygonSectors[pi].sector;
+                        break;
+                    }
             }
         }
     }
 
-    if (hovered && vectorMode && !shiftDown)
+    if (m_editorDrawingSector)
     {
-        if (m_editorPolygonPointMode &&
-            m_editorSelectedPolygon >= 0 &&
-            m_editorSelectedPolygon < static_cast<int>(m_polygonSectors.size()))
+        m_editorSectorRectEnd = {placementCoordinate(mouseWorldX), placementCoordinate(mouseWorldY)};
+        if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
         {
-            PolygonSectorRegion& region = m_polygonSectors[static_cast<std::size_t>(m_editorSelectedPolygon)];
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
+            m_editorDrawingSector = false;
+            if (hovered)
+                createEditorSectorRectangle(m_editorSectorRectStart[0], m_editorSectorRectStart[1],
+                    m_editorSectorRectEnd[0], m_editorSectorRectEnd[1]);
+            else
+                m_status = U8("Plocha nebyla vložena: dokončete tažení uvnitř mapy.");
+        }
+    }
+
+    if (!m_editorSectorPlacement && ImGui::IsItemActive() && ImGui::IsMouseDragging(ImGuiMouseButton_Left))
+    {
+        auto coordinate = [&](double value)
+        {
+            return ImGui::GetIO().KeyCtrl ? std::round(value * 4.0) / 4.0 : value;
+        };
+        const double x = coordinate(mouseWorldX + m_editorDragOffsetX);
+        const double y = coordinate(mouseWorldY + m_editorDragOffsetY);
+        if (m_editorDraggingSprite && m_editorSelectedSprite >= 0 &&
+            m_editorSelectedSprite < static_cast<int>(m_sprites.size()))
+        {
+            m_sprites[m_editorSelectedSprite].x = x;
+            m_sprites[m_editorSelectedSprite].y = y;
+            m_sceneDirty = true;
+        }
+        else if (m_editorDraggingVertex && m_editorSelectedPolygon >= 0 &&
+                 m_editorSelectedPolygon < static_cast<int>(m_polygonSectors.size()))
+        {
+            auto& region = m_polygonSectors[m_editorSelectedPolygon];
+            if (m_editorSelectedPolygonVertex >= 0 && m_editorSelectedPolygonVertex < static_cast<int>(region.vertices.size()))
             {
-                const double snappedX = std::round(mouseWorldX * 4.0) / 4.0;
-                const double snappedY = std::round(mouseWorldY * 4.0) / 4.0;
-                region.vertices.push_back({snappedX, snappedY});
-                m_editorSelectedPolygonVertex = static_cast<int>(region.vertices.size()) - 1;
+                region.vertices[m_editorSelectedPolygonVertex] = {x, y};
                 updatePolygonBounds(region);
-                rebuildPolygonBoundaryWalls();
-                rebuildVectorSectorLookup();
-                m_sceneDirty = true;
-            }
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_Right) && !region.vertices.empty())
-            {
-                double bestDistance = 0.45;
-                int best = -1;
-                for (int i = 0; i < static_cast<int>(region.vertices.size()); ++i)
-                {
-                    const double dx = region.vertices[static_cast<std::size_t>(i)][0] - mouseWorldX;
-                    const double dy = region.vertices[static_cast<std::size_t>(i)][1] - mouseWorldY;
-                    const double distance = std::hypot(dx, dy);
-                    if (distance < bestDistance) { bestDistance = distance; best = i; }
-                }
-                m_editorSelectedPolygonVertex = best;
+                m_editorPolygonDragDirty = true;
             }
         }
-        else
+    }
+    if (!ImGui::IsMouseDown(ImGuiMouseButton_Left))
+    {
+        if (m_editorOpenObjectInspectorOnRelease)
         {
-            if (ImGui::IsMouseClicked(ImGuiMouseButton_Left))
-            {
-                double bestDistance = 0.55;
-                int bestPolygon = -1;
-                int bestVertex = -1;
-                for (int polygonIndex = 0; polygonIndex < static_cast<int>(m_polygonSectors.size()); ++polygonIndex)
-                {
-                    const PolygonSectorRegion& region = m_polygonSectors[static_cast<std::size_t>(polygonIndex)];
-                    for (int vertexIndex = 0; vertexIndex < static_cast<int>(region.vertices.size()); ++vertexIndex)
-                    {
-                        const auto& vertex = region.vertices[static_cast<std::size_t>(vertexIndex)];
-                        const double distance = std::hypot(vertex[0] - mouseWorldX,
-                                                           vertex[1] - mouseWorldY);
-                        if (distance < bestDistance)
-                        {
-                            bestDistance = distance;
-                            bestPolygon = polygonIndex;
-                            bestVertex = vertexIndex;
-                        }
-                    }
-                }
-                if (bestPolygon >= 0)
-                {
-                    m_editorSelectedPolygon = bestPolygon;
-                    m_editorSelectedPolygonVertex = bestVertex;
-                    m_editorSelectedOpening = -1;
-                }
-            }
-            if (ImGui::IsMouseDown(ImGuiMouseButton_Left) &&
-                m_editorSelectedPolygon >= 0 &&
-                m_editorSelectedPolygon < static_cast<int>(m_polygonSectors.size()))
-            {
-                PolygonSectorRegion& region = m_polygonSectors[static_cast<std::size_t>(m_editorSelectedPolygon)];
-                if (m_editorSelectedPolygonVertex >= 0 &&
-                    m_editorSelectedPolygonVertex < static_cast<int>(region.vertices.size()))
-                {
-                    auto& vertex = region.vertices[static_cast<std::size_t>(m_editorSelectedPolygonVertex)];
-                    const double snappedX = std::round(mouseWorldX * 4.0) / 4.0;
-                    const double snappedY = std::round(mouseWorldY * 4.0) / 4.0;
-                    if (std::abs(vertex[0] - snappedX) > 1.0e-8 ||
-                        std::abs(vertex[1] - snappedY) > 1.0e-8)
-                    {
-                        vertex = {snappedX, snappedY};
-                        updatePolygonBounds(region);
-                        // Keep the 2D editor responsive while dragging. The
-                        // expensive sub-cell cache and 3D preview are rebuilt
-                        // once when the mouse button is released.
-                        m_editorPolygonDragDirty = true;
-                    }
-                }
-            }
+            m_editorSelectObjectsTab = true;
+            m_editorOpenObjectInspectorOnRelease = false;
         }
-        if (m_editorPolygonDragDirty && !ImGui::IsMouseDown(ImGuiMouseButton_Left))
+        m_editorDraggingSprite = false;
+        m_editorDraggingVertex = false;
+        if (m_editorPolygonDragDirty)
         {
             m_editorPolygonDragDirty = false;
             rebuildPolygonBoundaryWalls();
             rebuildVectorSectorLookup();
             m_sceneDirty = true;
         }
-    }
-    else if (hovered && !vectorMode && !shiftDown && isInside(mouseX, mouseY))
-    {
-        if (ImGui::IsMouseDown(ImGuiMouseButton_Left)) paintEditorCell(mouseX, mouseY, false);
-        if (ImGui::IsMouseDown(ImGuiMouseButton_Right)) paintEditorCell(mouseX, mouseY, true);
     }
 
     auto screenPoint = [&](double worldX, double worldY) {
@@ -9250,33 +9705,49 @@ void BuildInteriorEngine::renderEditorMap()
                 if (texture->w > 0 && texture->h > 0)
                     aspect = static_cast<double>(texture->w) / texture->h;
             }
-            const double width = std::max(0.40, sprite.scale * aspect);
-            const double depth = sprite.renderMode == ObjectRenderMode::Voxel
-                ? std::max(0.30, sprite.voxelDepth > 0.0
-                    ? sprite.voxelDepth
-                    : sprite.scale * 0.32)
-                : std::max(0.30, sprite.scale * 0.28);
-            const double minX = sprite.x - width * 0.5;
-            const double maxX = sprite.x + width * 0.5;
-            const double minY = sprite.y - depth * 0.5;
-            const double maxY = sprite.y + depth * 0.5;
-            const ImVec2 p0 = screenPoint(minX, minY);
-            const ImVec2 p1 = screenPoint(maxX, maxY);
-            draw->AddRectFilled(p0, p1, imguiColor(255, 210, 82, 34));
-            draw->AddRect(p0, p1, imguiColor(255, 210, 82, 245), 0.0f, 0, 2.0f);
-            for (int gx = static_cast<int>(std::ceil(minX));
-                 gx <= static_cast<int>(std::floor(maxX)); ++gx)
+            if (sprite.renderMode == ObjectRenderMode::Floor)
             {
-                const ImVec2 a = screenPoint(gx, minY);
-                const ImVec2 b = screenPoint(gx, maxY);
-                draw->AddLine(a, b, imguiColor(255, 210, 82, 120));
+                const double width = sprite.floorWidth > 0 ? sprite.floorWidth : sprite.scale * aspect;
+                const double depth = sprite.floorDepth > 0 ? sprite.floorDepth : sprite.scale;
+                ImVec2 corners[4];
+                int cornerIndex = 0;
+                for (const auto& corner : {std::pair{-0.5, -0.5}, std::pair{0.5, -0.5}, std::pair{0.5, 0.5}, std::pair{-0.5, 0.5}})
+                    corners[cornerIndex++] = screenPoint(
+                        sprite.x + std::cos(sprite.yaw) * corner.first * width - std::sin(sprite.yaw) * corner.second * depth,
+                        sprite.y + std::sin(sprite.yaw) * corner.first * width + std::cos(sprite.yaw) * corner.second * depth);
+                draw->AddConvexPolyFilled(corners, 4, imguiColor(255, 210, 82, 34));
+                draw->AddPolyline(corners, 4, imguiColor(255, 210, 82, 245), ImDrawFlags_Closed, 2);
             }
-            for (int gy = static_cast<int>(std::ceil(minY));
-                 gy <= static_cast<int>(std::floor(maxY)); ++gy)
+            else
             {
-                const ImVec2 a = screenPoint(minX, gy);
-                const ImVec2 b = screenPoint(maxX, gy);
-                draw->AddLine(a, b, imguiColor(255, 210, 82, 120));
+                const double width = std::max(0.40, sprite.scale * aspect);
+                const double depth = sprite.renderMode == ObjectRenderMode::Voxel
+                    ? std::max(0.30, sprite.voxelDepth > 0.0
+                        ? sprite.voxelDepth
+                        : sprite.scale * 0.32)
+                    : std::max(0.30, sprite.scale * 0.28);
+                const double minX = sprite.x - width * 0.5;
+                const double maxX = sprite.x + width * 0.5;
+                const double minY = sprite.y - depth * 0.5;
+                const double maxY = sprite.y + depth * 0.5;
+                const ImVec2 p0 = screenPoint(minX, minY);
+                const ImVec2 p1 = screenPoint(maxX, maxY);
+                draw->AddRectFilled(p0, p1, imguiColor(255, 210, 82, 34));
+                draw->AddRect(p0, p1, imguiColor(255, 210, 82, 245), 0.0f, 0, 2.0f);
+                for (int gx = static_cast<int>(std::ceil(minX));
+                     gx <= static_cast<int>(std::floor(maxX)); ++gx)
+                {
+                    const ImVec2 a = screenPoint(gx, minY);
+                    const ImVec2 b = screenPoint(gx, maxY);
+                    draw->AddLine(a, b, imguiColor(255, 210, 82, 120));
+                }
+                for (int gy = static_cast<int>(std::ceil(minY));
+                     gy <= static_cast<int>(std::floor(maxY)); ++gy)
+                {
+                    const ImVec2 a = screenPoint(minX, gy);
+                    const ImVec2 b = screenPoint(maxX, gy);
+                    draw->AddLine(a, b, imguiColor(255, 210, 82, 120));
+                }
             }
             draw->AddText(ImVec2(point.x + 7.0f, point.y - 18.0f),
                           imguiColor(255, 232, 150), sprite.id.c_str());
@@ -9293,6 +9764,23 @@ void BuildInteriorEngine::renderEditorMap()
                   screenPoint(m_posX + std::cos(m_angle) * 0.8,
                               m_posY + std::sin(m_angle) * 0.8),
                   imguiColor(255, 226, 108), 2.0f);
+
+    if (m_editorSectorPlacement && m_editorMapTool == EditorMapTool::Polygons)
+    {
+        if (hovered) ImGui::SetMouseCursor(ImGuiMouseCursor_ResizeAll);
+        if (m_editorDrawingSector)
+        {
+            const auto& a = m_editorSectorRectStart;
+            const auto& b = m_editorSectorRectEnd;
+            const ImVec2 p0 = screenPoint(std::min(a[0], b[0]), std::min(a[1], b[1]));
+            const ImVec2 p1 = screenPoint(std::max(a[0], b[0]), std::max(a[1], b[1]));
+            draw->AddRectFilled(p0, p1, imguiColor(255, 190, 82, 70));
+            draw->AddRect(p0, p1, imguiColor(255, 210, 82), 0.0f, 0, 2.0f);
+            char dimensions[96];
+            std::snprintf(dimensions, sizeof(dimensions), "%.2f x %.2f", std::abs(b[0] - a[0]), std::abs(b[1] - a[1]));
+            draw->AddText(ImVec2(p0.x + 4, p0.y + 4), imguiColor(255, 232, 150), dimensions);
+        }
+    }
 
     if (hovered)
         ImGui::SetTooltip("world %.2f / %.2f", mouseWorldX, mouseWorldY);
@@ -9614,6 +10102,8 @@ void BuildInteriorEngine::drawFlatTriangle(const ProjectedVertex& a, const Proje
             if (depth >= m_dynamicDepthBuffer[index]) continue;
             m_framebuffer[index] = alphaBlend(m_framebuffer[index], color);
             m_dynamicDepthBuffer[index] = depth;
+            if (m_editorMode && m_editorRenderingSprite >= 0)
+                m_editorObjectPixels[index] = m_editorRenderingSprite;
         }
     }
 }
@@ -9659,6 +10149,8 @@ void BuildInteriorEngine::drawTexturedTriangle(const ProjectedVertex& a, const P
             color = modulate(color, shade);
             m_framebuffer[index] = alphaBlend(m_framebuffer[index], color);
             m_dynamicDepthBuffer[index] = depth;
+            if (m_editorMode && m_editorRenderingSprite >= 0)
+                m_editorObjectPixels[index] = m_editorRenderingSprite;
         }
     }
 }

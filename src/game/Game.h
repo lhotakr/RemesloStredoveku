@@ -81,11 +81,12 @@ private:
     void enterCampaign(
         const std::string& mapPath = std::string(),
         const std::string& spawnId = std::string(),
-        bool useCustomStartDateTime = false);
+        bool useCustomStartDateTime = false,
+        bool playIntro = false);
     void leaveCampaign();
     bool loadCampaignMap(const std::string& mapPath, const std::string& spawnId);
 
-    void enterEditor();
+    void enterEditor(bool sequenceEditor = false);
     void leaveEditor();
 
     void enterObjectEditor();
@@ -182,6 +183,7 @@ private:
     int m_menuBgH = 0;
 
     Editor* m_editor = nullptr;
+    bool m_editorOpenedForSequence = false;
     ObjectEditor* m_objectEditor = nullptr;
     TextureSpriteEditor* m_textureSpriteEditor = nullptr;
     BuildInteriorEngine* m_interior2D = nullptr;
