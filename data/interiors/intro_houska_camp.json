@@ -1,0 +1,1232 @@
+{
+  "doors": [],
+  "eye_height": 1.090000033378601,
+  "fov_degrees": 66.99999999999999,
+  "geometry_mode": "polygon_sectors",
+  "grid_codes": [
+    [
+      0
+    ]
+  ],
+  "id": "intro_houska_camp",
+  "name": "Intro Houska camp cinematic set",
+  "polygon_sectors": [
+    {
+      "boundary_solid": true,
+      "cuts_underlying_floor": false,
+      "edge_openings": [],
+      "has_support_bottom": false,
+      "id": "forest_clearing",
+      "sector": "O",
+      "sector_code": 79,
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          -1.3356535391943352,
+          -5.913431802205034
+        ],
+        [
+          49.36345881379766,
+          -5.833332777023315
+        ],
+        [
+          49.47299032694355,
+          13.436528161960275
+        ],
+        [
+          -1.479388601731447,
+          13.590906143188477
+        ]
+      ],
+      "wall_ambient": 1.0,
+      "wall_texture_key": 0,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": false,
+      "cuts_underlying_floor": true,
+      "edge_openings": [],
+      "has_support_bottom": false,
+      "id": "sector_69_1",
+      "sector": "E",
+      "sector_code": 69,
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          -2.6818182468414307,
+          -6.409090548753738
+        ],
+        [
+          2.9913029568826817,
+          -6.545454025268555
+        ],
+        [
+          3.0874564508226072,
+          14.409090042114258
+        ],
+        [
+          -2.5856634920242088,
+          13.727272033691406
+        ]
+      ],
+      "wall_ambient": 1.0,
+      "wall_texture_key": 0,
+      "wall_texture_scale": 1.0
+    },
+    {
+      "boundary_solid": false,
+      "cuts_underlying_floor": true,
+      "edge_openings": [],
+      "has_support_bottom": false,
+      "id": "sector_69_2",
+      "sector": "E",
+      "sector_code": 69,
+      "support_bottom_z": 0.0,
+      "vertices": [
+        [
+          0.010510348882520226,
+          10.681818008422852
+        ],
+        [
+          3.2797664648079676,
+          9.318181991577148
+        ],
+        [
+          8.760578158897637,
+          14.454545974731445
+        ],
+        [
+          3.0874564508226072,
+          14.545454025268555
+        ]
+      ],
+      "wall_ambient": 1.0,
+      "wall_texture_key": 0,
+      "wall_texture_scale": 1.0
+    }
+  ],
+  "sector_codes": [
+    [
+      65
+    ]
+  ],
+  "sector_grid": [
+    "A"
+  ],
+  "sectors": {
+    "A": {
+      "ambient": 0.95,
+      "boundary_texture_key": 49,
+      "ceiling_color": [
+        24,
+        22,
+        20
+      ],
+      "ceiling_height": 1.15,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 67,
+      "code": 65,
+      "floor_color": [
+        54,
+        40,
+        28
+      ],
+      "floor_height": 0.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 70,
+      "id": "great_hall",
+      "name": "Velká kamenná síň",
+      "sky_ceiling": false,
+      "slope_origin_x": 3.6482597937067567,
+      "slope_origin_y": 0.9099099024599333,
+      "wall_height": -1.0
+    },
+    "B": {
+      "ambient": 1.08,
+      "boundary_texture_key": 50,
+      "ceiling_color": [
+        90,
+        80,
+        66
+      ],
+      "ceiling_height": 1.25,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 80,
+      "code": 66,
+      "floor_color": [
+        82,
+        54,
+        34
+      ],
+      "floor_height": 0.22,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 70,
+      "id": "raised_room",
+      "name": "Vyvýšená světnice",
+      "sky_ceiling": false,
+      "slope_origin_x": 3.6482597937067567,
+      "slope_origin_y": 0.9099099024599333,
+      "wall_height": -1.0
+    },
+    "C": {
+      "ambient": 0.52,
+      "boundary_texture_key": 49,
+      "ceiling_color": [
+        22,
+        22,
+        23
+      ],
+      "ceiling_height": 0.72,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 67,
+      "code": 67,
+      "floor_color": [
+        42,
+        42,
+        39
+      ],
+      "floor_height": -0.35,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 83,
+      "id": "cellar",
+      "name": "Nízký sklep",
+      "sky_ceiling": false,
+      "slope_origin_x": 3.6482597937067567,
+      "slope_origin_y": 0.9099099024599333,
+      "wall_height": -1.0
+    },
+    "D": {
+      "ambient": 0.82,
+      "boundary_texture_key": 51,
+      "ceiling_color": [
+        24,
+        22,
+        20
+      ],
+      "ceiling_height": 1.75,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 67,
+      "code": 68,
+      "floor_color": [
+        54,
+        40,
+        28
+      ],
+      "floor_height": 0.55,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 70,
+      "id": "gallery",
+      "name": "Horní galerie",
+      "sky_ceiling": false,
+      "slope_origin_x": 3.6482597937067567,
+      "slope_origin_y": 0.9099099024599333,
+      "wall_height": -1.0
+    },
+    "E": {
+      "ambient": 1.1,
+      "boundary_texture_key": 265,
+      "ceiling_color": [
+        88,
+        105,
+        120
+      ],
+      "ceiling_height": 12.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 75,
+      "code": 69,
+      "floor_color": [
+        72,
+        68,
+        58
+      ],
+      "floor_height": 0.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 266,
+      "id": "sector_69",
+      "name": "Asphat Road(#69)",
+      "sky_ceiling": true,
+      "slope_origin_x": 3.6482597937067567,
+      "slope_origin_y": 0.9099099024599333,
+      "wall_height": 2.8
+    },
+    "O": {
+      "ambient": 1.12,
+      "boundary_texture_key": 265,
+      "ceiling_color": [
+        88,
+        105,
+        120
+      ],
+      "ceiling_height": 12.0,
+      "ceiling_slope_x": 0.0,
+      "ceiling_slope_y": 0.0,
+      "ceiling_texture_key": 75,
+      "code": 79,
+      "floor_color": [
+        72,
+        68,
+        58
+      ],
+      "floor_height": 0.0,
+      "floor_slope_x": 0.0,
+      "floor_slope_y": 0.0,
+      "floor_texture_key": 71,
+      "id": "forest_clearing",
+      "name": "Forest clearing",
+      "sky_ceiling": true,
+      "slope_origin_x": 3.6482597937067567,
+      "slope_origin_y": 0.9099099024599333,
+      "wall_height": 2.3
+    }
+  },
+  "spawn": {
+    "angle_degrees": 8.606751959329216,
+    "pitch": -0.23496181562542925,
+    "x": 35.3554677193102,
+    "y": 1.526961524674431
+  },
+  "spawns": {},
+  "sprites": [
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "Tree_2",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.2,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 270,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 5.658985738543077,
+      "y": 6.03759285307639,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "tree_back_right",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.4,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 34.0149257872595,
+      "y": 6.025225245031519,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "Bush_1",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 0.5899999737739563,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 261,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 7.130847526113179,
+      "y": 12.22711002921993,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "tree_mid_right",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.1,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 256,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 29.096140533568544,
+      "y": 8.338738796284485,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": true,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "Car",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 1.4299999475479126,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 267,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 4.874977089086217,
+      "y": 12.102783822706606,
+      "yaw_degrees": 0.0,
+      "z_offset": -0.09000000357627869
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "tree_front_right",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.5,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 259,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 34.751225142426755,
+      "y": 11.334234317987931,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "Tree_1",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 1.6100000143051147,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 269,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 4.658569541542353,
+      "y": 0.7595576372400235,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "Tree_3",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.049999952316284,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 269,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 4.8201087632840025,
+      "y": -4.510414739804014,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "Bush_2",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 0.5600000023841858,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 272,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 9.573643797992819,
+      "y": 13.271342993165323,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_1",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.4,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 19.2399257872595,
+      "y": 5.312725245031519,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_2",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 3.6700000762939453,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 41.9024257872595,
+      "y": 4.225225245031519,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.9,
+      "floor_width": 0.9,
+      "id": "interior_object_3",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "floor",
+      "scale": 0.46000000834465027,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 273,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 26.860602368786807,
+      "y": 1.0440088161414776,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_4",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 1.649999976158142,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 259,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 44.142731113060954,
+      "y": 10.45374548280713,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_5",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 1.7699999809265137,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 271,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 23.821535698245572,
+      "y": 11.81160699523805,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_6",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.1,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 256,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 38.633640533568546,
+      "y": 8.876238796284484,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_7",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.18,
+      "light_height": 0.55,
+      "light_intensity": 0.85,
+      "light_radius": 3.2,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 1.0,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 274,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 14.005047206749751,
+      "y": 12.81116222165452,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_8",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 3.450000047683716,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 41.814925787259504,
+      "y": 1.8252252450315183,
+      "yaw_degrees": 0.0,
+      "z_offset": -0.009999999776482582
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_9",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.4,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 37.4274257872595,
+      "y": -0.812274754968481,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_10",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.4,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 15.027425787259503,
+      "y": -1.024774754968481,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    },
+    {
+      "action": "",
+      "animated": false,
+      "animation_max_fps": 12.0,
+      "animation_min_fps": 7.0,
+      "emits_light": false,
+      "floor_depth": 0.0,
+      "floor_width": 0.0,
+      "id": "interior_object_11",
+      "interaction_label": "",
+      "light_color": [
+        255,
+        150,
+        72
+      ],
+      "light_flicker": 0.0,
+      "light_height": 0.0,
+      "light_intensity": 0.0,
+      "light_radius": 0.0,
+      "random_animation": true,
+      "render_mode": "billboard",
+      "scale": 2.4,
+      "solid": false,
+      "station": "",
+      "target_interior": "",
+      "target_spawn": "",
+      "texture_key": 260,
+      "voxel_depth": 0.0,
+      "workshop": "",
+      "x": 10.814925787259503,
+      "y": 6.512725245031519,
+      "yaw_degrees": 0.0,
+      "z_offset": 0.0
+    }
+  ],
+  "textures": [
+    {
+      "key": 84,
+      "path": "assets/Interior/sprite_torch.png"
+    },
+    {
+      "key": 261,
+      "name": "DeadBush",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 32,
+        "w": 47,
+        "x": 273,
+        "y": 659
+      }
+    },
+    {
+      "key": 71,
+      "path": "assets/Castles/Houska1400/cleared_ground.png"
+    },
+    {
+      "key": 266,
+      "name": "Asphalt",
+      "path": "assets/modern/Asphalt.png"
+    },
+    {
+      "key": 267,
+      "name": "Car",
+      "path": "assets/modern/Car.png"
+    },
+    {
+      "key": 70,
+      "path": "assets/Interior/floor_boards.png"
+    },
+    {
+      "key": 264,
+      "name": "SmallLeafTree2Stump",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 23,
+        "w": 30,
+        "x": 119,
+        "y": 201
+      }
+    },
+    {
+      "key": 269,
+      "name": "MediumLeafTree5",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 142,
+        "w": 110,
+        "x": 727,
+        "y": 35
+      }
+    },
+    {
+      "key": 66,
+      "path": "assets/Interior/sprite_barrel.png"
+    },
+    {
+      "key": 270,
+      "name": "MediumLeafTree1",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 125,
+        "w": 97,
+        "x": 295,
+        "y": 57
+      }
+    },
+    {
+      "key": 67,
+      "path": "assets/Interior/ceiling_beams.png"
+    },
+    {
+      "key": 51,
+      "path": "assets/Interior/wall_brick.png"
+    },
+    {
+      "key": 268,
+      "name": "Tree 1",
+      "path": "assets/Objects/Decoration.png",
+      "source_rect": {
+        "h": 268,
+        "w": 233,
+        "x": 745,
+        "y": 1761
+      }
+    },
+    {
+      "key": 258,
+      "name": "smithing_skill_tree_atlas_2048",
+      "path": "assets/smithing/skill_tree_node_editor/assets/atlases/smithing_skill_tree_atlas_2048.png"
+    },
+    {
+      "key": 76,
+      "path": "assets/Castles/Houska1400/mixed_forest_tree.png"
+    },
+    {
+      "key": 50,
+      "path": "assets/Interior/wall_plaster.png"
+    },
+    {
+      "key": 262,
+      "name": "SmallLeafTree2Stump",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 20,
+        "w": 22,
+        "x": 121,
+        "y": 346
+      }
+    },
+    {
+      "key": 1,
+      "path": "assets/Interior/wall_courtyard.png"
+    },
+    {
+      "key": 273,
+      "name": "Podivná motyka",
+      "path": "assets/data/items/artifact_hoe.png"
+    },
+    {
+      "key": 274,
+      "name": "Logs",
+      "path": "assets/Objects/Decoration.png",
+      "source_rect": {
+        "h": 72,
+        "w": 165,
+        "x": 448,
+        "y": 1050
+      }
+    },
+    {
+      "key": 256,
+      "name": "DeadSpruceTree2",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 102,
+        "w": 18,
+        "x": 428,
+        "y": 459
+      }
+    },
+    {
+      "key": 80,
+      "path": "assets/Interior/ceiling_plaster.png"
+    },
+    {
+      "key": 257,
+      "name": "Kalici kad",
+      "path": "assets/Objects/Smithy/SmithyEnvironmentAtlas.png",
+      "source_rect": {
+        "h": 256,
+        "w": 288,
+        "x": 392,
+        "y": 392
+      }
+    },
+    {
+      "key": 88,
+      "path": "assets/Interior/sprite_crate.png"
+    },
+    {
+      "key": 265,
+      "name": "FarWoodsTexture",
+      "path": "assets/modern/FarWoodsTexture.png"
+    },
+    {
+      "key": 75,
+      "path": "assets/Interior/sky_overcast.png"
+    },
+    {
+      "key": 49,
+      "path": "assets/Interior/wall_stone.png"
+    },
+    {
+      "key": 52,
+      "path": "assets/Interior/wall_metal.png"
+    },
+    {
+      "key": 271,
+      "name": "MediumSpruceTree",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 121,
+        "w": 62,
+        "x": 109,
+        "y": 443
+      }
+    },
+    {
+      "key": 68,
+      "path": "assets/Interior/door_wood.png"
+    },
+    {
+      "key": 82,
+      "path": "assets/Interior/sprite_stairs.png"
+    },
+    {
+      "key": 259,
+      "name": "DeadBigLeafTree1",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 161,
+        "w": 109,
+        "x": 602,
+        "y": 485
+      }
+    },
+    {
+      "key": 272,
+      "name": "MediumBush1",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 27,
+        "w": 36,
+        "x": 210,
+        "y": 665
+      }
+    },
+    {
+      "key": 83,
+      "path": "assets/Interior/floor_stone.png"
+    },
+    {
+      "key": 260,
+      "name": "BigLeafTree2",
+      "path": "assets/Objects/TreeAndStoneSprites.png",
+      "source_rect": {
+        "h": 197,
+        "w": 122,
+        "x": 564,
+        "y": 230
+      }
+    },
+    {
+      "key": 263,
+      "name": "Tree 3",
+      "path": "assets/Objects/Decoration.png",
+      "source_rect": {
+        "h": 408,
+        "w": 303,
+        "x": 1182,
+        "y": 1622
+      }
+    }
+  ],
+  "traversal_ramps": [],
+  "wall_segments": []
+}

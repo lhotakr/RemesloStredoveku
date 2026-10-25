@@ -1,0 +1,21 @@
+{
+  "actors": [],
+  "background_image": "assets/modern/Houska_intro.png",
+  "id": "Houska_first_view",
+  "markers": [],
+  "props": [
+    {
+      "font_size": 40,
+      "id": "text_1",
+      "layer": 0,
+      "scale": 1,
+      "text": "28. března 2026\nKraj pod hradem Houska",
+      "type": "text",
+      "visible": true,
+      "width": 400.0,
+      "x": 50.0,
+      "y": 800.0
+    }
+  ],
+  "type": "image_2d"
+}
