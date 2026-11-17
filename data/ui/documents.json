@@ -1,0 +1,25 @@
+{
+  "documents": [
+    {
+      "id": "letter_sample",
+      "type": "letter",
+      "title": "Dopis od Matěje",
+      "original": "Milý příteli,\n\nprosím tě, zastav se ráno u studně. Vody jest třeba v domě i v chlévě. Až práci dokonáš, přijď ke stolu; chléb a teplá polévka budou připraveny.\n\nBuď zdráv.\nMatěj\n\nUkázka české sazby: ě š č ř ž ý á í é ů ú ť ď ň.\nLatina: Pax vobiscum; æ, œ, ā, ē, ī, ō, ū.",
+      "transcript": "Milý příteli,\n\nprosím tě, přijď ráno ke studni. Potřebujeme vodu do domu i pro zvířata. Až budeš hotov, přijď se najíst.\n\nMatěj"
+    },
+    {
+      "id": "church_sample",
+      "type": "church",
+      "title": "Zápis z farní knihy",
+      "original": "In nomine Domini.\n\nLéta Páně čtrnáctistého zapsáno jest, že obec dala na opravu střechy kostelní dřevo a práci svých rukou.\n\nPax vobiscum.\n\ně š č ř ž ý á í é ů ú ť ď ň\nÆternum, cœlum, misericordia.",
+      "transcript": "Ve jménu Páně.\n\nRoku 1400 obec přispěla dřevem a vlastní prací na opravu střechy kostela.\n\nPokoj vám."
+    },
+    {
+      "id": "noble_sample",
+      "type": "noble",
+      "title": "Listina o právu průchodu",
+      "original": "My, správce zdejšího panství, známo činíme všem, kdož tento list uzří, že nositeli jeho dovoleno jest projíti branou s nákladem obilí.\n\nDáno na hradě v měsíci listopadu.\n\nNa svědomí toho připojena pečeť.\n\ně š č ř ž ý á í é ů ú ť ď ň",
+      "transcript": "Správce panství dovoluje držiteli této listiny projít branou s nákladem obilí.\n\nVydáno na hradě v listopadu a potvrzeno pečetí."
+    }
+  ]
+}

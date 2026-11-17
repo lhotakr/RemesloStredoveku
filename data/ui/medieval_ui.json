@@ -1,0 +1,17 @@
+{
+  "textures": {
+    "wood": {"path": "assets/ui/medieval/private/Assets/panel_wood_dark_1.png", "borders": [24, 24, 24, 24], "border_scale": 0.65},
+    "parchment": {"path": "assets/ui/medieval/private/Assets/panel_parchment_ultrathin_fine_fibre.png", "borders": [8, 8, 8, 8]},
+    "stone": {"path": "assets/ui/medieval/private/Assets/panel_stone_thin_1.png", "borders": [30, 30, 30, 30], "border_scale": 0.5},
+    "church": {"path": "assets/ui/medieval/private/Assets/panel_parchment_ultrathin_warm_vellum.png", "borders": [8, 8, 8, 8]},
+    "noble": {"path": "assets/ui/medieval/private/Assets/panel_parchment_verythin_softly_aged.png", "borders": [64, 64, 64, 64], "border_scale": 0.3},
+    "portrait_frame": {"path": "assets/ui/medieval/private/Assets/frame_wood.png", "borders": [50, 50, 50, 50], "border_scale": 0.3},
+    "button": {"path": "assets/ui/medieval/private/Assets/button_parchment_normal.png", "borders": [8, 8, 8, 8]},
+    "button_hover": {"path": "assets/ui/medieval/private/Assets/button_parchment_hover.png", "borders": [8, 8, 8, 8]},
+    "button_pressed": {"path": "assets/ui/medieval/private/Assets/button_parchment_pressed.png", "borders": [8, 8, 8, 8]},
+    "button_disabled": {"path": "assets/ui/medieval/private/Assets/button_parchment_disabled.png", "borders": [8, 8, 8, 8]},
+    "button_focus": {"path": "assets/ui/medieval/private/Assets/button_parchment_focus.png", "borders": [8, 8, 8, 8]}
+  },
+  "portraits": {},
+  "portrait_aliases": {"matej_intro": "matej_sedlak"}
+}
