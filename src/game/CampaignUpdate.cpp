@@ -1,5 +1,6 @@
 #include "Campaign.h"
 
+#include "ControlSettings.h"
 #include "Utf8.h"
 
 #include <cmath>
@@ -34,6 +35,8 @@ bool Campaign::shouldBlockLetterHotkeys() const
 
 void Campaign::handleEvent(const SDL_Event& e)
 {
+    if (m_newGameIntroActive)
+        return;
     // 1) inspect p?es Alt + lev� klik
     if (e.type == SDL_MOUSEBUTTONDOWN &&
         e.button.button == SDL_BUTTON_LEFT &&
@@ -622,6 +625,11 @@ void Campaign::tryUseMapLinkUnderPlayer()
     if (!m_pendingInteriorTransitionId.empty())
         return;
 
+    const Uint8* ks = SDL_GetKeyboardState(nullptr);
+    const bool interactNow = ks[gamecontrols::Get().use] != 0;
+    if (!interactNow || m_interactPressedLastFrame || shouldBlockLetterHotkeys())
+        return;
+
     const SDL_Rect playerRect = m_player.worldAABB();
 
     for (int y = 0; y < m_map.height(); ++y)
@@ -684,29 +692,45 @@ void Campaign::tryUseMapLinkUnderPlayer()
 
 void Campaign::update(float dt)
 {
+    updateInteriorAudio(nullptr);
+
     m_gameTime.setPaused(m_consoleOpen || m_npcDialogOpen);
 
     const int elapsedGameMinutes = m_gameTime.update(dt);
 
     // nejd?�v v?dy aktualizovat po?as� podle aktu�ln�ho ?asu
     updateWeather();
+    updateSmithingTrainingRuntime(elapsedGameMinutes, dt);
+    updateSequenceRuntime(dt);
 
+    SDL_PumpEvents();
     const Uint8* ks = SDL_GetKeyboardState(nullptr);
 
-    if (m_consoleOpen || m_npcDialogOpen)
+    if (m_renderMode == GameRenderMode::Cinematic25D)
     {
         m_player.vx = 0.0f;
         m_player.vy = 0.0f;
+        m_player.isSprinting = false;
         return;
     }
 
+    if (m_consoleOpen || m_npcDialogOpen || m_newGameIntroActive || !m_sequencePlayerControlEnabled)
+    {
+        m_player.vx = 0.0f;
+        m_player.vy = 0.0f;
+        m_player.isSprinting = false;
+        m_player.update(dt, m_characterManager);
+        return;
+    }
+
+    const auto& controls = gamecontrols::Get();
     float ax = 0.0f;
     float ay = 0.0f;
 
-    if (ks[SDL_SCANCODE_A] || ks[SDL_SCANCODE_LEFT])  ax -= 1.0f;
-    if (ks[SDL_SCANCODE_D] || ks[SDL_SCANCODE_RIGHT]) ax += 1.0f;
-    if (ks[SDL_SCANCODE_W] || ks[SDL_SCANCODE_UP])    ay -= 1.0f;
-    if (ks[SDL_SCANCODE_S] || ks[SDL_SCANCODE_DOWN])  ay += 1.0f;
+    if (ks[controls.moveLeft] || ks[SDL_SCANCODE_LEFT])     ax -= 1.0f;
+    if (ks[controls.moveRight] || ks[SDL_SCANCODE_RIGHT])   ax += 1.0f;
+    if (ks[controls.moveForward] || ks[SDL_SCANCODE_UP])    ay -= 1.0f;
+    if (ks[controls.moveBackward] || ks[SDL_SCANCODE_DOWN]) ay += 1.0f;
 
     const float lenSq = ax * ax + ay * ay;
     if (lenSq > 0.0001f)
@@ -716,9 +740,8 @@ void Campaign::update(float dt)
         ay /= len;
     }
 
-    const bool running =
-        ks[SDL_SCANCODE_LCTRL] ||
-        ks[SDL_SCANCODE_RCTRL];
+    const bool running = lenSq > 0.0001f &&
+        (ks[controls.run] || ks[SDL_SCANCODE_LCTRL] || ks[SDL_SCANCODE_RCTRL]);
 
     m_player.isSprinting = running;
 
@@ -883,6 +906,12 @@ void Campaign::tryUseQuestTrigger()
 
 void Campaign::applyQuestRewardEffects(const std::string& flag)
 {
+    if (flag == "quest_benes_nails_started")
+    {
+        m_nailTrainingStation = "stock";
+        return;
+    }
+
     if (flag == "quest_matej_voda_rewarded")
     {
         m_player.stats.condition.nutrition =

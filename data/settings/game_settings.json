@@ -14,8 +14,8 @@
     "use": 8
   },
   "language": "cs",
-  "music_volume": 6,
-  "sfx_volume": 93,
+  "music_volume": 3,
+  "sfx_volume": 53,
   "show_fps": true,
-  "voice_volume": 92
+  "voice_volume": 57
 }

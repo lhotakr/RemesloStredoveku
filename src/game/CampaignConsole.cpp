@@ -18,6 +18,8 @@ void Campaign::consoleLog(const std::string& text)
 
 namespace
 {
+    static int g_debugSmithingDefectCursor = 0;
+
     static std::string DebugLowerAscii(std::string s)
     {
         std::transform(s.begin(), s.end(), s.begin(),
@@ -150,6 +152,12 @@ namespace
         // Safety guard: this is a debug simulation, not a calendar batch job.
         outMinutes = std::clamp(outMinutes, 1, 60 * 24 * 30);
         return true;
+    }
+
+    static const smithing::NailDefectInfo* DebugFindNailDefectInfo(std::string technicalId)
+    {
+        technicalId = DebugLowerAscii(technicalId);
+        return smithing::FindNailDefectInfo(technicalId);
     }
 }
 
@@ -702,6 +710,169 @@ void Campaign::executeConsoleCommand(const std::string& cmd)
         return;
     }
 
+    if (a == "smithing" || a == "kovani")
+    {
+        std::string sub;
+        iss >> sub;
+        sub = DebugLowerAscii(sub);
+
+        if (sub.empty() || sub == "help")
+        {
+            consoleLog("Smithing commands:");
+            consoleLog("smithing defects                 // seznam vad hrebiku");
+            consoleLog("smithing defect crooked_shank    // vygeneruje konkretni vadu");
+            consoleLog("smithing defect random           // vygeneruje nahodnou vadu");
+            return;
+        }
+
+        if (sub == "defects" || sub == "vady" || sub == "list")
+        {
+            consoleLog("=== SMITHING NAIL DEFECTS ===");
+            for (const smithing::NailDefectInfo& info : smithing::AllNailDefectInfos())
+            {
+                consoleLog(std::string(info.technicalId) + " | " + info.nameCs);
+                consoleLog(std::string("  obrazek: ") + info.imagePath);
+                consoleLog(std::string("  popis: ") + info.descriptionCs);
+            }
+            return;
+        }
+
+        if (sub == "defect" || sub == "vada" || sub == "generate_defect")
+        {
+            std::string defectId;
+            iss >> defectId;
+
+            if (defectId.empty())
+            {
+                consoleLog("Pouziti: smithing defect crooked_shank | smithing defect random | smithing defects");
+                return;
+            }
+
+            const smithing::NailDefectInfo* info = nullptr;
+            const std::string defectIdLower = DebugLowerAscii(defectId);
+            if (defectIdLower == "random" || defectIdLower == "nahodna")
+            {
+                const auto& infos = smithing::AllNailDefectInfos();
+                const int index = (currentGameMinuteSerial() + g_debugSmithingDefectCursor++) % static_cast<int>(infos.size());
+                info = &infos[std::clamp(index, 0, static_cast<int>(infos.size()) - 1)];
+            }
+            else
+            {
+                info = DebugFindNailDefectInfo(defectId);
+            }
+
+            if (!info)
+            {
+                consoleLog("Neznama vada: " + defectId);
+                consoleLog("Pouzij: smithing defects");
+                return;
+            }
+
+            beginBenesNailTraining();
+            smithing::NailWorkpieceState* nail = smithing::ActiveNail(m_nailTrainingBatch);
+            if (!nail)
+            {
+                consoleLog("Neni aktivni hrebik. Lekce muze byt dokoncena.");
+                return;
+            }
+
+            if (nail->phase != smithing::NailForgePhase::Finished)
+                nail->phase = smithing::NailForgePhase::Inspecting;
+            smithing::ForceDefect(*nail, info->id);
+            smithing::RecomputeNailDerivedState(*nail, true);
+
+            m_nailTrainingStation = "testing";
+            m_nailTrainingUiOpen = true;
+            m_nailLastMessageKey.clear();
+
+            consoleLog(std::string("Vada vygenerovana: ") + info->technicalId + " | " + info->nameCs);
+            consoleLog(std::string("Obrazek: ") + info->imagePath);
+            consoleLog(std::string("Popis: ") + info->descriptionCs);
+            return;
+        }
+
+        consoleLog("Neznamy smithing prikaz. Pouzij: smithing help");
+        return;
+    }
+
+    if (a == "sequence" || a == "seq")
+    {
+        std::string sub;
+        iss >> sub;
+
+        if (sub == "list")
+        {
+            m_sequenceManager.reload();
+            consoleLog("=== SEQUENCES ===");
+            for (const auto& id : m_sequenceManager.ids())
+                consoleLog(id);
+            for (const auto& err : m_sequenceManager.errors())
+                consoleLog("[sequence] " + err);
+            return;
+        }
+
+        if (sub == "play" || sub == "start")
+        {
+            std::string id;
+            iss >> id;
+            if (id.empty())
+            {
+                consoleLog("Pouziti: sequence play intro_houska");
+                return;
+            }
+            m_sequenceManager.reload();
+            setStoryFlag(id + "_started");
+            if (m_sequenceManager.start(id, *this))
+                consoleLog("Sequence started: " + id);
+            else
+                consoleLog("Sequence start failed: " + id);
+            return;
+        }
+
+        if (sub == "stop")
+        {
+            m_sequenceManager.stop();
+            enablePlayerControl(true);
+            setFadeAlpha(0.0f);
+            setFlashAlpha(0.0f);
+            hideSequenceText();
+            consoleLog("Sequence stopped.");
+            return;
+        }
+
+        if (sub == "status")
+        {
+            const auto s = m_sequenceManager.status();
+            const auto scene = m_cinematicScene.status();
+            std::ostringstream ss;
+            ss << "Sequence status: running=" << (s.running ? "yes" : "no")
+               << " completed=" << (s.completed ? "yes" : "no")
+               << " id=" << s.sequenceId
+               << " node=" << s.nodeId
+               << " action=" << s.actionIndex
+               << " elapsed=" << s.actionElapsed;
+            consoleLog(ss.str());
+            std::ostringstream rs;
+            rs << "Renderer: "
+               << (m_renderMode == GameRenderMode::Cinematic25D ? "2_5d" : "2d")
+               << " scene=" << scene.sceneId
+               << " actors=" << scene.actorCount
+               << " props=" << scene.propCount;
+            consoleLog(rs.str());
+            std::ostringstream cs;
+            cs << "Camera: x=" << scene.cameraX
+               << " y=" << scene.cameraY
+               << " angle=" << scene.cameraAngle
+               << " pitch=" << scene.cameraPitch
+               << " follow=" << scene.cameraFollowActor;
+            consoleLog(cs.str());
+            return;
+        }
+
+        consoleLog("Sequence commands: sequence list, sequence play <id>, sequence stop, sequence status");
+        return;
+    }
+
     if (a == "items")
     {
         std::string filter;
@@ -831,6 +1002,13 @@ void Campaign::executeConsoleCommand(const std::string& cmd)
         consoleLog("weather wind 18");
         consoleLog("weather clouds 90");
         consoleLog("weather wetness 80");
+        consoleLog("smithing defects");
+        consoleLog("smithing defect burned_iron");
+        consoleLog("smithing defect random");
+        consoleLog("sequence list");
+        consoleLog("sequence play intro_houska");
+        consoleLog("sequence stop");
+        consoleLog("sequence status");
         consoleLog("items");
         consoleLog("items nuz");
         consoleLog("give item_id");

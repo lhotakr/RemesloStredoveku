@@ -1,5 +1,7 @@
 #include "Editor.h"
+#include "EditorHelpers.h"
 #include "PathUtils.h"
+#include "ui/MedievalUI.h"
 #include <JsonUtils.h>
 
 #include <algorithm>
@@ -1749,67 +1751,58 @@ void Editor::renderDialogNodeEditor(EditorDialogDef& dlg)
 
 void Editor::renderDialogPreviewWindow()
 {
-    if (m_previewDialogIndex < 0 || m_previewDialogIndex >= (int)m_dialogDefs.size())
+    if (m_previewDialogIndex < 0 || m_previewDialogIndex >= static_cast<int>(m_dialogDefs.size()))
         return;
 
+    auto& ui = medieval::UI::Get();
     auto& dlg = m_dialogDefs[m_previewDialogIndex];
-
-    ImGui::SetNextWindowSize(ImVec2(520, 320), ImGuiCond_FirstUseEver);
-    if (!ImGui::Begin("Dialog Preview"))
-    {
-        ImGui::End();
-        return;
-    }
-
-    int nodeIndex = findDialogNodeIndexById(dlg, m_previewNodeId);
-
-    if (nodeIndex < 0)
-    {
-        ImGui::TextColored(ImVec4(1, 0.4f, 0.4f, 1), "Preview node nenalezen.");
-        if (ImGui::Button("Close preview"))
-        {
-            m_previewDialogIndex = -1;
-            m_previewNodeId.clear();
-        }
-        ImGui::End();
-        return;
-    }
-
-    auto& node = dlg.nodes[nodeIndex];
-
-    ImGui::Text("%s", node.speaker.empty() ? "(bez mluvciho)" : node.speaker.c_str());
-    ImGui::Separator();
-    ImGui::TextWrapped("%s", node.text.c_str());
-    ImGui::Spacing();
-
-    for (int i = 0; i < (int)node.choices.size(); ++i)
-    {
-        std::string btnId = node.choices[i].text + "##preview_" + std::to_string(i);
-        if (ImGui::Button(btnId.c_str(), ImVec2(-1, 0)))
-        {
-            if (node.choices[i].next.empty())
-            {
-                m_previewDialogIndex = -1;
-                m_previewNodeId.clear();
-            }
-            else
-            {
-                m_previewNodeId = node.choices[i].next;
-            }
-        }
-    }
-
-    ImGui::Spacing();
-    if (ImGui::Button("Restart preview", ImVec2(-1, 0)))
-        m_previewNodeId = dlg.startNode;
-
-    if (ImGui::Button("Close preview", ImVec2(-1, 0)))
+    const auto close = [this]
     {
         m_previewDialogIndex = -1;
         m_previewNodeId.clear();
+    };
+    medieval::PlaceWindow({1000 * ui.scale(), 540 * ui.scale()});
+    medieval::Window window(ui, "Dialog Preview", medieval::Surface::Wood, ImGuiWindowFlags_NoSavedSettings);
+    if (!window) return;
+    bool open = true;
+    if (!medieval::WindowHeader(ui, "Rozhovor – náhled", open))
+    {
+        close();
+        return;
     }
-
-    ImGui::End();
+    if (ImGui::BeginTable("##preview-controls", 2))
+    {
+        ImGui::TableNextColumn();
+        if (ui.button("##restart", "Restart náhledu")) m_previewNodeId = dlg.startNode;
+        ImGui::TableNextColumn();
+        if (ui.button("##documents", "Náhled listin")) ui.openDocuments();
+        ImGui::EndTable();
+    }
+    ImGui::PushTextWrapPos(0);
+    ImGui::TextDisabled("Vizuální náhled všech voleb; příběhové podmínky a efekty vyhodnocuje hra.");
+    ImGui::PopTextWrapPos();
+    const int nodeIndex = findDialogNodeIndexById(dlg, m_previewNodeId);
+    if (nodeIndex < 0)
+    {
+        ImGui::TextWrapped("Uzel náhledu nebyl nalezen. Použij restart nebo zavři náhled.");
+        return;
+    }
+    const auto& node = dlg.nodes[nodeIndex];
+    medieval::DialogueView view;
+    view.speaker = node.speaker.empty() ? "Neznámý mluvčí" : node.speaker;
+    view.text = node.text;
+    view.portraitKey = dlg.dialogId;
+    view.nodeKey = dlg.dialogId + "/" + node.id;
+    for (int i = 0; i < static_cast<int>(node.choices.size()); ++i)
+        view.choices.push_back({i, node.choices[i].text});
+    const auto action = ui.dialogueContents(view);
+    if (action.close) close();
+    else if (action.choice >= 0 && action.choice < static_cast<int>(node.choices.size()))
+    {
+        const auto& choice = node.choices[action.choice];
+        if (choice.closeDialog || choice.next.empty()) close();
+        else m_previewNodeId = choice.next;
+    }
 }
 
 bool Editor::dialogNodeExists(const EditorDialogDef& dlg, const std::string& nodeId) const

@@ -19,6 +19,9 @@
     "workbench": "assets/backgrounds/workbench_playfield_1536x768.jpg",
     "testing": "assets/backgrounds/testing_playfield_1536x768.jpg"
   },
+  "animation_packs": {
+    "nail": "nail/nail_forging_animations.json"
+  },
   "atlases": {
     "hands_and_tools": {
       "image": "assets/overlays/smithing_hands_tools_atlas_2048x1024.png",
@@ -52,6 +55,40 @@
         {"id": "refined_hot", "src": [512, 512, 512, 512], "file": "assets/overlays/workpiece_axe/refined_hot_512.png"},
         {"id": "quenched_wet", "src": [1024, 512, 512, 512], "file": "assets/overlays/workpiece_axe/quenched_wet_512.png"},
         {"id": "finished", "src": [1536, 512, 512, 512], "file": "assets/overlays/workpiece_axe/finished_512.png"}
+      ]
+    },
+    "nail_workpiece": {
+      "image": "assets/overlays/workpiece_nail/nail_workpiece_stages_atlas_2048x1024_v1.png",
+      "cell_size": [512, 512],
+      "columns": 4,
+      "rows": 2,
+      "blend": "alpha",
+      "cells": [
+        {"id": "rod_cold", "src": [0, 0, 512, 512], "file": "assets/overlays/workpiece_nail/frames/00_rod_cold.png"},
+        {"id": "rod_heated", "src": [512, 0, 512, 512], "file": "assets/overlays/workpiece_nail/frames/01_rod_heated.png"},
+        {"id": "shank_drawn", "src": [1024, 0, 512, 512], "file": "assets/overlays/workpiece_nail/frames/02_shank_drawn.png"},
+        {"id": "point_forged", "src": [1536, 0, 512, 512], "file": "assets/overlays/workpiece_nail/frames/03_point_forged.png"},
+        {"id": "blank_cut", "src": [0, 512, 512, 512], "file": "assets/overlays/workpiece_nail/frames/04_blank_cut.png"},
+        {"id": "head_partial", "src": [512, 512, 512, 512], "file": "assets/overlays/workpiece_nail/frames/05_head_partial.png"},
+        {"id": "nail_hot", "src": [1024, 512, 512, 512], "file": "assets/overlays/workpiece_nail/frames/06_nail_hot.png"},
+        {"id": "nail_finished", "src": [1536, 512, 512, 512], "file": "assets/overlays/workpiece_nail/frames/07_nail_finished.png"}
+      ]
+    },
+    "nail_defects": {
+      "image": "assets/overlays/defects_nail/nail_defects_atlas_2048x1024_v1.png",
+      "cell_size": [512, 512],
+      "columns": 4,
+      "rows": 2,
+      "blend": "alpha",
+      "cells": [
+        {"id": "crooked_shank", "src": [0, 0, 512, 512], "file": "assets/overlays/defects_nail/frames/00_crooked_shank.png"},
+        {"id": "blunt_point", "src": [512, 0, 512, 512], "file": "assets/overlays/defects_nail/frames/01_blunt_point.png"},
+        {"id": "point_off_axis", "src": [1024, 0, 512, 512], "file": "assets/overlays/defects_nail/frames/02_point_off_axis.png"},
+        {"id": "undersized_head", "src": [1536, 0, 512, 512], "file": "assets/overlays/defects_nail/frames/03_undersized_head.png"},
+        {"id": "head_off_center", "src": [0, 512, 512, 512], "file": "assets/overlays/defects_nail/frames/04_head_off_center.png"},
+        {"id": "neck_crack", "src": [512, 512, 512, 512], "file": "assets/overlays/defects_nail/frames/05_neck_crack.png"},
+        {"id": "burned_iron", "src": [1024, 512, 512, 512], "file": "assets/overlays/defects_nail/frames/06_burned_iron.png"},
+        {"id": "overdrawn_shank", "src": [1536, 512, 512, 512], "file": "assets/overlays/defects_nail/frames/07_overdrawn_shank.png"}
       ]
     },
     "effects": {

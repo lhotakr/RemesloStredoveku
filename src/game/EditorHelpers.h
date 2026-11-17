@@ -3,9 +3,32 @@
 #include <string>
 #include <vector>
 #include <cstdint>
+#include <cstring>
 #include <SDL.h>
 #include "imgui.h"
 #include "terrain/ObjectCatalog.h"
+
+// Cross-platform strncpy_s wrapper
+#ifdef _MSC_VER
+    // MSVC has strncpy_s and _TRUNCATE
+#else
+    // Linux/GCC: define compatible versions
+    // MSVC uses 3-parameter version: strncpy_s(dest, src, _TRUNCATE)
+    // where dest is a fixed-size array and compiler deduces size
+    #define _TRUNCATE ((size_t)-1)
+
+    // Helper to get array size at compile time
+    template<size_t N>
+    inline int strncpy_s(char (&dest)[N], const char* src, size_t count) {
+        if (count == _TRUNCATE) {
+            count = N - 1;
+        }
+        size_t len = std::min(count, N - 1);
+        std::strncpy(dest, src, len);
+        dest[len] = '\0';
+        return 0;
+    }
+#endif
 
 bool ContainsNoCase(const std::string& haystack, const std::string& needle);
 bool IsTechObject(const gameobj::ObjectDef& o);

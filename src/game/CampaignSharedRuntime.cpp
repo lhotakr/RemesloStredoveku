@@ -1,16 +1,21 @@
 #include "Campaign.h"
 
+#include "BuildInteriorEngine.h"
 #include "PlayerProfileStore.h"
+#include "../PathUtils.h"
 
 #include <algorithm>
 #include <array>
 #include <cmath>
 #include <cstdio>
+#include <filesystem>
 #include <string>
 
+#include <SDL_mixer.h>
 #include <nlohmann/json.hpp>
 
 using json = nlohmann::json;
+namespace fs = std::filesystem;
 
 namespace
 {
@@ -76,6 +81,26 @@ std::vector<std::string> LoadStringVector(const json& source)
             out.push_back(item.get<std::string>());
     }
     return out;
+}
+
+std::string ResolveInteriorAudioPath(const InteriorAudioEmitter& emitter)
+{
+    std::string path = emitter.soundPath;
+    if (path.empty() && !emitter.soundId.empty())
+        path = "assets/audio/smithing/nail/" + emitter.soundId + ".ogg";
+
+    if (path.empty())
+        return path;
+
+    const fs::path rawPath(path);
+    if (rawPath.is_absolute() || fs::exists(rawPath))
+        return path;
+
+    const fs::path projectPath = pathutils::ProjectRoot() / rawPath;
+    if (fs::exists(projectPath))
+        return projectPath.string();
+
+    return path;
 }
 
 json SaveStringVector(const std::vector<std::string>& values)
@@ -701,6 +726,9 @@ bool Campaign::handleSharedUiEvent(const SDL_Event& e)
         return true;
     }
 
+    if (m_nailTrainingUiOpen)
+        return true;
+
     if (shouldBlockLetterHotkeys())
         return false;
 
@@ -743,7 +771,8 @@ bool Campaign::sharedUiBlocksMouseLook() const
         m_craftsOpen ||
         m_questJournalOpen ||
         m_npcDialogOpen ||
-        m_forageWindowOpen;
+        m_forageWindowOpen ||
+        m_nailTrainingUiOpen;
 }
 
 float Campaign::playerX() const
@@ -828,12 +857,14 @@ json Campaign::saveRuntimeState() const
         dialogNpcId = m_npcManager.npcs()[m_dialogNpcIndex].id;
 
     return json{
-        {"version", 2},
+        {"version", 3},
         {"map", m_currentMapPath},
         {"game_time", SaveDateTime(m_gameTime.now())},
         {"player", SavePlayer(m_player)},
         {"npcs", npcs},
         {"story_flags", SaveStringSet(m_storyFlags)},
+        {"skill_evidence", SaveStringSet(m_skillEvidence)},
+        {"smithing", smithing::SaveNailTrainingBatch(m_nailTrainingBatch)},
         {"fog_of_war", json{
             {"map_w", m_map.width()},
             {"map_h", m_map.height()},
@@ -946,6 +977,19 @@ void Campaign::loadRuntimeState(const json& state)
         }
 
         LoadStringSet(state.value("story_flags", json::array()), m_storyFlags);
+        LoadStringSet(state.value("skill_evidence", json::array()), m_skillEvidence);
+        for (const std::string& evidence : m_skillEvidence)
+            if (!evidence.empty())
+                m_storyFlags.insert(evidence);
+        if (m_storyFlags.contains("smithing.nail.basic"))
+            m_skillEvidence.insert("smithing.nail.basic");
+
+        smithing::LoadNailTrainingBatch(
+            state.value("smithing", json::object()),
+            m_nailTrainingBatch,
+            currentGameMinuteSerial());
+        if (m_nailTrainingBatch.completed)
+            m_skillEvidence.insert("smithing.nail.basic");
 
         const json fow = state.value("fog_of_war", json::object());
         if (fow.is_object())
@@ -1159,6 +1203,76 @@ void Campaign::loadRuntimeState(const json& state)
     }
 }
 
+void Campaign::updateInteriorAudio(const BuildInteriorEngine* interior)
+{
+    std::unordered_set<std::string> activeSoundIds;
+
+    if (interior)
+    {
+        std::vector<InteriorAudioEmitter> emitters;
+        interior->collectAudioEmitters(emitters);
+
+        for (const InteriorAudioEmitter& emitter : emitters)
+        {
+            if (emitter.soundId.empty())
+                continue;
+
+            const std::string path = ResolveInteriorAudioPath(emitter);
+            if (path.empty())
+                continue;
+
+            int volume = emitter.volume0_128;
+            if (m_nailTrainingUiOpen &&
+                m_nailTrainingBatch.lessonStarted &&
+                emitter.soundId == "forge_fire_loop_01")
+            {
+                volume = 128;
+            }
+            volume = std::clamp(volume, 0, 128);
+            if (volume <= 0)
+                continue;
+
+            activeSoundIds.insert(emitter.soundId);
+            InteriorLoopAudioState& state = m_interiorLoopAudio[emitter.soundId];
+            if (state.channel < 0)
+            {
+                state.channel = m_nextInteriorLoopChannel++;
+                if (m_nextInteriorLoopChannel > 27)
+                    m_nextInteriorLoopChannel = 20;
+            }
+
+            if (!state.loadAttempted || state.path != path)
+            {
+                state.loadAttempted = true;
+                state.path = path;
+                state.loaded = m_audioManager.loadSfx(emitter.soundId, path);
+            }
+
+            if (!state.loaded)
+                continue;
+
+            if (state.volume0_128 <= 0 || !Mix_Playing(state.channel))
+                m_audioManager.playSfx(emitter.soundId, -1, state.channel, volume);
+
+            Mix_Volume(state.channel, volume);
+            state.volume0_128 = volume;
+        }
+    }
+
+    for (auto it = m_interiorLoopAudio.begin(); it != m_interiorLoopAudio.end(); )
+    {
+        if (activeSoundIds.contains(it->first))
+        {
+            ++it;
+            continue;
+        }
+
+        if (it->second.channel >= 0)
+            m_audioManager.stopSfxChannel(it->second.channel);
+        it = m_interiorLoopAudio.erase(it);
+    }
+}
+
 void Campaign::updateSharedRuntime(float dt, bool playerMoving, bool playerRunning)
 {
     m_player.isMoving = playerMoving;
@@ -1171,6 +1285,7 @@ void Campaign::updateSharedRuntime(float dt, bool playerMoving, bool playerRunni
     updateWeather();
     updatePlayerNeeds(elapsedGameMinutes, playerMoving, playerRunning);
     updateFoodPoisoning(elapsedGameMinutes);
+    updateSmithingTrainingRuntime(elapsedGameMinutes, dt);
 
     m_dayHudAnimTime += dt;
     if (m_dayHudAnimTime > 1000.0f)

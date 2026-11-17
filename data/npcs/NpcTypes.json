@@ -7,6 +7,14 @@
       "default_hp": 100,
       "default_mood": 50,
       "default_script_id": "farmer_intro"
+    },
+    {
+      "type_id": "blacksmith",
+      "name": "blacksmith",
+      "character_id": "Character_2_char_10",
+      "default_hp": 100,
+      "default_mood": 55,
+      "default_script_id": "benes_intro"
     }
   ]
 }

@@ -147,6 +147,7 @@ void Campaign::renderLightMask(int screenW, int screenH, float darkness)
     if (!m_lightMask)
         return;
 
+    SDL_Texture* previousTarget = SDL_GetRenderTarget(m_renderer);
     SDL_SetRenderTarget(m_renderer, m_lightMask);
 
     const Uint8 ambient = (Uint8)std::clamp(
@@ -175,7 +176,7 @@ void Campaign::renderLightMask(int screenW, int screenH, float darkness)
         drawLightOnMask(playerScreenX, playerScreenY, radiusPx, intensity);
     }
 
-    SDL_SetRenderTarget(m_renderer, nullptr);
+    SDL_SetRenderTarget(m_renderer, previousTarget);
 
     SDL_SetTextureBlendMode(m_lightMask, SDL_BLENDMODE_MOD);
     SDL_RenderCopy(m_renderer, m_lightMask, nullptr, nullptr);

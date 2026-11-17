@@ -114,6 +114,84 @@
     }
    ,
     {
+      "dialog_id": "benes_intro",
+      "start_node": "start",
+      "nodes": [
+        {
+          "id": "start",
+          "speaker": "Beneš",
+          "text": "Jestli chceš k železu, nezačínej sekerou. Hřebík ukáže ruku rychleji než chlouba.",
+          "choices": [
+            {
+              "text": "Chci se učit. Dej mi první práci.",
+              "next": "give_iron",
+              "style": "polite",
+              "forbid_flag": "quest_benes_nails_started"
+            },
+            {
+              "text": "Mám rozdělané hřebíky.",
+              "next": "work_reminder",
+              "require_flag": "quest_benes_nails_started",
+              "forbid_flag": "quest_benes_nails_done"
+            },
+            {
+              "text": "Co říkáš na mou práci s hřebíky?",
+              "next": "lesson_done",
+              "require_flag": "smithing.nail.basic"
+            },
+            {
+              "text": "Jen zdravím.",
+              "next": "end",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "give_iron",
+          "speaker": "Beneš",
+          "text": "Vezmi hranatou tyč, ohřej jen pracovní konec a udělej deset pokusů. Nechci rychlost, chci vidět, co dělá tvoje ruka.",
+          "choices": [
+            {
+              "text": "Začnu u výhně.",
+              "next": "end",
+              "set_flag": "quest_benes_nails_started",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "work_reminder",
+          "speaker": "Beneš",
+          "text": "Výheň, kovadlina, špička, oddělit, hlava a kontrola. Každý kus počítám, i zmetek.",
+          "choices": [
+            {
+              "text": "Jdu na to.",
+              "next": "end",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "lesson_done",
+          "speaker": "Beneš",
+          "text": "Základ máš zapsaný. Hřebík není mistrovství, ale bez něj kovář nepozná vlastní kladivo.",
+          "choices": [
+            {
+              "text": "Rozumím.",
+              "next": "end",
+              "close_dialog": true
+            }
+          ]
+        },
+        {
+          "id": "end",
+          "speaker": "Beneš",
+          "text": "",
+          "choices": []
+        }
+      ]
+    },
+    {
       "dialog_id": "new_dialog",
       "nodes": [],
       "start_node": "start"

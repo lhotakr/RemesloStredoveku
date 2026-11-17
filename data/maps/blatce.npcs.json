@@ -8,8 +8,8 @@
       "name": "Matěj",
       "script_id": "matej_intro",
       "surname": "z Lípy",
-      "tile_x": 23,
-      "tile_y": 9,
+      "tile_x": 30,
+      "tile_y": 8,
       "type_id": "farmer"
     },
     {
@@ -23,6 +23,18 @@
       "tile_x": 5,
       "tile_y": 13,
       "type_id": "farmer"
+    },
+    {
+      "character_id": "Character_2_char_10",
+      "greeting": "Když chceš do kovárny, nejdřív poslouchej železo.",
+      "hp": 100,
+      "id": "BenesKovar",
+      "mood": 55,
+      "name": "Beneš",
+      "script_id": "benes_intro",
+      "tile_x": 29,
+      "tile_y": 15,
+      "type_id": "blacksmith"
     }
   ]
 }

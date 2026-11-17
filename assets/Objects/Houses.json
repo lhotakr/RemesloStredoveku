@@ -1,5 +1,5 @@
 {
-  "image": "D:/Dev/Pajthon/Objects/Houses.png",
+  "image": "Houses.png",
   "objects": [
     {
       "collider": {

@@ -1,6 +1,31 @@
 out/
 vcpkg/
 vcpkg_installed/
-cmake-build-debug/
+cmake-build-*/
 repair_payload/
 .vs/
+
+# Local development tools and machine configuration.
+/.agents/
+/.codex/
+/.aws/
+
+# Local plans and source packages.
+/Plans/
+
+# Local Python tools, environments and caches.
+*.py
+*.pyw
+*.py[cod]
+__pycache__/
+.venv/
+venv/
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.tox/
+.nox/
+
+# Purchased UI artwork: local/runtime use only (see docs/medieval-ui.md).
+/assets/ui/medieval/private/
+/Plans/fantasy-ui-wood-parchment-and-stone*.zip

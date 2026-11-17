@@ -1,0 +1,191 @@
+{
+  "actors": [
+    {
+      "animation": "idle_down",
+      "character": "Character_2_char_05",
+      "id": "patrik",
+      "marker": "Player_start",
+      "scale": 1.5,
+      "visible": true,
+      "voxel": false
+    }
+  ],
+  "camera": {
+    "angle_degrees": 0,
+    "follow": "patrik",
+    "marker": "arrival_camera",
+    "pitch": 0.02
+  },
+  "id": "intro_houska_camp",
+  "interior": "intro_houska_camp",
+  "markers": [
+    {
+      "angle_degrees": -253.5,
+      "id": "arrival_camera",
+      "pitch": 0.019999999552965164,
+      "type": "camera",
+      "x": 3.643740653991699,
+      "y": -2.7542266845703125,
+      "z": 1.2799999713897705
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "forest_path_start",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 6.0,
+      "y": 5.5,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "forest_path_end",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 23.799999237060547,
+      "y": 3.5,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "camp_spot",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 38.99599838256836,
+      "y": 3.036219596862793,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "camp_camera",
+      "pitch": -0.07000000029802322,
+      "type": "camera",
+      "x": 36.79999923706055,
+      "y": 3.049999952316284,
+      "z": 1.2999999523162842
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "hammock_left",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 41.81492614746094,
+      "y": 1.8252252340316772,
+      "z": 1.5199999809265137
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "hammock_right",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 41.902427673339844,
+      "y": 4.225225448608398,
+      "z": 1.5199999809265137
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "hammock_center",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 41.85867691040039,
+      "y": 3.0252251625061035,
+      "z": 0.44999998807907104
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "Player_start",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 3.594743251800537,
+      "y": 7.8573832511901855,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "Camera1",
+      "pitch": 0.0,
+      "type": "camera",
+      "x": 4.148470878601074,
+      "y": 5.823648929595947,
+      "z": 1.600000023841858
+    },
+    {
+      "angle_degrees": 41.0,
+      "id": "Motyka",
+      "pitch": -0.11999999731779099,
+      "type": "camera",
+      "x": 24.299999237060547,
+      "y": -1.2000000476837158,
+      "z": 1.25
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "hoe_inspect",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 25.549999237060547,
+      "y": 1.649999976158142,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "backpack_drop",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 39.29999923706055,
+      "y": 3.799999952316284,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "hammock_setup_left",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 41.099998474121094,
+      "y": 1.9452252388000488,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "hammock_setup_right",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 41.099998474121094,
+      "y": 4.105225086212158,
+      "z": 0.0
+    },
+    {
+      "angle_degrees": 0.0,
+      "id": "camp_rest",
+      "pitch": 0.0,
+      "type": "sequence",
+      "x": 39.75,
+      "y": 4.099999904632568,
+      "z": 0.0
+    }
+  ],
+  "props": [
+    {
+      "id": "car",
+      "marker": "car_position",
+      "scale": 1.25,
+      "texture": "assets/Castles/Houska1400/wooden_cart.png",
+      "visible": false
+    },
+    {
+      "id": "backpack",
+      "marker": "backpack_drop",
+      "scale": 0.5,
+      "texture": "assets/data/items/backpack_modern_medium.png",
+      "visible": false
+    },
+    {
+      "id": "hammock",
+      "marker": "hammock_center",
+      "render_mode": "billboard",
+      "scale": 1.07,
+      "texture": "assets/modern/Hammock.png",
+      "visible": false
+    }
+  ]
+}
