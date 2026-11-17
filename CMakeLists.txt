@@ -131,6 +131,16 @@ if(EXISTS "/run/host/usr/lib64")
 
 endif()
 
+add_library(RemesloMedievalUI STATIC
+        src/ui/MedievalUI.h
+        src/ui/MedievalUI.cpp
+        src/ui/DialoguePanel.cpp
+        src/ui/DocumentReader.cpp
+)
+target_include_directories(RemesloMedievalUI PUBLIC src third_party/imgui PRIVATE third_party/nlohmann)
+target_link_libraries(RemesloMedievalUI PUBLIC PkgConfig::SDL2 PkgConfig::SDL2_IMAGE)
+target_compile_options(RemesloMedievalUI PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/utf-8>)
+
 add_executable(RemesloStredoveku
         # main
         src/main.cpp
@@ -159,6 +169,9 @@ add_executable(RemesloStredoveku
         src/game/CampaignSequence.cpp
         src/game/CampaignFogOfWar.cpp
         src/game/CampaignDialog.cpp
+        src/game/CampaignDialogUI.cpp
+        src/game/CampaignMenusUI.cpp
+        src/game/CampaignForageUI.cpp
         src/game/CampaignQuests.cpp
         src/game/CampaignHudAssets.cpp
         src/game/Campaign.h
@@ -285,6 +298,7 @@ if(EXISTS "/run/host/usr/include/SDL2")
 endif()
 
 target_link_libraries(RemesloStredoveku PRIVATE
+        RemesloMedievalUI
         PkgConfig::SDL2
         PkgConfig::SDL2_IMAGE
         PkgConfig::SDL2_MIXER
@@ -412,3 +426,20 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL "GNU")
 endif()
 add_test(NAME RemesloInteriorEditorTests COMMAND RemesloInteriorEditorTests)
 set_tests_properties(RemesloInteriorEditorTests PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy")
+
+add_executable(RemesloMedievalUITests
+        src/tests/MedievalUITests.cpp
+        src/game/DialogManager.cpp
+        src/JsonUtils.cpp
+        third_party/imgui/imgui.cpp
+        third_party/imgui/imgui_draw.cpp
+        third_party/imgui/imgui_tables.cpp
+        third_party/imgui/imgui_widgets.cpp
+        third_party/imgui/backends/imgui_impl_sdlrenderer2.cpp
+)
+target_include_directories(RemesloMedievalUITests PRIVATE third_party/nlohmann)
+target_link_libraries(RemesloMedievalUITests PRIVATE RemesloMedievalUI)
+target_compile_definitions(RemesloMedievalUITests PRIVATE SDL_MAIN_HANDLED REMESLO_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+target_compile_options(RemesloMedievalUITests PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/utf-8>)
+add_test(NAME RemesloMedievalUITests COMMAND RemesloMedievalUITests)
+set_tests_properties(RemesloMedievalUITests PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy")

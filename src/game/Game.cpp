@@ -10,6 +10,7 @@
 #include "Player.h"
 #include "Utf8.h"
 #include "ImGuiUtils.h"
+#include "ui/MedievalUI.h"
 
 #include <SDL_image.h>
 #include <algorithm>
@@ -335,47 +336,15 @@ static void DrawTextShadow(const ImVec2& pos, const char* text, ImU32 color, flo
 
 static void DrawMenuFrame(const ImVec2& pos, const ImVec2& size)
 {
-    ImDrawList* dl = ImGui::GetWindowDrawList();
-    const ImVec2 max(pos.x + size.x, pos.y + size.y);
-
-    dl->AddRectFilled(pos, max, ColorU32(0.055f, 0.040f, 0.026f, 0.78f), 18.0f);
-    dl->AddRect(pos, max, ColorU32(0.72f, 0.56f, 0.30f, 0.46f), 18.0f, 0, 1.6f);
-    dl->AddRect(ImVec2(pos.x + 5.0f, pos.y + 5.0f), ImVec2(max.x - 5.0f, max.y - 5.0f), ColorU32(0.96f, 0.78f, 0.40f, 0.14f), 14.0f, 0, 1.0f);
+    medieval::UI::Get().panel(ImGui::GetWindowDrawList(), pos, size, medieval::Surface::Wood);
 }
 
 static bool MedievalMenuButton(const char* label, const ImVec2& size, bool primary = false)
 {
+    auto& ui = medieval::UI::Get();
+    medieval::Font font(ui, medieval::FontRole::Body);
     ImGui::PushID(label);
-
-    const ImVec2 pos = ImGui::GetCursorScreenPos();
-    const bool clicked = ImGui::InvisibleButton("##menu_button", size);
-    const bool hovered = ImGui::IsItemHovered();
-    const bool active = ImGui::IsItemActive();
-
-    ImDrawList* dl = ImGui::GetWindowDrawList();
-    const ImVec2 max(pos.x + size.x, pos.y + size.y);
-
-    ImU32 fill = primary
-        ? ColorU32(0.34f, 0.20f, 0.08f, 0.92f)
-        : ColorU32(0.10f, 0.075f, 0.045f, 0.88f);
-
-    if (hovered)
-        fill = primary ? ColorU32(0.46f, 0.28f, 0.10f, 0.96f) : ColorU32(0.18f, 0.12f, 0.06f, 0.94f);
-    if (active)
-        fill = ColorU32(0.58f, 0.34f, 0.12f, 1.0f);
-
-    dl->AddRectFilled(pos, max, fill, 10.0f);
-    dl->AddRect(pos, max, hovered ? ColorU32(1.0f, 0.78f, 0.34f, 0.90f) : ColorU32(0.78f, 0.58f, 0.28f, 0.52f), 10.0f, 0, hovered ? 2.2f : 1.4f);
-    dl->AddLine(ImVec2(pos.x + 12.0f, pos.y + 8.0f), ImVec2(max.x - 12.0f, pos.y + 8.0f), ColorU32(1.0f, 0.84f, 0.42f, hovered ? 0.38f : 0.18f), 1.0f);
-
-    const ImVec2 textSize = ImGui::CalcTextSize(label);
-    const ImVec2 textPos(
-        pos.x + (size.x - textSize.x) * 0.5f,
-        pos.y + (size.y - textSize.y) * 0.5f - 1.0f);
-
-    dl->AddText(ImVec2(textPos.x + 2.0f, textPos.y + 2.0f), ColorU32(0.0f, 0.0f, 0.0f, 0.65f), label);
-    dl->AddText(textPos, hovered ? ColorU32(1.0f, 0.90f, 0.62f, 1.0f) : ColorU32(0.92f, 0.82f, 0.62f, 1.0f), label);
-
+    const bool clicked = ui.button("##menu_button", label, size.x, primary, size.y);
     ImGui::PopID();
     return clicked;
 }
@@ -990,10 +959,11 @@ void Game::syncInteriorMouseLookSuppression()
     if (!m_interior2D)
         return;
 
-    const bool sharedUiOpen =
+    const bool sharedUiOpen = medieval::UI::Get().documentsOpen() ||
+        (
         m_mode == Mode::Interior2D &&
         m_campaign &&
-        m_campaign->sharedUiBlocksMouseLook();
+        m_campaign->sharedUiBlocksMouseLook());
 
     m_interior2D->setMouseLookSuppressed(m_gameMenuOpen || sharedUiOpen);
 }
@@ -1748,14 +1718,8 @@ bool Game::init(SDL_Window* window)
     ImGui_ImplSDL2_InitForSDLRenderer(m_window, m_renderer);
     ImGui_ImplSDLRenderer2_Init(m_renderer);
 
-    ImGuiIO& io = ImGui::GetIO();
-    static const ImWchar ranges[] = {
-        0x0020, 0x00FF,
-        0x0100, 0x017F,
-        0x0180, 0x024F,
-        0
-    };
-    io.Fonts->AddFontFromFileTTF("assets/Fonts/NotoSans-Regular.ttf", 28.0f, nullptr, ranges);
+    ImGui::GetIO().ConfigFlags |= ImGuiConfigFlags_NavEnableKeyboard;
+    medieval::UI::Get().initialize(m_renderer, ProjectRootPath());
 
     m_menuBg = loadTexture(m_renderer, "assets/Images/MainMenuImg.png", m_menuBgW, m_menuBgH);
 
@@ -1784,6 +1748,8 @@ void Game::shutdown()
     leaveEditor();
     leaveCampaign();
     m_audio.shutdown();
+
+    medieval::UI::Get().shutdown();
 
     if (m_menuBg) {
         SDL_DestroyTexture(m_menuBg);
@@ -2108,6 +2074,13 @@ void Game::handleEvent(const SDL_Event& e)
         return;
     }
 
+    if (medieval::UI::Get().documentsOpen())
+    {
+        if (e.type == SDL_KEYDOWN && e.key.keysym.sym == SDLK_ESCAPE)
+            medieval::UI::Get().closeDocuments();
+        return;
+    }
+
     if (e.type == SDL_KEYDOWN && e.key.repeat == 0 && e.key.keysym.sym == SDLK_ESCAPE) {
         if (m_saveSlotMode != SaveSlotMode::None) {
             closeSaveSlotMenu();
@@ -2206,7 +2179,7 @@ void Game::update(float dt)
     processPendingGameMenuAction();
 
     syncInteriorMouseLookSuppression();
-    if (m_gameMenuOpen && isGameplayMode())
+    if ((m_gameMenuOpen && isGameplayMode()) || medieval::UI::Get().documentsOpen())
         return;
 
     if (m_mode == Mode::Editor && m_editor) {
@@ -2299,88 +2272,64 @@ void Game::render()
             ImGuiWindowFlags_NoBringToFrontOnFocus |
             ImGuiWindowFlags_NoBackground;
 
+        auto& ui = medieval::UI::Get();
+        medieval::Style menuStyle(ui, medieval::Surface::Wood);
+        medieval::Font menuFont(ui, medieval::FontRole::Body);
         ImGui::Begin("##MainMenuOverlay", nullptr, wflags);
 
-        const float titleX = std::max(52.0f, vp.x * 0.055f);
-        const float titleY = std::max(34.0f, vp.y * 0.050f);
-
-        DrawTextShadow(ImVec2(titleX, titleY), T(m_settings.language, "title"), ColorU32(0.94f, 0.78f, 0.43f, 1.0f), 2.05f);
-        ImGui::SetCursorPos(ImVec2(titleX + 4.0f, titleY + 74.0f));
-        ImGui::TextColored(ImVec4(0.82f, 0.74f, 0.58f, 0.92f), "%s", T(m_settings.language, "subtitle"));
+        const float menuScale = ui.scale();
+        const float titleX = 28 * menuScale;
+        const float titleY = 22 * menuScale;
+        {
+            medieval::Font titleFont(ui, medieval::FontRole::Heading);
+            const float titleWidth = std::max(1.0f, vp.x - titleX * 2);
+            const float titleScale = std::min(1.45f, titleWidth / std::max(1.0f, ImGui::CalcTextSize(T(m_settings.language, "title")).x));
+            DrawTextShadow({titleX, titleY}, T(m_settings.language, "title"), ImGui::GetColorU32(medieval::Palette::Ivory), titleScale);
+        }
+        ImGui::SetCursorPos({titleX, titleY + 48 * menuScale});
+        ImGui::PushTextWrapPos(vp.x - titleX);
+        ImGui::TextDisabled("%s", T(m_settings.language, "subtitle"));
+        ImGui::PopTextWrapPos();
 
         if (m_mode == Mode::Menu)
         {
-            const ImVec2 panelSize(450.0f, std::min(850.0f, std::max(200.0f, vp.y - 190.0f)));
-            const ImVec2 panelPos(
-                (vp.x - panelSize.x) * 0.5f,
-                std::max(170.0f, (vp.y - panelSize.y) * 0.52f));
-
-            DrawMenuFrame(panelPos, panelSize);
-            ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 38.0f, panelPos.y + 32.0f));
-            ImGui::BeginChild("MainMenuActions", ImVec2(panelSize.x - 76.0f, panelSize.y - 64.0f));
-            ImGui::BeginGroup();
-
-            ImGui::TextColored(ImVec4(0.86f, 0.76f, 0.54f, 1.0f), "%s", T(m_settings.language, "main_menu"));
-            ImGui::TextColored(ImVec4(0.62f, 0.58f, 0.48f, 1.0f), "%s", T(m_settings.language, "choose_path"));
-            ImGui::Spacing();
-            ImGui::Spacing();
-
-            const ImVec2 btnSize(ImGui::GetContentRegionAvail().x, 48.0f);
-            if (MedievalMenuButton(T(m_settings.language, "start_campaign"), btnSize, true))
-                m_mode = Mode::StyleSelect;
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "load_game"), btnSize, true))
-                openSaveSlotMenu(SaveSlotMode::Load);
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "level_editor"), btnSize))
-                enterEditor();
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "sequence_editor"), btnSize))
-                enterEditor(true);
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "scene_editor"), btnSize))
-                enterInteriorEditor("intro_houska_camp");
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "object_editor"), btnSize))
-                enterObjectEditor();
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "texture_sprite_editor"), btnSize))
-                enterTextureSpriteEditor();
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "interior_2d"), btnSize))
-                enterInterior2D(kDefaultHouskaLocation);
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "interior_editor"), btnSize))
-                enterInteriorEditor(kDefaultHouskaLocation);
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "profile_editor"), btnSize))
+            const float top = 118 * menuScale;
+            const ImVec2 panelSize(std::min(490 * menuScale, vp.x - 24 * menuScale),
+                                   std::max(1.0f, std::min(780 * menuScale, vp.y - top - 18 * menuScale)));
+            const ImVec2 panelPos((vp.x - panelSize.x) * 0.5f, top);
+            ImGui::SetCursorScreenPos(panelPos);
+            medieval::Child actions(ui, "MainMenuActions", panelSize, medieval::Surface::Wood);
+            if (actions)
             {
-                loadProfileDraft(m_pendingBackground);
-                m_mode = Mode::ProfileEditor;
+                ui.heading(T(m_settings.language, "main_menu"));
+                ImGui::TextDisabled("%s", T(m_settings.language, "choose_path"));
+                ImGui::Spacing();
+                const ImVec2 btnSize(ImGui::GetContentRegionAvail().x, 44 * menuScale);
+                if (MedievalMenuButton(T(m_settings.language, "start_campaign"), btnSize, true))
+                    m_mode = Mode::StyleSelect;
+                if (MedievalMenuButton(T(m_settings.language, "load_game"), btnSize))
+                    openSaveSlotMenu(SaveSlotMode::Load);
+                if (MedievalMenuButton(T(m_settings.language, "profile_editor"), btnSize))
+                {
+                    loadProfileDraft(m_pendingBackground);
+                    m_mode = Mode::ProfileEditor;
+                }
+                if (MedievalMenuButton(T(m_settings.language, "settings"), btnSize))
+                    m_mode = Mode::Settings;
+                if (ImGui::CollapsingHeader(m_settings.language == "en" ? "Development tools" : U8("Vývojové nástroje")))
+                {
+                    if (MedievalMenuButton(T(m_settings.language, "level_editor"), btnSize)) enterEditor();
+                    if (MedievalMenuButton(T(m_settings.language, "sequence_editor"), btnSize)) enterEditor(true);
+                    if (MedievalMenuButton(T(m_settings.language, "scene_editor"), btnSize)) enterInteriorEditor("intro_houska_camp");
+                    if (MedievalMenuButton(T(m_settings.language, "object_editor"), btnSize)) enterObjectEditor();
+                    if (MedievalMenuButton(T(m_settings.language, "texture_sprite_editor"), btnSize)) enterTextureSpriteEditor();
+                    if (MedievalMenuButton(T(m_settings.language, "interior_2d"), btnSize)) enterInterior2D(kDefaultHouskaLocation);
+                    if (MedievalMenuButton(T(m_settings.language, "interior_editor"), btnSize)) enterInteriorEditor(kDefaultHouskaLocation);
+                }
+                if (MedievalMenuButton(T(m_settings.language, "quit"), btnSize)) m_running = false;
+                ImGui::Spacing();
+                ImGui::TextWrapped("%s", T(m_settings.language, "hotkeys"));
             }
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "settings"), btnSize))
-                m_mode = Mode::Settings;
-
-            ImGui::Spacing();
-            if (MedievalMenuButton(T(m_settings.language, "quit"), btnSize))
-                m_running = false;
-
-            ImGui::Dummy(ImVec2(1.0f, 8.0f));
-            ImGui::TextColored(ImVec4(0.62f, 0.58f, 0.48f, 0.92f), "%s", T(m_settings.language, "hotkeys"));
-
-            ImGui::EndGroup();
-            ImGui::EndChild();
         }
         else if (m_mode == Mode::StyleSelect)
         {
@@ -2698,6 +2647,8 @@ void Game::render()
         if (m_campaign)
             m_campaign->render();
     }
+
+    medieval::UI::Get().renderDocuments();
 
     if (m_saveSlotMode != SaveSlotMode::None)
         renderSaveSlotMenu(screenW, screenH);

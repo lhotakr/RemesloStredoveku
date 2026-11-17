@@ -1,4 +1,5 @@
 #include "Campaign.h"
+#include "ui/MedievalUI.h"
 #include "JsonUtils.h"
 #include "PathUtils.h"
 #include "Utf8.h"
@@ -1239,27 +1240,12 @@ static CraftTreeUiCache& PlayerOverviewSmithingSkillTreeCache()
     return cache;
 }
 
-static ImU32 CraftNodeFillColor(const std::string& state)
-{
-    if (state == "completed")
-        return ImGui::GetColorU32(ImVec4(0.18f, 0.30f, 0.20f, 1.0f));
-    if (state == "active")
-        return ImGui::GetColorU32(ImVec4(0.36f, 0.19f, 0.10f, 1.0f));
-    if (state == "available")
-        return ImGui::GetColorU32(ImVec4(0.34f, 0.30f, 0.24f, 1.0f));
-    if (state == "locked_far" || state == "secret")
-        return ImGui::GetColorU32(ImVec4(0.12f, 0.12f, 0.12f, 1.0f));
-    if (state == "locked_near" || state == "locked")
-        return ImGui::GetColorU32(ImVec4(0.20f, 0.19f, 0.17f, 1.0f));
-    return ImGui::GetColorU32(ImVec4(0.22f, 0.19f, 0.15f, 1.0f));
-}
-
 static ImU32 CraftNodeBorderColor(const std::string& state)
 {
     if (state == "completed")
         return ImGui::GetColorU32(ImVec4(0.56f, 0.65f, 0.47f, 1.0f));
     if (state == "active")
-        return ImGui::GetColorU32(ImVec4(0.96f, 0.45f, 0.13f, 1.0f));
+        return ImGui::GetColorU32(ImVec4(0.61f, 0.46f, 0.25f, 1.0f));
     if (state == "locked_near")
         return ImGui::GetColorU32(ImVec4(0.52f, 0.47f, 0.37f, 1.0f));
     if (state == "secret")
@@ -1596,7 +1582,8 @@ static void CraftDrawNode(
     const ImVec2 size(nodeSize.x * zoom, nodeSize.y * zoom);
     const ImVec2 p0(origin.x + node.pos.x * zoom, origin.y + node.pos.y * zoom);
     const ImVec2 p1(p0.x + size.x, p0.y + size.y);
-    const float rounding = 7.0f * zoom;
+    auto& ui = medieval::UI::Get();
+    const float rounding = 2 * ui.scale();
 
     if (node.secret)
     {
@@ -1612,8 +1599,10 @@ static void CraftDrawNode(
         return;
     }
 
-    drawList->AddRectFilled(p0, p1, CraftNodeFillColor(node.state), rounding);
-    drawList->AddRect(p0, p1, selected ? ImGui::GetColorU32(ImVec4(1.0f, 0.69f, 0.26f, 1.0f)) : CraftNodeBorderColor(node.state), rounding, 0, selected ? 3.0f : 2.0f);
+    ui.panel(drawList, p0, size, medieval::Surface::Parchment);
+    if (node.state.find("locked") == 0)
+        drawList->AddRectFilled(p0, p1, IM_COL32(77, 62, 42, 42));
+    drawList->AddRect(p0, p1, selected ? ImGui::GetColorU32(medieval::Palette::Brass) : CraftNodeBorderColor(node.state), rounding, 0, selected ? 3.0f : 1.0f);
 
     const float iconSize = std::max(18.0f, 46.0f * zoom);
     const ImVec2 iconMin(p0.x + 12.0f * zoom, p0.y + 42.0f * zoom);
@@ -1624,28 +1613,16 @@ static void CraftDrawNode(
     else
         drawList->AddCircleFilled(ImVec2((iconMin.x + iconMax.x) * 0.5f, (iconMin.y + iconMax.y) * 0.5f), iconSize * 0.5f, ImGui::GetColorU32(ImVec4(0.10f, 0.09f, 0.08f, 1.0f)));
 
-    const float titleX = p0.x + 12.0f * zoom;
-    const ImVec4 titleClip(titleX, p0.y + 8.0f * zoom, p1.x - 14.0f * zoom, p0.y + 31.0f * zoom);
-    drawList->AddText(
-        nullptr,
-        0.0f,
-        ImVec2(titleX, p0.y + 8.0f * zoom),
-        ImGui::GetColorU32(ImVec4(0.93f, 0.86f, 0.72f, 1.0f)),
-        node.label.c_str(),
-        nullptr,
-        0.0f,
-        &titleClip);
-
-    const ImVec4 subtitleClip(p0.x + 70.0f * zoom, p0.y + 50.0f * zoom, p1.x - 12.0f * zoom, p0.y + 73.0f * zoom);
-    drawList->AddText(
-        nullptr,
-        0.0f,
-        ImVec2(p0.x + 70.0f * zoom, p0.y + 50.0f * zoom),
-        ImGui::GetColorU32(ImVec4(0.66f, 0.60f, 0.50f, 1.0f)),
-        node.subtitle.c_str(),
-        nullptr,
-        0.0f,
-        &subtitleClip);
+    const float titleX = p0.x + 12 * zoom;
+    const float textSize = std::max(11 * ui.scale(), 21 * zoom);
+    const ImVec4 titleClip(titleX, p0.y, p1.x - 12 * zoom, p0.y + 38 * zoom);
+    drawList->AddText(ui.font(medieval::FontRole::Heading), textSize,
+        {titleX, p0.y + 8 * zoom}, ImGui::GetColorU32(medieval::Palette::Ink),
+        node.label.c_str(), nullptr, 0, &titleClip);
+    const ImVec4 subtitleClip(p0.x + 70 * zoom, p0.y + 40 * zoom, p1.x - 12 * zoom, p1.y - 27 * zoom);
+    drawList->AddText(ui.font(medieval::FontRole::Body), std::max(10 * ui.scale(), 18 * zoom),
+        {p0.x + 70 * zoom, p0.y + 48 * zoom}, ImGui::GetColorU32(medieval::Palette::MutedInk),
+        node.subtitle.c_str(), nullptr, 0, &subtitleClip);
 
     if (node.progress >= 0.0f)
     {
@@ -1658,7 +1635,7 @@ static void CraftDrawNode(
             ImVec2(bar0.x + (bar1.x - bar0.x) * clamped, bar1.y),
             node.state == "completed"
                 ? ImGui::GetColorU32(ImVec4(0.62f, 0.74f, 0.45f, 1.0f))
-                : ImGui::GetColorU32(ImVec4(0.94f, 0.45f, 0.13f, 1.0f)),
+                : ImGui::GetColorU32(ImVec4(0.55f, 0.42f, 0.23f, 1.0f)),
             3.0f);
     }
 
@@ -1714,11 +1691,10 @@ static void CraftDrawLink(
 
 static void CraftDrawGrid(ImDrawList* drawList, const ImVec2& min, const ImVec2& max, const ImVec2& pan, float zoom)
 {
-    drawList->AddRectFilled(min, max, ImGui::GetColorU32(ImVec4(0.03f, 0.025f, 0.02f, 1.0f)));
-
+    medieval::UI::Get().panel(drawList, min, {max.x - min.x, max.y - min.y}, medieval::Surface::Parchment);
     const float grid = std::max(12.0f, 72.0f * zoom);
-    const ImU32 minor = ImGui::GetColorU32(ImVec4(0.35f, 0.25f, 0.15f, 0.42f));
-    const ImU32 major = ImGui::GetColorU32(ImVec4(0.56f, 0.39f, 0.20f, 0.62f));
+    const ImU32 minor = IM_COL32(88, 66, 39, 15);
+    const ImU32 major = IM_COL32(88, 66, 39, 32);
 
     float xStart = min.x + std::fmod(pan.x, grid);
     if (xStart > min.x)
@@ -1743,11 +1719,28 @@ static void CraftRenderSkillTreeCanvas(
     const CraftSkillTreeView& tree,
     std::string& selectedNodeId,
     ImVec2& pan,
-    float& zoom)
+    float& zoom,
+    bool resetView)
 {
-    const ImVec2 canvasSize = ImGui::GetContentRegionAvail();
+    const auto available = ImGui::GetContentRegionAvail();
+    const ImVec2 canvasSize{std::max(1.0f, available.x), std::max(1.0f, available.y)};
     const std::string canvasId = "##skill_tree_canvas_" + tree.domainId;
+    // Keep an actual node visible when the detail pane moves below a short canvas.
+    auto* storage = ImGui::GetStateStorage();
+    const auto widthKey = ImGui::GetID((canvasId + "-width").c_str());
+    const auto heightKey = ImGui::GetID((canvasId + "-height").c_str());
+    const bool resized = storage->GetFloat(widthKey) != canvasSize.x || storage->GetFloat(heightKey) != canvasSize.y;
+    storage->SetFloat(widthKey, canvasSize.x);
+    storage->SetFloat(heightKey, canvasSize.y);
+    if (resetView || resized || zoom <= 0)
+    {
+        if (resetView || zoom <= 0) zoom = std::clamp((tree.rich ? 0.50f : 0.62f) * medieval::UI::Get().scale(), 0.34f, 1.25f);
+        const auto* node = CraftSelectedNode(tree, selectedNodeId);
+        pan = {24 - (node ? node->pos.x * zoom : 0),
+               (canvasSize.y - tree.nodeSize.y * zoom) / 2 - (node ? node->pos.y * zoom : 0)};
+    }
     ImGui::InvisibleButton(canvasId.c_str(), canvasSize);
+    ImGui::SetItemKeyOwner(ImGuiKey_MouseWheelY);
 
     const bool hovered = ImGui::IsItemHovered();
     const bool active = ImGui::IsItemActive();
@@ -1776,14 +1769,7 @@ static void CraftRenderSkillTreeCanvas(
 
     const ImVec2 worldOrigin(canvasMin.x + pan.x, canvasMin.y + pan.y);
 
-    bool resetRequested = false;
-    const ImVec2 resetSize(122.0f, 28.0f);
-    const ImVec2 resetMin(canvasMax.x - resetSize.x - 16.0f, canvasMax.y - resetSize.y - 14.0f);
-    const ImVec2 resetMax(resetMin.x + resetSize.x, resetMin.y + resetSize.y);
-    if (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && CraftPointInRect(io.MousePos, resetMin, resetMax))
-        resetRequested = true;
-
-    if (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left) && !resetRequested)
+    if (hovered && ImGui::IsMouseClicked(ImGuiMouseButton_Left))
     {
         for (int i = static_cast<int>(tree.nodes.size()) - 1; i >= 0; --i)
         {
@@ -1798,14 +1784,8 @@ static void CraftRenderSkillTreeCanvas(
         }
     }
 
-    if (resetRequested)
-    {
-        zoom = tree.rich ? 0.50f : 0.62f;
-        pan = ImVec2(32.0f, tree.rich ? -115.0f : -85.0f);
-    }
-
-    CraftDrawGrid(drawList, canvasMin, canvasMax, pan, zoom);
     drawList->PushClipRect(canvasMin, canvasMax, true);
+    CraftDrawGrid(drawList, canvasMin, canvasMax, pan, zoom);
 
     for (const CraftLinkView& link : tree.links)
     {
@@ -1841,15 +1821,7 @@ static void CraftRenderSkillTreeCanvas(
 
     drawList->PopClipRect();
 
-    const ImVec2 hintMin(canvasMin.x + 14.0f, canvasMin.y + 14.0f);
-    const ImVec2 hintMax(hintMin.x + 222.0f, hintMin.y + 28.0f);
-    drawList->AddRectFilled(hintMin, hintMax, ImGui::GetColorU32(ImVec4(0.16f, 0.11f, 0.08f, 0.92f)), 4.0f);
-    drawList->AddRect(hintMin, hintMax, ImGui::GetColorU32(ImVec4(0.42f, 0.28f, 0.16f, 1.0f)), 4.0f);
-    drawList->AddText(ImVec2(hintMin.x + 10.0f, hintMin.y + 7.0f), ImGui::GetColorU32(ImVec4(0.70f, 0.63f, 0.53f, 1.0f)), U8("Kolečko: přiblížení  ·  LMB: posun"));
 
-    drawList->AddRectFilled(resetMin, resetMax, ImGui::GetColorU32(ImVec4(0.20f, 0.13f, 0.08f, 0.96f)), 4.0f);
-    drawList->AddRect(resetMin, resetMax, ImGui::GetColorU32(ImVec4(0.57f, 0.38f, 0.19f, 1.0f)), 4.0f);
-    drawList->AddText(ImVec2(resetMin.x + 14.0f, resetMin.y + 8.0f), ImGui::GetColorU32(ImVec4(0.78f, 0.67f, 0.50f, 1.0f)), U8("PŘEHLED STROMU"));
 }
 
 static void CraftRenderLessonLine(
@@ -1879,7 +1851,7 @@ static void CraftRenderSkillDetail(
     const CraftSkillTreeView& tree,
     const CraftNodeView* selectedNode)
 {
-    ImGui::TextColored(ImVec4(0.86f, 0.78f, 0.61f, 1.0f), U8("DETAIL DOVEDNOSTI"));
+    ImGui::TextColored(medieval::Palette::MutedInk, U8("DETAIL DOVEDNOSTI"));
     ImGui::Separator();
 
     if (!selectedNode)
@@ -1889,8 +1861,8 @@ static void CraftRenderSkillDetail(
     }
 
     const CraftNodeView& node = *selectedNode;
-    ImGui::TextColored(ImVec4(0.95f, 0.42f, 0.12f, 1.0f), "%s", node.secret ? U8("Neznámý uzel") : node.label.c_str());
-    ImGui::TextColored(ImVec4(0.62f, 0.55f, 0.45f, 1.0f), "%s", node.subtitle.c_str());
+    medieval::UI::Get().heading(node.secret ? U8("Neznámý uzel") : node.label);
+    ImGui::TextWrapped("%s", node.subtitle.c_str());
     ImGui::Spacing();
 
     const ImVec2 iconStart = ImGui::GetCursorScreenPos();
@@ -1914,13 +1886,13 @@ static void CraftRenderSkillDetail(
     char overlay[32];
     std::snprintf(overlay, sizeof(overlay), "%.0f %%", tree.currentProgress);
     ImGui::ProgressBar(progress, ImVec2(std::max(100.0f, ImGui::GetContentRegionAvail().x), 0.0f), overlay);
-    ImGui::TextColored(ImVec4(0.62f, 0.55f, 0.45f, 1.0f), U8("Účinnost učení řemesla"));
+    ImGui::TextWrapped(U8("Účinnost učení řemesla"));
     ImGui::EndGroup();
 
     ImGui::Spacing();
     ImGui::Separator();
     ImGui::Spacing();
-    ImGui::TextColored(ImVec4(0.86f, 0.78f, 0.61f, 1.0f), U8("CO SE UČÍŠ"));
+    ImGui::TextColored(medieval::Palette::MutedInk, U8("CO SE UČÍŠ"));
 
     if (node.lessons.empty())
     {
@@ -1936,7 +1908,7 @@ static void CraftRenderSkillDetail(
     ImGui::Spacing();
     ImGui::Separator();
     ImGui::Spacing();
-    ImGui::TextColored(ImVec4(0.86f, 0.78f, 0.61f, 1.0f), U8("PODMÍNKA POSTUPU"));
+    ImGui::TextColored(medieval::Palette::MutedInk, U8("PODMÍNKA POSTUPU"));
     if (!node.proofText.empty())
         PlayerOverviewWrappedText(node.proofText);
     else if (node.secret)
@@ -1947,7 +1919,7 @@ static void CraftRenderSkillDetail(
     ImGui::Spacing();
     ImGui::Spacing();
     if (node.state == "active")
-        ImGui::Button(U8("DALŠÍ: VYBER SPECIALIZACI"), ImVec2(-1.0f, 38.0f));
+        medieval::UI::Get().button("##specialization", U8("DALŠÍ: VYBER SPECIALIZACI"));
 }
 
 void Campaign::renderCraftsUI()
@@ -1961,26 +1933,18 @@ void Campaign::renderCraftsUI()
         m_craftsFocus = false;
     }
 
-    const ImGuiIO& io = ImGui::GetIO();
-    const ImVec2 windowSize(
-        std::max(880.0f, io.DisplaySize.x),
-        std::max(560.0f, io.DisplaySize.y));
-    ImGui::SetNextWindowPos(ImVec2(0.0f, 0.0f), ImGuiCond_Always);
-    ImGui::SetNextWindowSize(windowSize, ImGuiCond_Always);
-
-    const ImGuiWindowFlags windowFlags = ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize;
-    if (!ImGui::Begin(U8("Řemesla"), &m_craftsOpen, windowFlags))
-    {
-        ImGui::End();
-        return;
-    }
+    auto& ui = medieval::UI::Get();
+    const auto* viewport = ImGui::GetMainViewport();
+    medieval::PlaceWindow(viewport->WorkSize, ImGuiCond_Always);
+    medieval::Window window(ui, U8("Řemesla"), medieval::Surface::Wood,
+        ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoSavedSettings);
+    if (!window || !medieval::WindowHeader(ui, U8("Mapa řemesel"), m_craftsOpen)) return;
 
     CraftTreeUiCache& cache = PlayerOverviewCraftTreeCache();
     if (!cache.loaded)
     {
         ImGui::TextColored(ImVec4(0.95f, 0.45f, 0.35f, 1.0f), U8("Strom řemesel se nepodařilo načíst."));
         PlayerOverviewWrappedText(cache.error);
-        ImGui::End();
         return;
     }
 
@@ -1989,7 +1953,6 @@ void Campaign::renderCraftsUI()
     if (domains.empty())
     {
         ImGui::TextDisabled(U8("Žádné obory."));
-        ImGui::End();
         return;
     }
 
@@ -1999,49 +1962,32 @@ void Campaign::renderCraftsUI()
     static std::unordered_map<std::string, float> zoomByDomain;
     selectedDomain = std::clamp(selectedDomain, 0, static_cast<int>(domains.size()) - 1);
 
-    const float railWidth = 68.0f;
-    ImGui::BeginChild("##craft_icon_rail", ImVec2(railWidth, 0.0f), true);
-    for (int i = 0; i < static_cast<int>(domains.size()); ++i)
+    const float railWidth = 100 * ui.scale();
     {
-        const json& domain = domains[static_cast<size_t>(i)];
-        const std::string domainId = PlayerOverviewJsonString(domain, "id");
-        const std::string label = PlayerOverviewJsonString(domain, "name", domainId.c_str());
-        const std::string iconPath = PlayerOverviewJsonString(domain, "icon");
-
-        ImGui::PushID(i);
-        const ImVec2 buttonSize(48.0f, 48.0f);
-        if (ImGui::InvisibleButton("craft_icon", buttonSize))
-            selectedDomain = i;
-
-        const bool selected = selectedDomain == i;
-        const bool hovered = ImGui::IsItemHovered();
-        const ImVec2 min = ImGui::GetItemRectMin();
-        const ImVec2 max = ImGui::GetItemRectMax();
-        ImDrawList* drawList = ImGui::GetWindowDrawList();
-
-        drawList->AddRectFilled(
-            min,
-            max,
-            ImGui::GetColorU32(selected ? ImVec4(0.35f, 0.21f, 0.11f, 1.0f) : (hovered ? ImVec4(0.24f, 0.18f, 0.13f, 1.0f) : ImVec4(0.10f, 0.08f, 0.06f, 1.0f))),
-            6.0f);
-        if (selected)
-            drawList->AddRect(min, max, ImGui::GetColorU32(ImVec4(0.92f, 0.57f, 0.20f, 1.0f)), 6.0f, 0, 2.0f);
-
-        const ImVec2 iconMin(min.x + 5.0f, min.y + 5.0f);
-        const ImVec2 iconMax(max.x - 5.0f, max.y - 5.0f);
-        SDL_Texture* iconTex = CraftLoadCachedTexture(m_renderer, m_craftIconCache, iconPath);
-        if (iconTex)
-            drawList->AddImage((ImTextureID)iconTex, iconMin, iconMax);
-        else
-            drawList->AddCircleFilled(ImVec2((iconMin.x + iconMax.x) * 0.5f, (iconMin.y + iconMax.y) * 0.5f), 16.0f, ImGui::GetColorU32(ImVec4(0.20f, 0.15f, 0.11f, 1.0f)));
-
-        if (hovered)
-            ImGui::SetTooltip("%s", label.c_str());
-        ImGui::PopID();
-        ImGui::Dummy(ImVec2(0.0f, 5.0f));
+        medieval::Child rail(ui, "##craft_icon_rail", {railWidth, 0}, medieval::Surface::Wood);
+        if (rail) for (int i = 0; i < static_cast<int>(domains.size()); ++i)
+        {
+            const json& domain = domains[static_cast<size_t>(i)];
+            const std::string domainId = PlayerOverviewJsonString(domain, "id");
+            const std::string label = PlayerOverviewJsonString(domain, "name", domainId.c_str());
+            const std::string iconPath = PlayerOverviewJsonString(domain, "icon");
+            ImGui::PushID(i);
+            const ImVec2 buttonSize(48 * ui.scale(), 48 * ui.scale());
+            if (ImGui::InvisibleButton("craft_icon", buttonSize, ImGuiButtonFlags_EnableNav)) selectedDomain = i;
+            const auto min = ImGui::GetItemRectMin();
+            const auto max = ImGui::GetItemRectMax();
+            auto* draw = ImGui::GetWindowDrawList();
+            ui.buttonFrame(draw, min, buttonSize, ImGui::IsItemHovered(), ImGui::IsItemActive(),
+                ImGui::IsItemFocused(), selectedDomain == i);
+            if (auto* icon = CraftLoadCachedTexture(m_renderer, m_craftIconCache, iconPath))
+                draw->AddImage((ImTextureID)icon, {min.x + 5, min.y + 5}, {max.x - 5, max.y - 5});
+            else
+                draw->AddText({min.x + 12 * ui.scale(), min.y + 10 * ui.scale()},
+                    ImGui::GetColorU32(medieval::Palette::Ink), "?");
+            if (ImGui::IsItemHovered() || ImGui::IsItemFocused()) ImGui::SetTooltip("%s", label.c_str());
+            ImGui::PopID();
+        }
     }
-    ImGui::EndChild();
-
     ImGui::SameLine();
 
     const json& selected = domains[static_cast<size_t>(selectedDomain)];
@@ -2056,39 +2002,34 @@ void Campaign::renderCraftsUI()
 
     ImVec2& pan = panByDomain[tree.domainId];
     float& zoom = zoomByDomain[tree.domainId];
-    if (zoom <= 0.0f)
+
+    medieval::Child workspace(ui, "##craft_workspace", {0, 0}, medieval::Surface::Wood);
+    if (!workspace) return;
+    const auto available = ImGui::GetContentRegionAvail();
+    const bool stacked = available.x < 850 * ui.scale();
+    const float detailWidth = 310 * ui.scale();
+    const float mainWidth = stacked ? 0 : std::max(1.0f, available.x - detailWidth - ImGui::GetStyle().ItemSpacing.x);
+    const float mainHeight = stacked ? available.y * 0.57f : 0;
     {
-        zoom = tree.rich ? 0.50f : 0.62f;
-        pan = ImVec2(32.0f, tree.rich ? -115.0f : -85.0f);
+        medieval::Child main(ui, "##craft_tree_main", {mainWidth, mainHeight}, medieval::Surface::Wood);
+        if (main)
+        {
+            ui.heading(tree.title);
+            const CraftNodeView* activeNode = CraftSelectedNode(tree, selectedNodeId);
+            ImGui::TextWrapped("%s%s", tree.progressLabel.c_str(),
+                activeNode ? (std::string(U8("  ·  ")) + activeNode->label).c_str() : "");
+            const bool resetView = ui.button("##reset-tree", U8("Přehled stromu"), std::min(190 * ui.scale(), ImGui::GetContentRegionAvail().x));
+            ImGui::TextWrapped(U8("Kolečko: přiblížení  ·  LMB: výběr a posun"));
+            CraftRenderSkillTreeCanvas(m_renderer, m_craftIconCache, tree, selectedNodeId, pan, zoom, resetView);
+        }
     }
-
-    const float detailWidth = 292.0f;
-    const float spacing = ImGui::GetStyle().ItemSpacing.x;
-    const float mainWidth = std::max(420.0f, ImGui::GetContentRegionAvail().x - detailWidth - spacing);
-
-    ImGui::BeginChild("##craft_tree_main", ImVec2(mainWidth, 0.0f), false);
-    ImGui::TextColored(ImVec4(0.88f, 0.82f, 0.68f, 1.0f), "%s", tree.title.c_str());
-    ImGui::SameLine(std::max(260.0f, ImGui::GetContentRegionAvail().x - 170.0f));
-    const CraftNodeView* activeNode = CraftSelectedNode(tree, selectedNodeId);
-    std::string selectedProgressLabel = tree.progressLabel;
-    const std::string selectedNodeLabel = activeNode ? (std::string(U8("  ·  ")) + activeNode->label) : std::string{};
-    ImGui::TextColored(
-        ImVec4(0.95f, 0.45f, 0.13f, 1.0f),
-        "%s%s",
-        selectedProgressLabel.c_str(),
-        selectedNodeLabel.c_str());
-
-    CraftRenderSkillTreeCanvas(m_renderer, m_craftIconCache, tree, selectedNodeId, pan, zoom);
-    ImGui::EndChild();
-
-    ImGui::SameLine();
-
-    ImGui::BeginChild("##craft_skill_detail", ImVec2(detailWidth, 0.0f), true);
-    CraftRenderSkillDetail(m_renderer, m_craftIconCache, tree, CraftSelectedNode(tree, selectedNodeId));
-    ImGui::EndChild();
-
-    ImGui::End();
+    if (!stacked) ImGui::SameLine();
+    {
+        medieval::Child detail(ui, "##craft_skill_detail", {stacked ? 0 : detailWidth, 0}, medieval::Surface::Parchment);
+        if (detail) CraftRenderSkillDetail(m_renderer, m_craftIconCache, tree, CraftSelectedNode(tree, selectedNodeId));
+    }
 }
+
 
 static SDL_Texture* loadTexture(SDL_Renderer* r, const char* path, int& outW, int& outH)
 {
@@ -2338,197 +2279,6 @@ void Campaign::renderDebugHud()
     ImGui::End();
 }
 
-void Campaign::renderNpcDialog()
-{
-    if (!m_npcDialogOpen)
-        return;
-
-    if (m_dialogNpcIndex < 0 || m_dialogNpcIndex >= (int)m_npcManager.npcs().size())
-    {
-        m_npcDialogOpen = false;
-        m_dialogNpcIndex = -1;
-        m_activeDialog = nullptr;
-        m_activeDialogNodeId.clear();
-        return;
-    }
-
-    const auto& npc = m_npcManager.npcs()[m_dialogNpcIndex];
-    const std::string displayName = npc.displayName();
-
-    ImGui::SetNextWindowSize(ImVec2(800, 500), ImGuiCond_Always);
-    ImGui::SetNextWindowPos(ImVec2(40, 500), ImGuiCond_Always);
-
-    ImGuiWindowFlags flags =
-        ImGuiWindowFlags_NoResize |
-        ImGuiWindowFlags_NoCollapse;
-
-    if (ImGui::Begin(("Rozhovor##npc_" + npc.id).c_str(), nullptr, flags))
-    {
-        if (m_activeDialog && !m_activeDialogNodeId.empty())
-        {
-            const DialogNode* node = m_dialogManager.findNode(*m_activeDialog, m_activeDialogNodeId);
-
-            if (!node || !isDialogNodeAvailable(*node))
-            {
-                ImGui::Text("Chyba dialogu.");
-                if (ImGui::Button("Zavrit"))
-                {
-                    m_npcDialogOpen = false;
-                    m_dialogNpcIndex = -1;
-                    m_activeDialog = nullptr;
-                    m_activeDialogNodeId.clear();
-                }
-            }
-            else
-            {
-                const std::string speaker = node->speaker.empty() ? displayName : node->speaker;
-
-                ImGui::Text("%s", speaker.c_str());
-                ImGui::Text("Naladeni: %d", npc.mood);
-                ImGui::Separator();
-                ImGui::TextWrapped("%s", node->text.c_str());
-                ImGui::Spacing();
-
-                for (int i = 0; i < (int)node->choices.size(); ++i)
-                {
-                    const auto& ch = node->choices[i];
-
-                    if (!isDialogChoiceAvailable(ch))
-                        continue;
-
-                    std::string label = formatChoiceLabel(ch);
-                    std::string btnId = label + "##choice_" + std::to_string(i);
-
-                    if (ImGui::Button(btnId.c_str(), ImVec2(-1, 0)))
-                    {
-                        applyDialogChoiceEffects(ch);
-
-                        if (ch.closeDialog || ch.nextNodeId.empty())
-                        {
-                            m_npcDialogOpen = false;
-                            m_dialogNpcIndex = -1;
-                            m_activeDialog = nullptr;
-                            m_activeDialogNodeId.clear();
-                        }
-                        else
-                        {
-                            m_activeDialogNodeId = ch.nextNodeId;
-                        }
-                    }
-                }
-
-                ImGui::Spacing();
-                if (ImGui::Button("Ukoncit rozhovor", ImVec2(-1, 0)))
-                {
-                    m_npcDialogOpen = false;
-                    m_dialogNpcIndex = -1;
-                    m_activeDialog = nullptr;
-                    m_activeDialogNodeId.clear();
-                }
-            }
-        }
-        else
-        {
-            ImGui::Text("NPC: %s", displayName.c_str());
-
-            ImGui::Separator();
-            ImGui::TextWrapped("%s", npc.greeting.empty()
-                ? "NPC na tebe mlcky hledi."
-                : npc.greeting.c_str());
-
-            ImGui::Spacing();
-            if (ImGui::Button("Odejit", ImVec2(-1, 0)))
-            {
-                m_npcDialogOpen = false;
-                m_dialogNpcIndex = -1;
-                m_activeDialog = nullptr;
-                m_activeDialogNodeId.clear();
-            }
-        }
-    }
-
-    ImGui::End();
-}
-
-void Campaign::renderQuestJournal()
-{
-    if (m_questJournalFocus)
-    {
-        ImGui::SetNextWindowFocus();
-        m_questJournalFocus = false;
-    }
-
-    ImGui::SetNextWindowPos(ImVec2(80, 80), ImGuiCond_FirstUseEver);
-    ImGui::SetNextWindowSize(ImVec2(520, 420), ImGuiCond_FirstUseEver);
-
-    if (!ImGui::Begin("Ukolnicek", &m_questJournalOpen))
-    {
-        ImGui::End();
-        return;
-    }
-
-    ImGui::TextUnformatted("Aktivni ukoly");
-    ImGui::Separator();
-
-    bool anyActive = false;
-
-    for (const auto& q : m_questDefs)
-    {
-        if (!isQuestActive(q))
-            continue;
-
-        anyActive = true;
-
-        ImGui::PushID(q.id.c_str());
-
-        ImGui::Text("%s", q.title.c_str());
-        ImGui::TextWrapped("%s", q.description.c_str());
-
-        if (isQuestReadyToTurnIn(q))
-            ImGui::TextColored(ImVec4(0.85f, 0.80f, 0.35f, 1.0f), "Stav: pripraveno k odevzdani");
-        else
-            ImGui::TextColored(ImVec4(0.65f, 0.75f, 0.95f, 1.0f), "Stav: probiha");
-
-        ImGui::Separator();
-
-        ImGui::Separator();
-        ImGui::Text("DEBUG");
-        ImGui::Text("started: %s", hasStoryFlag("quest_matej_water_started") ? "ANO" : "NE");
-        ImGui::Text("ready: %s", hasStoryFlag("quest_matej_water_ready") ? "ANO" : "NE");
-        ImGui::Text("done: %s", hasStoryFlag("quest_matej_water_done") ? "ANO" : "NE");
-
-        const int footTx = (int)std::floor(m_player.x / (float)m_tileSize);
-        const int footTy = (int)std::floor((m_player.y - 1.0f) / (float)m_tileSize);
-        ImGui::Text("player foot tile: %d,%d", footTx, footTy);
-
-        const auto* dbgDef = m_map.getObjDefAt(m_objCatalog, footTx, footTy);
-        ImGui::Text("tile obj: %s", dbgDef ? dbgDef->id.c_str() : "-");
-        ImGui::PopID();
-    }
-
-    if (!anyActive)
-        ImGui::TextDisabled("Zadne aktivni ukoly.");
-
-    if (ImGui::CollapsingHeader("Dokoncene ukoly"))
-    {
-        bool anyDone = false;
-
-        for (const auto& q : m_questDefs)
-        {
-            if (!isQuestDone(q))
-                continue;
-
-            anyDone = true;
-            ImGui::BulletText("%s", q.title.c_str());
-        }
-
-        if (!anyDone)
-            ImGui::TextDisabled("Zat�m zadne.");
-    }
-
-    ImGui::End();
-}
-
 // Vykresl� item slot pro invent�?, v?etn? drag&drop logiky a tooltipu. Vrac� true pokud byl slot kliknut (pro p?�padn� dal?� akce, nap?. otev?en� detailn�ho pohledu na item).
 void Campaign::drawLabeledSlot(
     const char* label,
@@ -2538,7 +2288,9 @@ void Campaign::drawLabeledSlot(
 {
     ImGui::AlignTextToFramePadding();
     ImGui::TextUnformatted(label);
-    ImGui::SameLine(170.0f);
+    const float s = medieval::UI::Get().scale();
+    const float labelWidth = std::min(170 * s, std::max(40 * s, ImGui::GetContentRegionAvail().x - slotSize - 12 * s));
+    ImGui::SameLine(labelWidth);
     drawItemSlot(id, slotRef, m_itemDefs, slotSize);
 }
 
@@ -2631,6 +2383,8 @@ bool Campaign::drawContainerSlot(
     ImVec2 min = ImGui::GetItemRectMin();
     ImVec2 max = ImGui::GetItemRectMax();
 
+    medieval::UI::Get().panel(ImGui::GetWindowDrawList(), min, {size, size}, medieval::Surface::Stone);
+
     bool canDropHere = true;
     if (m_dragItem.active && !m_dragItem.stack.empty())
     {
@@ -2651,10 +2405,10 @@ bool Campaign::drawContainerSlot(
         ImGui::GetWindowDrawList()->AddRectFilled(min, max, fillColor);
     }
 
-    ImU32 borderColor = IM_COL32(90, 120, 170, 255);
+    ImU32 borderColor = ImGui::ColorConvertFloat4ToU32(medieval::Palette::Brass);
     if (ImGui::IsItemHovered())
         borderColor = canDropHere
-        ? IM_COL32(170, 200, 255, 255)
+        ? IM_COL32(203, 178, 126, 255)
         : IM_COL32(220, 80, 80, 255);
 
     ImGui::GetWindowDrawList()->AddRect(min, max, borderColor, 0.0f, 0, 2.0f);
@@ -3000,15 +2754,17 @@ bool Campaign::drawItemSlot(
     ImVec2 min = ImGui::GetItemRectMin();
     ImVec2 max = ImGui::GetItemRectMax();
 
+    medieval::UI::Get().panel(ImGui::GetWindowDrawList(), min, {size, size}, medieval::Surface::Stone);
+
     bool canDropHere = true;
     if (m_dragItem.active && !m_dragItem.stack.empty())
         canDropHere = canPlaceItemIntoSlot(m_dragItem.stack, slot, slotKey, defs);
 
-    ImU32 borderColor = IM_COL32(90, 120, 170, 255);
+    ImU32 borderColor = ImGui::ColorConvertFloat4ToU32(medieval::Palette::Brass);
 
     if (ImGui::IsItemHovered())
         borderColor = canDropHere
-        ? IM_COL32(170, 200, 255, 255)
+        ? IM_COL32(203, 178, 126, 255)
         : IM_COL32(220, 80, 80, 255);
 
     if (m_dragItem.active && m_dragItem.source == &slot)
@@ -3504,107 +3260,6 @@ void Campaign::renderPlayerOverviewUI()
     ImGui::End();
 }
 
-void Campaign::renderInventoryUI()
-{
-    if (!m_inventoryOpen)
-        return;
-
-    if (!m_dragItem.active)
-        ImGui::SetMouseCursor(ImGuiMouseCursor_Arrow);
-
-    ImGui::SetNextWindowPos(ImVec2(60, 120), ImGuiCond_Appearing);
-    ImGui::SetNextWindowSize(ImVec2(900, 520), ImGuiCond_Appearing);
-    ImGui::SetNextWindowFocus();
-
-    auto& inv = m_player.inventory;
-
-    if (!ImGui::Begin("Inventar", &m_inventoryOpen))
-    {
-        ImGui::End();
-        return;
-    }
-    const float slot = 40.0f;
-
-    ImGui::Columns(2, nullptr, true);
-
-    ImGui::Text("Vybaveni");
-    ImGui::Separator();
-
-    drawLabeledSlot("Hlava", "head", inv.equipped.head, slot);
-    drawLabeledSlot("Spodni odev", "torsoInner", inv.equipped.torsoInner, slot);
-    drawLabeledSlot("Svrchni odev", "torsoOuter", inv.equipped.torsoOuter, slot);
-    drawLabeledSlot("Nohavice", "legs", inv.equipped.legs, slot);
-    drawLabeledSlot("Obuv", "feet", inv.equipped.feet, slot);
-    drawLabeledSlot("Plast", "cloak", inv.equipped.cloak, slot);
-    drawLabeledSlot("Opasek", "beltEquip", inv.equipped.belt, slot);
-    drawLabeledSlot("Batoh", "back", inv.equipped.back, slot);
-
-    ImGui::NextColumn();
-
-    ImGui::Text("Batoh");
-    ImGui::Separator();
-
-	inv.backpack.compact();
-    const int backpackVisibleSlots = std::max(8, (int)inv.backpack.items.size() + 1);
-
-    for (int i = 0; i < backpackVisibleSlots; ++i)
-    {
-        std::string id = "bp_" + std::to_string(i);
-        drawContainerSlot(id.c_str(), inv.backpack, i, m_itemDefs, slot);
-
-        if ((i + 1) % 4 != 0)
-            ImGui::SameLine();
-    }
-
-    ImGui::Spacing();
-    ImGui::Text("Kapsy");
-    ImGui::Separator();
-
-	inv.pockets.compact();
-    const int pocketVisibleSlots = std::max(4, (int)inv.pockets.items.size() + 1);
-
-    for (int i = 0; i < pocketVisibleSlots; ++i)
-    {
-        std::string id = "pocket_" + std::to_string(i);
-        drawContainerSlot(id.c_str(), inv.pockets, i, m_itemDefs, slot);
-
-        if ((i + 1) % 4 != 0)
-            ImGui::SameLine();
-    }
-
-    ImGui::Columns(1);
-
-    if (m_activeFoodPoisoning.active)
-    {
-        ImGui::Separator();
-        const std::string poisonStatus = activeFoodPoisoningStatusText();
-        ImGui::TextColored(
-            m_activeFoodPoisoning.fatal
-                ? ImVec4(1.0f, 0.25f, 0.25f, 1.0f)
-                : ImVec4(1.0f, 0.75f, 0.25f, 1.0f),
-            "%s", poisonStatus.c_str());
-        ImGui::TextDisabled("Debug: konzole -> poison / skip 8h / skip 24h. IDDQD muze ucinky maskovat.");
-    }
-
-    if (m_dragItem.active && !m_dragItem.stack.empty())
-    {
-        ImGui::Separator();
-
-        auto it = m_itemDefs.find(m_dragItem.stack.itemId);
-        const char* heldName =
-            (it != m_itemDefs.end())
-            ? it->second.name.c_str()
-            : m_dragItem.stack.itemId.c_str();
-
-        ImGui::Text("Drzis: %s x%d", heldName, m_dragItem.stack.count);
-        ImGui::TextDisabled("LMB = cely stack, RMB = pulka / poloz 1 kus");
-    }
-
-    ImGui::End();
-
-    renderDraggedItemIcon();
-}
-
 void Campaign::renderQuickAccessBar()
 {
     const float slot = 40.0f;
@@ -3733,96 +3388,6 @@ static SDL_Rect GetObjectWorldRectScaled(const gameobj::ObjectDef& def, int wx, 
 }
 
 
-
-static void DrawForageSpriteImage(SDL_Texture* tex, const SDL_Rect& src, float maxW, float maxH)
-{
-    if (!tex)
-        return;
-
-    int tw = 1;
-    int th = 1;
-    SDL_QueryTexture(tex, nullptr, nullptr, &tw, &th);
-
-    const float scale = std::min(maxW / std::max(1, src.w), maxH / std::max(1, src.h));
-    const ImVec2 size(std::max(1.0f, src.w * scale), std::max(1.0f, src.h * scale));
-    const ImVec2 uv0((float)src.x / (float)tw, (float)src.y / (float)th);
-    const ImVec2 uv1((float)(src.x + src.w) / (float)tw, (float)(src.y + src.h) / (float)th);
-    ImGui::Image((ImTextureID)tex, size, uv0, uv1);
-}
-
-
-static std::string JoinForageValues(const std::vector<std::string>& values)
-{
-    std::string out;
-    for (size_t i = 0; i < values.size(); ++i)
-    {
-        if (values[i].empty())
-            continue;
-        if (!out.empty())
-            out += "; ";
-        out += values[i];
-    }
-    return out;
-}
-
-static const char* ForageTraitLabelCzFallback(const std::string& id)
-{
-    if (id == "cap")     return "Klobouk";
-    if (id == "stem")    return "Třeň / stonek";
-    if (id == "gills")   return "Lupeny / rourky";
-    if (id == "smell")   return "Vůně po promnutí";
-    if (id == "habitat") return "Místo nálezu";
-    if (id == "flower")  return "Květ";
-    if (id == "leaf")    return "List";
-    if (id == "root")    return "Kořen";
-    if (id == "seeds")   return "Semena";
-    if (id == "milk")    return "Mléko / šťáva";
-    return nullptr;
-}
-
-static std::string ForageTraitLabelForUi(const ForageTraitGroup* group, const std::string& id)
-{
-    if (const char* cz = ForageTraitLabelCzFallback(id))
-        return cz;
-
-    if (group && !group->label.empty())
-        return group->label;
-
-    return id;
-}
-
-static ImU32 ScoreColor(int score)
-{
-    score = std::clamp(score, 0, 100);
-    const float t = score / 100.0f;
-    const int r = (int)std::lround(220.0f * (1.0f - t) + 60.0f * t);
-    const int g = (int)std::lround(70.0f * (1.0f - t) + 210.0f * t);
-    const int b = (int)std::lround(50.0f * (1.0f - t) + 90.0f * t);
-    return IM_COL32(r, g, b, 255);
-}
-
-static void DrawIdentificationScoreBar(const ForageExaminationResult& result, float width)
-{
-    width = std::max(width, 220.0f);
-    const float height = 22.0f;
-    const ImVec2 p = ImGui::GetCursorScreenPos();
-    const ImVec2 q(p.x + width, p.y + height);
-    ImDrawList* dl = ImGui::GetWindowDrawList();
-
-    dl->AddRectFilled(p, q, IM_COL32(30, 25, 20, 220), 6.0f);
-
-    const float fillW = width * std::clamp(result.scorePercent / 100.0f, 0.0f, 1.0f);
-    if (fillW > 1.0f)
-        dl->AddRectFilled(p, ImVec2(p.x + fillW, q.y), ScoreColor(result.scorePercent), 6.0f);
-
-    dl->AddRect(p, q, IM_COL32(210, 170, 90, 220), 6.0f, 0, 1.4f);
-
-    const std::string label = "Přesnost určení: " + std::to_string(result.scorePercent) + "%";
-    const ImVec2 ts = ImGui::CalcTextSize(label.c_str());
-    dl->AddText(ImVec2(p.x + (width - ts.x) * 0.5f, p.y + (height - ts.y) * 0.5f), IM_COL32(255, 245, 220, 255), label.c_str());
-
-    ImGui::Dummy(ImVec2(width, height + 4.0f));
-}
 
 bool Campaign::isForageSpeciesKnown(const std::string& speciesId) const
 {
@@ -4203,309 +3768,6 @@ void Campaign::renderForagePrompt()
     dl->AddRectFilled(ImVec2(pos.x - pad.x, pos.y - pad.y), ImVec2(pos.x + textSize.x + pad.x, pos.y + textSize.y + pad.y), IM_COL32(8, 12, 8, 190), 8.0f);
     dl->AddRect(ImVec2(pos.x - pad.x, pos.y - pad.y), ImVec2(pos.x + textSize.x + pad.x, pos.y + textSize.y + pad.y), IM_COL32(120, 230, 140, 220), 8.0f);
     dl->AddText(pos, IM_COL32(210, 255, 210, 255), text.c_str());
-}
-
-void Campaign::renderForageWindow()
-{
-    if (!m_forageWindowOpen)
-        return;
-
-    const ForageSpawnDef* activeSpawn = nullptr;
-    for (const auto& spawn : m_forageSystem.spawns())
-    {
-        if (spawn.id == m_activeForageSpawnId &&
-            spawn.tileX == m_activeForageTileX &&
-            spawn.tileY == m_activeForageTileY)
-        {
-            activeSpawn = &spawn;
-            break;
-        }
-    }
-
-    // Backward fallback for saves/windows opened before this patch.
-    if (!activeSpawn)
-    {
-        for (const auto& spawn : m_forageSystem.spawns())
-        {
-            if (spawn.id == m_activeForageSpawnId)
-            {
-                activeSpawn = &spawn;
-                break;
-            }
-        }
-    }
-
-    if (!activeSpawn || !isForageSpawnAvailable(*activeSpawn))
-    {
-        m_forageWindowOpen = false;
-        return;
-    }
-
-    const ForageArchetypeDef* archetype = m_forageDb.findArchetype(activeSpawn->archetypeId);
-    const ForageSpeciesDef* species = m_forageDb.findSpecies(m_activeForageSpeciesId);
-    if (!species)
-        species = resolveForageSpeciesForSpawn(*activeSpawn);
-
-    if (!archetype && species)
-        archetype = m_forageDb.findArchetype(species->archetypeId);
-
-    if (!archetype)
-    {
-        m_forageWindowOpen = false;
-        return;
-    }
-
-    if (m_forageWindowFocus)
-    {
-        ImGui::SetNextWindowFocus();
-        m_forageWindowFocus = false;
-    }
-
-    ImGui::SetNextWindowSize(ImVec2(600, 560), ImGuiCond_FirstUseEver);
-
-    const bool known = species && isForageSpeciesKnown(species->id);
-    const std::string title = known
-        ? ("Přírodnina - " + (species->trueName.empty() ? species->id : species->trueName))
-        : (archetype->displayUnknown.empty() ? "Zkoumání nálezu" : ("Zkoumání - " + archetype->displayUnknown));
-
-    if (!ImGui::Begin(title.c_str(), &m_forageWindowOpen))
-    {
-        ImGui::End();
-        return;
-    }
-
-    const std::string exactSpriteId = species
-        ? (!species->detailSprite.empty() ? species->detailSprite : (!species->inventorySprite.empty() ? species->inventorySprite : species->herbariumSprite))
-        : resolveForageSpriteId(*activeSpawn);
-
-    if (!exactSpriteId.empty())
-    {
-        ImGui::Spacing();
-        ImGui::BeginGroup();
-        ImGui::TextUnformatted(species ? (known ? "Známý druh" : "Detail nálezu") : "Nález");
-        auto it = m_forageSprites.find(exactSpriteId);
-        if (it != m_forageSprites.end())
-            DrawForageSpriteImage(textureForForageSprite(it->second), it->second.src, 128.0f, 128.0f);
-        ImGui::EndGroup();
-        ImGui::Separator();
-    }
-
-    if (!species)
-    {
-        ImGui::TextWrapped("Tento spawn zatím nemá přiřazený konkrétní druh ve species_pool. Lze ho sebrat jako obecný vzorek.");
-        ImGui::Text("Spawn: %s", activeSpawn->id.c_str());
-        ImGui::Text("Archetype: %s", activeSpawn->archetypeId.c_str());
-        ImGui::Text("Scale: %.2f", resolveForageMapScale(*activeSpawn));
-        ImGui::Spacing();
-
-        if (ImGui::Button("Sebrat vzorek"))
-        {
-            if (addForageToInventory(nullptr, *archetype, std::max(1, activeSpawn->quantityMin)))
-            {
-                consoleLog("Sebral jsi vzorek: " + (archetype->displayUnknown.empty() ? activeSpawn->archetypeId : archetype->displayUnknown));
-                markForageSpawnGathered(*activeSpawn);
-                m_forageWindowOpen = false;
-            }
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Zavřít"))
-            m_forageWindowOpen = false;
-
-        ImGui::End();
-        return;
-    }
-
-    if (known)
-    {
-        ImGui::TextWrapped("Tuhle přírodninu už poznáš. Není potřeba ji znovu určovat.");
-        ImGui::Spacing();
-        ImGui::Text("Druh: %s", species->trueName.empty() ? species->id.c_str() : species->trueName.c_str());
-        if (!species->folkNames.empty())
-        {
-            std::string folk;
-            for (size_t i = 0; i < species->folkNames.size(); ++i)
-            {
-                if (i > 0) folk += ", ";
-                folk += species->folkNames[i];
-            }
-            ImGui::TextWrapped("Lidové názvy: %s", folk.c_str());
-        }
-        if (!species->description.empty())
-            ImGui::TextWrapped("Popis: %s", species->description.c_str());
-        ImGui::Text("Jedlost: %s", species->edibility.c_str());
-        ImGui::Text("Léčivost: %s", species->medicinalValue.c_str());
-        ImGui::Text("Toxicita: %d", species->toxicityLevel);
-        ImGui::Separator();
-
-        if (ImGui::Button("Sebrat"))
-        {
-            const std::string label = species->trueName.empty() ? species->id : species->trueName;
-            if (addForageToInventory(species, *archetype, std::max(1, activeSpawn->quantityMin)))
-            {
-                consoleLog("Sebral jsi: " + label);
-                markForageSpawnGathered(*activeSpawn);
-                m_forageWindowOpen = false;
-            }
-        }
-        ImGui::SameLine();
-        if (ImGui::Button("Zavřít"))
-            m_forageWindowOpen = false;
-
-        ImGui::End();
-        return;
-    }
-
-    ImGui::TextWrapped("Ohledáváš nalezenou přírodninu. Zapiš znaky, svůj volný popis a zkus odhadnout název.");
-    ImGui::Spacing();
-
-    std::vector<std::string> visibleSlots;
-    visibleSlots.reserve(species->traits.size());
-
-    if (!archetype->examinationSlots.empty())
-    {
-        for (const std::string& slotId : archetype->examinationSlots)
-        {
-            auto itTrait = species->traits.find(slotId);
-            if (itTrait != species->traits.end() && !itTrait->second.empty())
-                visibleSlots.push_back(slotId);
-        }
-    }
-
-    for (const auto& kv : species->traits)
-    {
-        if (kv.second.empty())
-            continue;
-        if (std::find(visibleSlots.begin(), visibleSlots.end(), kv.first) == visibleSlots.end())
-            visibleSlots.push_back(kv.first);
-    }
-
-    if (visibleSlots.empty())
-    {
-        ImGui::TextDisabled("Pro tento druh zatím nejsou v editoru nastavené rozpoznávací znaky.");
-        ImGui::Spacing();
-    }
-
-    if (ImGui::CollapsingHeader("1) Pozorované znaky", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        for (const std::string& slotId : visibleSlots)
-        {
-            const ForageTraitGroup* group = m_forageDb.findTraitGroup(slotId);
-            const std::string label = ForageTraitLabelForUi(group, slotId);
-
-            auto& buf = m_activeForageTraitText[slotId];
-            ImGui::PushID(slotId.c_str());
-            ImGui::TextUnformatted(label.c_str());
-            ImGui::SetNextItemWidth(-1.0f);
-            ImGui::InputText("##trait_text", buf.data(), buf.size());
-            ImGui::PopID();
-            ImGui::Spacing();
-        }
-    }
-
-    if (ImGui::CollapsingHeader("2) Volný popis", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        ImGui::TextDisabled("Sem napiš vlastní dojem: barva, tvar, místo nálezu, vůně, stav rostliny/houby...");
-        ImGui::InputTextMultiline("##forage_free_description", m_activeForageDescriptionText, IM_ARRAYSIZE(m_activeForageDescriptionText), ImVec2(-1.0f, 78.0f));
-    }
-
-    if (ImGui::CollapsingHeader("3) Odhad názvu", ImGuiTreeNodeFlags_DefaultOpen))
-    {
-        ImGui::SetNextItemWidth(-1.0f);
-        ImGui::InputText("##forage_name_guess", m_activeForageNameGuess, IM_ARRAYSIZE(m_activeForageNameGuess));
-    }
-
-    if (m_hasLastForageExaminationResult)
-    {
-        ImGui::Separator();
-        DrawIdentificationScoreBar(m_lastForageExaminationResult, ImGui::GetContentRegionAvail().x);
-        ImGui::TextWrapped("%s", m_lastForageExaminationResult.feedbackText.c_str());
-        for (const auto& line : m_lastForageExaminationResult.feedbackLines)
-            ImGui::BulletText("%s", line.c_str());
-
-        if (ImGui::TreeNode("Správné znaky / popis"))
-        {
-            for (const std::string& slotId : visibleSlots)
-            {
-                auto itTrait = species->traits.find(slotId);
-                if (itTrait == species->traits.end() || itTrait->second.empty())
-                    continue;
-
-                const ForageTraitGroup* group = m_forageDb.findTraitGroup(slotId);
-                const std::string label = ForageTraitLabelForUi(group, slotId);
-                const std::string values = JoinForageValues(itTrait->second);
-                if (!values.empty())
-                    ImGui::BulletText("%s: %s", label.c_str(), values.c_str());
-            }
-
-            if (!species->description.empty())
-                ImGui::TextWrapped("Správný popis: %s", species->description.c_str());
-
-            ImGui::TreePop();
-        }
-
-        if (m_lastForageExaminationResult.verifiedSpecies)
-        {
-            ImGui::Spacing();
-            ImGui::TextColored(ImVec4(0.55f, 1.0f, 0.55f, 1.0f), "Ověřeno: %s", species->trueName.empty() ? species->id.c_str() : species->trueName.c_str());
-            ImGui::Text("Jedlost: %s", species->edibility.c_str());
-            ImGui::Text("Léčivost: %s", species->medicinalValue.c_str());
-            ImGui::Text("Toxicita: %d", species->toxicityLevel);
-        }
-    }
-
-    ImGui::Separator();
-
-    if (ImGui::Button("Vyhodnotit určení"))
-    {
-        ForageIdentificationInput input;
-        for (const auto& slotId : visibleSlots)
-        {
-            auto it = m_activeForageTraitText.find(slotId);
-            if (it != m_activeForageTraitText.end())
-                input.traitTexts[slotId] = it->second.data();
-        }
-        input.descriptionText = m_activeForageDescriptionText;
-        input.nameGuess = m_activeForageNameGuess;
-
-        auto& entry = m_forageKnowledge.entries[species->id];
-        m_lastForageExaminationResult = m_forageSystem.identify(
-            *species,
-            input,
-            entry,
-            m_player.stats.survival.foraging,
-            m_player.stats.mental.observation,
-            m_player.stats.mental.focus,
-            m_player.stats.mental.memory,
-            m_player.stats.comfort.natureComfort);
-        m_hasLastForageExaminationResult = true;
-        consoleLog(m_lastForageExaminationResult.feedbackText);
-    }
-
-    ImGui::SameLine();
-
-    if (ImGui::Button("Sebrat"))
-    {
-        const bool nowKnown = isForageSpeciesKnown(species->id);
-        const std::string label = nowKnown && !species->trueName.empty()
-            ? species->trueName
-            : (archetype->displayPartial.empty() ? archetype->displayUnknown : archetype->displayPartial);
-
-        // Pass the real species even when it is not identified yet. The inventory label can stay
-        // generic, but eating an unidentified death cap must still poison the player.
-        if (addForageToInventory(species, *archetype, std::max(1, activeSpawn->quantityMin)))
-        {
-            consoleLog("Sebral jsi: " + label);
-            markForageSpawnGathered(*activeSpawn);
-            m_forageWindowOpen = false;
-        }
-    }
-
-    ImGui::SameLine();
-
-    if (ImGui::Button("Zavřít"))
-        m_forageWindowOpen = false;
-
-    ImGui::End();
 }
 
 void Campaign::renderSharedTimeOverlay()
