@@ -49,7 +49,54 @@ bool Player::selectCharacter(const std::string& id, const CharacterManager& mana
     animTime = 0.0f;
     currentAnim = "idle_down";
     facing = Facing::Down;
+    stopAnimation();
     return true;
+}
+
+void Player::syncCharacterVariant(const CharacterManager& manager)
+{
+    if (characterId != "patrik" && characterId != "patrik_s_batohem") return;
+    const std::string variant = inventory.equipped.back.empty() ? "patrik" : "patrik_s_batohem";
+    if (manager.getCharacter(variant)) characterId = variant;
+}
+
+bool Player::playAnimation(const std::string& animation, const CharacterManager& manager)
+{
+    if (animation.empty() || animation == "auto")
+    {
+        stopAnimation();
+        return true;
+    }
+    syncCharacterVariant(manager);
+    const auto* character = manager.getCharacter(characterId);
+    if (!character) return false;
+    std::string name = animation;
+    if (!character->animations.contains(name))
+        name += facingToIdle(facing).substr(4);
+    const auto found = character->animations.find(name);
+    if (found == character->animations.end() || found->second.frames.empty()) return false;
+
+    animationOverride = name;
+    animationHoldLastFrame = name.starts_with("lie_down_") || name.starts_with("death_");
+    currentAnim = name;
+    currentFrame = 0;
+    animTime = 0.0f;
+    return true;
+}
+
+void Player::stopAnimation()
+{
+    animationOverride.clear();
+    animationHoldLastFrame = false;
+}
+
+bool Player::movementLocked(const CharacterManager& manager) const
+{
+    if (stats.condition.health <= 0.0f) return true;
+    const auto* character = manager.getCharacter(characterId);
+    if (!character || animationOverride.empty()) return false;
+    const auto found = character->animations.find(animationOverride);
+    return found != character->animations.end() && !found->second.loop;
 }
 
 SDL_Rect Player::worldAABB() const
@@ -69,8 +116,13 @@ float Player::currentMoveSpeed() const
 
 void Player::update(float dt, const CharacterManager& manager)
 {
+    syncCharacterVariant(manager);
     const CharacterDef* ch = manager.getCharacter(characterId);
     if (!ch) return;
+
+    if (stats.condition.health <= 0.0f && !animationOverride.starts_with("death_"))
+        playAnimation("death", manager);
+    if (movementLocked(manager)) vx = vy = 0.0f;
 
     const float moveLenSq = vx * vx + vy * vy;
     isMoving = (moveLenSq > 0.0001f);
@@ -88,7 +140,15 @@ void Player::update(float dt, const CharacterManager& manager)
 
     stats.updateVitals(dt, isMoving);
 
-    currentAnim = isMoving ? facingToWalk(facing) : facingToIdle(facing);
+    std::string nextAnim = isMoving ? facingToWalk(facing) : facingToIdle(facing);
+    if (isMoving && isSprinting)
+    {
+        const auto run = "run" + facingToIdle(facing).substr(4);
+        const auto found = ch->animations.find(run);
+        if (found != ch->animations.end() && !found->second.frames.empty()) nextAnim = run;
+    }
+    if (!animationOverride.empty()) nextAnim = animationOverride;
+    if (nextAnim != currentAnim) { currentFrame = 0; animTime = 0; currentAnim = nextAnim; }
 
     auto it = ch->animations.find(currentAnim);
     if (it == ch->animations.end() || it->second.frames.empty()) {
@@ -99,17 +159,12 @@ void Player::update(float dt, const CharacterManager& manager)
 
     const CharacterAnimation& anim = it->second;
 
-    const float speedScale = std::clamp(currentMoveSpeed() / 90.0f, 0.55f, 1.65f);
+    const float referenceSpeed = currentAnim.starts_with("run_") ? 135.0f : 90.0f;
+    const float speedScale = isMoving && animationOverride.empty()
+        ? std::clamp(currentMoveSpeed() / referenceSpeed, 0.55f, 1.65f) : 1.0f;
     const float frameDuration = (anim.fps > 0)
         ? (1.0f / ((float)anim.fps * speedScale))
         : (0.15f / speedScale);
-
-    if (!isMoving)
-    {
-        currentFrame = 0;
-        animTime = 0.0f;
-        return;
-    }
 
     animTime += dt;
     while (animTime >= frameDuration)
@@ -120,7 +175,18 @@ void Player::update(float dt, const CharacterManager& manager)
         if (currentFrame >= (int)anim.frames.size())
         {
             if (anim.loop) currentFrame = 0;
-            else currentFrame = (int)anim.frames.size() - 1;
+            else
+            {
+                currentFrame = (int)anim.frames.size() - 1;
+                animTime = 0.0f;
+                if (!animationOverride.empty() && !animationHoldLastFrame)
+                {
+                    stopAnimation();
+                    currentAnim = isMoving ? facingToWalk(facing) : facingToIdle(facing);
+                    currentFrame = 0;
+                }
+                break;
+            }
         }
     }
 }

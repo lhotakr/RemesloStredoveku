@@ -2,10 +2,10 @@
   "actors": [
     {
       "animation": "idle_down",
-      "character": "Character_2_char_05",
+      "character": "patrik_s_batohem",
       "id": "patrik",
       "marker": "Player_start",
-      "scale": 1.5,
+      "scale": 1.9,
       "visible": true,
       "voxel": false
     }

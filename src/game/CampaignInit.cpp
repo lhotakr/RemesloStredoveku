@@ -1,5 +1,7 @@
 #include "Campaign.h"
+#include "NpcAuthoring.h"
 #include "ControlSettings.h"
+#include "ItemCatalog.h"
 #include "../PathUtils.h"
 #include "../JsonUtils.h"
 #include <nlohmann/json.hpp>
@@ -134,47 +136,6 @@ static void ApplyItemTextLocalization(
         def.flavorText = it->second.flavorText;
 }
 
-
-static ItemCategory ItemCategoryFromString(const std::string& s)
-{
-    if (s == "Clothing")       return ItemCategory::Clothing;
-    if (s == "BeltItem")       return ItemCategory::BeltItem;
-    if (s == "Tool")           return ItemCategory::Tool;
-    if (s == "WeaponTool")     return ItemCategory::WeaponTool;
-    if (s == "Food")           return ItemCategory::Food;
-    if (s == "Drink")          return ItemCategory::Drink;
-    if (s == "WaterContainer") return ItemCategory::WaterContainer;
-    if (s == "Container")      return ItemCategory::Container;
-    if (s == "Material")       return ItemCategory::Material;
-    if (s == "Utility")        return ItemCategory::Utility;
-    if (s == "Medicine")       return ItemCategory::Medicine;
-    if (s == "Quest")          return ItemCategory::Quest;
-    return ItemCategory::Utility;
-}
-
-static EquipSlot EquipSlotFromString(const std::string& s)
-{
-    if (s == "Head")       return EquipSlot::Head;
-    if (s == "TorsoInner") return EquipSlot::TorsoInner;
-    if (s == "TorsoOuter") return EquipSlot::TorsoOuter;
-    if (s == "Legs")       return EquipSlot::Legs;
-    if (s == "Feet")       return EquipSlot::Feet;
-    if (s == "Cloak")      return EquipSlot::Cloak;
-    if (s == "Belt")       return EquipSlot::Belt;
-    if (s == "Back")       return EquipSlot::Back;
-    if (s == "MainHand")   return EquipSlot::MainHand;
-    if (s == "OffHand")    return EquipSlot::OffHand;
-    return EquipSlot::None;
-}
-
-static BeltSlot BeltSlotFromString(const std::string& s)
-{
-    if (s == "Knife")    return BeltSlot::Knife;
-    if (s == "Pouch")    return BeltSlot::Pouch;
-    if (s == "Utility1") return BeltSlot::Utility1;
-    if (s == "Utility2") return BeltSlot::Utility2;
-    return BeltSlot::None;
-}
 
 static void GiveItemToBackpack(
     PlayerInventory& inv,
@@ -674,7 +635,7 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
         }
     }
 
-    std::string playerId = "Character_2_char_05";
+    std::string playerId = "patrik";
 
     if (!m_characterManager.getCharacter(playerId))
     {
@@ -941,6 +902,8 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
             return false;
         }
     }
+    // The asset catalog overrides matching IDs; unique data items remain available.
+    m_itemDefs.clear();
     // items
     {
         std::string itemErr;
@@ -1050,6 +1013,13 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
     loadInspectCursor();
     loadForagingData();
 
+    if (const auto* player = m_npcDefinitions.findByNpcId("player"))
+    {
+        if (!player->characterId.empty()) m_player.selectCharacter(player->characterId, m_characterManager);
+        npcauthoring::Apply(m_player, *player);
+    }
+
+    m_player.syncCharacterVariant(m_characterManager);
     return true;
 }
 
@@ -1076,50 +1046,15 @@ bool Campaign::loadItemDefs(const std::string& path, std::string* outError)
     const bool hasItemTextLocalizations =
         LoadItemTextLocalizations(language, itemTextLocalizations, localizationWarning);
 
-    m_itemDefs.clear();
-
     for (const auto& ji : root["items"])
     {
-        ItemDef def;
-
-        def.id = ji.value("id", "");
-        def.name = ji.value("name", "");
-		def.lockedInInventory = ji.value("lockedInInventory", false);
-        def.description = ji.value("description", "");
-        def.flavorText = ji.value("flavorText", "");
-        def.spriteId = ji.value("spriteId", "item_default");
-		def.audioNoteSfx = ji.value("audioNoteSfx", "");
-
-        def.category = ItemCategoryFromString(
-            ji.value("category", "Utility"));
-
-        def.weight = ji.value("weight", 0.0f);
-        def.volume = ji.value("volume", 0.0f);
-
-        def.stackable = ji.value("stackable", false);
-        def.maxStack = ji.value("maxStack", 1);
-
-        def.equippable = ji.value("equippable", false);
-        def.equipSlot = EquipSlotFromString(
-            ji.value("equipSlot", "None"));
-
-        def.beltCompatible = ji.value("beltCompatible", false);
-        def.preferredBeltSlot = BeltSlotFromString(
-            ji.value("preferredBeltSlot", "None"));
-
-        def.isContainer = ji.value("isContainer", false);
-        def.containerWeightCapacity = ji.value("containerWeightCapacity", 0.0f);
-        def.containerVolumeCapacity = ji.value("containerVolumeCapacity", 0.0f);
-
-        def.warmth = ji.value("warmth", 0.0f);
-        def.rainProtection = ji.value("rainProtection", 0.0f);
-        def.outfitAuthenticity = ji.value("outfitAuthenticity", 0.0f);
-        def.socialValue = ji.value("socialValue", 0.0f);
-
-        def.waterCapacity = ji.value("waterCapacity", 0.0f);
-        def.toolPower = ji.value("toolPower", 0.0f);
-
-        def.quickUsable = ji.value("quickUsable", false);
+        std::string validationError;
+        if (!itemcatalog::ValidateItem(ji, validationError))
+        {
+            if (outError) *outError = "ItemDefs: " + validationError + " | " + path;
+            return false;
+        }
+        ItemDef def = itemcatalog::FromJson(ji);
 
         if (def.id.empty())
             continue;

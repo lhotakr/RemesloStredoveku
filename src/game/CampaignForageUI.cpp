@@ -356,6 +356,7 @@ void Campaign::renderForageWindow()
                 // generic, but eating an unidentified death cap must still poison the player.
                 if (addForageToInventory(species, *archetype, std::max(1, activeSpawn->quantityMin)))
                 {
+                    m_player.playAnimation("pickup", m_characterManager);
                     consoleLog("Sebral jsi: " + label);
                     markForageSpawnGathered(*activeSpawn);
                     m_forageWindowOpen = false;
@@ -363,6 +364,7 @@ void Campaign::renderForageWindow()
             }
             else if (addForageToInventory(nullptr, *archetype, std::max(1, activeSpawn->quantityMin)))
             {
+                m_player.playAnimation("pickup", m_characterManager);
                 consoleLog("Sebral jsi vzorek: " + (archetype->displayUnknown.empty() ? activeSpawn->archetypeId : archetype->displayUnknown));
                 markForageSpawnGathered(*activeSpawn);
                 m_forageWindowOpen = false;

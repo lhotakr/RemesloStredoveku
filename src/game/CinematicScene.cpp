@@ -214,14 +214,19 @@ void CinematicScene::update(float dt)
             continue;
         const auto& anim = animIt->second;
         const float frameDuration = anim.fps > 0 ? 1.0f / static_cast<float>(anim.fps) : 0.15f;
-        entity.animTime += dt;
+        entity.animTime += std::max(0.0f, dt);
         if (entity.animTime >= frameDuration)
         {
-            entity.animTime = 0.0f;
-            entity.animFrame = entity.animFrame + 1;
-            if (entity.animFrame >= static_cast<int>(anim.frames.size()))
-                entity.animFrame = anim.loop ? 0 : static_cast<int>(anim.frames.size()) - 1;
-            pushEntityToEngine(entity, nullptr);
+            const int steps = static_cast<int>(entity.animTime / frameDuration);
+            entity.animTime = std::fmod(entity.animTime, frameDuration);
+            const int nextFrame = entity.animFrame + steps;
+            const int frame = anim.loop ? nextFrame % static_cast<int>(anim.frames.size())
+                : std::min(nextFrame, static_cast<int>(anim.frames.size()) - 1);
+            if (frame != entity.animFrame)
+            {
+                entity.animFrame = frame;
+                pushEntityToEngine(entity, nullptr);
+            }
         }
     }
 

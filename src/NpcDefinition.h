@@ -3,6 +3,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <nlohmann/json.hpp>
 
 struct NpcIdentity
 {
@@ -79,6 +80,10 @@ struct NpcDefinition
     std::string typeId;
     std::string scriptId;
     std::string characterId;
+    std::string greeting;
+    nlohmann::json personality = nlohmann::json::object();
+    nlohmann::json initialState = nlohmann::json::object();
+    nlohmann::json relationshipStates = nlohmann::json::object();
 
     NpcIdentity identity;
     NpcHouseholdLink household;

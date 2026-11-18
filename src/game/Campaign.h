@@ -250,6 +250,7 @@ private:
         float rotation = 0.0f;
         float scale = 1.0f;
         std::string animation;
+        float animTime = 0.0f;
     };
 
     sequence::SequenceManager m_sequenceManager;

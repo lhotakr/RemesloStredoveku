@@ -1,5 +1,6 @@
 #define NOMINMAX
 #include "Campaign.h"
+#include "NpcAuthoring.h"
 #include "../PathUtils.h"
 #include "../Utf8.h"
 #include "../ImGuiUtils.h"
@@ -284,17 +285,7 @@ void Campaign::applyNpcDefinitionsToInstances()
 
         SDL_Log(" -> definition found: %s", def->displayName().c_str());
 
-        if (npc.name.empty())
-            npc.name = def->identity.name;
-
-        if (npc.surname.empty())
-            npc.surname = def->identity.surname;
-
-        if (npc.scriptId.empty())
-            npc.scriptId = def->scriptId;
-
-        if (npc.characterId.empty())
-            npc.characterId = def->characterId;
+        npcauthoring::Apply(npc, *def);
 
         SDL_Log(" -> result name=%s surname=%s script=%s character=%s",
             npc.name.c_str(),

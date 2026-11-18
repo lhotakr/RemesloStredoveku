@@ -252,7 +252,7 @@ void UI::heading(const std::string& text) const
     ImGui::TextWrapped("%s", text.c_str());
 }
 
-Font::Font(const UI& ui, FontRole role) { ImGui::PushFont(ui.font(role), ui.fontSize(role)); }
+Font::Font(const UI& ui, FontRole role, float scale) { ImGui::PushFont(ui.font(role), ui.fontSize(role) * scale); }
 Font::~Font() { ImGui::PopFont(); }
 
 Style::Style(const UI& ui, Surface surface)

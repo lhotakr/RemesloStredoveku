@@ -118,7 +118,8 @@ bool Editor::saveNpcsForMap(const std::string& mapPath)
 
     for (const auto& npc : m_npcSpawns)
     {
-        nlohmann::json jn = {
+        nlohmann::json jn = npc.sourceData;
+        jn.update({
             {"id", npc.id},
             {"type_id", npc.typeId},
             {"script_id", npc.scriptId},
@@ -127,16 +128,13 @@ bool Editor::saveNpcsForMap(const std::string& mapPath)
             {"tile_y", npc.tileY},
             {"hp", npc.hp},
             {"mood", npc.mood}
-        };
+        });
 
-        if (!npc.name.empty())
-            jn["name"] = npc.name;
+        jn["name"] = npc.name;
 
-        if (!npc.surname.empty())
-            jn["surname"] = npc.surname;
+        jn["surname"] = npc.surname;
 
-        if (!npc.greeting.empty())
-            jn["greeting"] = npc.greeting;
+        jn["greeting"] = npc.greeting;
 
         root["npcs"].push_back(std::move(jn));
     }
@@ -174,6 +172,7 @@ bool Editor::loadNpcsForMap(const std::string& mapPath)
     for (const auto& jn : root["npcs"])
     {
         NpcSpawn npc;
+        npc.sourceData = jn;
         npc.id = jn.value("id", "");
         npc.typeId = jn.value("type_id", "");
 

@@ -1,4 +1,5 @@
 #include "Campaign.h"
+#include "NpcAuthoring.h"
 
 #include "ControlSettings.h"
 #include "Utf8.h"
@@ -542,7 +543,7 @@ void Campaign::tryInteractWithNpc()
             if (!npc.npcId.empty())
                 def = m_npcDefinitions.findByNpcId(npc.npcId);
 
-            bool allowTalk = true;
+            bool allowTalk = npc.canTalk && npc.hp > 0;
             std::string denyReason;
 
             if (def)
@@ -568,7 +569,7 @@ void Campaign::tryInteractWithNpc()
                         denyReason = npc.displayName() + " si te meri pohledem, ale zjevne nestoji o rozhovor uvnitr.";
                     }
                     else if (def->accessProfile.requiresTrustForHouse &&
-                        m_player.stats.villageAcceptance < def->accessProfile.minTrustForHouse)
+                        npcauthoring::TrustInPlayer(npc, m_player.stats.villageAcceptance) < def->accessProfile.minTrustForHouse)
                     {
                         allowTalk = false;
                         denyReason = npc.displayName() + " zjevne nechce hovorit tak duverne pod strechou.";
@@ -745,7 +746,7 @@ void Campaign::update(float dt)
 
     m_player.isSprinting = running;
 
-    const float speed = m_player.stats.getLimitedMoveSpeed(running);
+    const float speed = m_player.movementLocked(m_characterManager) ? 0.0f : m_player.stats.getLimitedMoveSpeed(running);
 
     m_player.vx = ax * speed;
     m_player.vy = ay * speed;
