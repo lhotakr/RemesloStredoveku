@@ -2,6 +2,8 @@
 #include "Game.h"
 #include "Editor.h"
 #include "ObjectEditor.h"
+#include "ItemEditor.h"
+#include "NpcEditor.h"
 #include "BuildInteriorEngine.h"
 #include "interior/TextureSpriteEditor.h"
 #include "ControlSettings.h"
@@ -213,6 +215,7 @@ static const char* T(const std::string& lang, const char* key)
     if (std::strcmp(key, "interior_2d") == 0) return cs ? U8("2.5D interiér") : "2.5D interior";
     if (std::strcmp(key, "interior_editor") == 0) return cs ? U8("Editor 2.5D interiéru") : "2.5D interior editor";
     if (std::strcmp(key, "profile_editor") == 0) return cs ? U8("Editor postavy") : "Character editor";
+    if (std::strcmp(key, "item_editor") == 0) return cs ? U8("Editor předmětů") : "Item editor";
     if (std::strcmp(key, "settings") == 0) return cs ? U8("Nastavení") : "Settings";
     if (std::strcmp(key, "quit") == 0) return cs ? U8("Konec") : "Quit";
     if (std::strcmp(key, "hotkeys") == 0) return cs ? U8("F11 – celá obrazovka     ESC – zpět / herní menu") : "F11 – fullscreen     ESC – back / game menu";
@@ -339,10 +342,10 @@ static void DrawMenuFrame(const ImVec2& pos, const ImVec2& size)
     medieval::UI::Get().panel(ImGui::GetWindowDrawList(), pos, size, medieval::Surface::Wood);
 }
 
-static bool MedievalMenuButton(const char* label, const ImVec2& size, bool primary = false)
+static bool MedievalMenuButton(const char* label, const ImVec2& size, bool primary = false, float fontScale = 1.0f)
 {
     auto& ui = medieval::UI::Get();
-    medieval::Font font(ui, medieval::FontRole::Body);
+    medieval::Font font(ui, medieval::FontRole::Body, fontScale);
     ImGui::PushID(label);
     const bool clicked = ui.button("##menu_button", label, size.x, primary, size.y);
     ImGui::PopID();
@@ -540,6 +543,7 @@ static bool BackgroundRowCard(PlayerStats::Background background, PlayerStats::B
     const bool chosen = selected == background;
     const ImVec2 pos = ImGui::GetCursorScreenPos();
     const bool clicked = ImGui::InvisibleButton("##background_row", size);
+    const ImVec2 nextCursor = ImGui::GetCursorScreenPos();
     const bool hovered = ImGui::IsItemHovered();
 
     if (clicked)
@@ -591,6 +595,7 @@ static bool BackgroundRowCard(PlayerStats::Background background, PlayerStats::B
     ImGui::SetCursorScreenPos(ImVec2(pos.x + padX, y));
     WrappedTextAtWidthScaled(BackgroundWeaknesses(background), wrapW, ImVec4(0.70f, 0.66f, 0.54f, 1.0f), 0.76f);
 
+    ImGui::SetCursorScreenPos(nextCursor);
     ImGui::PopID();
     return clicked;
 }
@@ -670,7 +675,7 @@ static const char* ProfileShortName(PlayerStats::Background background)
 static bool ProfileBackgroundButton(PlayerStats::Background background, PlayerStats::Background& selected, const ImVec2& size)
 {
     const bool isSelected = (selected == background);
-    if (MedievalMenuButton(ProfileShortName(background), size, isSelected))
+    if (MedievalMenuButton(ProfileShortName(background), size, isSelected, 0.82f))
     {
         selected = background;
         return true;
@@ -678,26 +683,36 @@ static bool ProfileBackgroundButton(PlayerStats::Background background, PlayerSt
     return false;
 }
 
-static bool ProfileSlider(const char* label, float& value, float width = 210.0f)
+static bool ProfileSlider(const char* label, float& value)
 {
     ImGui::PushID(label);
-    ImGui::TextColored(ImVec4(0.84f, 0.77f, 0.60f, 1.0f), "%s", label);
-    ImGui::SameLine(185.0f);
-    ImGui::PushItemWidth(width);
-    bool changed = ImGui::SliderFloat("##value", &value, 0.0f, 100.0f, "%.0f");
-    ImGui::PopItemWidth();
+    bool changed = false;
+    if (ImGui::BeginTable("##stat", 2, ImGuiTableFlags_SizingStretchSame))
+    {
+        ImGui::TableNextColumn();
+        ImGui::TextWrapped("%s", label);
+        ImGui::TableNextColumn();
+        ImGui::SetNextItemWidth(-1);
+        changed = ImGui::SliderFloat("##value", &value, 0.0f, 100.0f, "%.0f");
+        ImGui::EndTable();
+    }
     ImGui::PopID();
     return changed;
 }
 
-static bool ProfileSliderInt(const char* label, int& value, int minValue, int maxValue, float width = 210.0f)
+static bool ProfileSliderInt(const char* label, int& value, int minValue, int maxValue)
 {
     ImGui::PushID(label);
-    ImGui::TextColored(ImVec4(0.84f, 0.77f, 0.60f, 1.0f), "%s", label);
-    ImGui::SameLine(185.0f);
-    ImGui::PushItemWidth(width);
-    bool changed = ImGui::SliderInt("##value", &value, minValue, maxValue, "%d");
-    ImGui::PopItemWidth();
+    bool changed = false;
+    if (ImGui::BeginTable("##stat", 2, ImGuiTableFlags_SizingStretchSame))
+    {
+        ImGui::TableNextColumn();
+        ImGui::TextWrapped("%s", label);
+        ImGui::TableNextColumn();
+        ImGui::SetNextItemWidth(-1);
+        changed = ImGui::SliderInt("##value", &value, minValue, maxValue, "%d");
+        ImGui::EndTable();
+    }
     ImGui::PopID();
     return changed;
 }
@@ -1742,6 +1757,8 @@ bool Game::init(SDL_Window* window)
 
 void Game::shutdown()
 {
+    leaveNpcEditor();
+    leaveItemEditor();
     leaveInterior2D();
     leaveTextureSpriteEditor();
     leaveObjectEditor();
@@ -1826,6 +1843,52 @@ void Game::leaveObjectEditor()
     m_objectEditor->shutdown();
     delete m_objectEditor;
     m_objectEditor = nullptr;
+    m_mode = Mode::Menu;
+}
+
+void Game::enterItemEditor()
+{
+    if (!m_devMode || m_itemEditor) return;
+    m_itemEditor = new ItemEditor();
+    if (!m_itemEditor->init(m_renderer, ProjectRootPath()))
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Editor předmětů",
+            m_itemEditor->lastError().c_str(), m_window);
+        delete m_itemEditor;
+        m_itemEditor = nullptr;
+        return;
+    }
+    m_mode = Mode::ItemEditor;
+}
+
+void Game::leaveItemEditor()
+{
+    if (!m_itemEditor) return;
+    m_itemEditor->shutdown();
+    delete m_itemEditor;
+    m_itemEditor = nullptr;
+    m_mode = Mode::Menu;
+}
+
+void Game::enterNpcEditor()
+{
+    if (!m_devMode || m_npcEditor) return;
+    m_npcEditor = new NpcEditor();
+    if (!m_npcEditor->init(m_renderer, ProjectRootPath()))
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Editor NPC a postav", m_npcEditor->lastError().c_str(), m_window);
+        delete m_npcEditor;
+        m_npcEditor = nullptr;
+        return;
+    }
+    m_mode = Mode::NpcEditor;
+}
+
+void Game::leaveNpcEditor()
+{
+    if (!m_npcEditor) return;
+    delete m_npcEditor;
+    m_npcEditor = nullptr;
     m_mode = Mode::Menu;
 }
 
@@ -2046,6 +2109,17 @@ void Game::handleEvent(const SDL_Event& e)
     }
 
     if (e.type == SDL_QUIT) {
+        if (m_npcEditor)
+        {
+            m_mode = Mode::NpcEditor;
+            m_npcEditor->requestClose(true);
+            return;
+        }
+        if (m_mode == Mode::ItemEditor && m_itemEditor)
+        {
+            m_itemEditor->requestQuit();
+            return;
+        }
         m_running = false;
         return;
     }
@@ -2100,6 +2174,12 @@ void Game::handleEvent(const SDL_Event& e)
         else if (m_mode == Mode::ObjectEditor) {
             leaveObjectEditor();
         }
+        else if (m_mode == Mode::ItemEditor && m_itemEditor) {
+            m_itemEditor->requestClose();
+        }
+        else if (m_mode == Mode::NpcEditor && m_npcEditor) {
+            m_npcEditor->requestClose();
+        }
         else if (m_mode == Mode::TextureSpriteEditor) {
             leaveTextureSpriteEditor();
         }
@@ -2108,7 +2188,7 @@ void Game::handleEvent(const SDL_Event& e)
                 leaveInterior2D();
         }
         else if (m_mode == Mode::StyleSelect || m_mode == Mode::Settings || m_mode == Mode::ProfileEditor) {
-            m_mode = Mode::Menu;
+            m_mode = m_mode == Mode::ProfileEditor && m_npcEditor ? Mode::NpcEditor : Mode::Menu;
         }
         else {
             m_mode = Mode::Menu;
@@ -2309,15 +2389,23 @@ void Game::render()
                     m_mode = Mode::StyleSelect;
                 if (MedievalMenuButton(T(m_settings.language, "load_game"), btnSize))
                     openSaveSlotMenu(SaveSlotMode::Load);
-                if (MedievalMenuButton(T(m_settings.language, "profile_editor"), btnSize))
-                {
-                    loadProfileDraft(m_pendingBackground);
-                    m_mode = Mode::ProfileEditor;
-                }
                 if (MedievalMenuButton(T(m_settings.language, "settings"), btnSize))
                     m_mode = Mode::Settings;
+                if (MedievalMenuButton(T(m_settings.language, "quit"), btnSize)) m_running = false;
                 if (ImGui::CollapsingHeader(m_settings.language == "en" ? "Development tools" : U8("Vývojové nástroje")))
                 {
+                    ImGui::Checkbox(m_settings.language == "en" ? "DEV mode" : U8("DEV režim"), &m_devMode);
+                    ImGui::TextWrapped("%s", m_settings.language == "en"
+                        ? "Content editors are available in DEV mode."
+                        : U8("Editory obsahu jsou dostupné v DEV režimu."));
+                    ImGui::BeginDisabled(!m_devMode);
+                    if (MedievalMenuButton(T(m_settings.language, "profile_editor"), btnSize))
+                    {
+                        loadProfileDraft(m_pendingBackground);
+                        m_mode = Mode::ProfileEditor;
+                    }
+                    if (MedievalMenuButton(T(m_settings.language, "item_editor"), btnSize)) enterItemEditor();
+                    if (MedievalMenuButton(m_settings.language == "en" ? "NPC and character editor" : U8("Editor NPC a postav"), btnSize)) enterNpcEditor();
                     if (MedievalMenuButton(T(m_settings.language, "level_editor"), btnSize)) enterEditor();
                     if (MedievalMenuButton(T(m_settings.language, "sequence_editor"), btnSize)) enterEditor(true);
                     if (MedievalMenuButton(T(m_settings.language, "scene_editor"), btnSize)) enterInteriorEditor("intro_houska_camp");
@@ -2325,179 +2413,139 @@ void Game::render()
                     if (MedievalMenuButton(T(m_settings.language, "texture_sprite_editor"), btnSize)) enterTextureSpriteEditor();
                     if (MedievalMenuButton(T(m_settings.language, "interior_2d"), btnSize)) enterInterior2D(kDefaultHouskaLocation);
                     if (MedievalMenuButton(T(m_settings.language, "interior_editor"), btnSize)) enterInteriorEditor(kDefaultHouskaLocation);
+                    ImGui::EndDisabled();
                 }
-                if (MedievalMenuButton(T(m_settings.language, "quit"), btnSize)) m_running = false;
                 ImGui::Spacing();
                 ImGui::TextWrapped("%s", T(m_settings.language, "hotkeys"));
             }
         }
         else if (m_mode == Mode::StyleSelect)
         {
-            const ImVec2 panelSize(std::min(980.0f, vp.x - 90.0f), std::min(720.0f, vp.y - 145.0f));
-            const ImVec2 panelPos((vp.x - panelSize.x) * 0.5f, std::max(120.0f, (vp.y - panelSize.y) * 0.58f));
-            DrawMenuFrame(panelPos, panelSize);
-
-            ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 34.0f, panelPos.y + 28.0f));
-            ImGui::BeginGroup();
-            ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", T(m_settings.language, "style_title"));
-            ImGui::TextColored(ImVec4(0.70f, 0.65f, 0.52f, 1.0f), "%s", T(m_settings.language, "style_subtitle"));
-            ImGui::EndGroup();
-
-            const PlayerStats::Background options[3] = {
-                PlayerStats::Background::Survivalist,
-                PlayerStats::Background::ScholarAthlete,
-                PlayerStats::Background::SocialAdaptable
-            };
-
-            const float rowW = panelSize.x - 68.0f;
-            const float gap = 10.0f;
-            const float rowTopY = panelPos.y + 92.0f;
-            const float startY = panelPos.y + panelSize.y - 136.0f;
-            const float rowH = std::clamp((startY - rowTopY - 14.0f - gap * 2.0f) / 3.0f, 104.0f, 148.0f);
-            float y = rowTopY;
-
-            for (int i = 0; i < 3; ++i)
+            const float top = 104 * menuScale;
+            const ImVec2 panelSize(std::max(1.0f, std::min(980 * menuScale, vp.x - 24 * menuScale)),
+                                  std::max(1.0f, std::min(790 * menuScale, vp.y - top - 12 * menuScale)));
+            ImGui::SetCursorScreenPos({(vp.x - panelSize.x) * 0.5f, top});
+            medieval::Child campaignPanel(ui, "##campaign_setup", panelSize, medieval::Surface::Wood);
+            if (campaignPanel)
             {
-                ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 34.0f, y));
-                BackgroundRowCard(options[i], m_pendingBackground, ImVec2(rowW, rowH));
-                y += rowH + gap;
+                ImGui::TextWrapped("%s", T(m_settings.language, "style_title"));
+                ImGui::TextWrapped("%s", T(m_settings.language, "style_subtitle"));
+                const float footerHeight = std::max(52 * menuScale, ImGui::GetTextLineHeight() * 2.5f);
+                ImGui::BeginChild("##campaign_setup_scroll", {0, std::max(40.0f, ImGui::GetContentRegionAvail().y - footerHeight)});
+                const PlayerStats::Background options[] = {
+                    PlayerStats::Background::Survivalist,
+                    PlayerStats::Background::ScholarAthlete,
+                    PlayerStats::Background::SocialAdaptable
+                };
+                for (auto background : options)
+                {
+                    BackgroundRowCard(background, m_pendingBackground,
+                        {ImGui::GetContentRegionAvail().x, std::max(142.0f, 142 * menuScale)});
+                    ImGui::Spacing();
+                }
+                ImGui::PushStyleColor(ImGuiCol_Text, ImVec4(1.0f, 0.73f, 0.32f, 1.0f));
+                ImGui::SeparatorText(m_settings.language == "en" ? "DEV — campaign start overrides" : U8("DEV — hodnoty začátku kampaně"));
+                ImGui::TextWrapped("%s", m_settings.language == "en"
+                    ? "These development values override the story's starting date and time."
+                    : U8("Tyto vývojové hodnoty přepisují příběhové datum a čas začátku kampaně."));
+                ImGui::PopStyleColor();
+                bool startChanged = false;
+                if (ImGui::BeginTable("##campaign_date", 5, ImGuiTableFlags_SizingStretchSame))
+                {
+                    auto dateField = [&](const char* label, const char* id, int& value)
+                    {
+                        ImGui::TableNextColumn();
+                        ImGui::TextUnformatted(label);
+                        ImGui::SetNextItemWidth(-1);
+                        startChanged |= ImGui::InputInt(id, &value, 0, 0);
+                    };
+                    dateField(T(m_settings.language, "start_day"), "##start_day", m_newCampaignStartDay);
+                    dateField(T(m_settings.language, "start_month"), "##start_month", m_newCampaignStartMonth);
+                    dateField(T(m_settings.language, "start_year"), "##start_year", m_newCampaignStartYear);
+                    dateField(T(m_settings.language, "start_hour"), "##start_hour", m_newCampaignStartHour);
+                    dateField(T(m_settings.language, "start_minute"), "##start_minute", m_newCampaignStartMinute);
+                    ImGui::EndTable();
+                }
+                if (startChanged)
+                    ClampCampaignStartDateTime(m_newCampaignStartDay, m_newCampaignStartMonth, m_newCampaignStartYear,
+                                               m_newCampaignStartHour, m_newCampaignStartMinute);
+                ImGui::EndChild();
+                if (ImGui::BeginTable("##campaign_setup_actions", 2, ImGuiTableFlags_SizingStretchSame))
+                {
+                    ImGui::TableNextColumn();
+                    if (MedievalMenuButton(T(m_settings.language, "back"), {0, 40 * menuScale})) m_mode = Mode::Menu;
+                    ImGui::TableNextColumn();
+                    if (MedievalMenuButton(T(m_settings.language, "enter_campaign"), {0, 40 * menuScale}, true))
+                        enterCampaign(std::string(), std::string(), true, true);
+                    ImGui::EndTable();
+                }
             }
-
-            ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 34.0f, startY));
-            ImGui::TextColored(ImVec4(0.86f, 0.76f, 0.54f, 1.0f), "%s", T(m_settings.language, "start_datetime"));
-
-            bool startChanged = false;
-            ImGui::PushStyleColor(ImGuiCol_FrameBg, ImVec4(0.08f, 0.065f, 0.045f, 0.92f));
-            ImGui::PushStyleColor(ImGuiCol_FrameBgHovered, ImVec4(0.16f, 0.11f, 0.055f, 0.95f));
-            const float fieldsY = startY + 25.0f;
-            const float fieldGap = std::clamp((rowW - 314.0f) / 4.0f, 8.0f, 18.0f);
-            float fieldX = panelPos.x + 34.0f;
-            auto dateField = [&](const char* label, const char* id, int* value, float width)
-            {
-                ImGui::SetCursorScreenPos(ImVec2(fieldX, fieldsY));
-                ImGui::BeginGroup();
-                ImGui::TextColored(ImVec4(0.70f, 0.65f, 0.52f, 1.0f), "%s", label);
-                ImGui::SetNextItemWidth(width);
-                startChanged |= ImGui::InputInt(id, value, 0, 0);
-                ImGui::EndGroup();
-                fieldX += width + fieldGap;
-            };
-            dateField(T(m_settings.language, "start_day"), "##start_day", &m_newCampaignStartDay, 58.0f);
-            dateField(T(m_settings.language, "start_month"), "##start_month", &m_newCampaignStartMonth, 58.0f);
-            dateField(T(m_settings.language, "start_year"), "##start_year", &m_newCampaignStartYear, 82.0f);
-            dateField(T(m_settings.language, "start_hour"), "##start_hour", &m_newCampaignStartHour, 58.0f);
-            dateField(T(m_settings.language, "start_minute"), "##start_minute", &m_newCampaignStartMinute, 58.0f);
-            ImGui::PopStyleColor(2);
-            if (startChanged)
-            {
-                ClampCampaignStartDateTime(
-                    m_newCampaignStartDay,
-                    m_newCampaignStartMonth,
-                    m_newCampaignStartYear,
-                    m_newCampaignStartHour,
-                    m_newCampaignStartMinute);
-            }
-
-            ImGui::SetCursorScreenPos(ImVec2(panelPos.x + 34.0f, panelPos.y + panelSize.y - 70.0f));
-            if (MedievalMenuButton(T(m_settings.language, "back"), ImVec2(180.0f, 52.0f)))
-                m_mode = Mode::Menu;
-
-            ImGui::SameLine();
-            if (MedievalMenuButton(T(m_settings.language, "enter_campaign"), ImVec2(320.0f, 52.0f), true))
-                enterCampaign(std::string(), std::string(), true, true);
         }
         else if (m_mode == Mode::ProfileEditor)
         {
             if (!m_profileDraftLoaded)
                 loadProfileDraft(m_pendingBackground);
 
-            const ImVec2 panelSize(std::min(1080.0f, vp.x - 90.0f), std::min(790.0f, vp.y - 120.0f));
-            const ImVec2 panelPos((vp.x - panelSize.x) * 0.5f, std::max(96.0f, (vp.y - panelSize.y) * 0.56f));
-            DrawMenuFrame(panelPos, panelSize);
-
-            const float innerX = panelPos.x + 36.0f;
-            const float innerY = panelPos.y + 30.0f;
-            const float innerW = panelSize.x - 72.0f;
-            const float innerH = panelSize.y - 60.0f;
-
-            ImGui::SetCursorScreenPos(ImVec2(innerX, innerY));
-            ImGui::BeginGroup();
-            ImGui::TextColored(ImVec4(0.92f, 0.78f, 0.48f, 1.0f), "%s", T(m_settings.language, "profile_title"));
-            WrappedTextAtWidth(T(m_settings.language, "profile_subtitle"), innerW, ImVec4(0.70f, 0.65f, 0.52f, 1.0f));
-            ImGui::EndGroup();
-
-            const float topY = innerY + 74.0f;
-            const float leftW = 250.0f;
-            const float rightX = innerX + leftW + 28.0f;
-            const float rightW = innerW - leftW - 28.0f;
-            const float contentH = innerH - 150.0f;
-
-            ImGui::SetCursorScreenPos(ImVec2(innerX, topY));
-            ImGui::BeginGroup();
-            ImGui::TextColored(ImVec4(0.86f, 0.76f, 0.54f, 1.0f), U8("Profil"));
-            ImGui::Dummy(ImVec2(1.0f, 8.0f));
-
-            const PlayerStats::Background profileOptions[3] = {
-                PlayerStats::Background::Survivalist,
-                PlayerStats::Background::ScholarAthlete,
-                PlayerStats::Background::SocialAdaptable
-            };
-
-            for (PlayerStats::Background bg : profileOptions)
+            medieval::Font profileFont(ui, medieval::FontRole::Body, 0.82f);
+            const float top = 104 * menuScale;
+            const ImVec2 panelSize(std::max(1.0f, std::min(1080 * menuScale, vp.x - 24 * menuScale)),
+                                  std::max(1.0f, std::min(790 * menuScale, vp.y - top - 12 * menuScale)));
+            ImGui::SetCursorScreenPos({(vp.x - panelSize.x) * 0.5f, top});
+            medieval::Child profilePanel(ui, "##profile_panel", panelSize, medieval::Surface::Wood);
+            if (profilePanel)
             {
-                const PlayerStats::Background before = m_profileEditBackground;
-                ProfileBackgroundButton(bg, m_profileEditBackground, ImVec2(leftW, 48.0f));
-                if (before != m_profileEditBackground)
-                    loadProfileDraft(m_profileEditBackground);
-                ImGui::Dummy(ImVec2(1.0f, 8.0f));
-            }
+                ImGui::TextWrapped("DEV — %s", T(m_settings.language, "profile_title"));
+                ImGui::TextWrapped("%s", T(m_settings.language, "profile_subtitle"));
+                const bool compact = ImGui::GetContentRegionAvail().x < 760 * menuScale;
+                const float footerHeight = (compact ? 100.0f : 52.0f) * menuScale;
+                const float contentHeight = std::max(40.0f, ImGui::GetContentRegionAvail().y - footerHeight - ImGui::GetStyle().ItemSpacing.y);
+                ImGui::BeginChild("##profile_stats_child", {0, contentHeight}, true);
 
-            ImGui::Dummy(ImVec2(1.0f, 14.0f));
-            ProfileDerivedPreview(m_profileDraft);
-            ImGui::Dummy(ImVec2(1.0f, 14.0f));
-            WrappedTextAtWidth(T(m_settings.language, "profile_hint"), leftW, ImVec4(0.70f, 0.66f, 0.55f, 1.0f));
+                const PlayerStats::Background profileOptions[] = {
+                    PlayerStats::Background::Survivalist,
+                    PlayerStats::Background::ScholarAthlete,
+                    PlayerStats::Background::SocialAdaptable
+                };
+                const float buttonWidth = std::max(1.0f, (ImGui::GetContentRegionAvail().x - ImGui::GetStyle().ItemSpacing.x * 2) / 3);
+                for (int i = 0; i < 3; ++i)
+                {
+                    if (i) ImGui::SameLine();
+                    const auto before = m_profileEditBackground;
+                    ProfileBackgroundButton(profileOptions[i], m_profileEditBackground, {buttonWidth, 40 * menuScale});
+                    if (before != m_profileEditBackground) loadProfileDraft(m_profileEditBackground);
+                }
+                if (!m_profileStatus.empty()) ImGui::TextWrapped("%s", m_profileStatus.c_str());
+                if (ImGui::CollapsingHeader(m_settings.language == "en" ? "Derived values and profile storage" : U8("Odvozené hodnoty a ukládání profilu")))
+                {
+                    ProfileDerivedPreview(m_profileDraft);
+                    ImGui::TextWrapped("%s", T(m_settings.language, "profile_hint"));
+                }
+                if (DrawProfileEditorStats(m_profileDraft))
+                {
+                    m_profileDirty = true;
+                    m_profileStatus.clear();
+                }
+                ImGui::EndChild();
 
-            if (!m_profileStatus.empty())
-            {
-                ImGui::Dummy(ImVec2(1.0f, 8.0f));
-                ImGui::TextColored(ImVec4(0.66f, 0.92f, 0.58f, 1.0f), "%s", m_profileStatus.c_str());
-            }
-            ImGui::EndGroup();
-
-            ImGui::SetCursorScreenPos(ImVec2(rightX, topY));
-            ImGui::PushStyleColor(ImGuiCol_ChildBg, ImVec4(0.035f, 0.027f, 0.020f, 0.62f));
-            ImGui::PushStyleColor(ImGuiCol_Border, ImVec4(0.72f, 0.56f, 0.30f, 0.26f));
-            ImGui::BeginChild("##profile_stats_child", ImVec2(rightW, contentH), true, ImGuiWindowFlags_AlwaysVerticalScrollbar);
-
-            if (DrawProfileEditorStats(m_profileDraft))
-            {
-                m_profileDirty = true;
-                m_profileStatus.clear();
-            }
-
-            ImGui::EndChild();
-            ImGui::PopStyleColor(2);
-
-            ImGui::SetCursorScreenPos(ImVec2(innerX, panelPos.y + panelSize.y - 72.0f));
-            if (MedievalMenuButton(T(m_settings.language, "back"), ImVec2(190.0f, 52.0f)))
-                m_mode = Mode::Menu;
-
-            ImGui::SameLine();
-            if (MedievalMenuButton(T(m_settings.language, "profile_reset"), ImVec2(210.0f, 52.0f)))
-                resetProfileDraft();
-
-            ImGui::SameLine();
-            if (MedievalMenuButton(T(m_settings.language, "profile_save"), ImVec2(210.0f, 52.0f), true))
-                saveProfileDraft();
-
-            ImGui::SameLine();
-            if (MedievalMenuButton(T(m_settings.language, "profile_use"), ImVec2(230.0f, 52.0f), true))
-            {
-                if (m_profileDirty)
-                    saveProfileDraft();
-                m_pendingBackground = m_profileEditBackground;
-                campaignflow::SetSelectedBackground(m_pendingBackground);
-                m_profileStatus = U8("Profil je připravený pro novou kampaň.");
+                if (ImGui::BeginTable("##profile_actions", compact ? 2 : 4, ImGuiTableFlags_SizingStretchSame))
+                {
+                    const ImVec2 size(0, 40 * menuScale);
+                    ImGui::TableNextColumn();
+                    if (MedievalMenuButton(T(m_settings.language, "back"), size, false, 0.82f)) m_mode = m_npcEditor ? Mode::NpcEditor : Mode::Menu;
+                    ImGui::TableNextColumn();
+                    if (MedievalMenuButton(T(m_settings.language, "profile_reset"), size, false, 0.82f)) resetProfileDraft();
+                    ImGui::TableNextColumn();
+                    if (MedievalMenuButton(T(m_settings.language, "profile_save"), size, true, 0.82f)) saveProfileDraft();
+                    ImGui::TableNextColumn();
+                    if (MedievalMenuButton(T(m_settings.language, "profile_use"), size, true, 0.82f))
+                    {
+                        if (m_profileDirty) saveProfileDraft();
+                        m_pendingBackground = m_profileEditBackground;
+                        campaignflow::SetSelectedBackground(m_pendingBackground);
+                        m_profileStatus = U8("Profil je připravený pro novou kampaň.");
+                    }
+                    ImGui::EndTable();
+                }
             }
         }
 
@@ -2623,6 +2671,37 @@ void Game::render()
     {
         if (m_objectEditor)
             m_objectEditor->render();
+    }
+    else if (m_mode == Mode::NpcEditor)
+    {
+        if (m_npcEditor)
+        {
+            m_npcEditor->render();
+            if (m_npcEditor->consumeProfileRequest())
+            {
+                loadProfileDraft(m_pendingBackground);
+                m_mode = Mode::ProfileEditor;
+            }
+            if (!m_npcEditor->isOpen())
+            {
+                const bool quit = m_npcEditor->wantsToQuit();
+                leaveNpcEditor();
+                if (quit) m_running = false;
+            }
+        }
+    }
+    else if (m_mode == Mode::ItemEditor)
+    {
+        if (m_itemEditor)
+        {
+            m_itemEditor->render();
+            if (!m_itemEditor->isOpen())
+            {
+                const bool quit = m_itemEditor->wantsToQuit();
+                leaveItemEditor();
+                if (quit) m_running = false;
+            }
+        }
     }
     else if (m_mode == Mode::TextureSpriteEditor)
     {

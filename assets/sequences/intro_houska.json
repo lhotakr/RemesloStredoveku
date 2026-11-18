@@ -196,6 +196,11 @@
                     "type": "hide_text"
                 },
                 {
+                    "actor": "patrik",
+                    "animation": "pickup_left",
+                    "type": "set_actor_animation"
+                },
+                {
                     "count": 1,
                     "item": "artifact_hoe",
                     "once_flag": "intro_houska_hoe_picked_up",
@@ -275,6 +280,14 @@
                 },
                 {
                     "actor": "patrik",
+                    "character": "patrik",
+                    "kind": "cinematic",
+                    "marker": "camp_spot",
+                    "scale": 1.9,
+                    "type": "spawn_actor"
+                },
+                {
+                    "actor": "patrik",
                     "animation": "walk_up",
                     "type": "set_actor_animation"
                 },
@@ -287,7 +300,7 @@
                 },
                 {
                     "actor": "patrik",
-                    "animation": "idle_right",
+                    "animation": "interact_right",
                     "type": "set_actor_animation"
                 },
                 {
@@ -309,7 +322,7 @@
                 },
                 {
                     "actor": "patrik",
-                    "animation": "idle_right",
+                    "animation": "interact_right",
                     "type": "set_actor_animation"
                 },
                 {
@@ -360,7 +373,7 @@
                 },
                 {
                     "actor": "patrik",
-                    "animation": "idle_left",
+                    "animation": "lie_down_left",
                     "blocking": true,
                     "type": "set_actor_animation"
                 },

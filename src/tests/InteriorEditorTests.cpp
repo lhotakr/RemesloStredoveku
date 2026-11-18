@@ -899,6 +899,18 @@ struct BuildInteriorEditorTestAccess
         CHECK(std::abs(hoePosition.x - hoe->x) < 0.0001 && std::abs(hoePosition.y - hoe->y) < 0.0001);
         CHECK(scene.setActorVisible("interior_object_3", false));
         CHECK(!hoe->visible);
+        // A slower update must advance every elapsed frame and preserve the remainder.
+        CHECK(scene.setActorAnimation("patrik", "walk_left", {}));
+        auto pixels = [&]() { return rendered.m_textures.at(rendered.findSpriteById("patrik")->texture).pixels; };
+        const auto first = pixels();
+        scene.update(.26f);
+        const auto third = pixels(); CHECK(third != first);
+        CHECK(scene.setActorAnimation("patrik", "walk_left", {}));
+        scene.update(.1f); scene.update(.1f); CHECK(pixels() == third);
+        CHECK(scene.setActorAnimation("patrik", "pickup_left", {}));
+        scene.update(1.1f); const auto last = pixels();
+        scene.update(1.1f); CHECK(pixels() == last);
+        CHECK(last != first);
         scene.shutdown();
         characters.shutdown();
     }

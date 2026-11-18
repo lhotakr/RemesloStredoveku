@@ -104,7 +104,7 @@ private:
 class Font
 {
 public:
-    Font(const UI& ui, FontRole role);
+    Font(const UI& ui, FontRole role, float scale = 1.0f);
     ~Font();
     Font(const Font&) = delete;
     Font& operator=(const Font&) = delete;

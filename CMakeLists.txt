@@ -148,6 +148,13 @@ add_executable(RemesloStredoveku
         # game
         src/game/Game.cpp
         src/game/Game.h
+        src/game/ItemEditor.h
+        src/game/ItemEditor.cpp
+        src/game/ItemCatalog.h
+        src/game/ItemCatalog.cpp
+        src/game/EditorDocument.cpp
+        src/game/NpcCatalog.cpp
+        src/game/NpcEditor.cpp
         src/game/BuildInteriorEngine.cpp
         src/game/InteriorEditorGeometry.cpp
         src/game/InteriorEditorAssets.cpp
@@ -443,3 +450,31 @@ target_compile_definitions(RemesloMedievalUITests PRIVATE SDL_MAIN_HANDLED REMES
 target_compile_options(RemesloMedievalUITests PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/utf-8>)
 add_test(NAME RemesloMedievalUITests COMMAND RemesloMedievalUITests)
 set_tests_properties(RemesloMedievalUITests PROPERTIES ENVIRONMENT "SDL_VIDEODRIVER=dummy")
+
+add_executable(RemesloItemCatalogTests
+        src/tests/ItemCatalogTests.cpp
+        src/game/ItemCatalog.cpp
+        src/game/EditorDocument.cpp
+        src/JsonUtils.cpp
+)
+target_include_directories(RemesloItemCatalogTests PRIVATE src third_party/nlohmann)
+target_compile_definitions(RemesloItemCatalogTests PRIVATE REMESLO_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+target_compile_options(RemesloItemCatalogTests PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/utf-8>)
+add_test(NAME RemesloItemCatalogTests COMMAND RemesloItemCatalogTests)
+
+add_executable(RemesloNpcCatalogTests
+        src/tests/NpcCatalogTests.cpp
+        src/game/NpcCatalog.cpp
+        src/game/EditorDocument.cpp
+        src/NpcDefinition.cpp
+        src/CharacterManager.cpp
+        src/Player.cpp
+        src/game/NpcManager.cpp
+        src/audio/AudioManager.cpp
+        src/JsonUtils.cpp
+)
+target_include_directories(RemesloNpcCatalogTests PRIVATE src third_party/nlohmann)
+target_link_libraries(RemesloNpcCatalogTests PRIVATE PkgConfig::SDL2 PkgConfig::SDL2_IMAGE PkgConfig::SDL2_MIXER)
+target_compile_definitions(RemesloNpcCatalogTests PRIVATE SDL_MAIN_HANDLED REMESLO_PROJECT_ROOT="${CMAKE_SOURCE_DIR}")
+target_compile_options(RemesloNpcCatalogTests PRIVATE $<$<CXX_COMPILER_ID:MSVC>:/utf-8>)
+add_test(NAME RemesloNpcCatalogTests COMMAND RemesloNpcCatalogTests)

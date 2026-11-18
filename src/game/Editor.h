@@ -22,6 +22,7 @@
 
 struct NpcSpawn
 {
+    nlohmann::json sourceData = nlohmann::json::object();
     std::string id;
     std::string typeId;
 

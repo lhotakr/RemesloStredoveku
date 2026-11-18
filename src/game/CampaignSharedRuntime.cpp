@@ -409,6 +409,8 @@ json SavePlayer(const Player& player)
         {"character_id", player.characterId},
         {"given_name", player.givenName},
         {"family_name", player.familyName},
+        {"personality", player.personality},
+        {"relationship_states", player.relationshipStates},
         {"note_profile_id", player.noteProfileId},
         {"is_sprinting", player.isSprinting},
         {"is_moving", player.isMoving},
@@ -416,6 +418,8 @@ json SavePlayer(const Player& player)
         {"current_anim", player.currentAnim},
         {"current_frame", player.currentFrame},
         {"anim_time", player.animTime},
+        {"animation_override", player.animationOverride},
+        {"animation_hold_last_frame", player.animationHoldLastFrame},
         {"stats", SavePlayerStats(player.stats)},
         {"inventory", SaveInventory(player.inventory)}
     };
@@ -426,7 +430,10 @@ void LoadPlayer(const json& source, Player& player, const CharacterManager& char
     if (!source.is_object())
         return;
 
-    const std::string characterId = JsonValue(source, "character_id", player.characterId);
+    std::string characterId = JsonValue(source, "character_id", player.characterId);
+    // Migrate only the former player default; NPCs keep their existing appearance.
+    if (characterId == "Character_2_char_05" && characters.getCharacter("patrik"))
+        characterId = "patrik";
     if (!characterId.empty())
     {
         if (!player.selectCharacter(characterId, characters))
@@ -441,6 +448,8 @@ void LoadPlayer(const json& source, Player& player, const CharacterManager& char
     player.colH = std::max(1, JsonValue(source, "col_h", player.colH));
     player.givenName = JsonValue(source, "given_name", player.givenName);
     player.familyName = JsonValue(source, "family_name", player.familyName);
+    if (source.contains("personality") && source["personality"].is_object()) player.personality = source["personality"];
+    if (source.contains("relationship_states") && source["relationship_states"].is_object()) player.relationshipStates = source["relationship_states"];
     player.noteProfileId = JsonValue(source, "note_profile_id", player.noteProfileId);
     player.isSprinting = JsonValue(source, "is_sprinting", player.isSprinting);
     player.isMoving = JsonValue(source, "is_moving", player.isMoving);
@@ -450,6 +459,11 @@ void LoadPlayer(const json& source, Player& player, const CharacterManager& char
     player.animTime = std::max(0.0f, JsonValue(source, "anim_time", player.animTime));
     LoadPlayerStats(source.value("stats", json::object()), player.stats);
     LoadInventory(source.value("inventory", json::object()), player.inventory);
+    player.syncCharacterVariant(characters);
+    player.animationOverride = JsonValue(source, "animation_override", std::string());
+    player.animationHoldLastFrame = JsonValue(source, "animation_hold_last_frame", false);
+    const auto* character = characters.getCharacter(player.characterId);
+    if (!character || !character->animations.contains(player.animationOverride)) player.stopAnimation();
 }
 
 json SaveNpcState(const NpcInstance& npc)
@@ -473,6 +487,12 @@ json SaveNpcState(const NpcInstance& npc)
         {"y", npc.y},
         {"hp", npc.hp},
         {"mood", npc.mood},
+        {"personality", npc.personality},
+        {"relationship_states", npc.relationshipStates},
+        {"can_move", npc.canMove},
+        {"can_talk", npc.canTalk},
+        {"move_speed", npc.moveSpeed},
+        {"current_anim", npc.currentAnim},
         {"facing", npc.facing},
         {"greeted_player", npc.greetedPlayer},
         {"greeting_cooldown_remaining_ms", greetingRemaining},
@@ -505,6 +525,12 @@ void LoadNpcState(const json& source, NpcInstance& npc)
     npc.y = JsonValue(source, "y", npc.y);
     npc.hp = JsonValue(source, "hp", npc.hp);
     npc.mood = std::clamp(JsonValue(source, "mood", npc.mood), 0, 100);
+    if (source.contains("personality") && source["personality"].is_object()) npc.personality = source["personality"];
+    if (source.contains("relationship_states") && source["relationship_states"].is_object()) npc.relationshipStates = source["relationship_states"];
+    npc.canMove = JsonValue(source, "can_move", npc.canMove);
+    npc.canTalk = JsonValue(source, "can_talk", npc.canTalk);
+    npc.moveSpeed = std::clamp(JsonValue(source, "move_speed", npc.moveSpeed), 0.f, 10000.f);
+    npc.currentAnim = JsonValue(source, "current_anim", std::string());
     npc.facing = JsonValue(source, "facing", npc.facing);
     npc.greetedPlayer = JsonValue(source, "greeted_player", npc.greetedPlayer);
     npc.nextGreetingAllowedTime = SDL_GetTicks() +

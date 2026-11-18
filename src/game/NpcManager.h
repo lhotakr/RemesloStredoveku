@@ -5,6 +5,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <nlohmann/json.hpp>
 
 class CharacterManager;
 
@@ -98,6 +99,13 @@ struct NpcInstance
     float targetY = 0.0f;
     float animTime = 0.0f;
     float idleTimer = 0.0f;
+    std::string currentAnim;
+    bool canMove = true, canTalk = true;
+    float moveSpeed = 30.0f;
+    // Map overrides stay separate from defaults inherited from the definition/type.
+    nlohmann::json spawnOverrides = nlohmann::json::object();
+    nlohmann::json personality = nlohmann::json::object();
+    nlohmann::json relationshipStates = nlohmann::json::object();
 
     float awarenessRadius = 96.0f;
     float greetingRadius = 64.0f;

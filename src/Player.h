@@ -4,6 +4,7 @@
 #include <SDL.h>
 #include <string>
 #include "PlayerInventory.h"
+#include <nlohmann/json.hpp>
 
 class CharacterManager;
 
@@ -54,12 +55,16 @@ struct Player
     // stats / survival
     PlayerStats stats;
     PlayerInventory inventory;
+    nlohmann::json personality = nlohmann::json::object();
+    nlohmann::json relationshipStates = nlohmann::json::object();
 
     // animation state
     Facing facing = Facing::Down;
     std::string currentAnim = "idle_down";
     int currentFrame = 0;
     float animTime = 0.0f;
+    std::string animationOverride;
+    bool animationHoldLastFrame = false;
 
     // meta / progression
     std::string givenName = "Patrik";
@@ -73,6 +78,10 @@ struct Player
 
     void applyBackground(PlayerStats::Background background);
     bool selectCharacter(const std::string& id, const CharacterManager& manager);
+    void syncCharacterVariant(const CharacterManager& manager);
+    bool playAnimation(const std::string& animation, const CharacterManager& manager);
+    void stopAnimation();
+    bool movementLocked(const CharacterManager& manager) const;
 
     void update(float dt, const CharacterManager& manager);
     SDL_Rect worldAABB() const;

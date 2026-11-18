@@ -184,6 +184,7 @@ bool NpcManager::loadSpawns(const std::string& path, int tileSize, std::string* 
         const int tileY = jn.value("tile_y", 0);
 
         NpcInstance npc;
+        npc.spawnOverrides = jn;
         npc.id = jn.value("id", "");
 		npc.npcId = jn.value("npc_id", "");
         npc.typeId = typeId;
@@ -194,8 +195,10 @@ bool NpcManager::loadSpawns(const std::string& path, int tileSize, std::string* 
         npc.surname = jn.value("surname", "");
         npc.greeting = jn.value("greeting", "");
 
-        npc.scriptId = jn.value("script_id", t.defaultScriptId);
-        npc.characterId = jn.value("character_id", t.characterId);
+        npc.scriptId = jn.value("script_id", "");
+        if (npc.scriptId.empty()) npc.scriptId = t.defaultScriptId;
+        npc.characterId = jn.value("character_id", "");
+        if (npc.characterId.empty()) npc.characterId = t.characterId;
         npc.hp = jn.value("hp", t.defaultHP);
         npc.mood = jn.value("mood", t.defaultMood);
 
@@ -478,13 +481,17 @@ void NpcManager::updateMovement(float dt, int tileSize)
 
 void NpcManager::stepMovement(float dt)
 {
-    const float speed = 30.0f;
-
     for (auto& npc : m_npcs)
     {
         const float dx = npc.targetX - npc.x;
         const float dy = npc.targetY - npc.y;
         const float dist = std::sqrt(dx * dx + dy * dy);
+        const bool moving = npc.canMove && npc.hp > 0 && npc.moveSpeed > 0 && dist >= 1.f;
+        const char* directions[]{"up", "right", "down", "left"};
+        const auto animation = std::string(moving ? "walk_" : "idle_") + directions[std::clamp(static_cast<int>(npc.facing), 0, 3)];
+        if (animation != npc.currentAnim) { npc.currentAnim = animation; npc.animTime = 0; }
+        npc.animTime += std::max(0.f, dt);
+        if (!npc.canMove || npc.hp <= 0 || npc.moveSpeed <= 0) continue;
 
         if (dist < 1.0f)
         {
@@ -498,7 +505,7 @@ void NpcManager::stepMovement(float dt)
         else
             npc.facing = (dy > 0.0f) ? 2.0f : 0.0f;
 
-        const float step = speed * dt;
+        const float step = npc.moveSpeed * dt;
         if (step >= dist)
         {
             npc.x = npc.targetX;
@@ -510,7 +517,6 @@ void NpcManager::stepMovement(float dt)
             npc.y += dy / dist * step;
         }
 
-        npc.animTime += dt * 6.0f;
     }
 }
 
@@ -520,9 +526,6 @@ void NpcManager::updateReactions(
     AudioManager& audio,
     int dayPhase)
 {
-    constexpr float awarenessRadius = 96.0f;
-    constexpr float greetRadius = 64.0f;
-    constexpr float dialogRadius = 42.0f;
     constexpr uint32_t greetingCooldownMs = 12000; // 12 sekund
 
     const uint32_t nowTicks = SDL_GetTicks();
@@ -531,15 +534,16 @@ void NpcManager::updateReactions(
     {
         npc.playerNearby = false;
         npc.playerInDialogRange = false;
+        if (npc.hp <= 0) continue;
 
         const bool inAwareness =
-            playerInRange(npc.x, npc.y, playerX, playerY, awarenessRadius);
+            playerInRange(npc.x, npc.y, playerX, playerY, npc.awarenessRadius);
 
         const bool inGreet =
-            playerInRange(npc.x, npc.y, playerX, playerY, greetRadius);
+            playerInRange(npc.x, npc.y, playerX, playerY, npc.greetingRadius);
 
         const bool inDialog =
-            playerInRange(npc.x, npc.y, playerX, playerY, dialogRadius);
+            playerInRange(npc.x, npc.y, playerX, playerY, npc.dialogRadius);
 
         // mimo awareness radius: NPC hráèe ignoruje
         if (!inAwareness)
@@ -554,7 +558,7 @@ void NpcManager::updateReactions(
         npc.playerNearby = true;
         npc.facing = computeFacing(npc.x, npc.y, playerX, playerY);
 
-        if (inDialog)
+        if (inDialog && npc.canTalk)
             npc.playerInDialogRange = true;
 
         // v awareness, ale ne v greet radiusu -> sleduje hráèe, ale nezdraví
@@ -571,7 +575,7 @@ void NpcManager::updateReactions(
             continue;
 
         // greeting jen jednou za cooldown
-        if (!npc.greetedPlayer)
+        if (!npc.greetedPlayer && npc.canTalk)
         {
             playGreeting(npc, audio, dayPhase);
             npc.greetedPlayer = true;
@@ -594,7 +598,7 @@ void NpcManager::render(SDL_Renderer* renderer, int camX, int camY, const Charac
 
         const float dx = npc.targetX - npc.x;
         const float dy = npc.targetY - npc.y;
-        const bool moving = (std::fabs(dx) > 2.0f || std::fabs(dy) > 2.0f);
+        const bool moving = npc.canMove && npc.hp > 0 && npc.moveSpeed > 0 && dx * dx + dy * dy >= 1.f;
 
         if (moving)
         {
@@ -629,9 +633,9 @@ void NpcManager::render(SDL_Renderer* renderer, int camX, int camY, const Charac
         }
 
         const auto& frames = itAnim->second.frames;
-        const int frameIndex = moving
-            ? ((int)npc.animTime % (int)frames.size())
-            : 0;
+        const int frame = static_cast<int>(npc.animTime * std::max(1, itAnim->second.fps));
+        const int frameIndex = itAnim->second.loop ? frame % static_cast<int>(frames.size())
+            : std::min(frame, static_cast<int>(frames.size()) - 1);
 
         const AnimFrame& fr = frames[frameIndex];
 

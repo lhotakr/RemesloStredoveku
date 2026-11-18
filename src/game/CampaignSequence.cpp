@@ -123,6 +123,9 @@ void Campaign::updateSequenceRuntime(float dt)
     if (m_sequenceCameraShakeRemaining > 0.0f)
         m_sequenceCameraShakeRemaining = std::max(0.0f, m_sequenceCameraShakeRemaining - dt);
 
+    for (auto& [id, actor] : m_sequenceActors)
+        actor.animTime += std::max(0.0f, dt);
+
     m_audioManager.update(dt);
     const bool wasRunning = m_sequenceManager.isRunning();
     m_sequenceManager.update(dt);
@@ -190,7 +193,11 @@ void Campaign::renderSequenceActors()
                 it = ch->animations.find("idle_down");
             if (it != ch->animations.end() && !it->second.frames.empty())
             {
-                const auto& fr = it->second.frames[0];
+                const auto& animation = it->second;
+                const int frame = static_cast<int>(actor.animTime * std::max(1, animation.fps));
+                const int index = animation.loop ? frame % static_cast<int>(animation.frames.size())
+                    : std::min(frame, static_cast<int>(animation.frames.size()) - 1);
+                const auto& fr = animation.frames[index];
                 SDL_Rect src{fr.x, fr.y, fr.w, fr.h};
                 SDL_Rect dst{
                     (int)std::lround(actor.x - fr.w * actor.scale * 0.5f) - m_camX,
@@ -476,12 +483,18 @@ void Campaign::setActorAnimation(const std::string& actorId, const std::string& 
 
     auto it = m_sequenceActors.find(actorId);
     if (it != m_sequenceActors.end())
+    {
         it->second.animation = animationId;
+        it->second.animTime = 0.0f;
+    }
     else
     {
         const auto alias = m_sequenceActorAliases.find(actorId);
         if (actorId == "player" || (alias != m_sequenceActorAliases.end() && alias->second == "player"))
-            m_player.currentAnim = animationId.empty() ? m_player.currentAnim : animationId;
+        {
+            if (!m_player.playAnimation(animationId, m_characterManager))
+                sequenceLog("Unknown player animation: " + animationId);
+        }
     }
 }
 
@@ -766,6 +779,7 @@ void Campaign::teleportPlayer(sequence::Vec2 pos)
 void Campaign::enablePlayerControl(bool enabled)
 {
     m_sequencePlayerControlEnabled = enabled;
+    if (enabled) m_player.stopAnimation();
     if (!enabled)
     {
         m_player.vx = 0.0f;

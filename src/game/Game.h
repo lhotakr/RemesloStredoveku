@@ -7,6 +7,8 @@
 
 class Editor;
 class ObjectEditor;
+class ItemEditor;
+class NpcEditor;
 class Campaign;
 class BuildInteriorEngine;
 class TextureSpriteEditor;
@@ -37,6 +39,8 @@ private:
         InteriorEditor,
         Editor,
         ObjectEditor,
+        ItemEditor,
+        NpcEditor,
         TextureSpriteEditor,
         Campaign
     };
@@ -92,6 +96,11 @@ private:
     void enterObjectEditor();
     void leaveObjectEditor();
 
+    void enterItemEditor();
+    void leaveItemEditor();
+    void enterNpcEditor();
+    void leaveNpcEditor();
+
     void enterTextureSpriteEditor();
     void leaveTextureSpriteEditor();
 
@@ -141,6 +150,7 @@ private:
     SDL_Renderer* m_renderer = nullptr;
 
     bool m_running = true;
+    bool m_devMode = false;
     Mode m_mode = Mode::Menu;
     PlayerStats::Background m_pendingBackground = PlayerStats::Background::ScholarAthlete;
     int m_newCampaignStartDay = 29;
@@ -185,6 +195,8 @@ private:
     Editor* m_editor = nullptr;
     bool m_editorOpenedForSequence = false;
     ObjectEditor* m_objectEditor = nullptr;
+    ItemEditor* m_itemEditor = nullptr;
+    NpcEditor* m_npcEditor = nullptr;
     TextureSpriteEditor* m_textureSpriteEditor = nullptr;
     BuildInteriorEngine* m_interior2D = nullptr;
 };

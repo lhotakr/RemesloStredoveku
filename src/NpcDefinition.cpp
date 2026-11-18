@@ -74,7 +74,14 @@ bool NpcDefinitionRegistry::loadFromFile(const std::string& path, std::string* o
 
     m_definitions.clear();
 
-    for (const auto& jNpc : root["npcs"])
+    auto actors = root["npcs"];
+    if (root.contains("player") && root["player"].is_object())
+    {
+        auto player = root["player"];
+        player["npc_id"] = "player";
+        actors.push_back(std::move(player));
+    }
+    for (const auto& jNpc : actors)
     {
         NpcDefinition def;
 
@@ -82,6 +89,10 @@ bool NpcDefinitionRegistry::loadFromFile(const std::string& path, std::string* o
         def.typeId = jNpc.value("type_id", "");
         def.scriptId = jNpc.value("script_id", "");
         def.characterId = jNpc.value("character_id", "");
+        def.greeting = jNpc.value("greeting", "");
+        for (auto [key, dest] : {std::pair{"personality", &def.personality},
+                std::pair{"initial_state", &def.initialState}, std::pair{"relationship_states", &def.relationshipStates}})
+            if (jNpc.contains(key) && jNpc[key].is_object()) *dest = jNpc[key];
 
         if (def.npcId.empty())
             continue;
