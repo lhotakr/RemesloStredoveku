@@ -85,6 +85,7 @@ public:
         std::vector<std::uint32_t> pixels;
         int pixelW = 0;
         int pixelH = 0;
+        SDL_FPoint billboardAnchor{0.5f, 1.0f};
         double x = 0.0;
         double y = 0.0;
         double zOffset = 0.0;
@@ -341,6 +342,7 @@ private:
         double y = 0.0;
         double zOffset = 0.0;
         double scale = 0.75;
+        SDL_FPoint billboardAnchor{0.5f, 1.0f};
         bool solid = false;
         ObjectRenderMode renderMode = ObjectRenderMode::Billboard;
         double yaw = 0.0;
