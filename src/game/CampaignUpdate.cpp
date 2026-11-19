@@ -291,13 +291,7 @@ void Campaign::updatePlayerNeeds(int elapsedGameMinutes)
         std::abs(m_player.vx) > 1.0f ||
         std::abs(m_player.vy) > 1.0f;
 
-    const Uint8* ks = SDL_GetKeyboardState(nullptr);
-
-    const bool running =
-        ks[SDL_SCANCODE_LCTRL] ||
-        ks[SDL_SCANCODE_RCTRL];
-
-    updatePlayerNeeds(elapsedGameMinutes, moving, running);
+    updatePlayerNeeds(elapsedGameMinutes, moving, moving && m_player.isSprinting);
 }
 
 void Campaign::updatePlayerNeeds(int elapsedGameMinutes, bool moving, bool running)
@@ -744,18 +738,13 @@ void Campaign::update(float dt)
     const bool running = lenSq > 0.0001f &&
         (ks[controls.run] || ks[SDL_SCANCODE_LCTRL] || ks[SDL_SCANCODE_RCTRL]);
 
-    m_player.isSprinting = running;
-
     const float speed = m_player.movementLocked(m_characterManager) ? 0.0f : m_player.stats.getLimitedMoveSpeed(running);
-
-    m_player.vx = ax * speed;
-    m_player.vy = ay * speed;
 
     const float oldX = m_player.x;
     const float oldY = m_player.y;
 
-    const float nextX = oldX + m_player.vx * dt;
-    const float nextY = oldY + m_player.vy * dt;
+    const float nextX = oldX + ax * speed * dt;
+    const float nextY = oldY + ay * speed * dt;
 
     // pohyb po ose X
     if (!wouldPlayerCollideWithTerrainAt(nextX, oldY) &&
@@ -782,6 +771,16 @@ void Campaign::update(float dt)
     }
 
     clampPlayerToMap();
+    if (dt > 0.00001f)
+    {
+        m_player.vx = (m_player.x - oldX) / dt;
+        m_player.vy = (m_player.y - oldY) / dt;
+    }
+    else
+    {
+        m_player.vx = m_player.vy = 0.0f;
+    }
+    m_player.isSprinting = running && (m_player.vx != 0.0f || m_player.vy != 0.0f);
     tryUseMapLinkUnderPlayer();
 
     updateNearbyNpc();

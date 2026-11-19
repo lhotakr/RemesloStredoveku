@@ -63,6 +63,7 @@ struct Player
     std::string currentAnim = "idle_down";
     int currentFrame = 0;
     float animTime = 0.0f;
+    float animFrameDuration = 0.0f;
     std::string animationOverride;
     bool animationHoldLastFrame = false;
 

@@ -105,7 +105,8 @@ private:
         int& outW,
         int& outH,
         std::string& outAnimationUsed,
-        const std::function<void(const std::string&)>& log) const;
+        const std::function<void(const std::string&)>& log,
+        SDL_FPoint* anchor = nullptr) const;
 
     bool pushEntityToEngine(Entity& entity, const std::function<void(const std::string&)>& log);
     bool loadImageScene(const nlohmann::json& root, const std::function<void(const std::string&)>& log);

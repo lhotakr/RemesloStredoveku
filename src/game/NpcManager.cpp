@@ -640,11 +640,7 @@ void NpcManager::render(SDL_Renderer* renderer, int camX, int camY, const Charac
         const AnimFrame& fr = frames[frameIndex];
 
         SDL_Rect src{ fr.x, fr.y, fr.w, fr.h };
-        SDL_Rect dst;
-        dst.w = fr.w;
-        dst.h = fr.h;
-        dst.x = (int)std::lround(npc.x - fr.w * 0.5f) - camX;
-        dst.y = (int)std::lround(npc.y - fr.h) - camY;
+        const SDL_Rect dst = ch->frameDestination(fr, npc.x, npc.y, camX, camY);
 
         SDL_RenderCopy(renderer, tex, &src, &dst);
     }

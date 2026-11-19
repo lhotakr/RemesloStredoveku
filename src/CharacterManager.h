@@ -1,6 +1,7 @@
 #pragma once
 #include <SDL.h>
 
+#include <optional>
 #include <string>
 #include <vector>
 #include <unordered_map>
@@ -29,7 +30,12 @@ struct CharacterDef
     int sheetW = 0;
     int sheetH = 0;
 
+    std::optional<SDL_Point> anchor;
     std::unordered_map<std::string, CharacterAnimation> animations;
+
+    SDL_FPoint frameAnchor(const AnimFrame& frame) const;
+    SDL_Rect frameDestination(const AnimFrame& frame, float x, float y,
+                              int camX, int camY, float scale = 1.0f) const;
 };
 
 class CharacterManager

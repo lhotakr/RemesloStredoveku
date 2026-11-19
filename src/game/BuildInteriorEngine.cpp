@@ -518,6 +518,7 @@ bool BuildInteriorEngine::upsertRuntimeSprite(const RuntimeSpriteDef& def)
     sprite.y = def.y;
     sprite.zOffset = def.zOffset;
     sprite.scale = std::clamp(def.scale, 0.10, 6.0);
+    sprite.billboardAnchor = def.billboardAnchor;
     sprite.solid = def.solid && !def.floor;
     sprite.renderMode = def.floor ? ObjectRenderMode::Floor
         : (def.voxel ? ObjectRenderMode::Voxel : ObjectRenderMode::Billboard);
@@ -7884,7 +7885,8 @@ void BuildInteriorEngine::renderBillboardSprite(const SpriteDef& sprite, int scr
 
     const int screenX = static_cast<int>((screenW / 2.0) * (1.0 + transformX / transformY));
     const SectorDef& sector = sectorAtWorld(sprite.x, sprite.y);
-    const double bottomZ = floorHeightAt(sector, sprite.x, sprite.y) + sprite.zOffset;
+    const double anchorZ = floorHeightAt(sector, sprite.x, sprite.y) + sprite.zOffset;
+    const double bottomZ = anchorZ - (1.0 - sprite.billboardAnchor.y) * sprite.scale;
     const double topZ = bottomZ + sprite.scale;
     int drawStartY = projectZ(topZ, transformY, screenH, horizon, eyeZ);
     int drawEndY = projectZ(bottomZ, transformY, screenH, horizon, eyeZ);
@@ -7892,8 +7894,9 @@ void BuildInteriorEngine::renderBillboardSprite(const SpriteDef& sprite, int scr
     const int spriteHeight = std::max(1, drawEndY - drawStartY);
     const double aspect = static_cast<double>(textureW) / textureH;
     const int spriteWidth = std::max(1, static_cast<int>(spriteHeight * aspect));
-    const int drawStartX = screenX - spriteWidth / 2;
-    const int drawEndX = screenX + spriteWidth / 2;
+    const int anchorOffsetX = static_cast<int>(spriteWidth * (0.5 - sprite.billboardAnchor.x));
+    const int drawStartX = screenX - spriteWidth / 2 + anchorOffsetX;
+    const int drawEndX = screenX + spriteWidth / 2 + anchorOffsetX;
     const double shade = std::clamp(sector.ambient / (1.0 + transformY * 0.045), 0.25, 1.15);
 
     for (int stripe = std::max(0, drawStartX); stripe < std::min(screenW, drawEndX); ++stripe)

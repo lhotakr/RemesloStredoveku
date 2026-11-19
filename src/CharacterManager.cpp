@@ -6,6 +6,10 @@
 #include <filesystem>
 #include <fstream>
 #include <algorithm>
+#include <cmath>
+#include <limits>
+#include <stdexcept>
+#include <string_view>
 
 namespace fs = std::filesystem;
 using json = nlohmann::json;
@@ -22,14 +26,23 @@ std::vector<std::string> CharacterManager::characterIds() const
     return ids;
 }
 
-static SDL_Texture* loadTexture(SDL_Renderer* r, const char* path)
+SDL_FPoint CharacterDef::frameAnchor(const AnimFrame& frame) const
 {
-    SDL_Surface* surf = IMG_Load(path);
-    if (!surf) return nullptr;
+    if (anchor)
+        return {static_cast<float>(anchor->x), static_cast<float>(anchor->y)};
+    return {frame.w * 0.5f, static_cast<float>(frame.h)};
+}
 
-    SDL_Texture* tex = SDL_CreateTextureFromSurface(r, surf);
-    SDL_FreeSurface(surf);
-    return tex;
+SDL_Rect CharacterDef::frameDestination(const AnimFrame& frame, float x, float y,
+                                        int camX, int camY, float scale) const
+{
+    const auto pivot = frameAnchor(frame);
+    return {
+        static_cast<int>(std::lround(x - pivot.x * scale)) - camX,
+        static_cast<int>(std::lround(y - pivot.y * scale)) - camY,
+        static_cast<int>(std::lround(frame.w * scale)),
+        static_cast<int>(std::lround(frame.h * scale))
+    };
 }
 
 bool CharacterManager::init(SDL_Renderer* renderer, const std::string& folder)
@@ -38,35 +51,33 @@ bool CharacterManager::init(SDL_Renderer* renderer, const std::string& folder)
 
     m_renderer = renderer;
     m_folder = folder;
-    m_lastError.clear();
-
-    if (!m_renderer) {
-        m_lastError = "CharacterManager: renderer is null";
-        return false;
-    }
-
-    if (!fs::exists(m_folder)) {
-        m_lastError = "CharacterManager: folder not found: " + m_folder;
-        return false;
-    }
-
-    bool anyLoaded = false;
-
-    for (const auto& entry : fs::directory_iterator(m_folder))
+    const auto fail = [this](std::string error)
     {
-        if (!entry.is_regular_file()) continue;
-        if (entry.path().extension() != ".json") continue;
-
-        if (!loadJsonFile(entry.path().string()))
-            return false;
-
-        anyLoaded = true;
-    }
-
-    if (!anyLoaded) {
-        m_lastError = "CharacterManager: no json files found in " + m_folder;
+        shutdown();
+        m_lastError = std::move(error);
         return false;
+    };
+
+    if (!m_renderer)
+        return fail("CharacterManager: renderer is null");
+
+    try
+    {
+        for (const auto& entry : fs::directory_iterator(m_folder))
+        {
+            if (!entry.is_regular_file() || entry.path().extension() != ".json")
+                continue;
+            if (!loadJsonFile(entry.path().string()))
+                return fail(m_lastError);
+        }
     }
+    catch (const fs::filesystem_error& ex)
+    {
+        return fail(std::string("CharacterManager: ") + ex.what());
+    }
+
+    if (m_characters.empty())
+        return fail("CharacterManager: no character definitions found in " + m_folder);
 
     return true;
 }
@@ -109,9 +120,15 @@ SDL_Texture* CharacterManager::loadTextureIfNeeded(const std::string& sheetFile)
         return it->second;
 
     fs::path fullPath = fs::path(m_folder) / sheetFile;
-    SDL_Texture* tex = loadTexture(m_renderer, fullPath.string().c_str());
-    if (!tex) {
-        m_lastError = "CharacterManager: failed to load texture: " + fullPath.string();
+    SDL_Texture* tex = IMG_LoadTexture(m_renderer, fullPath.string().c_str());
+    if (!tex)
+    {
+        m_lastError = "cannot load atlas " + fullPath.string() + ": " + IMG_GetError();
+        std::ifstream file(fullPath, std::ios::binary);
+        constexpr std::string_view lfsHeader = "version https://git-lfs.github.com/spec/v1";
+        char header[lfsHeader.size()]{};
+        if (file.read(header, sizeof(header)) && std::string_view(header, sizeof(header)) == lfsHeader)
+            m_lastError += " (soubor je pouze Git LFS ukazatel, spusťte git lfs pull)";
         return nullptr;
     }
 
@@ -119,79 +136,116 @@ SDL_Texture* CharacterManager::loadTextureIfNeeded(const std::string& sheetFile)
     return tex;
 }
 
+static int readNonNegativeInt(const json& object, const char* key)
+{
+    const auto& value = object.at(key);
+    if (!value.is_number_integer() || value.get<double>() < 0 ||
+        value.get<double>() > std::numeric_limits<int>::max())
+        throw std::runtime_error(std::string(key) + " must be a non-negative integer");
+    return value.get<int>();
+}
+
 bool CharacterManager::loadJsonFile(const std::string& path)
 {
-    std::ifstream f(path, std::ios::binary);
-    if (!f) {
-        m_lastError = "CharacterManager: failed to open json: " + path;
-        return false;
-    }
-
-    json root;
-    try {
-        f >> root;
-    }
-    catch (const std::exception& ex) {
-        m_lastError = std::string("CharacterManager: json parse error in ") + path + " : " + ex.what();
-        return false;
-    }
-
-    if (!root.contains("characters") || !root["characters"].is_array()) {
-        m_lastError = "CharacterManager: missing 'characters' array in " + path;
-        return false;
-    }
-
-    for (const auto& jc : root["characters"])
+    std::string context = path;
+    try
     {
-        CharacterDef cd;
-        cd.id = jc.value("id", "");
-        cd.name = jc.value("name", "");
-        cd.sheet = jc.value("sheet", "");
+        std::ifstream file(path, std::ios::binary);
+        if (!file)
+            throw std::runtime_error("cannot open JSON");
+        const auto root = json::parse(file);
+        const auto& characters = root.at("characters");
+        if (!characters.is_array() || characters.empty())
+            throw std::runtime_error("'characters' must be a non-empty array");
 
-        if (cd.id.empty() || cd.sheet.empty())
-            continue;
-
-        SDL_Texture* tex = loadTextureIfNeeded(cd.sheet);
-        if (!tex)
-            return false;
-
-        int texW = 0;
-        int texH = 0;
-        SDL_QueryTexture(tex, nullptr, nullptr, &texW, &texH);
-
-        cd.sheetW = texW;
-        cd.sheetH = texH;
-
-        if (jc.contains("animations") && jc["animations"].is_object())
+        for (const auto& entry : characters)
         {
-            for (auto it = jc["animations"].begin(); it != jc["animations"].end(); ++it)
+            context = path;
+            CharacterDef character;
+            character.id = entry.at("id").get<std::string>();
+            character.name = entry.value("name", "");
+            character.sheet = entry.at("sheet").get<std::string>();
+            if (character.id.empty() || character.sheet.empty())
+                throw std::runtime_error("'id' and 'sheet' must not be empty");
+            context = path + " / " + character.id;
+            if (m_characters.contains(character.id))
+                throw std::runtime_error("duplicate character ID");
+
+            SDL_Texture* texture = loadTextureIfNeeded(character.sheet);
+            if (!texture)
+                throw std::runtime_error(m_lastError);
+            if (SDL_QueryTexture(texture, nullptr, nullptr, &character.sheetW, &character.sheetH) != 0)
+                throw std::runtime_error("cannot query atlas " + character.sheet + ": " + SDL_GetError());
+
+            if (entry.contains("anchor"))
             {
-                CharacterAnimation anim;
-                const auto& ja = it.value();
+                const auto& anchor = entry.at("anchor");
+                character.anchor = SDL_Point{readNonNegativeInt(anchor, "x"), readNonNegativeInt(anchor, "y")};
+            }
 
-                anim.loop = ja.value("loop", true);
-                anim.fps = ja.value("fps", 6);
+            const auto& animations = entry.at("animations");
+            if (!animations.is_object() || animations.empty())
+                throw std::runtime_error("'animations' must be a non-empty object");
 
-                if (ja.contains("frames") && ja["frames"].is_array())
+            bool hasLocomotion = false;
+            for (const auto& [name, clip] : animations.items())
+            {
+                const std::string clipContext = path + " / " + character.id + " / " + name;
+                context = clipContext;
+                if (name.empty())
+                    throw std::runtime_error("empty animation name");
+                CharacterAnimation animation;
+                animation.loop = clip.value("loop", true);
+                if (clip.contains("fps"))
+                    animation.fps = readNonNegativeInt(clip, "fps");
+                if (animation.fps < 1 || animation.fps > 240)
+                    throw std::runtime_error("'fps' must be between 1 and 240");
+
+                const auto& frames = clip.at("frames");
+                if (!frames.is_array() || frames.empty())
+                    throw std::runtime_error("'frames' must be a non-empty array");
+                for (const auto& rect : frames)
                 {
-                    for (const auto& jf : ja["frames"])
+                    context = clipContext + " / frame " + std::to_string(animation.frames.size() + 1);
+                    const AnimFrame frame{
+                        readNonNegativeInt(rect, "x"), readNonNegativeInt(rect, "y"),
+                        readNonNegativeInt(rect, "w"), readNonNegativeInt(rect, "h")
+                    };
+                    if (frame.w == 0 || frame.h == 0 ||
+                        frame.x > character.sheetW - frame.w || frame.y > character.sheetH - frame.h)
                     {
-                        AnimFrame fr;
-                        fr.x = jf.value("x", 0);
-                        fr.y = jf.value("y", 0);
-                        fr.w = jf.value("w", 0);
-                        fr.h = jf.value("h", 0);
-                        anim.frames.push_back(fr);
+                        throw std::runtime_error("frame rectangle exceeds atlas " + character.sheet + " or has zero area");
+                    }
+                    if (character.anchor && (character.anchor->x > frame.w || character.anchor->y > frame.h))
+                        throw std::runtime_error("anchor is outside the frame");
+                    animation.frames.push_back(frame);
+                }
+                hasLocomotion |= name.starts_with("walk_") || name.starts_with("run_");
+                character.animations.emplace(name, std::move(animation));
+            }
+
+            context = path + " / " + character.id;
+            if (hasLocomotion)
+            {
+                for (const std::string direction : {"down", "left", "right", "up"})
+                {
+                    for (const char* action : {"idle_", "walk_"})
+                    {
+                        const auto name = action + direction;
+                        if (!character.animations.contains(name))
+                            throw std::runtime_error("missing directional animation " + name);
                     }
                 }
-
-                cd.animations[it.key()] = anim;
             }
+
+            const auto id = character.id;
+            m_characters.emplace(id, std::move(character));
         }
-
-        const std::string loadedId = cd.id;
-        m_characters[loadedId] = std::move(cd);
     }
-
+    catch (const std::exception& ex)
+    {
+        m_lastError = "CharacterManager: " + context + ": " + ex.what();
+        return false;
+    }
     return true;
 }

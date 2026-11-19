@@ -37,6 +37,27 @@ static float JsonFloatAny(const json& j, float def, std::initializer_list<const 
     return def;
 }
 
+static std::string validatePatrikAnimations(const CharacterManager& manager)
+{
+    for (const std::string id : {"patrik", "patrik_s_batohem"})
+    {
+        const auto* character = manager.getCharacter(id);
+        if (!character)
+            return "Chybí postava " + id + " v assets/characters. Zkontrolujte soubory " + id + ".json a " + id + ".png.";
+
+        for (const std::string direction : {"_down", "_left", "_right", "_up"})
+        {
+            for (const char* action : {"idle", "walk", "run", "breathe", "wave", "pickup", "interact", "lie_down", "death"})
+            {
+                const auto name = action + direction;
+                if (!character->animations.contains(name))
+                    return "V definici " + id + " chybí animace " + name + ".";
+            }
+        }
+    }
+    return {};
+}
+
 struct ItemTextLocalization
 {
     std::string name;
@@ -453,6 +474,13 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
         return false;
     }
 
+    if (const auto error = validatePatrikAnimations(m_characterManager); !error.empty())
+    {
+        SDL_ShowSimpleMessageBox(SDL_MESSAGEBOX_ERROR, "Patrikovy animace", error.c_str(), m_window);
+        return false;
+    }
+    m_player.selectCharacter("patrik", m_characterManager);
+
     // terrain tileset
     if (!m_tileset.loadFromJson(
         m_renderer,
@@ -633,49 +661,6 @@ bool Campaign::init(SDL_Window* window, SDL_Renderer* renderer)
         if (!m_npcManager.loadSchedules(schedulesPath)) {
             SDL_Log("NPC schedules not loaded: %s", schedulesPath.c_str());
         }
-    }
-
-    std::string playerId = "patrik";
-
-    if (!m_characterManager.getCharacter(playerId))
-    {
-        const auto ids = m_characterManager.characterIds();
-        if (!ids.empty())
-            playerId = ids.front();
-    }
-
-    SDL_Log("Selected player character: %s", playerId.c_str());
-
-    if (!m_player.selectCharacter(playerId, m_characterManager))
-    {
-        std::string msg =
-            "Nepodarilo se vybrat postavu: " + playerId;
-
-        SDL_ShowSimpleMessageBox(
-            SDL_MESSAGEBOX_ERROR,
-            "Player character error",
-            msg.c_str(),
-            m_window
-        );
-        return false;
-    }
-    
-    if (!m_player.selectCharacter(
-        playerId,
-        m_characterManager))
-    {
-        std::string msg =
-            "Nepodarilo se vybrat postavu: "
-            + playerId;
-
-        SDL_ShowSimpleMessageBox(
-            SDL_MESSAGEBOX_ERROR,
-            "Player character error",
-            msg.c_str(),
-            m_window
-        );
-
-        return false;
     }
 
     if (!spawnPlayerFromMap())

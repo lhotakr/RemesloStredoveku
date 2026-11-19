@@ -199,12 +199,7 @@ void Campaign::renderSequenceActors()
                     : std::min(frame, static_cast<int>(animation.frames.size()) - 1);
                 const auto& fr = animation.frames[index];
                 SDL_Rect src{fr.x, fr.y, fr.w, fr.h};
-                SDL_Rect dst{
-                    (int)std::lround(actor.x - fr.w * actor.scale * 0.5f) - m_camX,
-                    (int)std::lround(actor.y - fr.h * actor.scale) - m_camY,
-                    (int)std::lround(fr.w * actor.scale),
-                    (int)std::lround(fr.h * actor.scale)
-                };
+                const SDL_Rect dst = ch->frameDestination(fr, actor.x, actor.y, m_camX, m_camY, actor.scale);
                 SDL_RenderCopy(m_renderer, tex, &src, &dst);
                 continue;
             }

@@ -418,6 +418,7 @@ json SavePlayer(const Player& player)
         {"current_anim", player.currentAnim},
         {"current_frame", player.currentFrame},
         {"anim_time", player.animTime},
+        {"anim_frame_duration", player.animFrameDuration},
         {"animation_override", player.animationOverride},
         {"animation_hold_last_frame", player.animationHoldLastFrame},
         {"stats", SavePlayerStats(player.stats)},
@@ -457,6 +458,7 @@ void LoadPlayer(const json& source, Player& player, const CharacterManager& char
     player.currentAnim = JsonValue(source, "current_anim", player.currentAnim);
     player.currentFrame = std::max(0, JsonValue(source, "current_frame", player.currentFrame));
     player.animTime = std::max(0.0f, JsonValue(source, "anim_time", player.animTime));
+    player.animFrameDuration = std::max(0.0f, JsonValue(source, "anim_frame_duration", 0.0f));
     LoadPlayerStats(source.value("stats", json::object()), player.stats);
     LoadInventory(source.value("inventory", json::object()), player.inventory);
     player.syncCharacterVariant(characters);

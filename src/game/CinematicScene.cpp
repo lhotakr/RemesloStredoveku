@@ -530,7 +530,8 @@ bool CinematicScene::loadCharacterFramePixels(
     int& outW,
     int& outH,
     std::string& outAnimationUsed,
-    const std::function<void(const std::string&)>& log) const
+    const std::function<void(const std::string&)>& log,
+    SDL_FPoint* anchor) const
 {
     outPixels.clear();
     outW = 0;
@@ -563,6 +564,11 @@ bool CinematicScene::loadCharacterFramePixels(
 
     outW = frame.w;
     outH = frame.h;
+    if (anchor)
+    {
+        const auto pivot = ch->frameAnchor(frame);
+        *anchor = {pivot.x / frame.w, pivot.y / frame.h};
+    }
     outPixels.assign(static_cast<std::size_t>(outW) * outH, 0u);
     for (int y = 0; y < outH; ++y)
     {
@@ -602,7 +608,7 @@ bool CinematicScene::pushEntityToEngine(Entity& entity, const std::function<void
     if (!entity.characterId.empty())
     {
         std::string animUsed;
-        if (loadCharacterFramePixels(entity, sprite.pixels, sprite.pixelW, sprite.pixelH, animUsed, log))
+        if (loadCharacterFramePixels(entity, sprite.pixels, sprite.pixelW, sprite.pixelH, animUsed, log, &sprite.billboardAnchor))
             entity.animation = animUsed;
     }
 

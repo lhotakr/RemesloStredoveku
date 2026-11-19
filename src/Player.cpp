@@ -4,7 +4,11 @@
 #include <algorithm>
 #include <cmath>
 #include <string>
-#include <terrain/TileMap.h>
+
+static bool isLocomotion(const std::string& animation)
+{
+    return animation.starts_with("walk_") || animation.starts_with("run_");
+}
 
 static std::string facingToIdle(Player::Facing f)
 {
@@ -47,6 +51,7 @@ bool Player::selectCharacter(const std::string& id, const CharacterManager& mana
     characterId = id;
     currentFrame = 0;
     animTime = 0.0f;
+    animFrameDuration = 0.0f;
     currentAnim = "idle_down";
     facing = Facing::Down;
     stopAnimation();
@@ -81,6 +86,7 @@ bool Player::playAnimation(const std::string& animation, const CharacterManager&
     currentAnim = name;
     currentFrame = 0;
     animTime = 0.0f;
+    animFrameDuration = 0.0f;
     return true;
 }
 
@@ -148,47 +154,57 @@ void Player::update(float dt, const CharacterManager& manager)
         if (found != ch->animations.end() && !found->second.frames.empty()) nextAnim = run;
     }
     if (!animationOverride.empty()) nextAnim = animationOverride;
-    if (nextAnim != currentAnim) { currentFrame = 0; animTime = 0; currentAnim = nextAnim; }
-
-    auto it = ch->animations.find(currentAnim);
-    if (it == ch->animations.end() || it->second.frames.empty()) {
+    const auto next = ch->animations.find(nextAnim);
+    if (next == ch->animations.end())
+    {
+        currentAnim = nextAnim;
         currentFrame = 0;
-        animTime = 0.0f;
+        animTime = animFrameDuration = 0.0f;
         return;
     }
 
-    const CharacterAnimation& anim = it->second;
-
-    const float referenceSpeed = currentAnim.starts_with("run_") ? 135.0f : 90.0f;
-    const float speedScale = isMoving && animationOverride.empty()
-        ? std::clamp(currentMoveSpeed() / referenceSpeed, 0.55f, 1.65f) : 1.0f;
-    const float frameDuration = (anim.fps > 0)
-        ? (1.0f / ((float)anim.fps * speedScale))
-        : (0.15f / speedScale);
-
-    animTime += dt;
-    while (animTime >= frameDuration)
+    const CharacterAnimation& anim = next->second;
+    const float referenceSpeed = nextAnim.starts_with("run_") ? 135.0f : 90.0f;
+    const float speedScale = isMoving && animationOverride.empty() && isLocomotion(nextAnim)
+        ? std::sqrt(moveLenSq) / referenceSpeed : 1.0f;
+    const float frameDuration = 1.0f / (static_cast<float>(anim.fps) * speedScale);
+    const float previousDuration = animFrameDuration > 0.0f ? animFrameDuration : frameDuration;
+    const int frameCount = static_cast<int>(anim.frames.size());
+    // Keep the fraction of the previous frame when the playback speed changes.
+    const double frameProgress = static_cast<double>(animTime) / previousDuration;
+    double playhead = 0.0;
+    if (currentAnim == nextAnim)
     {
-        animTime -= frameDuration;
-        currentFrame++;
-
-        if (currentFrame >= (int)anim.frames.size())
+        playhead = std::clamp(currentFrame, 0, frameCount - 1) + frameProgress;
+    }
+    else if (anim.loop && isLocomotion(nextAnim) && isLocomotion(currentAnim))
+    {
+        const auto previous = ch->animations.find(currentAnim);
+        if (previous != ch->animations.end() && previous->second.loop)
         {
-            if (anim.loop) currentFrame = 0;
-            else
-            {
-                currentFrame = (int)anim.frames.size() - 1;
-                animTime = 0.0f;
-                if (!animationOverride.empty() && !animationHoldLastFrame)
-                {
-                    stopAnimation();
-                    currentAnim = isMoving ? facingToWalk(facing) : facingToIdle(facing);
-                    currentFrame = 0;
-                }
-                break;
-            }
+            const int previousCount = static_cast<int>(previous->second.frames.size());
+            const double previousPlayhead = std::clamp(currentFrame, 0, previousCount - 1) + frameProgress;
+            playhead = std::fmod(previousPlayhead, previousCount) * frameCount / previousCount;
         }
     }
+
+    currentAnim = nextAnim;
+    animFrameDuration = frameDuration;
+    playhead += static_cast<double>(std::max(0.0f, dt)) / frameDuration;
+    if (anim.loop)
+        playhead = std::fmod(playhead, frameCount);
+    else if (playhead >= frameCount)
+    {
+        playhead = frameCount - 1;
+        if (!animationOverride.empty() && !animationHoldLastFrame)
+        {
+            stopAnimation();
+            currentAnim = facingToIdle(facing);
+            playhead = 0.0;
+        }
+    }
+    currentFrame = static_cast<int>(playhead);
+    animTime = static_cast<float>(playhead - currentFrame) * frameDuration;
 }
 
 void Player::render(SDL_Renderer* r, int camX, int camY, const CharacterManager& manager) const
@@ -221,11 +237,7 @@ void Player::render(SDL_Renderer* r, int camX, int camY, const CharacterManager&
 
     SDL_Rect src{ fr.x, fr.y, fr.w, fr.h };
 
-    SDL_Rect dst;
-    dst.w = fr.w;
-    dst.h = fr.h;
-    dst.x = (int)std::lround(x - fr.w * 0.5f) - camX;
-    dst.y = (int)std::lround(y - fr.h) - camY;
+    const SDL_Rect dst = ch->frameDestination(fr, x, y, camX, camY);
 
     SDL_RenderCopy(r, tex, &src, &dst);
 }
